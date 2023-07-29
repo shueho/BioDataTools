@@ -35,3 +35,9 @@ Parse the KEG file.
 **Generation 1:** output_[your keg file name] (TABLE file)   
 **Generation 2:** ko_match_KO.txt (TABLE file)   
 **Generation 3:** KO_map.txt (TABLE file)   
+
+
+
+**Author: Hao Xue**
+**E-mail: studid@163.com**
+
