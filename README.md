@@ -38,6 +38,6 @@ Parse the KEG file.
 
 
 
-**Author: Hao Xue**
-**E-mail: studid@163.com**
+**Author: Hao Xue**     
+**E-mail: studid@163.com**     
 
