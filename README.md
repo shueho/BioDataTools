@@ -45,7 +45,7 @@ Parse the KEG file.
 **Generation 3:** KO_map.txt (TABLE file)   
 
 
-## Genetics   
+## 2. Genetics   
 Data processing for genetic analysis, including conversion of downloaded data from NCBI and batch crawling of some information.     
      
 ### 2.1 Get_gb_by_gi.py
