@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+# _*_ coding:utf-8 _*_
+#
+# @Version : 1.0
+# @Time    : 2023/7/30 13:00
+# @Author  : Hao Xue
+# @E-mail  : studid@163.com
+# @File    : splitFromLevel.py
+#
+# The species abundance matrix was extracted.
 
 import sys
 import os
