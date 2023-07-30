@@ -54,7 +54,7 @@ Data processing for genetic analysis, including conversion of downloaded data fr
 Crawl the corresponding genebank file by reading the GI number.
 Read all text files ending in "_gi.txt" under the folder where the script is located, and each "_gi.txt" file contains the GI number that needs to be crawled.    
 *This means that you need to put the script in the place of the response for it to run successfully.*     
-**Generation:** ./gb/\<your gi_list_file name>_\<GI ACCESSION>.gb (GENEBANK files)    
+**Generation:** ./gb/\<your gi_list_file name>\_\<GI ACCESSION>.gb (GENEBANK files)    
 
 ### 2.2 Name_gb_by_isolate.py   
 ***Supports all versions of python3.***   
