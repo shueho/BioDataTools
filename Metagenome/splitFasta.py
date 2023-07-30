@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# _*_ coding:utf-8 _*_
+#
+# @Version : 1.0
+# @Time    : 2023/7/30 13:00
+# @Author  : Hao Xue
+# @E-mail  : studid@163.com
+# @File    : splitFasta.py
+#
+# Split FASTA files into smaller FASTA files according to the number of sequences.
+
 import sys
 import os
 print("Author: XueHao\nE-mail: studid@163.com\nplease wait!")
