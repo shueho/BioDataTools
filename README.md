@@ -86,7 +86,7 @@ You can call this script repeatedly if you want to merge multiple sequences.
 ### 2.5 S_to_H.py -p [FASTA_FILE_NAME] -l [LIST_NAME]    
 ***Supports all versions of python3.***   
 ***Sample files exist.***    
-FASTA_FILE_NAME: Sample sequence.
+FASTA_FILE_NAME: Sample sequence.     
 LIST_NAME: The column haplotype table
 Convert fasta files of sample sequences to fasta files consisting of haplotypes. Realize the merging of identical sequences!    
 Two files need to be obtained before use, one is a haplotype sample control form exported by DnaSP (may need to be made by hand). The other is a fasta file containing the sequences of all species.    
