@@ -93,6 +93,17 @@ Two files need to be obtained before use, one is a haplotype sample control form
 **Generation:** out_a. fasta (FASTA file)    
 
 
+## 3. Gadget   
+Some general text processing tools.    
+
+### 3.1 MergeTable.py       
+***Supports all versions of python3.***   
+***Only graphical systems are supported.***    
+Import the table and merge the table according to the first column.     
+
+
+
+
 ==============      
 **Author: Hao Xue**     
 **E-mail: studid@163.com**  
