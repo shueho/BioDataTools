@@ -90,7 +90,7 @@ FASTA_FILE_NAME: Sample sequence.
 LIST_NAME: The column haplotype table
 Convert fasta files of sample sequences to fasta files consisting of haplotypes. Realize the merging of identical sequences!    
 Two files need to be obtained before use, one is a haplotype sample control form exported by DnaSP (may need to be made by hand). The other is a fasta file containing the sequences of all species.    
-**Generation:** out_a. fasta (FASTA file)    
+**Generation:** out_a.fasta (FASTA file)    
 
 
 ## 3. Gadget   
@@ -101,6 +101,19 @@ Some general text processing tools.
 ***Only graphical systems are supported.***    
 Import the table and merge the table according to the first column.     
 
+
+## 4.Plotscript     
+A collection of drawing codes.     
+
+### 4.1 geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]     
+***Supports all versions of python3.***   
+***Sample files exist.***    
+GENE_LIST: List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.     
+COLOR_CONFIG: Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.     
+Vertical_spacing: Spacing of adjacent row genomes, default 50.    
+The linear arrangement of genes is distinguished according to different colors.    
+Sample code: python geneArrangementMap.py gene.txt color.txt 50
+**Generation:** out.svg (SVG file)    
 
 
 
@@ -120,4 +133,3 @@ Import the table and merge the table according to the first column.
         alt="ORCID iD icon"/>
       https://orcid.org/0000-0001-9708-3575
     </a>     
-
