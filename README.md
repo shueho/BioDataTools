@@ -111,8 +111,8 @@ A collection of drawing codes.
 GENE_LIST: List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.     
 COLOR_CONFIG: Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.     
 Vertical_spacing: Spacing of adjacent row genomes, default 50.    
-The linear arrangement of genes is distinguished according to different colors.    
-Sample code: python geneArrangementMap.py gene.txt color.txt 50
+The linear arrangement of genes is distinguished according to different colors.     
+Sample code: python geneArrangementMap.py gene.txt color.txt 50    
 **Generation:** out.svg (SVG file)    
 
 
