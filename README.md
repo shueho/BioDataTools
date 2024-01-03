@@ -101,6 +101,16 @@ Some general text processing tools.
 ***Only graphical systems are supported.***    
 Import the table and merge the table according to the first column.     
 
+### 3.2 VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP]   
+***Supports all versions of python3.***   
+KEY_FILE: A file with a line listing the contents to retrieve (the so-called key). Fill in the file path here.   
+MAP_FILE: A table should have at least two columns: key and value. Fill in the file path here.   
+KEY_LOC: The key is located in the column number of MAP_FILE, and fill in the number.   
+VALUE_LOC: The value is located in the column number of MAP_FILE, and fill in the number.   
+SEP: The file-delimiter symbol for MAP_FILE.The default is a TAB character.   
+Python implementation of the vlookup function. Column numbers start at 1, so the first column number is 1.      
+**Generation:** map_\<map file name> (TABLE file)    
+
 
 ## 4.Plotscript     
 A collection of drawing codes.     
