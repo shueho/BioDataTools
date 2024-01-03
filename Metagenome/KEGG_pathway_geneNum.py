@@ -84,7 +84,7 @@ for i in gk:
 print("3/3: save date")
 
 with open("A.txt","w") as f:
-    f.write("A\tnum\nall_gene\t"+str(len(gk)))
+    f.write("A\tnum\nall_gene\t"+str(len(gk))+"\n")
     for i in A_cout:
         f.write(all_d[i]+"\t"+str(A_cout[i])+"\n")
         
