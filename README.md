@@ -38,11 +38,22 @@ Split FASTA files into smaller FASTA files according to the number of sequences.
 
 ### 1.6 read_keg.py [KEG_FILE]   
 ***Supports all versions of python3.***   
-KEG_FILE: KEG files downloaded from the KEGG database, such as the common ko00001.keg (Click to download: https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=).   
+KEG_FILE: KEG files downloaded from the KEGG database, such as the common ko00001.keg(Click to download: https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=).   
 Parse the KEG file.   
 **Generation 1:** output_\<your keg file name> (TABLE file)   
 **Generation 2:** ko_match_KO.txt (TABLE file)   
 **Generation 3:** KO_map.txt (TABLE file)   
+
+### 1.7 KEGG_pathway_geneNum.py [1.6_Generation_1] [GENE_KO]    
+***Supports all versions of python3.***   
+1.6_Generation_1: 1.6 Generated file 1 or a similar file containing the KEGG annotation results.   
+GENE_KO: The first column is the gene name and the second column is the ko number. The ko numbers are separated by commas. The example file is gk.txt.   
+KEGG pathway gene number statistics.     
+**Generation 1:** A.txt (all_gene is the total number of genes, and you can use this number to find the gene ratio. TABLE file)   
+**Generation 2:** A-B.txt (TABLE file)   
+**Generation 3:** A-C.txt (TABLE file)   
+**Generation 4:** D.txt (TABLE file)   
+**Generation 5:** err.txt (There is no matching KO number. TABLE file)   
 
 
 ## 2. Genetics   
