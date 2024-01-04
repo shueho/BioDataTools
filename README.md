@@ -38,7 +38,7 @@ Split FASTA files into smaller FASTA files according to the number of sequences.
 
 ### 1.6 read_keg.py [KEG_FILE]   
 ***Supports all versions of python3.***   
-KEG_FILE: KEG files downloaded from the KEGG database, such as the common ko00001.keg(Click to download: https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=).   
+KEG_FILE: KEG files downloaded from the KEGG database, such as the common ko00001.keg (Click to download: https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=).   
 Parse the KEG file.   
 **Generation 1:** output_\<your keg file name> (TABLE file)   
 **Generation 2:** ko_match_KO.txt (TABLE file)   
