@@ -193,20 +193,30 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **脚本功能：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格。      
 **obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 将网页另存为txt文件即可）。       
 **生成文件：** go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
+  
+### 3.09 read_goOBO.py [go_term_list] [GENE_GO_MAP]                 
+**脚本功能：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。               
+**go_term_list：** 推荐是使用3.08脚本生成的go_term_list.txt文件。     
+**GENE_GO_MAP：** 第一列是基因名称，第二列是对应的GO号，注意你需要把注释原始数据格式转换为一一对应的格式。       
+**注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
+```awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file```      
+**因为完整的GOterm表格很大，下面的示例用简化版的表格，实际使用时需要按照3.08生成表格文件。** 
+```python getGOinfo.py example/go_term.txt example/gene_go.txt```      
+**生成文件：** gene_GO_info.txt（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。   
 
-### 3.09 GenoSpider     
+### 3.10 GenoSpider     
 **脚本功能：** 基因组数据爬虫，详细说明待补充！       
 
 
 ## 4.Plotscript     
 绘图代码工具集。     
 
-### 4.1 geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]     
+### 4.01 geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]     
 **脚本功能：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。     
 **GENE_LIST：** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.     
 **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.     
 **Vertical_spacing：** Spacing of adjacent row genomes, default 50.    
-```python geneArrangementMap.py gene.txt color.txt 50```      
+```python geneArrangementMap.py example/gene.txt example/color.txt 50```      
 ** 生成文件:** out.svg （SVG file）。     
 
 

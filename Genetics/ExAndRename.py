@@ -22,9 +22,9 @@ d = dict()
 for i in ls:
 	if ">" in i:
 		flag = i.strip(">\n ").split(" ")[0]
-		d[flag] = ""
+		d[flag] = []
 	else:
-		d[flag] += i
+		d[flag].append(i)
 
 with open(map_path) as f:
 	ls = f.readlines()
@@ -35,7 +35,7 @@ for i in ls:
 		continue
 	tem = i.strip().split("\t")
 	if tem[0] in d:
-		f.write(">"+tem[1]+"\n"+d[tem[0]]+"\n")
+		f.write(">"+tem[1]+"\n"+"".join(d[tem[0]])+"\n")
 	else:
 		print(tem[0] + ": not in fasta file!")
 f.close()
