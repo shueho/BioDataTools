@@ -35,17 +35,18 @@ for i in lt:
 		d[i[1]] = []
 		d[i[1]].append(i[0])
 
-print(len(d))
+#print(len(d))
 del lt
 with open(parser.lis) as f:
 	ls = f.readlines()
 
 ls = [i.split(" ")[-1].strip().strip("]") for i in ls if "[" in i] 
 
-f = open("out_a.fasta","a")
+f = open("out_hap.fasta","w")
 for i in range(len(ls)):
 	for j in d.keys():
 		if ls[i] in d[j]:
 			f.write(">H%d\n%s\n"%(i+1,j))
 
 f.close()
+print("ok!")
