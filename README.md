@@ -86,7 +86,14 @@ TABLE：表格包含特征名称、组别和起始位置的表。第一列为基
 注意：如果序列中含有中间终止密码子慎用，并且如果不是+链编码的基因会提取到其反向互补序列。    
 ```python FeaturesBaseComponents.py example/all.fa example/matrix.txt```         
 ** 生成文件 1：** ex_seq.fasta (FASTA文件，提取到的小片段序列)           
-** 生成文件 2：** Base_composition.txt (表格ATGC的碱基占比)           
+** 生成文件 2：** Base_composition.txt (表格ATGC的碱基占比)       
+
+### 2.09 ExAndRename.py [MAP_FILE] [FASTA_FILE]      
+从fasta文件中提取部分序列，并对这些序列按照规则修改名称。适用于从全基因组序列中提取染色体并修改名称。     
+MAP_FILE：第一列是想要提取的序列名（>后第一个空格前的内容，如果没有空格是>后的内容 ），第二列是想要修改成的名称，如果第一列和第二列一样等同于代码2.06。
+FASTA_FILE：Fasta格式的序列文件，也就是包括所有序列的文件。           
+```python ExAndRename.py example/map.txt example/text.fa ```       
+** 生成文件:** subset_fasta.faa (FASTA文件，如果在map表存在多余的内容会有提示)             
 
 
 ## 3. Gadget     
@@ -174,7 +181,7 @@ GENE_KO：GENE-KO映射表，第一列是基因ID或名称，第二列为ko编�
 ### 3.08 read_goOBO.py [obo_FILE]      
 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格。      
 obo_FILE：网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 将网页另存为txt文件即可）。       
-** 生成文件 1:** output_\<your keg file name> (TABLE file)      
+** 生成文件 1:** go_term_list.txt (TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类)      
 
 ### 3.09 GenoSpider     
 基因组数据爬虫，详细说明待补充！       
