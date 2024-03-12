@@ -173,7 +173,8 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **脚本功能：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释。      
 **场景举例：** 有两个场景，一种是手动通过在线KEGG平台对序列进行注释以提取信息可以用到这个脚本；另一种则是自主下载所有KO编号对应的通路信息，随后自行进行注释和富集分析。第二个场景最为常用，比如你还可以下载老鼠的通路文件等。                 
 **KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg         
-> 你可以点击链接下载：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=       
+> 你可以点击链接下载：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=          
+
 **生成文件 1：** output_\<your keg file name> (TABLE file)   
 **生成文件 2：** ko_match_KO.txt (TABLE file)     
 **生成文件 3：** KO_map.txt (TABLE file)     
@@ -215,7 +216,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 ==============      
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
-**引用：没有文献可以引用，如果对您科研工作有用的话在，在心里夸夸我厉害就行。**            
+**引用：没有文献可以引用，如果对您科研工作有帮助的话，在心里夸夸我厉害就行。**            
     <a
     id="cy-effective-orcid-url"
     class="underline"
