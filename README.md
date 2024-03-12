@@ -45,7 +45,7 @@
 ### 2.03 gb_to_fasta.py   
 **脚本功能：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。       
 **参数说明：** 不需要配置参数。运行时，需要将该脚本放置在GB文件所在的目录中（推荐在1.02生成的output文件中）。      
-**生成文件:** output/\<FASTA_FILE_NAME>.fas (多个FASTA文件)   。 
+**生成文件：** output/\<FASTA_FILE_NAME>.fas (多个FASTA文件)   。 
 
 > 群体遗传学分析快速下载数据流程：比如要从NCBI下载特定物种的cox1基因，可以先创建一个文件夹，分别列出该物种不同个体的cox1基因的GI编号，并将每个物种的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的gb文件；再运行脚本2.02，依据isolate标签对下载的gb文件进行重命名；最后执行脚本2.03，从而生成以isolate为名称的最终fasta格式序列文件。这是快速整合其他研究群体遗传学分析结果的流程。                
        
@@ -215,7 +215,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 ==============      
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
-**引用：没有文献可以引用，如果对您科研工作有用的话在，在心里夸夸我厉害就行。**
+**引用：没有文献可以引用，如果对您科研工作有用的话在，在心里夸夸我厉害就行。**            
     <a
     id="cy-effective-orcid-url"
     class="underline"
