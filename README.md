@@ -200,13 +200,30 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **脚本功能：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。               
 **go_term_list：** 推荐是使用3.08脚本生成的go_term_list.txt文件。     
 **GENE_GO_MAP：** 第一列是基因名称，第二列是对应的GO号，注意你需要把注释原始数据格式转换为一一对应的格式。       
-**注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
+**注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过代码3.10（推荐）或者下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
 ```awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file```      
 **因为完整的GOterm表格很大，下面的示例用简化版的表格，实际使用时需要按照3.08生成表格文件。**         
 ```python getGOinfo.py example/go_term.txt example/gene_go.txt```      
 **生成文件：** gene_GO_info.txt（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。   
 
-### 3.10 GenoSpider     
+### 3.10 ConvertGene-GO.py [GENE_GOs_MAP]                 
+**脚本功能：** 转换注释表格。  
+从表格：    
+| Gene | GO Terms |            
+| GeneA | GO:000001, GO:000002 |      
+| GeneB | GO:000006 |      
+改写为：     
+| Gene | GO Term |            
+| --- | --- |      
+| GeneA	 | GO:000001 |      
+| GeneA	 | GO:000002 |      
+| GeneB	 | GO:000006 |      
+其中：原始表格不一定是逗号分隔，也可以是分号分隔或者可以包含多余的描述信息，或者是 GO:000001(描述信息), GO:000002(描述信息)  的格式。          
+**GENE_GOs_MAP：** 二列表格，第一列是基因名称，第二列是对应的许多GO号，每一行都是一对多的形式。           
+```python ConvertGene-GO.py example/seq_gos.txt```      
+**生成文件：** g-go.txt（TABLE文件，第一列是geneid，第二列是GOID）。   
+
+### 3.11 GenoSpider     
 **脚本功能：** 基因组数据爬虫，详细说明待补充！       
 
 
@@ -228,7 +245,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 ==============      
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
-**引用：没有文献可以引用，如果对您科研工作有帮助的话，在心里夸夸我厉害就行。**            
+**引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**            
     <a
     id="cy-effective-orcid-url"
     class="underline"
