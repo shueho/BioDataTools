@@ -73,8 +73,10 @@
 **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组的pep或者CDS序列。           
 **LIST_FILE：** 列表中应包含希望提取的序列编号或名称，这部分信息可以是FASTA_FILE中每条序列“>”符号后紧跟的整个描述字段，也可以只是该描述字段中的一部分内容。       
 **Regular_expressions：** 假如你的列表中的名称与FASTA文件序列名称有所不同，你可以指定正则表达式对序列进行提取。如果没有填写，默认为："\_(.*?)".，这意味着你将“>”之后第一个空格前的内容作为ID名称。       
-***如果你所需要提取的序列名称与fasta文件中序列标识符的格式完全一致，尤其是针对那些直接从NCBI下载的fasta文件，你可以直接运用：***        
+***如果你所需要提取的序列名称是第一个空格前的内容，尤其是针对那些直接从NCBI下载的fasta文件，你可以直接运用：***        
 ```python ExtractFasta.py example/text.fa example/list1.txt```      
+***！！！常用！如果你所需要提取的序列名称是>后的所有内容，你可以直接运用：***        
+```python ExtractFasta.py example/text2.fa example/list2.txt "\>(.*)"```      
 ***如果使用正则表达式提取：***      
 ```python ExtractFasta.py example/text.fa example/list2.txt "\_(.*?) " ```       
 **生成文件：** out_match_seq.fasta（FASTA文件）。                  
@@ -200,7 +202,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **GENE_GO_MAP：** 第一列是基因名称，第二列是对应的GO号，注意你需要把注释原始数据格式转换为一一对应的格式。       
 **注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
 ```awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file```      
-**因为完整的GOterm表格很大，下面的示例用简化版的表格，实际使用时需要按照3.08生成表格文件。** 
+**因为完整的GOterm表格很大，下面的示例用简化版的表格，实际使用时需要按照3.08生成表格文件。**         
 ```python getGOinfo.py example/go_term.txt example/gene_go.txt```      
 **生成文件：** gene_GO_info.txt（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。   
 
