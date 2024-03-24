@@ -224,9 +224,12 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 其中：原始表格不一定是逗号分隔，也可以是分号分隔或者可以包含多余的描述信息，或者是 GO:000001(描述信息), GO:000002(描述信息)  的格式。          
 **GENE_GOs_MAP：** 二列表格，第一列是基因名称，第二列是对应的许多GO号，每一行都是一对多的形式。           
 ```python ConvertGene-GO.py example/seq_gos.txt```      
-**生成文件：** g-go.txt（TABLE文件，第一列是geneid，第二列是GOID）。   
+**生成文件：** g-go.txt（TABLE文件，第一列是geneid，第二列是GOID）。     
 
-### 3.11 GenoSpider     
+> GO富集分析流程：当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.10转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.09为每个gene添加GO注释信息；④使用修改的R代码3
+11在R上运行得到关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。                
+       
+### 3.12 GenoSpider     
 **脚本功能：** 基因组数据爬虫，详细说明待补充！       
 
 
