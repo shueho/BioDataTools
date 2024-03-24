@@ -209,7 +209,8 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 ### 3.10 ConvertGene-GO.py [GENE_GOs_MAP]                 
 **脚本功能：** 转换注释表格。  
 从表格：    
-| Gene | GO Terms |            
+| Gene | GO Terms |          
+| --- | --- |      
 | GeneA | GO:000001, GO:000002 |      
 | GeneB | GO:000006 |      
 
