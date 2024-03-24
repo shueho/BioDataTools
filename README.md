@@ -214,7 +214,8 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 | GeneB	 | GO:000006 |    
   
 其中：原始表格不一定是逗号分隔，也可以是分号分隔或者可以包含多余的描述信息，比如： GO:000001(描述信息), GO:000002(描述信息)  的格式。          
-**GENE_GOs_MAP：** 二列表格，第一列是基因名称，第二列是对应的许多GO号，每一行都是一对多的形式。        s.txt```      
+**GENE_GOs_MAP：** 二列表格，第一列是基因名称，第二列是对应的许多GO号，每一行都是一对多的形式。     
+```python ConvertGene-GO.py example/seq_gos.txt```       
 **生成文件：** g-go.txt（TABLE文件，第一列是geneid，第二列是GOID）。     
       
 ### 3.10 getGOinfo.py [go_term_list] [GENE_GO_MAP]                 
