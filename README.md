@@ -196,7 +196,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 将网页另存为txt文件即可）。       
 **生成文件：** go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
   
-### 3.09 read_goOBO.py [go_term_list] [GENE_GO_MAP]                 
+### 3.09 getGOinfo.py [go_term_list] [GENE_GO_MAP]                 
 **脚本功能：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。               
 **go_term_list：** 推荐是使用3.08脚本生成的go_term_list.txt文件。     
 **GENE_GO_MAP：** 第一列是基因名称，第二列是对应的GO号，注意你需要把注释原始数据格式转换为一一对应的格式。       
