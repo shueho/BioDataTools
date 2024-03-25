@@ -200,14 +200,14 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件：** \<版本号\>_go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
           
 ### 3.09 ConvertGene-GO.py [GENE_GOs_MAP]                 
-**脚本功能：** 转换注释表格。  
-从表格：    
+**脚本功能：** 转换GO注释表格：  
+将表格：    
 | Gene | GO Terms |          
 | --- | --- |      
 | GeneA | GO:000001, GO:000002 |      
 | GeneB | GO:000006 |      
 
-改写为：     
+转换为：     
 | Gene | GO Term |            
 | --- | --- |      
 | GeneA	 | GO:000001 |      
