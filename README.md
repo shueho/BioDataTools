@@ -82,7 +82,7 @@
 **生成文件：** out_match_seq.fasta（FASTA文件）。                  
 
 ### 2.07 ProteinPropertyFromExpasy.py [FASTA_FILE]      
-**脚本功能：** 从Expasy（https://web.expasy.org/protparam）中批量获得蛋白质的理化性质。     
+**脚本功能：** 从Expasy（ https://web.expasy.org/protparam ）中批量获得蛋白质的理化性质。     
 **FASTA_FILE：** 提供蛋白质序列的fasta格式可以是多序列的文件。      
 ```python ProteinPropertyFromExpasy.py example/text.fa ```       
 **生成文件：** expasy_output.csv（TABLE file）。        
