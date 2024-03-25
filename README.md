@@ -192,11 +192,12 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件 5：** err.txt (There is no matching KO number. TABLE file)      
 
 ### 3.08 read_goOBO.py [obo_FILE]      
-**脚本功能：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格。      
-**obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 将网页CTRL+A全选CTRL+C复制，新建txt文件并打开CTRL+V粘贴）。       
-**比如你将网页复制到了abc.txt，你可以运行下方代码：**        
+**脚本功能：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格，你可以直接使用示例文件中的go_term_list.txt，要注意这个文件可能不是最新的版本，因此推荐使用该脚本提取最新的GO注释信息。           
+**obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 推荐打开网页后，右键，点击另存为，保存为文本文件） 。       
+**注意事项：** 由于网页加载可能不全因此不推荐将网页CTRL+A全选CTRL+C复制，新建txt文件并打开CTRL+V粘贴。      
+**比如你将网页复制或保存到了abc.txt，你可以运行下方代码：**        
 ```python read_goOBO.py abc.txt```   
-**生成文件：** go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
+**生成文件：** \<版本号\>_go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
           
 ### 3.09 ConvertGene-GO.py [GENE_GOs_MAP]                 
 **脚本功能：** 转换注释表格。  
@@ -224,8 +225,8 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **GENE_GO_MAP：** 推荐是3.09生成的文件，第一列是基因名称，第二列是对应的GO号。       
 **注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过代码3.09（推荐）或者下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
 ```awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file```      
-**因为完整的GOterm表格很大，下面的示例用简化版的表格，实际使用时需要按照3.08生成表格文件。**         
-```python getGOinfo.py example/go_term.txt example/gene_go.txt```      
+**使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。**             
+```python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt```      
 **生成文件：** gene_GO_info.txt（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。   
 
 > GO富集分析流程：当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.09转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.10为每个gene添加GO注释信息；④使用R包clusterProfiler 计算受关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。比较常见的富集结果（气泡图的横坐标）有基因比例（gene Ratio）、富集得分（enrichment score）和富集因子（rich factor），比如clusterProfiler计算得到的GeneRatio是20/100（表示100个关注基因富集到某术语20个gene），BgRatio是50/150（表示所有的150个基因富集到某术语50个gene）那么，基因比例即为20/100=0.20，富集得分为两个比例的比值即为(20/100)/(50/150)=0.6，富集因子是两个分子的比值即为20/50=0.4。注意如小鼠、人等模式生物，由于自己注释出的背景基因很可能不全面，因此推荐使用专门的富集网址或者富集工具包完成。    

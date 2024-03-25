@@ -14,9 +14,9 @@ ipath = sys.argv[1]
 import re
 with open(ipath) as f:
     t = f.read()
-
+ver = re.search("releases/(.*)",t)[1]
 ls = t.split("[Term]")
-f = open("go_term_list.txt","w")
+f = open(ver+"_go_term_list.txt","w")
 for i in ls:
     if "id: " in i:
         id_ = re.search("id: (.*?)\n",i)[1]
