@@ -172,19 +172,26 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件：** \<Split file number>_\<your fasta file name>（多个FASTA文件）。   
 
 ### 3.06 read_keg.py [KEG_FILE]   
-**脚本功能：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释。      
-**场景举例：** 有两个场景，一种是手动通过在线KEGG平台对序列进行注释以提取信息可以用到这个脚本；另一种则是自主下载所有KO编号对应的通路信息，随后自行进行注释和富集分析。第二个场景最为常用，比如你还可以下载老鼠的通路文件等。                 
-**KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg         
-> 你可以点击链接下载：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=          
+**脚本功能：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释时手动构建背景基因集。      
+**场景举例：** 通过本脚本你可以得到KEGG数据库每个ko或者每个物种的通路ID的简易化表格，①用于在KEGG在线注释网站得到的KEGG注释的解析；②用于解析KEGG通路数据库中模式生物或通用注释表的解析。                 
+**KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg或者人类KEG文件：hsa00001.keg。                
+> 你可以点击链接下载通用KEG文件：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=          
+将上述网址中的htext=ko00001中的ko替换为物种缩写可以下载特定物种的KEG文件，比如替换为hsa https://www.kegg.jp/kegg-bin/download_htext?htext=hsa00001&format=htext&filedir= 即是人类的KEG文件。         
+物种缩写你可以参照：  https://www.genome.jp/kegg/catalog/org_list.html   比如老鼠时mmu。
 
-**生成文件 1：** output_\<your keg file name> (TABLE file)   
-**生成文件 2：** ko_match_KO.txt (TABLE file)     
-**生成文件 3：** KO_map.txt (TABLE file)     
+**注意事项：** 在示例文件中有从KEGG网址下载的人类和通用keg文件，为保证数据库的最新建议手动下载。      
+**比如解析通用keg文件：**        
+```python read_keg.py example/ko00001.keg```          
+**比如解析人类keg文件：**        
+```python read_keg.py example/hsa00001.keg```          
+**生成文件 1：** output_\<你的keg文件名> (TABLE file)       
+**生成文件 2：** \<你的keg（物种缩写）\>_map.txt （表格文件，如果需要进行KEGG富集分析，你可以使用excel的Vlookup函数对完成背景基因文件）    
 
 ### 3.07 KEGG_pathway_geneNum.py [3.06_生成文件_1] [GENE_KO]    
 **脚本功能：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。    
 **3.06_ 生成文件_1：** 脚本3.06的生成文件。            
 **GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号，多个ko编号可以用逗号隔开，可参考示例文件。    
+```python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt```         
 **生成文件 1：** A.txt (all_gene is the total number of genes, and you can use this number to find the gene ratio. TABLE file)   
 **生成文件 2：** A-B.txt (TABLE file)   
 **生成文件 3：** A-C.txt (TABLE file)   

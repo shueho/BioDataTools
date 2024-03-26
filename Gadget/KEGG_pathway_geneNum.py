@@ -34,33 +34,36 @@ for i in ls:
     B[i[2]] = i[0] #B:A       
     C[i[4]] = i[2] #C:B
 
-    if i[6] not in D: #D:{C}
-        D[i[6]] = set()
-    D[i[6]].update((i[4],))
+    #if i[6] not in D: #D:{C}
+        #D[i[6]] = set()
+    #D[i[6]].update((i[4],))
 
 print("2/3: read match file and count gene number")
 err = []
 A_cout = dict()
 B_cout = dict()
 C_cout = dict()
-D_cout = dict()
+#D_cout = dict()
 with open(gene_vs_ko) as f:
     gk = f.readlines()
     gk = [i.strip().split("\t")[1].split(",") for i in gk if i.strip()]
 for i in gk:
-    t_set = set()
-    for d in i:
-        if d not in D_cout:
-            D_cout[d] = 0
-        D_cout[d] += 1
-        if d not in D:
-            err.append(d)
-        else:
-            t_set.update(D[d]) #{C}
-    tem = list(t_set)
+    #t_set = set()
+    #for d in i:
+        #if d not in D_cout:
+            #D_cout[d] = 0
+        #D_cout[d] += 1
+        #if d not in D:
+            #err.append(d)
+        #else:
+            #t_set.update(D[d]) #{C}
+    #tem = list(t_set)
 
     t_set = set()
-    for c in tem:
+    for c in i:
+        if c not in C:
+            err.append(c)
+            continue
         if c not in C_cout:
             C_cout[c] = 0
         C_cout[c] += 1
@@ -99,10 +102,10 @@ with open("A-C.txt","w") as f:
     for i in C_cout:
         f.write(all_d[B[C[i]]]+"\t"+all_d[C[i]]+"\t"+all_d[i]+"\t"+str(C_cout[i])+"\n")
 
-with open("D.txt","w") as f:
-    f.write("D\tnum\n")
-    for i in D_cout:
-        f.write(i+"\t"+str(D_cout[i])+"\n")
+#with open("D.txt","w") as f:
+    #f.write("D\tnum\n")
+    #for i in D_cout:
+        #f.write(i+"\t"+str(D_cout[i])+"\n")
 
 with open("err.txt","w") as f:
     f.write("\n".join(err))
