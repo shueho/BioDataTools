@@ -245,7 +245,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列格式修改：            
              
 | gene_id | ID | Description | GROUP |            
-| ... | ... | ... | ... |        
+| --- | --- | --- | --- |        
 | GeneA | GO:000001 | mitochondrion inheritance | biological_process |        
 | GeneA | GO:000002 | mitochondrial genome maintenance | biological_process |         
 | GeneB | GO:000006 | high-affinity zinc transmembrane transporter activity | molecular_function |        
@@ -254,7 +254,7 @@ GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列�
 > KEGG富集分析的文件需要按照下列格式修改可以使用代码3.05和EXCEL的vlookup函数生成该文件：           
                
 | gene_id | ID | Description | GROUP |            
-| ... | ... | ... | ... |        
+| --- | --- | --- | --- |        
 | GeneA | ko00010 | Glycolysis / Gluconeogenesis | Metabolism |        
 | GeneA | ko00020 | Citrate cycle (TCA cycle) | Metabolism |         
 | GeneB | ko04016 | MAPK signaling pathway - plant | Environmental Information Processing |        
