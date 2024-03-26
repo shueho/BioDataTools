@@ -10,7 +10,7 @@
 **生成文件：** sumary.tsv（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
       
 ### 1.02 fasta_rename.py [FASTA_FILE_PATH]   
-**脚本功能：** 在宏基因组或转录组项目中，当合并多个样品组装结果前，可使用该脚本将每个FASTA文件内的序列名称统一标准化，例如按照1、2、3等连续编号的方式重命名。这样，在进行基因丰度分析和注释之前，能确保合并后FASTA数据中每个序列的标识符唯一，进而便于后续识别差异基因并追溯到原始序列。
+**脚本功能：** 在宏基因组或转录组项目中，当合并多个样品组装结果前，可使用该脚本将每个FASTA文件内的序列名称统一标准化，例如按照1、2、3等连续编号的方式重命名。这样，在进行基因丰度分析和注释之前，能确保合并后FASTA数据中每个序列的标识符唯一，进而便于后续识别差异基因并追溯到原始序列。      
 **FASTA_FILE_PATH：** 指定需要重新编号其序列名称的FASTA文件的路径。    
 **生成文件：** out_\<your fasta file name>（FASTA文件，将输入文件的序列名称重新命名）。    
          
@@ -177,7 +177,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg或者人类KEG文件：hsa00001.keg。                
 > 你可以点击链接下载通用KEG文件：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=          
 将上述网址中的htext=ko00001中的ko替换为物种缩写可以下载特定物种的KEG文件，比如替换为hsa https://www.kegg.jp/kegg-bin/download_htext?htext=hsa00001&format=htext&filedir= 即是人类的KEG文件。         
-物种缩写你可以参照：  https://www.genome.jp/kegg/catalog/org_list.html   比如老鼠时mmu。
+物种缩写你可以参照：  https://www.genome.jp/kegg/catalog/org_list.html   比如老鼠的缩写是mmu。
 
 **注意事项：** 在示例文件中有从KEGG网址下载的人类和通用keg文件，为保证数据库的最新建议手动下载。      
 **比如解析通用keg文件：**        
@@ -185,17 +185,16 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **比如解析人类keg文件：**        
 ```python read_keg.py example/hsa00001.keg```          
 **生成文件 1：** output_\<你的keg文件名> (TABLE file)       
-**生成文件 2：** \<你的keg（物种缩写）\>_map.txt （表格文件，如果需要进行KEGG富集分析，你可以使用excel的Vlookup函数对完成背景基因文件）    
+**生成文件 2：** \<你的keg前缀（物种缩写）\>_map.txt （表格文件，如果需要进行KEGG富集分析，你可以使用excel的Vlookup函数对完成背景基因文件）    
 
 ### 3.07 KEGG_pathway_geneNum.py [3.06_生成文件_1] [GENE_KO]    
 **脚本功能：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。    
 **3.06_ 生成文件_1：** 脚本3.06的生成文件。            
-**GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号，多个ko编号可以用逗号隔开，可参考示例文件。    
+**GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号（或其他通路编号），多个ko编号可以用逗号隔开，可参考示例文件。    
 ```python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt```         
 **生成文件 1：** A.txt (all_gene is the total number of genes, and you can use this number to find the gene ratio. TABLE file)   
 **生成文件 2：** A-B.txt (TABLE file)   
 **生成文件 3：** A-C.txt (TABLE file)   
-**生成文件 4：** D.txt (TABLE file)   
 **生成文件 5：** err.txt (There is no matching KO number. TABLE file)      
 
 ### 3.08 read_goOBO.py [obo_FILE]      
@@ -236,9 +235,36 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 ```python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt```      
 **生成文件：** gene_GO_info.txt（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。   
 
-> GO富集分析流程：当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.09转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.10为每个gene添加GO注释信息；④使用R包clusterProfiler 计算受关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。比较常见的富集结果（气泡图的横坐标）有基因比例（gene Ratio）、富集得分（enrichment score，又称fold enrichment富集倍率）和富集因子（rich factor），比如clusterProfiler计算得到的GeneRatio是20/100（表示100个关注基因富集到某术语20个gene），BgRatio是50/150（表示所有的150个基因富集到某术语50个gene）那么，基因比例即为20/100=0.20，富集得分为两个比例的比值即为(20/100)/(50/150)=0.6，富集因子是两个分子的比值即为20/50=0.4。注意如小鼠、人等模式生物，由于自己注释出的背景基因很可能不全面，因此推荐使用专门的富集网址或者富集工具包完成。    
+> 无参GO富集分析流程：当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.09转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.10为每个gene添加GO注释信息；④使用R包clusterProfiler 计算受关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。比较常见的富集结果（气泡图的横坐标）有基因比例（gene Ratio）、富集得分（enrichment score，又称fold enrichment富集倍率）和富集因子（rich factor），比如clusterProfiler计算得到的GeneRatio是20/100（表示100个关注基因富集到某术语20个gene），BgRatio是50/150（表示所有的150个基因富集到某术语50个gene）那么，基因比例即为20/100=0.20，富集得分为两个比例的比值即为(20/100)/(50/150)=0.6，富集因子是两个分子的比值即为20/50=0.4。注意如小鼠、人等模式生物，由于自己注释出的背景基因很可能不全面，因此推荐使用专门的富集网站或者富集工具包完成。    
 
->KEGG富集分析流程与GO富集类似，也需要获得关注基因和背景基因注释表，不过差别是注释表不同。                  
+> 无参KEGG富集分析流程与GO富集类似，也需要获得关注基因和背景基因注释表，不过差别是注释表不同。           
+
+```    
+#富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分。      
+
+library(clusterProfiler)        
+#读取手动准备好的背景基因集
+gene_ID <- read.delim('gene_GO.txt', stringsAsFactors = FALSE)
+#读取基因列表文件中的基因名称
+genes <- read.delim('gene.txt', stringsAsFactors = FALSE)$gene_id
+#GO/KEGG 富集分析
+gene_rich <- enricher(gene = genes,  #待富集的基因列表
+    TERM2GENE = gene_ID[c('ID', 'gene_id')],  #背景基因集
+    TERM2NAME = gene_ID[c('ID', 'Description')], 
+    pAdjustMethod = 'BH',  #指定 p 值校正方法
+        pvalueCutoff = 0.05,  #指定 p 值阈值（可指定 1 以输出全部）
+    qvalueCutoff = 0.2)  #指定 q 值阈值（可指定 1 以输出全部）
+#输出富集结果
+write.table(gene_rich, 'gene_rich.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+#再把 GO Ontology或KEGG levelA 信息添加在上述富集结果中
+tmp <- read.delim('gene_rich.txt')
+gene_ID <- gene_ID[!duplicated(gene_GO$ID), ]
+tmp <- merge(tmp, gene_GO[c('ID', 'GROP')], by = 'ID')
+tmp <- tmp[c(10, 1:9)]
+tmp <- tmp[order(tmp$pvalue), ]
+#输出
+write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+```       
        
 ### 3.11 GenoSpider     
 **脚本功能：** 基因组数据爬虫，详细说明待补充！       
