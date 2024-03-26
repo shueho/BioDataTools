@@ -242,8 +242,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 
 > **文件1 背景基因注释分组文件 gene_ID.txt**    
 第一列是gene或蛋白质的名称（可以不唯一）；第二列是GO号或ko号；第三列是描述信息，对于GO富集分析是GO术语的详细解释（level2），对于KEGG分析是levelC的描述信息；第四列是分组信息，对于GO是指GO的三大类，对于KEGG可以选择levelC所属的levelA或levelB的描述信息。       
-GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列格式修改：            
-             
+GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列格式修改：                       
 | gene_id | ID | Description | GROUP |            
 | --- | --- | --- | --- |        
 | GeneA | GO:000001 | mitochondrion inheritance | biological_process |        
@@ -251,8 +250,7 @@ GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列�
 | GeneB | GO:000006 | high-affinity zinc transmembrane transporter activity | molecular_function |        
 | ... | ... | ... | ... |        
                 
-> KEGG富集分析的文件需要按照下列格式修改可以使用代码3.05和EXCEL的vlookup函数生成该文件：           
-               
+> KEGG富集分析的文件需要按照下列格式修改可以使用代码3.05和EXCEL的vlookup函数生成该文件：                         
 | gene_id | ID | Description | GROUP |            
 | --- | --- | --- | --- |        
 | GeneA | ko00010 | Glycolysis / Gluconeogenesis | Metabolism |        
@@ -262,7 +260,6 @@ GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列�
           
 > **文件2 关注的基因（差异基因/特异基因/正选择基因等）列表 gene.txt**      
 至少有一列是以gene_id为列名的列，注意该列不得有重复的基因，否则计算将错误。       
-   
 | gene_id |                   
 | --- |           
 | GeneA |     
