@@ -2,12 +2,12 @@
 # _*_ coding:utf-8 _*_
 #
 # @Version : 1.0
-# @Time    : 2024/4/3 23:00
+# @Time    : 2024/4/4 19:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : BatchFastaToPam.py
+# @File    : Extract4DTv.py
 #
-# The aligned protein sequences were converted to DNA sequences in batches.
+# Batch extraction of 4DTv sites.
 
 import argparse
 
@@ -32,7 +32,7 @@ p_list = os.listdir(pepdir)
 p_list = [i for i in p_list if "."+suffix_p in i]
 
 try:
-    os.makedirs("output")
+    os.makedirs("4dtv")
 except:
     pass
 #Read the codon table.
@@ -65,12 +65,10 @@ for i in aa_cod:
 with open(mappath) as f:
     tem = f.readlines()
 name_map = dict()
-seq_map = dict()
 for i in tem:
     if i.strip():
         t = i.strip().split("\t")
         name_map[t[0]] = t[1]
-        seq_map[t[1]] = t[0]#.split("_")[0]
 
 def readfasta(path):
     with open(path) as f:
@@ -117,12 +115,12 @@ def processing(item):
     for i in pep:
         tem = pep[i].replace("-","").rstrip("*")
         if "N" in cds[name_map[i]]:
-            with open("err_cds.txt","a") as f:
+            with open("err_4dtv.txt","a") as f:
                 f.write(item + "\tThere is N in the CDS.\n")
             return None
         tem2 = translation(cds[name_map[i]])
         if not tem2:
-            with open("err_cds.txt","a") as f:
+            with open("err_4dtv.txt","a") as f:
                 f.write(item + "\tThe CDS is not a multiple of 3.\n")
             return None
         if "*" == tem2[-1]:
@@ -130,22 +128,41 @@ def processing(item):
             tem2 = tem2[:-1]
         #assert "*" not in tem2
         if tem2 != tem:
-            with open("err_cds.txt","a") as f:
+            with open("err_4dtv.txt","a") as f:
                 f.write(item + "\tSequence mismatch\n")
             return None
         if "*" in tem2:
             print(item,i)
         finseq[name_map[i]] = Reverse_translation(cds[name_map[i]],pep[i])
     return finseq
-       
+
+def get4dtv(dic):
+    nu = set()
+    for i in dic:
+        tem = dic[i]
+        le = len(tem)//3
+        for j in range(le):
+            if tem[j*3:j*3+3] in fdtv:
+                nu.add(j*3+fdtv[tem[j*3:j*3+3]]-1)
+    nu = list(nu)
+    nu.sort()
+    fi = dict()
+    for i in nu:
+        for j in dic:
+            if j not in fi:
+                fi[j] = ""
+            fi[j] += dic[j][i]
+    return fi
+        
 def main():
     for i in p_list:
         d = processing(i)
         if not d:
             continue
-        with open("output/"+i,"w") as f:
-            for j in d:
-                f.write(">"+seq_map[j]+"\n"+d[j]+"\n")
+        F = get4dtv(d)
+        with open("4dtv/"+i,"w") as f:
+            for j in F:
+                f.write(">"+j+"\n"+F[j]+"\n")
 
 main()
         
