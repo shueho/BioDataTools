@@ -103,8 +103,45 @@
 **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组fa文件、pep或者CDS序列。             
 ```python ExAndRename.py example/map.txt example/text.fa ```       
 **生成文件：** subset_fasta.faa（FASTA文件，如果在map表存在多余的内容会有提示）。              
+       
+### 2.10 BatchFastaToPam.py [FASTA_FILE_DIR]         
+**脚本功能：** 批量将比对过的fasta文件转换为paml比对文件。     
+**FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要转换的fasta格式的比对文件。            
+**注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！                       
+```python BatchFastaToPam.py example/ali_fasta```          
+**生成文件：** pamlfile (文件夹，其中包含需要转换的fasta文件名+pam后缀)       
 
+### 2.11 ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]        
+**脚本功能：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。       
+**使用场景：** 单拷贝同源基因每个基因家族的序列提取。       
+**IN_FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要重新分配的fasta格式序列文件，可以是DNA、CDS、转录本、蛋白质或其他序列。            
+**MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一行的第一个项目是新分配后的文件名，其余位置是该文件中包含的序列名称。      
+**OUT_FASTA_FILE_DIR：** 文件夹路径名，输出路径。             
+**注意事项：** 索引表格一定要包含标题行，可以是标准的同行数同列数的矩阵，但不强制要求。                       
+```python ReassignSequence.py example/ali_fasta example/seq_matrix.txt out```          
+**生成文件：** \<OUT_FASTA_FILE_DIR\> (文件夹，其中包含重新分配后的序列)       
 
+### 2.12 BatchAlignedProteinToDNA.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
+**脚本功能：** 批量将比对过的蛋白质序列转换为DNA序列。      
+**场景举例：** 通过OrthoFinder软件对多个物种的同源基因家族进行搜索期间会在Single_Copy_Orthologue_Sequences目录生成单拷贝正交基因蛋白序列的比对文件，从NCBI等数据库下载CDS序列（CDS序列编号和蛋白序列编号是相同的），使用脚本2.09提取蛋白序列对应的CDS序列（未比对），。    
+**注意事项：** 参数说明如下！**   
+```options:
+  -h, --help            显示帮助信息
+  -c CODON, --codon 密码子表文件，第一列为氨基酸单字母缩写，第二列是
+                        Codon Table File.
+  -m MAPFILE, --mapfile MAPFILE
+                        Protein Sequence Names and their Corresponding CDS Sequence Names Table.
+  -p PEP, --pep PEP     Directory containing Protein Sequences.
+  -C CDS, --cds CDS     Directory containing CDS Sequences.
+  -s SUFFIX_P, --suffix_p SUFFIX_P
+                        Protein sequence file extensions.
+  -S SUFFIX_C, --suffix_c SUFFIX_C
+                        CDS sequence file extensions.       
+```                  
+```python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0```          
+**生成文件：** count_Map.txt（TABLE file）。      
+  
+  
 ## 3. Gadget     
 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。         
 
@@ -299,7 +336,7 @@ tmp <- tmp[order(tmp$pvalue), ]
 #输出
 write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
 ```       
-       
+
 ### 3.11 GenoSpider     
 **脚本功能：** 基因组数据爬虫，详细说明待补充！       
 
