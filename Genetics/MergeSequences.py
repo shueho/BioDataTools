@@ -1,9 +1,21 @@
+#!/usr/bin/env python
+# _*_ coding:utf-8 _*_
+#
+# @Version : 1.0
+# @Time    : 2024/4/3 23:00
+# @Author  : Hao Xue
+# @E-mail  : studid@163.com
+# @File    : MergeSequences.py
+#
+# Merge sequences.
 
+import sys
 
 import os
 
-mpath = "../pro_matrix.txt"
-p = os.listdir("4dtv")
+mpath = sys.argv[1]#"../pro_matrix.txt"
+dirpath = sys.argv[2]
+p = os.listdir(dirpath)
 
 with open(mpath) as f:
     ls = f.readlines()
@@ -27,18 +39,26 @@ def readfasta(path):
 
 ad = dict()
 for i in p:
-    ad.update(readfasta("4dtv/"+i))
+    ad.update(readfasta(dirpath+"/"+i))
 fia = dict()
 for i in sam:
     fia[i] = ""
-
-for i in d:
+if len(sys.argv) > 3:
+	with open(sys.argv[3]) as f:
+		order = f.readlines()
+	order = [i.strip() for i in order if i.strip()]
+else:
+	order = list(d.keys())
+f = open("order.true","w")
+for i in order:
+    f.write(i+"\n")
     for j in range(len(sam)):
         if d[i][j] in ad:
             fia[sam[j]] += ad[d[i][j]]
-
-f = open("4dtv.fasta","w")
+f.close()
+f = open(os.path.basename(dirpath)+".fasta","w")
 for i in fia:
     f.write(">"+i+"\n"+fia[i]+"\n")
 f.close()
+print("ok!")
 

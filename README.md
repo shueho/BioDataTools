@@ -51,7 +51,7 @@
        
 ### 2.04 Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]    
 ***过时代码***     
-**脚本功能：** 合并序列的低级版本，后续会提供该脚本的进阶版本。      
+**脚本功能：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。      
 **FASTA_FILE_1：** 第一个序列。       
 **FASTA_FILE_2：** 第二个序列。    
 **场景举例：** 假设你有来自样本A、B和C的16S和COI序列，出于某种目的，你想要结合来自不同样本的16S和COI序列。您可以使用这个脚本。      
@@ -109,11 +109,11 @@
 **FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要转换的fasta格式的比对文件。            
 **注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！                       
 ```python BatchFastaToPam.py example/ali_fasta```          
-**生成文件：** pamlfile (文件夹，其中包含需要转换的fasta文件名+pam后缀)       
+**生成文件：** pamlfile (文件夹，其中包含需要转换的fasta文件名+pam后缀) 。      
 
 ### 2.11 ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]        
 **脚本功能：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。       
-**使用场景：** ①单拷贝同源基因每个基因家族的序列提取过程中，将下载的CDS序列按照基因家族分组将CDS分别归属到新的不同的文件中，用于后续CDS和蛋白质序列的匹配，矩阵文件是Orthogroups/Orthogroups.tsv（MATRIX_FILE），你只需要从NCBI下载每个物种的fna文件（重要：需要使用cut命令分列并保留第一列，使得每个序列的名称只包含ID号！）放置在同一文件夹中（IN_FASTA_FILE_DIR），然后指定输出文件就可以将不同物种的CDS文件分配到已基因家族名称命名的fasta文件中；②提取同一基因家族的基因进行合并分析。       
+**使用场景：** ①单拷贝同源基因每个基因家族的序列提取过程中，将下载的CDS序列按照基因家族分组将CDS分别归属到新的不同的文件中，用于后续CDS和蛋白质序列的匹配，矩阵文件是Orthogroups/Orthogroups.tsv（MATRIX_FILE，可以参照示例文件example/seq_matrix2.txt），你只需要从NCBI下载每个物种的fna文件（重要：需要使用cut命令分列并保留第一列，使得每个序列的名称只包含ID号！）放置在同一文件夹中（IN_FASTA_FILE_DIR），然后指定输出文件就可以将不同物种的CDS文件分配到已基因家族名称命名的fasta文件中；②提取同一基因家族的基因进行合并分析。       
 **IN_FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要重新分配的fasta格式序列文件，可以是DNA、CDS、转录本、蛋白质或其他序列。            
 **MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一行的第一个项目是新分配后的文件名，其余位置是该文件中包含的序列名称。      
 **OUT_FASTA_FILE_DIR：** 文件夹路径名，输出路径。             
@@ -133,7 +133,7 @@
   -s SUFFIX_P, --suffix_p 蛋白质序列的扩展名，即蛋白质序列文件最后的.后的内容，默认是fa。
   -S SUFFIX_C, --suffix_c CDS序列的扩展名，即CDS序列文件最后的.后的内容，默认是fna。
 ```         
-**注意事项：** 由软件自动生成的SequenceIDs.txt需要手动按照冒号和空格分列，删除多余的部分，详细可以查看示例文件**            
+**注意事项：** 由软件自动生成的SequenceIDs.txt需要手动按照冒号和空格分列，删除多余的部分，详细可以查看示例文件            
 ```python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"```          
 **生成文件 1：** output（文件夹，用于存放比对过的CDS序列，运行上述命令生成的文件参考example/output）。      
 **生成文件 2：** err_cds.txt（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。      
@@ -141,10 +141,42 @@
 ### 2.13 Extract4DTv.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
 **脚本功能：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。      
 **场景举例：** 同源基因建树。      
-**注意事项：** 所有参数均与脚本2.12一致，代码内容其实差不多，只是生成的文件名称不同。**            
+**注意事项：** 所有参数均与脚本2.12一致，代码内容其实差不多，只是生成的文件名称不同。            
 ```python Extract4DTv.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"```          
 **生成文件 1：** 4dtv（文件夹，用于存放提取到的4DTv位点，运行上述命令生成的文件参考example/4dtv）。      
 **生成文件 2：** err_4dtv.txt（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。      
+  
+### 2.14 MergeSequences.py [MATRIX_FILE] [FASTA_FILE_DIR] [SUFFIX] [ORDER_LIST（可选参数）]      
+**脚本功能：** 进阶版合并序列脚本。     
+**MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一列是一个样品，每一行的第一个项目是对应的序列名称（fasta文件名,不包含后缀），行和列可以确定每个样品对应序列的序列名称。            
+**FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要合并的fasta格式的比对文件，文件名没有要求，只要包含MATRIX_FILE中所有序列名即可。            
+**ORDER_LIST：** 指定连接顺序，通过指定连接顺序既可以排除某个序列，也可以指定连接顺序，如果不指定则默认按照序列名称的哈希值为序全部连接。            
+**注意事项：** 文件夹中不能包含未比对的序列文件，可能会发生连接错误！         
+***运行下列代码将不指定顺序全连接。***               
+```python MergeSequences.py example/seq_matrix2.txt example/4dtv```          
+***若指定连接顺序运行下列代码。***              
+```python MergeSequences.py example/seq_matrix2.txt example/4dtv example/order.txt```          
+**生成文件 1：** <FASTA_FILE_DIR的名称>.fasta （FASTA文件，每个序列名称为第一行的样品名称）。      
+**生成文件 2：** order.true （实际合并顺序）。      
+
+> 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。     
+。               
+
+### 2.15 BatchGenerationCodeML_CTL.py [PAML_FILE_DIR] [TREE_FILE]         
+**脚本功能：** 批量生成CodeML的配置文件。           
+**PAML_FILE_DIR：** PAML格式的比对文件所在目录，在运行本脚本时要求目录中必须含有需要进行选择压力分析的比对文件，并且尽量不使用相对路径，否则将无法读取需要比对文件路径。            
+**TREE_FILE：** 树文件路径（相对于CodeML运行时的路径），不要求在本脚本运行时该文件存在，但是务必要保证在运行CodeML程序时程序可以读取到该路径。          
+**注意事项：** 本脚本只是生成配置文件，请务必注意脚本导入树文件路径并不是CodeML程序运行时树文件路径！配置文件模板选择的是Branch model模型，如果有其他需求可以直接修改配置文件。                           
+```python BatchGenerationCodeML_CTL.py example/paml_file "./out/a.tree"```          
+**生成文件 1：** codemlnull (文件夹，基于无效假设的配置文件） 。            
+**生成文件 1：** codeml2 (文件夹，基于替代假设的配置文件） 。            
+
+### 2.16 ParsingCodeMLResults.py [MOD0_DIR] [MOD2_DIR]         
+**脚本功能：** 批量生成CodeML的配置文件，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。           
+**MOD0_DIR：** 基于无效假设生成的结果。            
+**MOD2_DIR：** 基于替代假设生成的结果。            
+```python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2```          
+**生成文件：** result.txt (表格，可能需要手动整理） 。            
   
   
 ## 3. Gadget     
@@ -180,7 +212,7 @@
 ### 3.04 CountByGroup.py [-h] [-a MAPA] [-b MAPB] [-k KEA] [-K KEB] [-v VAA] [-V VAB] [-s SEA] [-S SEB] [--seka SEKA] [--sekb SEKB] [--seva SEVA] [--sevb SEVB] [-n HEADA] [-N HEADB]         
 **脚本功能：** 针对具有三层映射关系A-B-C的数据结构，任务是在A层中寻找关联到C层的所有元素，并统计这些元素的数量。      
 **场景举例：** 比如在生物过程中包括三个GO术语，这三个术语之间存在交集基因，你想统计生物过程下一共的基因数目（去重的）。    
-**注意事项：** -a和-b参数是必需的，其他参数都有默认值！**   
+**注意事项：** -a和-b参数是必需的，其他参数都有默认值！    
 ```options:
   -h, --help            show this help message and exit
   -a MAPA, --mapa MAPA  The path of the large group map. 
