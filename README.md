@@ -159,8 +159,6 @@
 **生成文件 1：** <FASTA_FILE_DIR的名称>.fasta （FASTA文件，每个序列名称为第一行的样品名称）。      
 **生成文件 2：** order.true （实际合并顺序）。      
 
-> 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。         
-
 ### 2.15 BatchGenerationCodeML_CTL.py [PAML_FILE_DIR] [TREE_FILE]         
 **脚本功能：** 批量生成CodeML的配置文件。           
 **PAML_FILE_DIR：** PAML格式的比对文件所在目录，在运行本脚本时要求目录中必须含有需要进行选择压力分析的比对文件，并且尽量不使用相对路径，否则将无法读取需要比对文件路径。            
@@ -171,13 +169,27 @@
 **生成文件 1：** codeml2 (文件夹，基于替代假设的配置文件） 。            
 
 ### 2.16 ParsingCodeMLResults.py [MOD0_DIR] [MOD2_DIR]         
-**脚本功能：** 批量生成CodeML的配置文件，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。           
+**脚本功能：** 批量解析CodeML结果，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。           
 **MOD0_DIR：** 基于无效假设生成的结果。            
 **MOD2_DIR：** 基于替代假设生成的结果。            
 ```python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2```          
 **生成文件：** result.txt (表格，可能需要手动整理） 。            
 
-### 2.17 BaseSiteInformation.py [GFF_FILE] [Q_FILE]         
+> 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。         
+
+### 2.17 SplitAXT.py [AXT_FILE]     
+**脚本功能：** 将单个AXT格式文件拆分为多个AXT文件，使得每个文件中只包含一对序列比对。   
+**场景举例：** 脚本2.12生成的密码子比对文件后，如果需要进一步进行4dtv分析，需要使用摘抄代码convert_fasta_to_axt.pl（做了适应性修改）将其转换为AXT文件，本脚本可以把上述代码生成的AXT文件按照序列对进行拆分。           
+**AXT_FILE：** 需要拆分的AXT文件。            
+**注意事项：** 本脚本只支持序列对名称中含有数字的AXT文件。                           
+```python SplitAXT.py example/test.axt```          
+***有时你也许需要批处理。***               
+```for i in `ls *axt`;do python SplitAXT.py $i ;done```          
+**生成文件：** \<序列对\>.axt-split (多个axt文件） 。          
+
+> 你可以参考 https://yanzhongsino.github.io/2022/09/07/bioinfo_Ks_batch.calculation.Ks 来计算 Ka、Ks和4dtv值，由于calculate_4DTV_correction.pl脚本只支持一对序列的4dtv计算，因此可以使用脚本2.17对AXT文件进行拆分。                 
+
+### 2.18 BaseSiteInformation.py [GFF_FILE] [Q_FILE]         
 **脚本功能：** 根据指定染色体位置及碱基位点信息，抽取相应的基因数据，比如位点在哪一个转录本上的哪一个CDS区间中，以及CDS或转录本的位置信息，方便后续注释分析。           
 **场景举例：** 通过随机森林等算法找到不同种群或不同品种的变异位点，需要定位到该位点所在基因。          
 **GFF_FILE：** 基因组GFF文件，只需要保留mRNA和CDS特征，并且每个mRNA需要位于其包含CDS特征的上方，可以选择在运行代码前手动将GFF文件排序！                 
