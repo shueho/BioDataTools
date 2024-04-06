@@ -196,6 +196,19 @@
 **Q_FILE：** 查找的条目表格，需要包括标题行，至少包含两列：第一列必须是染色体编号，第二列是对应于染色体上的位置。            
 ```python BaseSiteInformation.py example/genome.gene.gff example/base_loc.txt```          
 **生成文件：** out_<Q_FILE>.xls (表格，第一、四列为基因名称，第二列是是否为CDS区域CDS/noCDS，第三列为CDS的起始终止位置以及ORF起始位点，第五列是染色体ID，然后是基因起始位置、得分以及基因CDS数目） 。            
+
+### 2.19 MaskSeq.py [FASTA_FILE] [TABLE_FILE] [TARG 可选参数]       
+***待优化！***       
+**脚本功能：** 对Fasta文件中的某些区间进行屏蔽（替换为TARG）。           
+**场景举例：** 基因组分析中对基因组的一些序列（比如重复序列）进行屏蔽（ mask）以节约分析过程的算力。          
+**FASTA_FILE：** Fasta文件，里边包含许多序列，对于基因组来说其中包括许多染色体序列，>后边的内容为序列名称。                        
+**TABLE_FILE：** 三列表格，不需要包括标题行，第一列是序列名称（注意和fasta文件名称完全一致），第二、三列分别是屏蔽起始和终止位置（从1开始计数，可以从gff文件中直接复制）。            
+**TARG：** 默认是将指定位置的碱基替换为N，你也可以指定替换的字符。         
+***默认替换为N。***                          
+```python MaskSeq.py example/Chr.fa example/masktbl.txt```          
+***默认替换为?。***                          
+```python MaskSeq.py example/Chr.fa example/masktbl.txt "?"```          
+**生成文件：** maskseq_\<FASTA_FILE> (屏蔽部分序列的FASTA文件） 。   
   
   
 ## 3. Gadget     
