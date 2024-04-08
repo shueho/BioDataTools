@@ -16,7 +16,7 @@ masktbl = sys.argv[2]
 targ = "N"
 if len(sys.argv) > 3:
 	targ = sys.argv[3]
-
+assert len(targ) == 1
 def readfasta(path):
     with open(path) as f:
         tem = f.readlines()

@@ -81,6 +81,8 @@ def get_seq(file_name):
     with open(file_name,"r",encoding="utf-8") as f:
         text_lis = f.readlines()
     for i in text_lis:
+        if not i.strip():
+            continue
         if i.strip()[0] == ">":
             seqId = i.strip().split(" ")[0].strip(">")
             d[seqId] = ""
@@ -105,7 +107,7 @@ def main():
             except:
                 with open("expasy_output.csv","a") as f:
                     f.write("error!\n")
-                print("{}:error!".fomat(item))
+                print("{}:error!".format(item))
         flag += 1
 
 main()

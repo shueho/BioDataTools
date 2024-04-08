@@ -203,12 +203,25 @@
 **场景举例：** 基因组分析中对基因组的一些序列（比如重复序列）进行屏蔽（ mask）以节约分析过程的算力。          
 **FASTA_FILE：** Fasta文件，里边包含许多序列，对于基因组来说其中包括许多染色体序列，>后边的内容为序列名称。                        
 **TABLE_FILE：** 三列表格，不需要包括标题行，第一列是序列名称（注意和fasta文件名称完全一致），第二、三列分别是屏蔽起始和终止位置（从1开始计数，可以从gff文件中直接复制）。            
-**TARG：** 默认是将指定位置的碱基替换为N，你也可以指定替换的字符。         
+**TARG：** 屏蔽字符，将指定部分碱基替换为该字符，默认是将指定位置的碱基替换为N，你也可以指定替换的字符。         
 ***默认替换为N。***                          
 ```python MaskSeq.py example/Chr.fa example/masktbl.txt```          
-***默认替换为?。***                          
+***替换为?。***                          
 ```python MaskSeq.py example/Chr.fa example/masktbl.txt "?"```          
-**生成文件：** maskseq_\<FASTA_FILE> (屏蔽部分序列的FASTA文件） 。   
+**生成文件：** maskseq_\<FASTA_FILE> (屏蔽部分序列的FASTA文件） 。    
+
+### 2.20 BaseCompositionCalculation.py [FASTA_FILE] [TER_CODE 可选参数]       
+**脚本功能：** 计算CDS序列中各个序列的各个位点的碱基数目，如A1、T1、G1、G3等。           
+**场景举例：** 进行密码子偏好分析时需要获取GC12和GC3等参数可以通过本脚本结果进一步计算。          
+**FASTA_FILE：** Fasta文件，里边包含许多序列，要求是核酸序列。                        
+**TER_CODE：** 终止密码子列表，默认是标准密码子表的TAG,TAA,TGA，如果需要指定，需要保证每个终止密码子之间用半角英文逗号隔开且不含有过多空白，如果你希望统计到终止密码子你可以输入NNN。         
+***默认去除标准终止密码：***                          
+```python BaseCompositionCalculation.py example/base_cds.fa```          
+***希望统计到终止密码：***                          
+```python BaseCompositionCalculation.py example/base_cds.fa NNN```          
+***自定义终止密码：***                          
+```python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA```          
+**生成文件：** BaseComposition.txt (表格文件，包括各个位点的碱基数目，最后一列是碱基总数） 。   
   
   
 ## 3. Gadget     
