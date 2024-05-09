@@ -7,7 +7,7 @@
 ### 1.01 get_sum.py [DIR_PATH]    
 **脚本功能：** 用于整合多样本组装评估结果（Quast软件所生成的组装评估结果），得到组装评估信息汇总表。           
 **DIR_PATH：** Quast软件所生成的组装评估结果所在目录的路径，该路径下有不同样本的组装评估结果。    
-***比如在example/quast文件下存放了各个样品（sp1-3）的Quast评估结果，即sp1-3文件夹下都存在“transposed_report.tsv”文件，即可运行下述代码：***        
+***比如在example/quast文件下存放了各个样品（sp1-3）的Quast评估结果，即sp1-3文件夹下都存有“transposed_report.tsv”文件（也包括其他文件，示例文件中未包含），即可运行下述代码：***        
 ```python get_sum.py example/quast```      
 **生成文件：** sumary.tsv（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
       
@@ -28,6 +28,17 @@
 **MPA_MERGE_FILE：** 由1.03 mergeMpa.py脚本生成的mpaMatrix.txt文件的路径。         
 **SPLIT_LEVEL：** 需要输出物种丰度表的分类阶元，可按照界、门、纲、目、科、属、种的首字母标识，分别用"a"（表示所有类别丰度表都输出）、"k"（Kingdom 只输出界水平丰度表）、"p"（Phylum 只输出门水平丰度表）、"c"（Class 只输出纲水平丰度表）、"o"（Order 只输出目水平丰度表）、"f"（Family 只输出科水平丰度表）、"g"（Genus 只输出属水平丰度表）和"s"（Species 输出每一个物种的丰度表）或其对应的大写字母进行选择。输入字母"a"则表示生成包括所有分类级别的丰度表。       
 **生成文件：** taxLevel_\<uppercase letter of level>_output.\<mpaMatrix file name>（一个或多个TABLE 文件）。       
+
+> 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
+  
+```kraken2 --db database_PATH	  --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output```           
+> 随后使用bracken将report文件转换为bracken文件。    
+    
+```bracken -d database_PATH（数据库路径）  -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report```     
+> 使用kreport2mpa.py得到mpa文件。    
+    
+```kreport2mpa.py -r sp1.bracken.report --display-header -o sp1.bracken.mpa```      
+> 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种峰度矩阵，使用1.04脚本得到各个阶元水平的峰度矩阵。              
      
 
 ## 2. Genetics     
