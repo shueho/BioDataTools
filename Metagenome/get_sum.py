@@ -10,10 +10,13 @@
 # Place the script in the parent directory of the assembly evaluation results completed by quast software to obtain the assembly evaluation information summary table.
 
 import os
+import sys
+root = sys.argv[1]
+
 print("Author: XueHao\nE-mail: studid@163.com")
 print("begin")
-ls = list(os.popen("find -name transposed_report.tsv"))
-ls = [i.strip() for i in ls if i.strip()]
+ls = os.listdir(root)
+ls = [root+ "/" + i + "/transposed_report.tsv" for i in ls if os.path.exists(root+ "/" + i + "/transposed_report.tsv")]
 
 fi = open("sumarry.tsv","w")
 with open(ls[0]) as f:
