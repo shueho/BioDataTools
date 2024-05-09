@@ -41,7 +41,7 @@ def readMpa(item):
 
 print("begin!")
 for i in ls:
-	readMpa(path+"/"+i)
+	readMpa(i)
 
 with open("mpaMatrix.txt","w") as f:
 	f.write("\t".join(HEAD)+"\n")

@@ -18,9 +18,11 @@
 **注意事项：** 本代码只适用于后续不再讨论原始序列ID的场景，比如宏基因组分析使用cd-hit-est等软件去冗余之后，正式基因定量分析之前使用本脚本，切勿在定量、注释等分析后使用该脚本！        
 **生成文件：** out_\<your fasta file name>（FASTA文件，将输入文件的序列名称重新命名）。    
          
-### 1.03 mergeMpa.py     
-**脚本功能：** 此脚本能够将多个MPA文件批量转换为物种丰度矩阵格式。           
-**参数说明：** 不需要配置参数。可直接放置于由kraken1、kraken2或bracken软件所生成的MPA文件目录下运行。在执行此脚本之前，请确保您已使用kreport2mpa.py脚本来将相应的报告文件成功转换成了MPA格式。这样，脚本就能自动处理同一目录下的所有MPA文件，并将其整合为物种丰度矩阵。       
+### 1.03 mergeMpa.py  [MPA_PATH]   
+**脚本功能：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。          
+**MPA_PATH：** 存放所有样品的MPA文件的路径。      
+```python mergeMpa.py example/mpa```      
+**注意事项：** 可以指定由kraken1、kraken2或bracken软件所生成的MPA文件目录。在执行此脚本之前，请确保您已使用kreport2mpa.py脚本来将相应的报告文件成功转换成了MPA格式。注意，需要保证每个mpa文件生成所使用的核酸数据库是相同的，因为物种丰度矩阵的物种顺序与数据库的选择相关联。       
 **生成文件：** mpaMatrix.txt（表格文件，整合后的丰度表，每一列都表示一个样品）。   
 
 ### 1.04 splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]       
@@ -31,14 +33,14 @@
 
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
   
-```kraken2 --db database_PATH	  --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output```           
+```kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output```           
 > 随后使用bracken将report文件转换为bracken文件。    
     
-```bracken -d database_PATH（数据库路径）  -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report```     
+```bracken -d database_PATH -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report```     
 > 使用kreport2mpa.py得到mpa文件。    
     
 ```kreport2mpa.py -r sp1.bracken.report --display-header -o sp1.bracken.mpa```      
-> 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种峰度矩阵，使用1.04脚本得到各个阶元水平的峰度矩阵。              
+> 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种丰度矩阵，使用1.04脚本得到各个阶元水平的丰度矩阵，随后可以进行α/β物种多样性分析、LEfSe分析等与物种丰度相关的分析。              
      
 
 ## 2. Genetics     
