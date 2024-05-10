@@ -1,50 +1,16 @@
-# BioDataTools
+# BioDataTools      
+这是一套囊括组学分析与生态遗传分析在内的生物信息学通用数据处理脚本，涵盖了多种数据处理工具，以满足不同研究需求。       
 
-生物信息学通用数据处理脚本，涵盖了多种数据处理工具，以满足不同研究需求。
-
-## 1. Metagenome 宏基因组分析工具集
-
-### 1.01 `get_sum.py`
-
-- **功能**：整合Quast输出的多个样本组装评估结果，形成综合评估信息表。
-- **用法**：`python get_sum.py DIR_PATH`
-  - `DIR_PATH`：Quast结果文件夹路径，内含各样本的`transposed_report.tsv`文件。
-
-**命令示例**:
-```bash
-python get_sum.py example/quast
-```
-
-**假设目录结构**:
-```
-example/
-└── quast/
-    ├── sp1/
-    │   └── transposed_report.tsv
-    ├── sp2/
-    │   └── transposed_report.tsv
-    └── sp3/
-        └── transposed_report.tsv
-```
-
-**输出结果**:
-- **生成文件**: `summary.tsv`
-  - **内容示例**:
-    ```
-    Sample    N50    Total Length    # Contigs    Largest Contig    GC (%)    ...
-    sp1       10000   5000000         100           25000       42.3      ...
-    sp2       12000   5500000         85            30000       41.7      ...
-    sp3       15000   6000000         70            40000       43.1      ...
-    ```
-
-#### 1.02 `fasta_rename.py` - 序列重命名
-
-- **功能**：为FASTA文件中的序列名称实施标准化重命名，便于后续分析。
-- **用法**：`python fasta_rename.py FASTA_FILE_PATH`
-  - `FASTA_FILE_PATH`：需重命名序列的FASTA文件路径。
-- **示例**：`python fasta_rename.py example/origin_seq.fa`
-- **输出**：`out_origin_seq.fa` - 序列名称已按规则重排的FASTA文件。
-
+## 1. Metagenome            
+宏基因组分析数据处理和绘图脚本。         
+   
+### 1.01 get_sum.py [DIR_PATH]    
+**脚本功能：** 用于整合多样本组装评估结果（Quast软件所生成的组装评估结果），得到组装评估信息汇总表。           
+**DIR_PATH：** Quast软件所生成的组装评估结果所在目录的路径，该路径下有不同样本的组装评估结果。    
+***比如在example/quast文件下存放了各个样品（sp1-3）的Quast评估结果，即sp1-3文件夹下都存有“transposed_report.tsv”文件（也包括其他文件，示例文件中未包含），即可运行下述代码：***        
+```python get_sum.py example/quast```      
+**生成文件：** sumary.tsv（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
+      
 ### 1.02 fasta_rename.py [FASTA_FILE_PATH]   
 **脚本功能：** 在宏基因组或转录组项目中，当合并多个样品组装结果前，可使用该脚本将每个FASTA文件内的序列名称统一标准化，例如按照1、2、3等连续编号的方式重命名。这样，在进行基因丰度分析和注释之前，能确保合并后FASTA数据中每个序列的标识符唯一，进而便于后续识别差异基因并追溯到原始序列。      
 **注意事项：** 本代码只适用于后续不再讨论原始序列ID的场景，比如宏基因组分析使用cd-hit-est等软件去冗余之后，正式基因定量分析之前使用本脚本，切勿在定量、注释等分析后使用该脚本！        
