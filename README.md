@@ -16,7 +16,7 @@
 
 **示例：**
 
-如quast文件中包含由Quast软件得到的各样品组装评估结果，其文件结构如下：
+如 `example/quast` 文件中包含由Quast软件得到的各样品组装评估结果，其文件结构如下：
 ```
 example/
 └── quast/
@@ -41,7 +41,7 @@ sp3       15000   6000000         70            40000       43.1      ...
 
 ### 1.02 `fasta_rename.py [FASTA_FILE_PATH]` 
 
-**功能描述：** 为FASTA文序列文件标头统一命名规范，确保每个序列名唯一且编号连续。
+**功能描述：** 对FASTA格式序列文件中各个序列标头进行统一命名规范，确保每个序列标识唯一且编号连续。
 
 - **FASTA_FILE_PATH：** 原FASTA文件路径。
 
@@ -54,21 +54,33 @@ sp3       15000   6000000         70            40000       43.1      ...
 
 **示例：**
 
-比如 `origin_seq.fa` 文件中包含重复标识的序列，执行命令：
+比如 `example/origin_seq.fa` 文件中包含重复标识的序列，执行命令：
 ```bash
 python fasta_rename.py example/origin_seq.fa
 ``` 
 输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
          
-### 1.03 mergeMpa.py  [MPA_PATH]   
-**脚本功能：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。          
-**MPA_PATH：** 存放所有样品的MPA文件的路径。      
-**注意事项：** 可以指定由kraken1、kraken2或bracken软件所生成的MPA文件目录。在执行此脚本之前，请确保您已使用kreport2mpa.py脚本来将相应的报告文件成功转换成了MPA格式。注意，需要保证每个mpa文件生成所使用的核酸数据库是相同的，因为物种丰度矩阵的物种顺序与数据库的选择相关联。    
-```python mergeMpa.py example/mpa```         
-**生成文件：** mpaMatrix.txt（表格文件，整合后的丰度表，每一列都表示一个样品）。   
+### 1.03 `mergeMpa.py  [MPA_PATH]` 
+
+**功能描述：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。
+
+- **MPA_PATH：** 存放所有样品的MPA文件的路径。
+
+**注意事项：** 本脚本支持处理由Kraken 1、Kraken 2或Bracken输出的MPA文件目录。运行前，请先利用kreport2mpa.py脚本将结果转换为MPA格式。重要的是，所有MPA文件必须基于相同的核酸数据库生成，因为物种丰度的排列顺序取决于所选数据库，确保数据一致性。
+
+**生成文件：** 
+- `mpaMatrix.txt`（表格文件，物种丰度表，每一列都表示一个样品）。   
+
+**示例：**
+
+比如 `example/mpa` 文件中包含重复标识的序列，执行命令：
+```bash
+python mergeMpa.py example/mpa
+``` 
+输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵。
 
 ### 1.04 splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]       
-**脚本功能：** 该脚本旨在从物种丰度定量分析结果中提取各分类层级的物种丰度数据并构建相应的丰度矩阵。         
+**功能描述：** 该脚本旨在从物种丰度定量分析结果中提取各分类层级的物种丰度数据并构建相应的丰度矩阵。         
 **MPA_MERGE_FILE：** 由1.03 mergeMpa.py脚本生成的mpaMatrix.txt文件的路径。         
 **SPLIT_LEVEL：** 需要输出物种丰度表的分类阶元，可按照界、门、纲、目、科、属、种的首字母标识，分别用"a"（表示所有类别丰度表都输出）、"k"（Kingdom 只输出界水平丰度表）、"p"（Phylum 只输出门水平丰度表）、"c"（Class 只输出纲水平丰度表）、"o"（Order 只输出目水平丰度表）、"f"（Family 只输出科水平丰度表）、"g"（Genus 只输出属水平丰度表）和"s"（Species 输出每一个物种的丰度表）或其对应的大写字母进行选择。输入字母"a"则表示生成包括所有分类级别的丰度表。       
 ***生成各个阶元等级的丰度数据：***        
@@ -94,19 +106,19 @@ python fasta_rename.py example/origin_seq.fa
         
 ### 2.01 Get_gb_by_gi.py
 ***需要安装requests库***    
-**脚本功能：** 通过GI编号批量下载fasta文件。         
+**功能描述：** 通过GI编号批量下载fasta文件。         
 **参数说明：** 不需要配置参数。该脚本自动检测并读取文件夹内所有以“_gi.txt”为扩展名的文本文件。这些“_gi.txt”文件内部存储着待抓取的GI编号列表。          
 **场景举例：** 比如在需要批量获取大量gb文件的情况下，您只需创建一个或多个名为“xxx_gi.txt”的文本文件，并将所需GI编号粘贴其中。这种设计允许您按照GI编号所存放的列表文件不同，将下载的fasta文件存放在多个独立的文件夹内，这一做法在群体遗传学中针对单倍型分析的情况尤为常见。请注意，通常情况下会批量提取GB（GenBank）文件然后再转换为FASTA格式，这是因为FASTA格式相较于GB格式简化了许多信息。                       
 **生成文件：** gb/\<your gi_list_file name>\_\<GI ACCESSION>.gb（多个GENEBANK文件）。        
 
 ### 2.02 Name_gb_by_isolate.py     
-**脚本功能：** 该脚本能够读取GB文件内的isolate信息，并依据这些信息为对应的GB文件重新命名，尤其适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。      
+**功能描述：** 该脚本能够读取GB文件内的isolate信息，并依据这些信息为对应的GB文件重新命名，尤其适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。      
 **参数说明：** 不需要配置参数。运行应将该脚本直接存放于包含GB文件的目录中，本脚本会自动批量读取目录下所有gb文件。        
 **脚本改写：** 如果你想遵循特定的genbank指令来命名你的序列文件，你可以在我的脚本中适当地重写正则表达式。          
 **生成文件：** output/\<ISOLATE>.gb（多个GENEBANK文件，重新命名的）。    
      
 ### 2.03 gb_to_fasta.py   
-**脚本功能：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。       
+**功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。       
 **参数说明：** 不需要配置参数。运行时，需要将该脚本放置在GB文件所在的目录中（推荐在1.02生成的output文件中）。      
 **生成文件：** output/\<FASTA_FILE_NAME>.fas (多个FASTA文件)   。 
 
@@ -114,7 +126,7 @@ python fasta_rename.py example/origin_seq.fa
        
 ### 2.04 Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]    
 ***过时代码***     
-**脚本功能：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。      
+**功能描述：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。      
 **FASTA_FILE_1：** 第一个序列。       
 **FASTA_FILE_2：** 第二个序列。    
 **场景举例：** 假设你有来自样本A、B和C的16S和COI序列，出于某种目的，你想要结合来自不同样本的16S和COI序列。您可以使用这个脚本。      
@@ -122,7 +134,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件：** merge.fas（FASTA文件）。    
 
 ### 2.05 S_to_H.py -p [FASTA_FILE_NAME] -l [LIST_NAME]      
-**脚本功能：** 将fasta文件多个样品序列根据单倍型归类。     
+**功能描述：** 将fasta文件多个样品序列根据单倍型归类。     
 **参数说明：** 使用前需要获取两个文件，一个是DnaSP导出的单倍型和样品对应的表格（可能需要手工制作）。另一个是包含所有物种序列的fasta文件。     
 **场景举例：** 比如，对于包含a、b、c、d、e五个样品的序列数据，其中样品a、b、c的序列完全相同，样品d和e的序列也完全一致，意味着我们拥有两个独特的单倍型。借助这段代码，能够将具有相同序列的样品合并归类为各自的单倍型，有利于后续针对不同单倍型序列进行系统发育分析。参考示例文件和示例代码！！！      
 **FASTA_FILE_NAME：** 样品序列文件名（example/sample.fas）。    
@@ -131,7 +143,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件：** out_hap.fasta（FASTA文件，由单倍型组成的fasta文件）。          
 
 ### 2.06 ExtractFasta.py [FASTA_FILE] [LIST_FILE] [Regular_expressions (Optional)]      
-**脚本功能：** 根据给定列表，可以从包含多个序列的总体fasta文件中筛选出子集fasta文件。列表中的ID项可以是总体fasta文件中序列ID的一部分，默认情况下，系统将匹配">"符号后直至第一个空格前的文本作为对应ID。若实际情况下的ID对应关系并非如此简单，则可通过配置自定义正则表达式来进行精确匹配。                            
+**功能描述：** 根据给定列表，可以从包含多个序列的总体fasta文件中筛选出子集fasta文件。列表中的ID项可以是总体fasta文件中序列ID的一部分，默认情况下，系统将匹配">"符号后直至第一个空格前的文本作为对应ID。若实际情况下的ID对应关系并非如此简单，则可通过配置自定义正则表达式来进行精确匹配。                            
 **场景举例：** 共线性分析或者同源基因聚类时，从NCBI下载的pep文件常包含冗余内容，可以再NCBI下载只由染色体编码的去冗余蛋白质序列集，使用这个脚本可以根据提供的序列名称从总的pep文件中提取想要的部分，亦可以提取相应蛋白质序列的CDS序列，由于蛋白质序列ID和CDS不是一致的，这时或许你需要配置正则表达式来提取相应的序列，当然你也可以用后续的代码2.09来完成这个操作。    
 **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组的pep或者CDS序列。           
 **LIST_FILE：** 列表中应包含希望提取的序列编号或名称，这部分信息可以是FASTA_FILE中每条序列“>”符号后紧跟的整个描述字段，也可以只是该描述字段中的一部分内容。       
@@ -145,13 +157,13 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件：** out_match_seq.fasta（FASTA文件）。                  
 
 ### 2.07 ProteinPropertyFromExpasy.py [FASTA_FILE]      
-**脚本功能：** 从Expasy（ https://web.expasy.org/protparam ）中批量获得蛋白质的理化性质。     
+**功能描述：** 从Expasy（ https://web.expasy.org/protparam ）中批量获得蛋白质的理化性质。     
 **FASTA_FILE：** 提供蛋白质序列的fasta格式可以是多序列的文件。      
 ```python ProteinPropertyFromExpasy.py example/text.fa ```       
 **生成文件：** expasy_output.csv（TABLE file）。        
 
 ### 2.08 FeaturesBaseComponents.py [FASTA_FILE] [TABLE]       
-**脚本功能：** 细胞器基因组专用，特征提取和碱基组成统计。如果你想基于开始和结束位置截断fasta文件，你也可以使用这个脚本!       
+**功能描述：** 细胞器基因组专用，特征提取和碱基组成统计。如果你想基于开始和结束位置截断fasta文件，你也可以使用这个脚本!       
 **FASTA_FILE：** 只包含一个序列的fasta文件。    
 **TABLE：** 表格包含特征名称、组别和起始位置的表。第一列为基因组，第二列为基因，第三列为基因起始位置，第四列为基因终止位置。基因是名义上的概念，你可以给任何片段分配分组。        
 **注意事项：** 如果序列中含有中间终止密码子慎用，并且如果不是+链编码的基因会提取到其反向互补序列。    
@@ -160,7 +172,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件 2：** Base_composition.txt (表格ATGC的碱基占比) 。      
 
 ### 2.09 ExAndRename.py [MAP_FILE] [FASTA_FILE]      
-**脚本功能：** 从fasta文件中提取部分序列，并对这些序列按照规则修改名称。    
+**功能描述：** 从fasta文件中提取部分序列，并对这些序列按照规则修改名称。    
 **场景举例：** 适用于从全基因组序列中提取染色体并修改名称。     
 **MAP_FILE：** 在提供的信息中，第一列所列出的是欲提取或重命名的序列名，它对应fasta文件中“>”符号之后，首个空格之前的文本内容；若无空格，则为“>”符号之后的完整序列标识符。第二列则是期望修改为目标的新名称。当第一列与第二列内容相同时，这一操作相当于执行代码2.06的功能。            
 **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组fa文件、pep或者CDS序列。             
@@ -168,14 +180,14 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件：** subset_fasta.faa（FASTA文件，如果在map表存在多余的内容会有提示）。              
        
 ### 2.10 BatchFastaToPam.py [FASTA_FILE_DIR]         
-**脚本功能：** 批量将比对过的fasta文件转换为paml比对文件。     
+**功能描述：** 批量将比对过的fasta文件转换为paml比对文件。     
 **FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要转换的fasta格式的比对文件。            
 **注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！                       
 ```python BatchFastaToPam.py example/ali_fasta```          
 **生成文件：** pamlfile (文件夹，其中包含需要转换的fasta文件名+pam后缀) 。      
 
 ### 2.11 ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]        
-**脚本功能：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。       
+**功能描述：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。       
 **使用场景：** ①单拷贝同源基因每个基因家族的序列提取过程中，将下载的CDS序列按照基因家族分组将CDS分别归属到新的不同的文件中，用于后续CDS和蛋白质序列的匹配，矩阵文件是Orthogroups/Orthogroups.tsv（MATRIX_FILE，可以参照示例文件example/seq_matrix2.txt），你只需要从NCBI下载每个物种的fna文件（重要：需要使用cut命令分列并保留第一列，使得每个序列的名称只包含ID号！）放置在同一文件夹中（IN_FASTA_FILE_DIR），然后指定输出文件就可以将不同物种的CDS文件分配到已基因家族名称命名的fasta文件中；②提取同一基因家族的基因进行合并分析。       
 **IN_FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要重新分配的fasta格式序列文件，可以是DNA、CDS、转录本、蛋白质或其他序列。            
 **MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一行的第一个项目是新分配后的文件名，其余位置是该文件中包含的序列名称。      
@@ -185,7 +197,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件：** \<OUT_FASTA_FILE_DIR\> (文件夹，其中包含重新分配后的序列)       
 
 ### 2.12 BatchAlignedProteinToDNA.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
-**脚本功能：** 假如你有蛋白质的比对文件，想要得到对应CDS的密码子比对文件可以使用此脚本，简单来说是批量将比对过的蛋白质序列转换为DNA序列，通过本脚本可以过滤掉：①CDS系列长度不为3的倍数的序列；②CDS-蛋白序列不匹配的序列；③含有未知碱基N的序列。      
+**功能描述：** 假如你有蛋白质的比对文件，想要得到对应CDS的密码子比对文件可以使用此脚本，简单来说是批量将比对过的蛋白质序列转换为DNA序列，通过本脚本可以过滤掉：①CDS系列长度不为3的倍数的序列；②CDS-蛋白序列不匹配的序列；③含有未知碱基N的序列。      
 **场景举例：** 通过OrthoFinder软件对多个物种的同源基因家族进行搜索期间会在WorkingDirectory/Alignments_ids目录生成单拷贝正交基因蛋白序列的比对文件，从其中提取单拷贝正交基因家族（单拷贝基因家族列表在Orthogroups/Orthogroups_SingleCopyOrthologues.txt，可以使用for循环提取）存放到文件夹中（PEP参数），从NCBI等数据库下载CDS序列（CDS序列编号和蛋白序列编号是相同的），使用脚本2.11提取蛋白序列对应的CDS序列（未比对）存放到文件夹中（CDS参数），OrthoFinder结果文件中WorkingDirectory下的SequenceIDs.txt即为蛋白质名称-CDS名称对照表（MAPFILE参数）。      
 ```options:
   -h, --help            显示帮助信息
@@ -202,7 +214,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件 2：** err_cds.txt（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。      
   
 ### 2.13 Extract4DTv.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
-**脚本功能：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。      
+**功能描述：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。      
 **场景举例：** 同源基因建树。      
 **注意事项：** 所有参数均与脚本2.12一致，代码内容其实差不多，只是生成的文件名称不同。            
 ```python Extract4DTv.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"```          
@@ -210,7 +222,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件 2：** err_4dtv.txt（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。      
   
 ### 2.14 MergeSequences.py [MATRIX_FILE] [FASTA_FILE_DIR] [SUFFIX] [ORDER_LIST（可选参数）]      
-**脚本功能：** 进阶版合并序列脚本。     
+**功能描述：** 进阶版合并序列脚本。     
 **MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一列是一个样品，每一行的第一个项目是对应的序列名称（fasta文件名,不包含后缀），行和列可以确定每个样品对应序列的序列名称。            
 **FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要合并的fasta格式的比对文件，文件名没有要求，只要包含MATRIX_FILE中所有序列名即可。            
 **ORDER_LIST：** 指定连接顺序，通过指定连接顺序既可以排除某个序列，也可以指定连接顺序，如果不指定则默认按照序列名称的哈希值为序全部连接。            
@@ -223,7 +235,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件 2：** order.true （实际合并顺序）。      
 
 ### 2.15 BatchGenerationCodeML_CTL.py [PAML_FILE_DIR] [TREE_FILE]         
-**脚本功能：** 批量生成CodeML的配置文件。           
+**功能描述：** 批量生成CodeML的配置文件。           
 **PAML_FILE_DIR：** PAML格式的比对文件所在目录，在运行本脚本时要求目录中必须含有需要进行选择压力分析的比对文件，并且尽量不使用相对路径，否则将无法读取需要比对文件路径。            
 **TREE_FILE：** 树文件路径（相对于CodeML运行时的路径），不要求在本脚本运行时该文件存在，但是务必要保证在运行CodeML程序时程序可以读取到该路径。          
 **注意事项：** 本脚本只是生成配置文件，请务必注意脚本导入树文件路径并不是CodeML程序运行时树文件路径！配置文件模板选择的是Branch model模型，如果有其他需求可以直接修改配置文件。                           
@@ -232,7 +244,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件 1：** codeml2 (文件夹，基于替代假设的配置文件） 。            
 
 ### 2.16 ParsingCodeMLResults.py [MOD0_DIR] [MOD2_DIR]         
-**脚本功能：** 批量解析CodeML结果，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。           
+**功能描述：** 批量解析CodeML结果，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。           
 **MOD0_DIR：** 基于无效假设生成的结果。            
 **MOD2_DIR：** 基于替代假设生成的结果。            
 ```python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2```          
@@ -241,7 +253,7 @@ python fasta_rename.py example/origin_seq.fa
 > 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。         
 
 ### 2.17 SplitAXT.py [AXT_FILE]     
-**脚本功能：** 将单个AXT格式文件拆分为多个AXT文件，使得每个文件中只包含一对序列比对。   
+**功能描述：** 将单个AXT格式文件拆分为多个AXT文件，使得每个文件中只包含一对序列比对。   
 **场景举例：** 脚本2.12生成的密码子比对文件后，如果需要进一步进行4dtv分析，需要使用摘抄代码convert_fasta_to_axt.pl（做了适应性修改）将其转换为AXT文件，本脚本可以把上述代码生成的AXT文件按照序列对进行拆分。           
 **AXT_FILE：** 需要拆分的AXT文件。            
 **注意事项：** 本脚本只支持序列对名称中含有数字的AXT文件。                           
@@ -253,7 +265,7 @@ python fasta_rename.py example/origin_seq.fa
 > 你可以参考 https://yanzhongsino.github.io/2022/09/07/bioinfo_Ks_batch.calculation.Ks 来计算 Ka、Ks和4dtv值，由于calculate_4DTV_correction.pl脚本只支持一对序列的4dtv计算，因此可以使用脚本2.17对AXT文件进行拆分。                 
 
 ### 2.18 BaseSiteInformation.py [GFF_FILE] [Q_FILE]         
-**脚本功能：** 根据指定染色体位置及碱基位点信息，抽取相应的基因数据，比如位点在哪一个转录本上的哪一个CDS区间中，以及CDS或转录本的位置信息，方便后续注释分析。           
+**功能描述：** 根据指定染色体位置及碱基位点信息，抽取相应的基因数据，比如位点在哪一个转录本上的哪一个CDS区间中，以及CDS或转录本的位置信息，方便后续注释分析。           
 **场景举例：** 通过随机森林等算法找到不同种群或不同品种的变异位点，需要定位到该位点所在基因。          
 **GFF_FILE：** 基因组GFF文件，只需要保留mRNA和CDS特征，并且每个mRNA需要位于其包含CDS特征的上方，可以选择在运行代码前手动将GFF文件排序！                 
 **Q_FILE：** 查找的条目表格，需要包括标题行，至少包含两列：第一列必须是染色体编号，第二列是对应于染色体上的位置。            
@@ -262,7 +274,7 @@ python fasta_rename.py example/origin_seq.fa
 
 ### 2.19 MaskSeq.py [FASTA_FILE] [TABLE_FILE] [TARG 可选参数]       
 ***待优化！***       
-**脚本功能：** 对Fasta文件中的某些区间进行屏蔽（替换为TARG）。           
+**功能描述：** 对Fasta文件中的某些区间进行屏蔽（替换为TARG）。           
 **场景举例：** 基因组分析中对基因组的一些序列（比如重复序列）进行屏蔽（ mask）以节约分析过程的算力。          
 **FASTA_FILE：** Fasta文件，里边包含许多序列，对于基因组来说其中包括许多染色体序列，>后边的内容为序列名称。                        
 **TABLE_FILE：** 三列表格，不需要包括标题行，第一列是序列名称（注意和fasta文件名称完全一致），第二、三列分别是屏蔽起始和终止位置（从1开始计数，可以从gff文件中直接复制）。            
@@ -274,7 +286,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件：** maskseq_\<FASTA_FILE> (屏蔽部分序列的FASTA文件） 。    
 
 ### 2.20 BaseCompositionCalculation.py [FASTA_FILE] [TER_CODE 可选参数]       
-**脚本功能：** 计算CDS序列中各个序列的各个位点的碱基数目，如A1、T1、G1、G3等。           
+**功能描述：** 计算CDS序列中各个序列的各个位点的碱基数目，如A1、T1、G1、G3等。           
 **场景举例：** 进行密码子偏好分析时需要获取GC12和GC3等参数可以通过本脚本结果进一步计算。          
 **FASTA_FILE：** Fasta文件，里边包含许多序列，要求是核酸序列。                        
 **TER_CODE：** 终止密码子列表，默认是标准密码子表的TAG,TAA,TGA，如果需要指定，需要保证每个终止密码子之间用半角英文逗号隔开且不含有过多空白，如果你希望统计到终止密码子你可以输入NNN。         
@@ -292,11 +304,11 @@ python fasta_rename.py example/origin_seq.fa
 
 ### 3.01 MergeTable.py       
 ***图形界面的合并表格工具***   
-**脚本功能：** 合并多个表格时，可以根据它们的第一列数据进行对应联接操作。       
+**功能描述：** 合并多个表格时，可以根据它们的第一列数据进行对应联接操作。       
 **参数说明：** 不需要配置参数。将所有需要依据首列进行合并的表格逐一导入，并通过相应功能一键实现按第一列内容的合并操作。     
 
 ### 3.02 VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP]     
-**脚本功能：** vlookup函数的Python实现。可以自定义键值的位置。   
+**功能描述：** vlookup函数的Python实现。可以自定义键值的位置。   
 **场景举例：** 从总注释表中提取一些基因的注释信息。注意这个只能提取一列内容。       
 **KEY_FILE：** 一个文件，包含需要检索值的列。   
 **MAP_FILE：** 在其中检索的表格，需要至少有两个列，其中一个是key，另外一个是值。        
@@ -307,7 +319,7 @@ python fasta_rename.py example/origin_seq.fa
 
 ### 3.03 SumByGroup.py [MAP_FILE] [MATRIX_FILE] [KEY_COL_ID] [VALUE_COL_ID]             
 **务必确保map表和matrix表均包含标题行以便正确识别列信息。另外，在进行相对丰度计算时，应当使用all.count的总计数值作为计算每个序列丰度的分母。**       
-**脚本功能：** 分组求和的进阶版。       
+**功能描述：** 分组求和的进阶版。       
 **场景举例：** 在处理数据时，假如你拥有一份map表，该表记录了每个基因与其所属基因家族的关系；同时你还有一份matrix表，其中列出了各基因的丰度数据。此时，你需要通过联合这两份表，来计算出每个基因家族总的丰度值，物种丰度表同理。                 
 **MAP_FILE：** 在进行数据处理时，所使用的表格需包含分组列以及该组内所有成员列。分组和成员关系可以是一对一、一对多、多对一或多对多的形式。分组及其成员之间用逗号分隔，例如："A,B" 表示 A 组和 B 组都包含相同的成员 "a"；而 "A a,b" 则表示 A 组内包含成员 "a" 和 "b"。        
 **MATRIX_FILE：** 丰度表或类似的矩阵，请确保矩阵文件包含标题行，其中第一列的元素必须与MAP_FILE中的成员值（不是分组）相匹配。举例来说，在基因丰度矩阵中，第一列通常是基因名称，这些基因属于不同的基因家族，并且矩阵中还包含了针对各个样品的丰度数据列。       
@@ -318,7 +330,7 @@ python fasta_rename.py example/origin_seq.fa
 **生成文件 1：** all.count（TABLE file, 总求和表）。          
 
 ### 3.04 CountByGroup.py [-h] [-a MAPA] [-b MAPB] [-k KEA] [-K KEB] [-v VAA] [-V VAB] [-s SEA] [-S SEB] [--seka SEKA] [--sekb SEKB] [--seva SEVA] [--sevb SEVB] [-n HEADA] [-N HEADB]         
-**脚本功能：** 针对具有三层映射关系A-B-C的数据结构，任务是在A层中寻找关联到C层的所有元素，并统计这些元素的数量。      
+**功能描述：** 针对具有三层映射关系A-B-C的数据结构，任务是在A层中寻找关联到C层的所有元素，并统计这些元素的数量。      
 **场景举例：** 比如在生物过程中包括三个GO术语，这三个术语之间存在交集基因，你想统计生物过程下一共的基因数目（去重的）。    
 **注意事项：** -a和-b参数是必需的，其他参数都有默认值！    
 ```options:
@@ -345,7 +357,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件：** count_Map.txt（TABLE file）。       
 
 ### 3.05 splitFasta.py [FASTA_FILE_PATH] [Number_of_split_files]       
-**脚本功能：** 针对含有大量序列的FASTA文件，可根据序列数量对其进行分割，形成多个较小的FASTA文件。      
+**功能描述：** 针对含有大量序列的FASTA文件，可根据序列数量对其进行分割，形成多个较小的FASTA文件。      
 **场景举例：** 例如，在进行在线KEGG注释时，KEGG服务可能对一次上传的序列数目有所限制，通过预先分割大的FASTA文件，可以确保符合上传要求并顺利完成注释任务。      
 **FASTA_FILE_PATH：** 要分割的FASTA文件的路径。     
 **Number_of_split_files：** 分割完成后每个文件包含的序列数。       
@@ -354,7 +366,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件：** \<Split file number>_\<your fasta file name>（多个FASTA文件）。   
 
 ### 3.06 read_keg.py [KEG_FILE]   
-**脚本功能：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释时手动构建背景基因集。      
+**功能描述：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释时手动构建背景基因集。      
 **场景举例：** 通过本脚本你可以得到KEGG数据库每个ko或者每个物种的通路ID的简易化表格，①用于在KEGG在线注释网站得到的KEGG注释的解析；②用于解析KEGG通路数据库中模式生物或通用注释表的解析。                 
 **KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg或者人类KEG文件：hsa00001.keg。                
 > 你可以点击链接下载通用KEG文件：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=          
@@ -370,7 +382,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件 2：** \<你的keg前缀（物种缩写）\>_map.txt （表格文件，如果需要进行KEGG富集分析，你可以使用excel的Vlookup函数对完成背景基因文件）    
 
 ### 3.07 KEGG_pathway_geneNum.py [3.06_生成文件_1] [GENE_KO]    
-**脚本功能：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。    
+**功能描述：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。    
 **3.06_ 生成文件_1：** 脚本3.06的生成文件。            
 **GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号（或其他通路编号），多个ko编号可以用逗号隔开，可参考示例文件。    
 ```python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt```         
@@ -380,7 +392,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件 5：** err.txt (There is no matching KO number. TABLE file)      
 
 ### 3.08 read_goOBO.py [obo_FILE]      
-**脚本功能：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格，你可以直接使用示例文件中的go_term_list.txt，要注意这个文件可能不是最新的版本，因此推荐使用该脚本提取最新的GO注释信息。           
+**功能描述：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格，你可以直接使用示例文件中的go_term_list.txt，要注意这个文件可能不是最新的版本，因此推荐使用该脚本提取最新的GO注释信息。           
 **obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 推荐打开网页后，右键，点击另存为，保存为文本文件） 。       
 **注意事项：** 由于网页加载可能不全因此不推荐将网页CTRL+A全选CTRL+C复制，新建txt文件并打开CTRL+V粘贴。      
 **比如你将网页复制或保存到了abc.txt，你可以运行下方代码：**        
@@ -388,7 +400,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件：** \<版本号\>_go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
           
 ### 3.09 ConvertGene-GO.py [GENE_GOs_MAP]                 
-**脚本功能：** 转换GO注释表格：  
+**功能描述：** 转换GO注释表格：  
 将表格：    
 | Gene | GO Terms |          
 | --- | --- |      
@@ -408,7 +420,7 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 **生成文件：** g-go.txt（TABLE文件，第一列是geneid，第二列是GOID）。     
       
 ### 3.10 getGOinfo.py [go_term_list] [GENE_GO_MAP]                 
-**脚本功能：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。               
+**功能描述：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。               
 **go_term_list：** 推荐是使用3.08脚本生成的go_term_list.txt文件，包含所有GO术语的描述信息。     
 **GENE_GO_MAP：** 推荐是3.09生成的文件，第一列是基因名称，第二列是对应的GO号。       
 **注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过代码3.09（推荐）或者下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
@@ -483,14 +495,14 @@ write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, qu
 ```       
 
 ### 3.11 GenoSpider     
-**脚本功能：** 基因组数据爬虫，详细说明待补充！       
+**功能描述：** 基因组数据爬虫，详细说明待补充！       
 
 
 ## 4.Plotscript     
 绘图代码工具集。     
 
 ### 4.01 geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]     
-**脚本功能：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。     
+**功能描述：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。     
 **GENE_LIST：** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.     
 **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.     
 **Vertical_spacing：** Spacing of adjacent row genomes, default 50.    
