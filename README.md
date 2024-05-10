@@ -35,14 +35,6 @@ example/
     sp3       15000   6000000         70            40000       43.1      ...
     ```
 
-#### 1.01 `get_sum.py` - 组装评估汇总
-
-- **功能**：整合Quast输出的多个样本组装评估结果，形成综合评估信息表。
-- **用法**：`python get_sum.py DIR_PATH`
-  - `DIR_PATH`：Quast结果文件夹路径，内含各样本的`transposed_report.tsv`文件。
-- **示例**：`python get_sum.py example/quast`
-- **输出**：`sumary.tsv` - 汇总了各样本的组装质量数据。
-
 #### 1.02 `fasta_rename.py` - 序列重命名
 
 - **功能**：为FASTA文件中的序列名称实施标准化重命名，便于后续分析。
