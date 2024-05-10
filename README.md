@@ -1,34 +1,78 @@
-# BioDataTools      
-这是一套囊括组学分析与生态遗传分析在内的生物信息学通用数据处理脚本，涵盖了多种数据处理工具，以满足不同研究需求。       
+# BioDataTools
 
-## 1. Metagenome            
-宏基因组分析数据处理和绘图脚本。         
-   
-### 1.01 get_sum.py [DIR_PATH]    
-**脚本功能：** 用于整合多样本组装评估结果（Quast软件所生成的组装评估结果），得到组装评估信息汇总表。           
-**DIR_PATH：** Quast软件所生成的组装评估结果所在目录的路径，该路径下有不同样本的组装评估结果。    
-***比如在example/quast文件下存放了各个样品（sp1-3）的Quast评估结果，即sp1-3文件夹下都存有“transposed_report.tsv”文件（也包括其他文件，示例文件中未包含），即可运行下述代码：***        
-```python get_sum.py example/quast```      
-**生成文件：** sumary.tsv（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
-      
+生物信息学通用数据处理脚本，涵盖了多种数据处理工具，以满足不同研究需求。       
+
+## 1. Metagenome 宏基因组分析工具集
+
+### 1.01 `get_sum.py`
+
+**功能**：整合由Quast软件输出的多个样本组装评估结果，形成信息表矩阵。
+
+**命令示例**:
+```bash
+python get_sum.py example/quast
+```
+
+**假设目录结构**:
+```
+example/
+└── quast/
+    ├── sp1/
+    │   └── transposed_report.tsv
+    ├── sp2/
+    │   └── transposed_report.tsv
+    └── sp3/
+        └── transposed_report.tsv
+```
+
+**输出结果**:
+- **生成文件**: `summary.tsv`
+  - **内容示例**:
+    ```
+    Sample    N50    Total Length    # Contigs    Largest Contig    GC (%)    ...
+    sp1       10000   5000000         100           25000       42.3      ...
+    sp2       12000   5500000         85            30000       41.7      ...
+    sp3       15000   6000000         70            40000       43.1      ...
+    ```
+
+#### 1.01 `get_sum.py` - 组装评估汇总
+
+- **功能**：整合Quast输出的多个样本组装评估结果，形成综合评估信息表。
+- **用法**：`python get_sum.py DIR_PATH`
+  - `DIR_PATH`：Quast结果文件夹路径，内含各样本的`transposed_report.tsv`文件。
+- **示例**：`python get_sum.py example/quast`
+- **输出**：`sumary.tsv` - 汇总了各样本的组装质量数据。
+
+#### 1.02 `fasta_rename.py` - 序列重命名
+
+- **功能**：为FASTA文件中的序列名称实施标准化重命名，便于后续分析。
+- **用法**：`python fasta_rename.py FASTA_FILE_PATH`
+  - `FASTA_FILE_PATH`：需重命名序列的FASTA文件路径。
+- **示例**：`python fasta_rename.py example/origin_seq.fa`
+- **输出**：`out_origin_seq.fa` - 序列名称已按规则重排的FASTA文件。
+
 ### 1.02 fasta_rename.py [FASTA_FILE_PATH]   
 **脚本功能：** 在宏基因组或转录组项目中，当合并多个样品组装结果前，可使用该脚本将每个FASTA文件内的序列名称统一标准化，例如按照1、2、3等连续编号的方式重命名。这样，在进行基因丰度分析和注释之前，能确保合并后FASTA数据中每个序列的标识符唯一，进而便于后续识别差异基因并追溯到原始序列。      
+**注意事项：** 本代码只适用于后续不再讨论原始序列ID的场景，比如宏基因组分析使用cd-hit-est等软件去冗余之后，正式基因定量分析之前使用本脚本，切勿在定量、注释等分析后使用该脚本！        
 **FASTA_FILE_PATH：** 指定需要重新编号其序列名称的FASTA文件的路径。     
 ```python fasta_rename.py example/origin_seq.fa```      
-**注意事项：** 本代码只适用于后续不再讨论原始序列ID的场景，比如宏基因组分析使用cd-hit-est等软件去冗余之后，正式基因定量分析之前使用本脚本，切勿在定量、注释等分析后使用该脚本！        
 **生成文件：** out_\<your fasta file name>（FASTA文件，将输入文件的序列名称重新命名）。    
          
 ### 1.03 mergeMpa.py  [MPA_PATH]   
 **脚本功能：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。          
 **MPA_PATH：** 存放所有样品的MPA文件的路径。      
-```python mergeMpa.py example/mpa```      
-**注意事项：** 可以指定由kraken1、kraken2或bracken软件所生成的MPA文件目录。在执行此脚本之前，请确保您已使用kreport2mpa.py脚本来将相应的报告文件成功转换成了MPA格式。注意，需要保证每个mpa文件生成所使用的核酸数据库是相同的，因为物种丰度矩阵的物种顺序与数据库的选择相关联。       
+**注意事项：** 可以指定由kraken1、kraken2或bracken软件所生成的MPA文件目录。在执行此脚本之前，请确保您已使用kreport2mpa.py脚本来将相应的报告文件成功转换成了MPA格式。注意，需要保证每个mpa文件生成所使用的核酸数据库是相同的，因为物种丰度矩阵的物种顺序与数据库的选择相关联。    
+```python mergeMpa.py example/mpa```         
 **生成文件：** mpaMatrix.txt（表格文件，整合后的丰度表，每一列都表示一个样品）。   
 
 ### 1.04 splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]       
 **脚本功能：** 该脚本旨在从物种丰度定量分析结果中提取各分类层级的物种丰度数据并构建相应的丰度矩阵。         
 **MPA_MERGE_FILE：** 由1.03 mergeMpa.py脚本生成的mpaMatrix.txt文件的路径。         
 **SPLIT_LEVEL：** 需要输出物种丰度表的分类阶元，可按照界、门、纲、目、科、属、种的首字母标识，分别用"a"（表示所有类别丰度表都输出）、"k"（Kingdom 只输出界水平丰度表）、"p"（Phylum 只输出门水平丰度表）、"c"（Class 只输出纲水平丰度表）、"o"（Order 只输出目水平丰度表）、"f"（Family 只输出科水平丰度表）、"g"（Genus 只输出属水平丰度表）和"s"（Species 输出每一个物种的丰度表）或其对应的大写字母进行选择。输入字母"a"则表示生成包括所有分类级别的丰度表。       
+***生成各个阶元等级的丰度数据：***        
+```python splitFromLevel.py example/mpaMatrix.txt a```     
+***只生成科阶元的丰度数据：***        
+```python splitFromLevel.py example/mpaMatrix.txt f```    
 **生成文件：** taxLevel_\<uppercase letter of level>_output.\<mpaMatrix file name>（一个或多个TABLE 文件）。       
 
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
