@@ -39,6 +39,7 @@ sp2       12000   5500000         85            30000       41.7      ...
 sp3       15000   6000000         70            40000       43.1      ...
 ```
 
+
 ### 1.02 `fasta_rename.py [FASTA_FILE_PATH]` 
 
 **功能描述：** 对FASTA格式序列文件中各个序列标头进行统一命名规范，确保每个序列标识唯一且编号连续。
@@ -59,7 +60,8 @@ sp3       15000   6000000         70            40000       43.1      ...
 python fasta_rename.py example/origin_seq.fa
 ``` 
 输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
-         
+
+
 ### 1.03 `mergeMpa.py  [MPA_PATH]` 
 
 **功能描述：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。
@@ -78,6 +80,7 @@ python fasta_rename.py example/origin_seq.fa
 python mergeMpa.py example/mpa
 ``` 
 输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵。
+
 
 ### 1.04 `splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]` 
 
@@ -102,6 +105,7 @@ python splitFromLevel.py example/mpaMatrix.txt f
 # 只输出结果文件：taxLevel_F_output.mpaMatrix.txt。
 ```
 即可输出对应的结果。
+
 
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
   
