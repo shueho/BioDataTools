@@ -4,16 +4,19 @@
 
 ## 1. Metagenome 宏基因组分析相关脚本
    
-### 1.01 ```get_sum.py [DIR_PATH]```
+### 1.01 `get_sum.py [DIR_PATH]`
 
 **功能描述：** 整合由Quast软件输出的多个样本组装评估结果，生成一个组装信息表矩阵。
 
-- **DIR_PATH：** Quast结果文件夹路径，内含各个样本的`transposed_report.tsv`文件。
+- **DIR_PATH：** Quast结果文件夹路径，内含各个样本的 `transposed_report.tsv` 文件。
 
-**生成文件：** sumary.tsv（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
+**生成文件：**
+
+- `sumary.tsv`（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
 
 **示例：**
-假设目录结构如下：
+
+如quast文件中包含由Quast软件得到的各样品组装评估结果，其文件结构如下：
 ```
 example/
 └── quast/
@@ -28,8 +31,7 @@ example/
 ```bash
 python get_sum.py example/quast
 ```
-**输出结果：**
-生成文件 `summary.tsv`，内容示例：
+输出结果文件 `summary.tsv`，内容示例：
 ```
 Sample    N50    Total Length    # Contigs    Largest Contig    GC (%)    ...
 sp1       10000   5000000         100           25000       42.3      ...
@@ -37,12 +39,26 @@ sp2       12000   5500000         85            30000       41.7      ...
 sp3       15000   6000000         70            40000       43.1      ...
 ```
 
-### 1.02 fasta_rename.py [FASTA_FILE_PATH]   
-**脚本功能：** 在宏基因组或转录组项目中，当合并多个样品组装结果前，可使用该脚本将每个FASTA文件内的序列名称统一标准化，例如按照1、2、3等连续编号的方式重命名。这样，在进行基因丰度分析和注释之前，能确保合并后FASTA数据中每个序列的标识符唯一，进而便于后续识别差异基因并追溯到原始序列。      
-**注意事项：** 本代码只适用于后续不再讨论原始序列ID的场景，比如宏基因组分析使用cd-hit-est等软件去冗余之后，正式基因定量分析之前使用本脚本，切勿在定量、注释等分析后使用该脚本！        
-**FASTA_FILE_PATH：** 指定需要重新编号其序列名称的FASTA文件的路径。     
-```python fasta_rename.py example/origin_seq.fa```      
-**生成文件：** out_\<your fasta file name>（FASTA文件，将输入文件的序列名称重新命名）。    
+### 1.02 `fasta_rename.py [FASTA_FILE_PATH]` 
+
+**功能描述：** 为FASTA文序列文件标头统一命名规范，确保每个序列名唯一且编号连续。
+
+- **FASTA_FILE_PATH：** 原FASTA文件路径。
+
+**使用场景：** 在宏基因组等组学分析项目中，该脚本通过统一重命名各FASTA文件中的序列ID为连续数字（1, 2, 3...），确保合并样品组装数据时标识唯一性，为后续基因丰度分析及注释规范序列名称，便于差异基因追踪及原始序列比对。
+
+**注意事项：** 本代码只适用于后续不再讨论原始序列标识的场景，切勿在定量、注释等下游分析后使用该脚本！
+
+**生成文件：** 
+- `out_<原始FASTA文件名称>`（FASTA文件，各个序列被重新编码）。    
+
+**示例：**
+
+比如 `origin_seq.fa` 文件中包含重复标识的序列，执行命令：
+```bash
+python fasta_rename.py example/origin_seq.fa
+``` 
+输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
          
 ### 1.03 mergeMpa.py  [MPA_PATH]   
 **脚本功能：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。          
