@@ -39,7 +39,6 @@ sp2       12000   5500000         85            30000       41.7      ...
 sp3       15000   6000000         70            40000       43.1      ...
 ```
 
-
 ### 1.02 `fasta_rename.py [FASTA_FILE_PATH]` 
 
 **功能描述：** 对FASTA格式序列文件中各个序列标头进行统一命名规范，确保每个序列标识唯一且编号连续。
@@ -61,7 +60,6 @@ python fasta_rename.py example/origin_seq.fa
 ``` 
 输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
 
-
 ### 1.03 `mergeMpa.py  [MPA_PATH]` 
 
 **功能描述：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。
@@ -80,7 +78,6 @@ python fasta_rename.py example/origin_seq.fa
 python mergeMpa.py example/mpa
 ``` 
 输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵。
-
 
 ### 1.04 `splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]` 
 
@@ -106,18 +103,14 @@ python splitFromLevel.py example/mpaMatrix.txt f
 ```
 即可输出对应的结果。
 
-
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
-  
-```kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output```           
-> 随后使用bracken将report文件转换为bracken文件。    
-    
-```bracken -d database_PATH -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report```     
+> ```kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output```           
+> 随后使用bracken将report文件转换为bracken文件。
+> ```bracken -d database_PATH -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report```     
 > 使用kreport2mpa.py得到mpa文件。    
-    
-```kreport2mpa.py -r sp1.bracken.report --display-header -o sp1.bracken.mpa```      
-> 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种丰度矩阵，使用1.04脚本得到各个阶元水平的丰度矩阵，随后可以进行α/β物种多样性分析、LEfSe分析等与物种丰度相关的分析。              
-     
+> ```kreport2mpa.py -r sp1.bracken.report --display-header -o sp1.bracken.mpa```      
+> 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种丰度矩阵，使用1.04脚本得到各个阶元水平的丰度矩阵，随后可以进行α/β物种多样性分析、LEfSe分析等与物种丰度相关的分析。 
+             
 
 ## 2. Genetics     
 用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
