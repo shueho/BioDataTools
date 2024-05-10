@@ -103,12 +103,19 @@ python splitFromLevel.py example/mpaMatrix.txt f
 ```
 即可输出对应的结果。
 
+> ##宏基因组物种定量分析流程
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
-> ```kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output```           
+> ```
+> kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output
+> ```
 > 随后使用bracken将report文件转换为bracken文件。
-> ```bracken -d database_PATH -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report```     
-> 使用kreport2mpa.py得到mpa文件。    
-> ```kreport2mpa.py -r sp1.bracken.report --display-header -o sp1.bracken.mpa```      
+> ```
+> bracken -d database_PATH -i sp1.report -r 150 -l S -t 0 -o sp1.bracken -w sp1.bracken.report
+> ```
+> 使用kreport2mpa.py得到mpa文件。
+> ```
+> kreport2mpa.py -r sp1.bracken.report --display-header -o sp1.bracken.mpa
+> ``` 
 > 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种丰度矩阵，使用1.04脚本得到各个阶元水平的丰度矩阵，随后可以进行α/β物种多样性分析、LEfSe分析等与物种丰度相关的分析。 
              
 
