@@ -95,15 +95,15 @@ python mergeMpa.py example/mpa
 ```bash
 # 生成各个阶元等级的丰度数据
 python splitFromLevel.py example/mpaMatrix.txt a
-# 输出7各结果文件：taxLevel_K/P/C/O/F/G/S_output.mpaMatrix.txt。
+# 输出7个阶元的结果文件：taxLevel_K/P/C/O/F/G/S_output.mpaMatrix.txt。
 
 # 只生成科阶元的丰度数据：
 python splitFromLevel.py example/mpaMatrix.txt f
-# 只输出结果文件：taxLevel_F_output.mpaMatrix.txt。
+# 只输出一个结果文件：taxLevel_F_output.mpaMatrix.txt。
 ```
 即可输出对应的结果。
 
-> ##宏基因组物种定量分析流程
+> ## 宏基因组物种定量分析流程     
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
 > ```
 > kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output
