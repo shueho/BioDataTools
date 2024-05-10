@@ -79,15 +79,29 @@ python mergeMpa.py example/mpa
 ``` 
 输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵。
 
-### 1.04 splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]       
-**功能描述：** 该脚本旨在从物种丰度定量分析结果中提取各分类层级的物种丰度数据并构建相应的丰度矩阵。         
-**MPA_MERGE_FILE：** 由1.03 mergeMpa.py脚本生成的mpaMatrix.txt文件的路径。         
-**SPLIT_LEVEL：** 需要输出物种丰度表的分类阶元，可按照界、门、纲、目、科、属、种的首字母标识，分别用"a"（表示所有类别丰度表都输出）、"k"（Kingdom 只输出界水平丰度表）、"p"（Phylum 只输出门水平丰度表）、"c"（Class 只输出纲水平丰度表）、"o"（Order 只输出目水平丰度表）、"f"（Family 只输出科水平丰度表）、"g"（Genus 只输出属水平丰度表）和"s"（Species 输出每一个物种的丰度表）或其对应的大写字母进行选择。输入字母"a"则表示生成包括所有分类级别的丰度表。       
-***生成各个阶元等级的丰度数据：***        
-```python splitFromLevel.py example/mpaMatrix.txt a```     
-***只生成科阶元的丰度数据：***        
-```python splitFromLevel.py example/mpaMatrix.txt f```    
-**生成文件：** taxLevel_\<uppercase letter of level>_output.\<mpaMatrix file name>（一个或多个TABLE 文件）。       
+### 1.04 `splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]` 
+
+**功能描述：** 该脚本物种丰度表中提取各分类阶元的物种丰度数据并构建相应的丰度矩阵。
+
+- **MPA_MERGE_FILE：** 由 `1.03 mergeMpa.py` 脚本生成的 `mpaMatrix.txt` 文件路径，也可以将您的丰度表修改为示例文件的样式。
+- **SPLIT_LEVEL：** 要指定输出的物种丰度表格的分类级别，可使用以下单个字母标识：'a'（全级别）、'K'（界）、'P'（门）、'C'（纲）、'O'（目）、'F'（科）、'G'（属）、'S'（种），其中'a'表示输出所有分类阶元的丰度表。大写或小写字母均可。
+
+**生成文件：** 
+- `taxLevel_<指定的阶元等级（大写）>_output.<丰度矩阵文件名>`（一个或多个表格文件，物种丰度表）。       
+
+**示例：**
+
+比如 `example/mpaMatrix.txt` 文件中包含物种丰度信息，执行命令：
+```bash
+# 生成各个阶元等级的丰度数据
+python splitFromLevel.py example/mpaMatrix.txt a
+# 输出7各结果文件：taxLevel_K/P/C/O/F/G/S_output.mpaMatrix.txt。
+
+# 只生成科阶元的丰度数据：
+python splitFromLevel.py example/mpaMatrix.txt f
+# 只输出结果文件：taxLevel_F_output.mpaMatrix.txt。
+```
+即可输出对应的结果。
 
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
   

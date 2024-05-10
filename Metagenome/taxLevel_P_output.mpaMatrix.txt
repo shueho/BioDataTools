@@ -1,0 +1,4 @@
+k	p	sp1	sp2	sp3	sp4
+Fungi	Ascomycota	12398	8678	8176	12898
+Fungi	Basidiomycota	1273	954	856	1548
+Fungi	Microsporidia	11	5	7	14
