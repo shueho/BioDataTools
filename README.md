@@ -464,7 +464,7 @@ python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2
 > ## 比较基因组学-同源基因建树和选择压力分析流程（一）          
 > 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。         
 
-### `2.17 SplitAXT.py [AXT_FILE]`
+### 2.17 `SplitAXT.py [AXT_FILE]`
      
 **功能描述：** 将单个AXT格式文件拆分为多个AXT文件，使得每个文件中只包含一对序列比对。
 
@@ -593,23 +593,37 @@ python MergeTable.py
 **生成文件：** 
 - `map_<map file name>`（TABLE file）。
 
-### 3.03 SumByGroup.py [MAP_FILE] [MATRIX_FILE] [KEY_COL_ID] [VALUE_COL_ID]             
-**务必确保map表和matrix表均包含标题行以便正确识别列信息。另外，在进行相对丰度计算时，应当使用all.count的总计数值作为计算每个序列丰度的分母。**       
-**功能描述：** 分组求和的进阶版。       
-**使用场景：** 在处理数据时，假如你拥有一份map表，该表记录了每个基因与其所属基因家族的关系；同时你还有一份matrix表，其中列出了各基因的丰度数据。此时，你需要通过联合这两份表，来计算出每个基因家族总的丰度值，物种丰度表同理。                 
-**MAP_FILE：** 在进行数据处理时，所使用的表格需包含分组列以及该组内所有成员列。分组和成员关系可以是一对一、一对多、多对一或多对多的形式。分组及其成员之间用逗号分隔，例如："A,B" 表示 A 组和 B 组都包含相同的成员 "a"；而 "A a,b" 则表示 A 组内包含成员 "a" 和 "b"。        
-**MATRIX_FILE：** 丰度表或类似的矩阵，请确保矩阵文件包含标题行，其中第一列的元素必须与MAP_FILE中的成员值（不是分组）相匹配。举例来说，在基因丰度矩阵中，第一列通常是基因名称，这些基因属于不同的基因家族，并且矩阵中还包含了针对各个样品的丰度数据列。       
-**KEY_COL_ID：** 在MAP文件中，指定组名所在的列编号，其中0代表第一列，1代表第二列，以此类推，用于指示每一行记录中的组别信息所在位置。      
-**VALUE_COL_ID：** 在MAP文件中，指定成员名所在的列编号，其中0代表第一列，1代表第二列，以此类推，用于指示每一行记录中的成员信息所在位置。         
-```python SumByGroup.py example/map.txt example/matrix.txt 1 0```          
-**生成文件 1：** out.count（TABLE file, 分组求和表）。      
-**生成文件 1：** all.count（TABLE file, 总求和表）。          
+### 3.03 `SumByGroup.py [MAP_FILE] [MATRIX_FILE] [KEY_COL_ID] [VALUE_COL_ID]`
 
-### 3.04 CountByGroup.py [-h] [-a MAPA] [-b MAPB] [-k KEA] [-K KEB] [-v VAA] [-V VAB] [-s SEA] [-S SEB] [--seka SEKA] [--sekb SEKB] [--seva SEVA] [--sevb SEVB] [-n HEADA] [-N HEADB]         
-**功能描述：** 针对具有三层映射关系A-B-C的数据结构，任务是在A层中寻找关联到C层的所有元素，并统计这些元素的数量。      
-**使用场景：** 比如在生物过程中包括三个GO术语，这三个术语之间存在交集基因，你想统计生物过程下一共的基因数目（去重的）。    
-**注意事项：** -a和-b参数是必需的，其他参数都有默认值！    
-```options:
+**功能描述：** 分组求和的进阶版。
+
+- **MAP_FILE：** 在进行数据处理时，所使用的表格需包含分组列以及该组内所有成员列。分组和成员关系可以是一对一、一对多、多对一或多对多的形式。分组及其成员之间用逗号分隔，例如："A,B" 表示 A 组和 B 组都包含相同的成员 "a"；而 "A a,b" 则表示 A 组内包含成员 "a" 和 "b"。
+- **MATRIX_FILE：** 丰度表或类似的矩阵，请确保矩阵文件包含标题行，其中第一列的元素必须与MAP_FILE中的成员值（不是分组）相匹配。举例来说，在基因丰度矩阵中，第一列通常是基因名称，这些基因属于不同的基因家族，并且矩阵中还包含了针对各个样品的丰度数据列。
+- **KEY_COL_ID：** 在MAP文件中，指定组名所在的列编号，其中0代表第一列，1代表第二列，以此类推，用于指示每一行记录中的组别信息所在位置。
+- **VALUE_COL_ID：** 在MAP文件中，指定成员名所在的列编号，其中0代表第一列，1代表第二列，以此类推，用于指示每一行记录中的成员信息所在位置。
+
+**使用场景：** 在处理数据时，假如你拥有一份map表，该表记录了每个基因与其所属基因家族的关系；同时你还有一份matrix表，其中列出了各基因的丰度数据。此时，你需要通过联合这两份表，来计算出每个基因家族总的丰度值，物种丰度表同理。                 
+
+**注意事项：** 务必确保map表和matrix表均包含标题行以便正确识别列信息。另外，在进行相对丰度计算时，应当使用all.count的总计数值作为计算每个序列丰度的分母。
+
+**生成文件：** 
+- `out.count`（TABLE file, 分组求和表）。
+- `all.count`（TABLE file, 总求和表）。
+
+**示例：**
+
+```bash
+python SumByGroup.py example/map.txt example/matrix.txt 1 0
+```
+
+### 3.04 `CountByGroup.py [-h] [-a MAPA] [-b MAPB] [-k KEA] [-K KEB] [-v VAA] [-V VAB] [-s SEA] [-S SEB] [--seka SEKA] [--sekb SEKB] [--seva SEVA] [--sevb SEVB] [-n HEADA] [-N HEADB]`
+         
+**功能描述：** 针对具有三层映射关系A-B-C的数据结构，任务是在A层中寻找关联到C层的所有元素，并统计这些元素的数量。
+
+**参数说明：** 
+
+```bash
+options:
   -h, --help            show this help message and exit
   -a MAPA, --mapa MAPA  The path of the large group map. 
   -b MAPB, --mapb MAPB  The path of the small group map.
@@ -627,55 +641,109 @@ python MergeTable.py
                         The Number of excluded rows of the large group value. default=0 (0 starts counting).
   -N HEADB, --headb HEADB
                         The Number of excluded rows of the small group value. default=0 (0 starts counting).        
-```                  
-Given the three levels of map A-B-C, find the C elements in A and count them.         
-```python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0```          
-**生成文件：** count_Map.txt（TABLE file）。       
+```
 
-### 3.05 splitFasta.py [FASTA_FILE_PATH] [Number_of_split_files]       
-**功能描述：** 针对含有大量序列的FASTA文件，可根据序列数量对其进行分割，形成多个较小的FASTA文件。      
-**使用场景：** 例如，在进行在线KEGG注释时，KEGG服务可能对一次上传的序列数目有所限制，通过预先分割大的FASTA文件，可以确保符合上传要求并顺利完成注释任务。      
-**FASTA_FILE_PATH：** 要分割的FASTA文件的路径。     
-**Number_of_split_files：** 分割完成后每个文件包含的序列数。       
-***运行下列代码将7个序列的fasta文件分为3个2序列的文件（不够整除最后一个文件只有一个序列）。*** 
-```python splitFasta.py example/text.fa 2```          
-**生成文件：** \<Split file number>_\<your fasta file name>（多个FASTA文件）。   
+**使用场景：** 比如在生物过程中包括三个GO术语，这三个术语之间存在交集基因，你想统计生物过程下一共的基因数目（去重的）。
 
-### 3.06 read_keg.py [KEG_FILE]   
-**功能描述：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释时手动构建背景基因集。      
-**使用场景：** 通过本脚本你可以得到KEGG数据库每个ko或者每个物种的通路ID的简易化表格，①用于在KEGG在线注释网站得到的KEGG注释的解析；②用于解析KEGG通路数据库中模式生物或通用注释表的解析。                 
-**KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg或者人类KEG文件：hsa00001.keg。                
-> 你可以点击链接下载通用KEG文件：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=          
-将上述网址中的htext=ko00001中的ko替换为物种缩写可以下载特定物种的KEG文件，比如替换为hsa https://www.kegg.jp/kegg-bin/download_htext?htext=hsa00001&format=htext&filedir= 即是人类的KEG文件。         
-物种缩写你可以参照：  https://www.genome.jp/kegg/catalog/org_list.html   比如老鼠的缩写是mmu。
+**注意事项：** -a和-b参数是必需的，其他参数都有默认值！
 
-**注意事项：** 在示例文件中有从KEGG网址下载的人类和通用keg文件，为保证数据库的最新建议手动下载。      
-**比如解析通用keg文件：**        
-```python read_keg.py example/ko00001.keg```          
-**比如解析人类keg文件：**        
-```python read_keg.py example/hsa00001.keg```          
-**生成文件 1：** output_\<你的keg文件名> (TABLE file)       
-**生成文件 2：** \<你的keg前缀（物种缩写）\>_map.txt （表格文件，如果需要进行KEGG富集分析，你可以使用excel的Vlookup函数对完成背景基因文件）    
+**生成文件：** 
+- `count_Map.txt`（表格文件）。
 
-### 3.07 KEGG_pathway_geneNum.py [3.06_生成文件_1] [GENE_KO]    
-**功能描述：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。    
-**3.06_ 生成文件_1：** 脚本3.06的生成文件。            
-**GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号（或其他通路编号），多个ko编号可以用逗号隔开，可参考示例文件。    
-```python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt```         
-**生成文件 1：** A.txt (all_gene is the total number of genes, and you can use this number to find the gene ratio. TABLE file)   
-**生成文件 2：** A-B.txt (TABLE file)   
-**生成文件 3：** A-C.txt (TABLE file)   
-**生成文件 5：** err.txt (There is no matching KO number. TABLE file)      
+**示例：**
 
-### 3.08 read_goOBO.py [obo_FILE]      
-**功能描述：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格，你可以直接使用示例文件中的go_term_list.txt，要注意这个文件可能不是最新的版本，因此推荐使用该脚本提取最新的GO注释信息。           
-**obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 推荐打开网页后，右键，点击另存为，保存为文本文件） 。       
-**注意事项：** 由于网页加载可能不全因此不推荐将网页CTRL+A全选CTRL+C复制，新建txt文件并打开CTRL+V粘贴。      
-**比如你将网页复制或保存到了abc.txt，你可以运行下方代码：**        
-```python read_goOBO.py abc.txt```   
-**生成文件：** \<版本号\>_go_term_list.txt（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）。   
-          
-### 3.09 ConvertGene-GO.py [GENE_GOs_MAP]                 
+```bash
+python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0
+```
+
+### 3.05 `splitFasta.py [FASTA_FILE_PATH] [Number_of_split_files]`
+       
+**功能描述：** 针对含有大量序列的FASTA文件，可根据序列数量对其进行分割，形成多个较小的FASTA文件。
+
+- **FASTA_FILE_PATH：** 要分割的FASTA文件的路径。
+- **Number_of_split_files：** 分割完成后每个文件包含的序列数。
+
+**使用场景：** 例如，在进行在线KEGG注释时，KEGG服务可能对一次上传的序列数目有所限制，通过预先分割大的FASTA文件，可以确保符合上传要求并顺利完成注释任务。
+
+**生成文件：** 
+- `<拆分后的文件编号>_<原FASTA文件>`（多个FASTA文件）。   
+
+**示例：**
+
+运行下列代码将7个序列的fasta文件分为3个2序列的文件（不够整除最后一个文件只有一个序列）。
+```bash
+python splitFasta.py example/text.fa 2
+```
+
+### 3.06 `read_keg.py [KEG_FILE]`
+   
+**功能描述：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释时手动构建背景基因集。
+
+- **KEG_FILE：** 从KEGG数据库下载的KEG文件比如通用的：ko00001.keg或者人类KEG文件：hsa00001.keg。
+
+**使用场景：** 通过本脚本你可以得到KEGG数据库每个ko或者每个物种的通路ID的简易化表格，①用于在KEGG在线注释网站得到的KEGG注释的解析；②用于解析KEGG通路数据库中模式生物或通用注释表的解析。
+                 
+> 你可以点击链接下载通用KEG文件：https://www.kegg.jp/kegg-bin/download_htext?htext=ko00001&format=htext&filedir=
+> 将上述网址中的htext=ko00001中的ko替换为物种缩写可以下载特定物种的KEG文件，比如替换为hsa https://www.kegg.jp/kegg-bin/download_htext?htext=hsa00001&format=htext&filedir= 即是人类的KEG文件。
+> 物种缩写你可以参照：  https://www.genome.jp/kegg/catalog/org_list.html   比如老鼠的缩写是mmu。
+
+**注意事项：** 在示例文件中有从KEGG网址下载的人类和通用keg文件，为保证数据库的最新建议手动下载。
+
+
+**生成文件：** 
+- `output_\<你的keg文件名>`（表格文件）
+- `<你的keg前缀（物种缩写）>_map.txt` （表格文件，如果需要进行KEGG富集分析，你可以使用excel的Vlookup函数对完成背景基因文件）
+
+**示例：**
+
+```bash
+# 比如解析通用keg文件：
+python read_keg.py example/ko00001.keg
+
+# 比如解析人类keg文件：
+python read_keg.py example/hsa00001.keg
+```
+
+### 3.07 `KEGG_pathway_geneNum.py [3.06_生成文件_1] [GENE_KO]`
+    
+**功能描述：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。
+
+- **3.06_ 生成文件_1：** 脚本3.06的生成文件。
+- **GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号（或其他通路编号），多个ko编号可以用逗号隔开，可参考示例文件。
+
+
+**生成文件：** 
+- A.txt (all_gene is the total number of genes, and you can use this number to find the gene ratio. TABLE file)  
+- A-B.txt (TABLE file)   
+- A-C.txt (TABLE file)   
+- err.txt (There is no matching KO number. TABLE file)
+
+**示例：**
+
+```bash
+python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt
+```
+
+### 3.08 `read_goOBO.py [obo_FILE]`
+
+**功能描述：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格，你可以直接使用示例文件中的go_term_list.txt，要注意这个文件可能不是最新的版本，因此推荐使用该脚本提取最新的GO注释信息。
+
+- **obo_FILE：** GO网站上下载的obo文件路径（打开网址：https://purl.obolibrary.org/obo/go/go-basic.obo 推荐打开网页后，右键，点击另存为，保存为文本文件） 。
+
+**注意事项：** 由于网页加载可能不全因此不推荐将网页CTRL+A全选CTRL+C复制，新建txt文件并打开CTRL+V粘贴。
+
+**生成文件：** 
+- `<版本号>_go_term_list.txt`（TABLE文件，第一列是GO号，第二列是描述信息，第三列是分类）
+
+**示例：**
+
+比如你将网页复制或保存到了abc.txt，你可以运行下方代码：
+```bash
+python read_goOBO.py abc.txt
+```
+
+### 3.09 `ConvertGene-GO.py [GENE_GOs_MAP]`
+                 
 **功能描述：** 转换GO注释表格：  
 将表格：    
 | Gene | GO Terms |          
@@ -690,100 +758,127 @@ Given the three levels of map A-B-C, find the C elements in A and count them.
 | GeneA	 | GO:000002 |      
 | GeneB	 | GO:000006 |    
   
-其中：原始表格不一定是逗号分隔，也可以是分号分隔或者可以包含多余的描述信息，比如： GO:000001(描述信息), GO:000002(描述信息)  的格式。          
-**GENE_GOs_MAP：** 二列表格，第一列是基因名称，第二列是对应的许多GO号，每一行都是一对多的形式。     
-```python ConvertGene-GO.py example/seq_gos.txt```       
-**生成文件：** g-go.txt（TABLE文件，第一列是geneid，第二列是GOID）。     
+其中：原始表格不一定是逗号分隔，也可以是分号分隔或者可以包含多余的描述信息，比如： GO:000001(描述信息), GO:000002(描述信息)  的格式。
+
+- **GENE_GOs_MAP：** 二列表格，第一列是基因名称，第二列是对应的许多GO号，每一行都是一对多的形式。
+
+**生成文件：** 
+- `g-go.txt`（TABLE文件，第一列是geneid，第二列是GOID）。     
+
+**示例：**
+
+```bash
+python ConvertGene-GO.py example/seq_gos.txt
+```
       
-### 3.10 getGOinfo.py [go_term_list] [GENE_GO_MAP]                 
-**功能描述：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。               
-**go_term_list：** 推荐是使用3.08脚本生成的go_term_list.txt文件，包含所有GO术语的描述信息。     
-**GENE_GO_MAP：** 推荐是3.09生成的文件，第一列是基因名称，第二列是对应的GO号。       
-**注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过代码3.09（推荐）或者下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。                  
-```awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file```      
-**使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。**             
-```python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt```      
-**生成文件：** gene_GO_info.txt（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。   
+### 3.10 `getGOinfo.py [go_term_list] [GENE_GO_MAP]`
+                 
+**功能描述：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。
 
-> **无参GO富集分析流程：** 当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.09转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.10为每个gene添加GO注释信息；④使用R包clusterProfiler 计算受关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。比较常见的富集结果（气泡图的横坐标）有基因比例（gene Ratio）、富集得分（enrichment score，又称fold enrichment富集倍率）和富集因子（rich factor），比如clusterProfiler计算得到的GeneRatio是20/100（表示100个关注基因富集到某术语20个gene），BgRatio是50/150（表示所有的150个基因富集到某术语50个gene）那么，基因比例即为20/100=0.20，富集得分为两个比例的比值即为(20/100)/(50/150)=0.6，富集因子是两个分子的比值即为20/50=0.4。注意如小鼠、人等模式生物，由于自己注释出的背景基因很可能不全面，因此推荐使用专门的富集网站或者富集工具包完成。    
-**无参KEGG富集分析流程与GO富集类似。**            
+- **go_term_list：** 推荐是使用3.08脚本生成的go_term_list.txt文件，包含所有GO术语的描述信息。
+- **GENE_GO_MAP：** 推荐是3.09生成的文件，第一列是基因名称，第二列是对应的GO号。
 
+**注意事项：** 有时自己注释的表格是某一列是geneID，还有一列是很多GO号。你可以通过代码3.09（推荐）或者下面的代码把一个基因对应多个GO号的文件转换为一一对应的格式！如果是go号之间是逗号隔开，把下边的分号改为分号即可，注意需要是英文的！input_file是你输入的文件名，也就是一个gene对应很多GO编号的表格，output_file是指输出的文件名，注意不要和已有文件相同。
+```bash
+awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file
+```
+**生成文件：** 
+- `gene_GO_info.txt`（TABLE文件，第一列是geneid，第二列是GOID，第三列是描述信息，第四列是GO三大类的分类）。
+
+**示例：**
+
+使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。
+```bash
+python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
+```
+
+> **无参GO/KEGG富集分析流程**    
+> 当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.09转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.10为每个gene添加GO注释信息；④使用R包clusterProfiler 计算受关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。比较常见的富集结果（气泡图的横坐标）有基因比例（gene Ratio）、富集得分（enrichment score，又称fold enrichment富集倍率）和富集因子（rich factor），比如clusterProfiler计算得到的GeneRatio是20/100（表示100个关注基因富集到某术语20个gene），BgRatio是50/150（表示所有的150个基因富集到某术语50个gene）那么，基因比例即为20/100=0.20，富集得分为两个比例的比值即为(20/100)/(50/150)=0.6，富集因子是两个分子的比值即为20/50=0.4。注意如小鼠、人等模式生物，由于自己注释出的背景基因很可能不全面，因此推荐使用专门的富集网站或者富集工具包完成。    
+>无参KEGG富集分析流程与GO富集类似。
 > 富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分，并对部分内容进行修改，使之同时适合KEGG和GO无参富集分析。    
 
 > **文件1 背景基因注释分组文件 gene_ID.txt**    
-第一列是gene或蛋白质的名称（可以不唯一）；第二列是GO号或ko号；第三列是描述信息，对于GO富集分析是GO术语的详细解释（level2），对于KEGG分析是levelC的描述信息；第四列是分组信息，对于GO是指GO的三大类，对于KEGG可以选择levelC所属的levelA或levelB的描述信息。      
+> 第一列是gene或蛋白质的名称（可以不唯一）；第二列是GO号或ko号；第三列是描述信息，对于GO富集分析是GO术语的详细解释（level2），对于KEGG分析是levelC的描述信息；第四列是分组信息，对于GO是指GO的三大类，对于KEGG可以选择levelC所属的levelA或levelB的描述信息。      
  
 > GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列格式修改：            
              
-| gene_id | ID | Description | GROUP |            
-| --- | --- | --- | --- |        
-| GeneA | GO:000001 | mitochondrion inheritance | biological_process |        
-| GeneA | GO:000002 | mitochondrial genome maintenance | biological_process |         
-| GeneB | GO:000006 | high-affinity zinc transmembrane transporter activity | molecular_function |        
-| ... | ... | ... | ... |        
+> | gene_id | ID | Description | GROUP |            
+> | --- | --- | --- | --- |        
+> | GeneA | GO:000001 | mitochondrion inheritance | biological_process |        
+> | GeneA | GO:000002 | mitochondrial genome maintenance | biological_process |         
+> | GeneB | GO:000006 | high-affinity zinc transmembrane transporter activity | molecular_function |        
+> | ... | ... | ... | ... |        
                 
 > KEGG富集分析的文件需要按照下列格式修改可以使用代码3.05和EXCEL的vlookup函数生成该文件：           
                
-| gene_id | ID | Description | GROUP |            
-| --- | --- | --- | --- |        
-| GeneA | ko00010 | Glycolysis / Gluconeogenesis | Metabolism |        
-| GeneA | ko00020 | Citrate cycle (TCA cycle) | Metabolism |         
-| GeneB | ko04016 | MAPK signaling pathway - plant | Environmental Information Processing |        
-| ... | ... | ... | ... |        
+> | gene_id | ID | Description | GROUP |            
+> | --- | --- | --- | --- |        
+> | GeneA | ko00010 | Glycolysis / Gluconeogenesis | Metabolism |        
+> | GeneA | ko00020 | Citrate cycle (TCA cycle) | Metabolism |         
+> | GeneB | ko04016 | MAPK signaling pathway - plant | Environmental Information Processing |        
+> | ... | ... | ... | ... |        
           
 > **文件2 关注的基因（差异基因/特异基因/正选择基因等）列表 gene.txt**      
-至少有一列是以gene_id为列名的列，注意该列不得有重复的基因，否则计算将错误。       
+> 至少有一列是以gene_id为列名的列，注意该列不得有重复的基因，否则计算将错误。       
    
-| gene_id |                   
-| --- |           
-| GeneA |     
-| GeneB |        
-| GeneD |         
-| ... |           
+> | gene_id |                   
+> | --- |           
+> | GeneA |     
+> | GeneB |        
+> | GeneD |         
+> | ... |           
       
 > 准备好上述两个文件，即可使用下列代码计算富集统计数，基于富集统计数即可绘制气泡图。       
    
-```    
-#富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分。      
+> ```bash
+> #富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分。      
+> 
+> library(clusterProfiler)        
+> #读取手动准备好的背景基因集
+> gene_ID <- read.delim('gene_ID.txt', stringsAsFactors = FALSE)
+> #读取基因列表文件中的基因名称
+> genes <- read.delim('gene.txt', stringsAsFactors = FALSE)$gene_id
+> #GO/KEGG 富集分析
+> gene_rich <- enricher(gene = genes,  #待富集的基因列表
+>     TERM2GENE = gene_ID[c('ID', 'gene_id')],  #背景基因集
+>     TERM2NAME = gene_ID[c('ID', 'Description')], 
+>     pAdjustMethod = 'BH',  #指定 p 值校正方法
+>     pvalueCutoff = 0.05,  #指定 p 值阈值（可指定 1 以输出全部）
+>     qvalueCutoff = 0.2)  #指定 q 值阈值（可指定 1 以输出全部）
+> #输出富集结果
+> write.table(gene_rich, 'gene_rich.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+> #再把 GO Ontology或KEGG levelA 信息添加在上述富集结果中
+> tmp <- read.delim('gene_rich.txt')
+> gene_ID <- gene_ID[!duplicated(gene_GO$ID), ]
+> tmp <- merge(tmp, gene_GO[c('ID', 'GROUP')], by = 'ID')
+> tmp <- tmp[c(10, 1:9)]
+> tmp <- tmp[order(tmp$pvalue), ]
+> #输出
+> write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+> ```       
 
-library(clusterProfiler)        
-#读取手动准备好的背景基因集
-gene_ID <- read.delim('gene_ID.txt', stringsAsFactors = FALSE)
-#读取基因列表文件中的基因名称
-genes <- read.delim('gene.txt', stringsAsFactors = FALSE)$gene_id
-#GO/KEGG 富集分析
-gene_rich <- enricher(gene = genes,  #待富集的基因列表
-    TERM2GENE = gene_ID[c('ID', 'gene_id')],  #背景基因集
-    TERM2NAME = gene_ID[c('ID', 'Description')], 
-    pAdjustMethod = 'BH',  #指定 p 值校正方法
-        pvalueCutoff = 0.05,  #指定 p 值阈值（可指定 1 以输出全部）
-    qvalueCutoff = 0.2)  #指定 q 值阈值（可指定 1 以输出全部）
-#输出富集结果
-write.table(gene_rich, 'gene_rich.txt', sep = '\t', row.names = FALSE, quote = FALSE)
-#再把 GO Ontology或KEGG levelA 信息添加在上述富集结果中
-tmp <- read.delim('gene_rich.txt')
-gene_ID <- gene_ID[!duplicated(gene_GO$ID), ]
-tmp <- merge(tmp, gene_GO[c('ID', 'GROUP')], by = 'ID')
-tmp <- tmp[c(10, 1:9)]
-tmp <- tmp[order(tmp$pvalue), ]
-#输出
-write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
-```       
+### 3.11 `GenoSpider`
 
-### 3.11 GenoSpider     
 **功能描述：** 基因组数据爬虫，详细说明待补充！       
 
+## 4.Plotscript 绘图代码工具集。     
 
-## 4.Plotscript     
-绘图代码工具集。     
+### 4.01 `geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
+     
+**功能描述：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。
 
-### 4.01 geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]     
-**功能描述：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。     
-**GENE_LIST：** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.     
-**COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.     
-**Vertical_spacing：** Spacing of adjacent row genomes, default 50.    
-```python geneArrangementMap.py example/gene.txt example/color.txt 50```      
-** 生成文件:** out.svg （SVG file）。     
+- **GENE_LIST：** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.
+- **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
+- **Vertical_spacing：** Spacing of adjacent row genomes, default 50.
+
+** 生成文件:** 
+- `out.svg` （SVG file）。
+
+**示例：**
+
+```bash
+python geneArrangementMap.py example/gene.txt example/color.txt 50
+```
 
 
 
