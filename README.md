@@ -792,44 +792,35 @@ awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_fi
 python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 ```
 
-> **无参GO/KEGG富集分析流程**    
+> ## 无参GO/KEGG富集分析流程    
 > 当你已经得到所有基因/蛋白质的GO注释结果，①如果原始注释表格是gene-GOs一对多的格式，使用3.09转换为gene-GO一对一的格式；②使用3.08下载并解析所有GO术语描述信息表；③使用3.10为每个gene添加GO注释信息；④使用R包clusterProfiler 计算受关注基因（比如差异基因/正选择基因/扩张基因等）的GO术语富集到背景基因（所有注释基因/蛋白质）GO术语的结果。比较常见的富集结果（气泡图的横坐标）有基因比例（gene Ratio）、富集得分（enrichment score，又称fold enrichment富集倍率）和富集因子（rich factor），比如clusterProfiler计算得到的GeneRatio是20/100（表示100个关注基因富集到某术语20个gene），BgRatio是50/150（表示所有的150个基因富集到某术语50个gene）那么，基因比例即为20/100=0.20，富集得分为两个比例的比值即为(20/100)/(50/150)=0.6，富集因子是两个分子的比值即为20/50=0.4。注意如小鼠、人等模式生物，由于自己注释出的背景基因很可能不全面，因此推荐使用专门的富集网站或者富集工具包完成。    
 >无参KEGG富集分析流程与GO富集类似。
 > 富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分，并对部分内容进行修改，使之同时适合KEGG和GO无参富集分析。    
-
 > **文件1 背景基因注释分组文件 gene_ID.txt**    
 > 第一列是gene或蛋白质的名称（可以不唯一）；第二列是GO号或ko号；第三列是描述信息，对于GO富集分析是GO术语的详细解释（level2），对于KEGG分析是levelC的描述信息；第四列是分组信息，对于GO是指GO的三大类，对于KEGG可以选择levelC所属的levelA或levelB的描述信息。      
- 
 > GO富集分析的文件可以使用脚本3.10生成，但是需要按照下列格式修改：            
-             
 > | gene_id | ID | Description | GROUP |            
 > | --- | --- | --- | --- |        
 > | GeneA | GO:000001 | mitochondrion inheritance | biological_process |        
 > | GeneA | GO:000002 | mitochondrial genome maintenance | biological_process |         
 > | GeneB | GO:000006 | high-affinity zinc transmembrane transporter activity | molecular_function |        
 > | ... | ... | ... | ... |        
-                
 > KEGG富集分析的文件需要按照下列格式修改可以使用代码3.05和EXCEL的vlookup函数生成该文件：           
-               
 > | gene_id | ID | Description | GROUP |            
 > | --- | --- | --- | --- |        
 > | GeneA | ko00010 | Glycolysis / Gluconeogenesis | Metabolism |        
 > | GeneA | ko00020 | Citrate cycle (TCA cycle) | Metabolism |         
 > | GeneB | ko04016 | MAPK signaling pathway - plant | Environmental Information Processing |        
 > | ... | ... | ... | ... |        
-          
 > **文件2 关注的基因（差异基因/特异基因/正选择基因等）列表 gene.txt**      
 > 至少有一列是以gene_id为列名的列，注意该列不得有重复的基因，否则计算将错误。       
-   
 > | gene_id |                   
 > | --- |           
 > | GeneA |     
 > | GeneB |        
 > | GeneD |         
 > | ... |           
-      
 > 准备好上述两个文件，即可使用下列代码计算富集统计数，基于富集统计数即可绘制气泡图。       
-   
 > ```bash
 > #富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分。      
 > 
