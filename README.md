@@ -324,7 +324,8 @@ python ExAndRename.py example/map.txt example/text.fa
 
 **注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！
 
-**生成文件：** pamlfile (文件夹，其中包含需要转换的fasta文件名+pam后缀) 。      
+**生成文件：** 
+- `pamlfile`（文件夹，其中包含需要转换的fasta文件名+pam后缀）。      
 
 **示例：**
 
@@ -332,20 +333,35 @@ python ExAndRename.py example/map.txt example/text.fa
 python BatchFastaToPam.py example/ali_fasta
 ```
 
-### 2.11 ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]        
-**功能描述：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。       
-**使用场景：** ①单拷贝同源基因每个基因家族的序列提取过程中，将下载的CDS序列按照基因家族分组将CDS分别归属到新的不同的文件中，用于后续CDS和蛋白质序列的匹配，矩阵文件是Orthogroups/Orthogroups.tsv（MATRIX_FILE，可以参照示例文件example/seq_matrix2.txt），你只需要从NCBI下载每个物种的fna文件（重要：需要使用cut命令分列并保留第一列，使得每个序列的名称只包含ID号！）放置在同一文件夹中（IN_FASTA_FILE_DIR），然后指定输出文件就可以将不同物种的CDS文件分配到已基因家族名称命名的fasta文件中；②提取同一基因家族的基因进行合并分析。       
-**IN_FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要重新分配的fasta格式序列文件，可以是DNA、CDS、转录本、蛋白质或其他序列。            
-**MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一行的第一个项目是新分配后的文件名，其余位置是该文件中包含的序列名称。      
-**OUT_FASTA_FILE_DIR：** 文件夹路径名，输出路径。             
-**注意事项：** 索引表格一定要包含标题行，可以是标准的同行数同列数的矩阵，但不强制要求。                       
-```python ReassignSequence.py example/ali_fasta example/seq_matrix.txt out```          
-**生成文件：** \<OUT_FASTA_FILE_DIR\> (文件夹，其中包含重新分配后的序列)       
+### 2.11 `ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]`
 
-### 2.12 BatchAlignedProteinToDNA.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
-**功能描述：** 假如你有蛋白质的比对文件，想要得到对应CDS的密码子比对文件可以使用此脚本，简单来说是批量将比对过的蛋白质序列转换为DNA序列，通过本脚本可以过滤掉：①CDS系列长度不为3的倍数的序列；②CDS-蛋白序列不匹配的序列；③含有未知碱基N的序列。      
-**使用场景：** 通过OrthoFinder软件对多个物种的同源基因家族进行搜索期间会在WorkingDirectory/Alignments_ids目录生成单拷贝正交基因蛋白序列的比对文件，从其中提取单拷贝正交基因家族（单拷贝基因家族列表在Orthogroups/Orthogroups_SingleCopyOrthologues.txt，可以使用for循环提取）存放到文件夹中（PEP参数），从NCBI等数据库下载CDS序列（CDS序列编号和蛋白序列编号是相同的），使用脚本2.11提取蛋白序列对应的CDS序列（未比对）存放到文件夹中（CDS参数），OrthoFinder结果文件中WorkingDirectory下的SequenceIDs.txt即为蛋白质名称-CDS名称对照表（MAPFILE参数）。      
-```options:
+**功能描述：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。
+
+- **IN_FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要重新分配的fasta格式序列文件，可以是DNA、CDS、转录本、蛋白质或其他序列。
+- **MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一行的第一个项目是新分配后的文件名，其余位置是该文件中包含的序列名称。
+- **OUT_FASTA_FILE_DIR：** 文件夹路径名，输出路径。
+
+**使用场景：** ①单拷贝同源基因每个基因家族的序列提取过程中，将下载的CDS序列按照基因家族分组将CDS分别归属到新的不同的文件中，用于后续CDS和蛋白质序列的匹配，矩阵文件是Orthogroups/Orthogroups.tsv（MATRIX_FILE，可以参照示例文件example/seq_matrix2.txt），你只需要从NCBI下载每个物种的fna文件（重要：需要使用cut命令分列并保留第一列，使得每个序列的名称只包含ID号！）放置在同一文件夹中（IN_FASTA_FILE_DIR），然后指定输出文件就可以将不同物种的CDS文件分配到已基因家族名称命名的fasta文件中；②提取同一基因家族的基因进行合并分析。       
+
+**注意事项：** 索引表格一定要包含标题行，可以是标准的同行数同列数的矩阵，但不强制要求。
+
+**生成文件：** 
+- `<OUT_FASTA_FILE_DIR参数>` (文件夹，其中包含重新分配后的序列)       
+
+**示例：**
+
+```bash
+python ReassignSequence.py example/ali_fasta example/seq_matrix.txt out
+``` 
+
+### 2.12 `BatchAlignedProteinToDNA.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]`
+
+**功能描述：** 假如你有蛋白质的比对文件，想要得到对应CDS的密码子比对文件可以使用此脚本，简单来说是批量将比对过的蛋白质序列转换为DNA序列，通过本脚本可以过滤掉：①CDS系列长度不为3的倍数的序列；②CDS-蛋白序列不匹配的序列；③含有未知碱基N的序列。
+
+**参数说明：** 
+
+```bash
+options:
   -h, --help            显示帮助信息
   -c CODON, --codon 密码子表文件，第一列为氨基酸单字母缩写，第二列是对应的密码子，示例文件中cod.txt为标准密码子表。
   -m MAPFILE, --mapfile 索引表文件，蛋白质序列名称及其对应的CDS序列名称表。第一列是蛋白质名称，第二列是对应CDS名称。
@@ -353,12 +369,22 @@ python BatchFastaToPam.py example/ali_fasta
   -C CDS, --cds 包含所有CDS序列的目录，推荐使用脚本2.11生成的。
   -s SUFFIX_P, --suffix_p 蛋白质序列的扩展名，即蛋白质序列文件最后的.后的内容，默认是fa。
   -S SUFFIX_C, --suffix_c CDS序列的扩展名，即CDS序列文件最后的.后的内容，默认是fna。
-```         
-**注意事项：** 由软件自动生成的SequenceIDs.txt需要手动按照冒号和空格分列，删除多余的部分，详细可以查看示例文件            
-```python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"```          
-**生成文件 1：** output（文件夹，用于存放比对过的CDS序列，运行上述命令生成的文件参考example/output）。      
-**生成文件 2：** err_cds.txt（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。      
-  
+``` 
+
+**使用场景：** 通过OrthoFinder软件对多个物种的同源基因家族进行搜索期间会在WorkingDirectory/Alignments_ids目录生成单拷贝正交基因蛋白序列的比对文件，从其中提取单拷贝正交基因家族（单拷贝基因家族列表在Orthogroups/Orthogroups_SingleCopyOrthologues.txt，可以使用for循环提取）存放到文件夹中（PEP参数），从NCBI等数据库下载CDS序列（CDS序列编号和蛋白序列编号是相同的），使用脚本2.11提取蛋白序列对应的CDS序列（未比对）存放到文件夹中（CDS参数），OrthoFinder结果文件中WorkingDirectory下的SequenceIDs.txt即为蛋白质名称-CDS名称对照表（MAPFILE参数）。
+
+**注意事项：** 由软件自动生成的SequenceIDs.txt需要手动按照冒号和空格分列，删除多余的部分，详细可以查看示例文件。
+
+**生成文件：** 
+- `output`（文件夹，用于存放比对过的CDS序列，运行上述命令生成的文件参考example/output）。
+- `err_cds.txt`（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。
+
+**示例：**
+
+```bash
+python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"
+```  
+
 ### 2.13 Extract4DTv.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
 **功能描述：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。      
 **使用场景：** 同源基因建树。      
