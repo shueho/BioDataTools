@@ -9,10 +9,10 @@
 #
 # Merge different sequences of the same sample (recommendation is the result of the comparison).
 
-import os
+import sys
 
-arg = os.argv
-assert len(arg) == 2
+arg = sys.argv
+assert len(arg) == 3
 a = arg[1]
 b = arg[2]
 #a = "16s.fas"

@@ -10,6 +10,8 @@
 # Convert the GB file into a FASTA file, and take the GB file name as the content of the modifier after ">" in the FASTA file.It is mainly used for batch processing of a large number of GB files.
 
 import os
+import sys
+path = sys.argv[1]
 
 try:
 	os.mkdir("output")
@@ -29,12 +31,12 @@ def gb_to_fas(gb_file):
 					text += j
 		if "ORIGIN" in i:
 			flag = 1
-	with open("./output/{}.fas".format(gb_file.replace(".gb","")),"w") as f:
-		f.write(">"+gb_file.replace(".gb","")+"\n")
+	with open("./output/{}.fas".format(os.path.basename(gb_file).replace(".gb","")),"w") as f:
+		f.write(">"+os.path.basename(gb_file).replace(".gb","")+"\n")
 		f.write(text)
 
-ls = os.listdir()
-ls = [i for i in ls if ".gb" in i]
+ls = os.listdir(path)
+ls = [path+"/"+i for i in ls if ".gb" in i]
 
 for i in ls:
 	gb_to_fas(i)

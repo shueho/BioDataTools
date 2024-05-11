@@ -164,32 +164,73 @@ python Name_gb_by_info.py example/gb_isolate isolate
 # 以orgnism信息命名运行：
 python Name_gb_by_info.py example/gb_organism organism
 ```
-即可输出对应的结果。
+即可输出对应的结果于文件夹 `output` 中。
      
-### 2.03 gb_to_fasta.py   
-**功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。       
-**参数说明：** 不需要配置参数。运行时，需要将该脚本放置在GB文件所在的目录中（推荐在1.02生成的output文件中）。      
-**生成文件：** output/\<FASTA_FILE_NAME>.fas (多个FASTA文件)   。 
+### 2.03 `gb_to_fasta.py [GB_DIR]
+`
+**功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。
 
-> 群体遗传学分析快速下载数据流程：比如要从NCBI下载特定物种的cox1基因，可以先创建一个文件夹，分别列出该物种不同个体的cox1基因的GI编号，并将每个物种的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的gb文件；再运行脚本2.02，依据isolate标签对下载的gb文件进行重命名；最后执行脚本2.03，从而生成以isolate为名称的最终fasta格式序列文件。这是快速整合其他研究群体遗传学分析结果的流程。                
-       
-### 2.04 Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]    
-***过时代码***     
-**功能描述：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。      
-**FASTA_FILE_1：** 第一个序列。       
-**FASTA_FILE_2：** 第二个序列。    
-**场景举例：** 假设你有来自样本A、B和C的16S和COI序列，出于某种目的，你想要结合来自不同样本的16S和COI序列。您可以使用这个脚本。      
-**多次调用：** 如果要合并多个序列，可以重复调用此脚本。       
-**生成文件：** merge.fas（FASTA文件）。    
+- **GB_DIR：** 存放GB文件的目录路径。
 
-### 2.05 S_to_H.py -p [FASTA_FILE_NAME] -l [LIST_NAME]      
-**功能描述：** 将fasta文件多个样品序列根据单倍型归类。     
-**参数说明：** 使用前需要获取两个文件，一个是DnaSP导出的单倍型和样品对应的表格（可能需要手工制作）。另一个是包含所有物种序列的fasta文件。     
-**场景举例：** 比如，对于包含a、b、c、d、e五个样品的序列数据，其中样品a、b、c的序列完全相同，样品d和e的序列也完全一致，意味着我们拥有两个独特的单倍型。借助这段代码，能够将具有相同序列的样品合并归类为各自的单倍型，有利于后续针对不同单倍型序列进行系统发育分析。参考示例文件和示例代码！！！      
-**FASTA_FILE_NAME：** 样品序列文件名（example/sample.fas）。    
-**LIST_NAME：** 单倍型对应样品的表格（example/hap.list）。    
-```python S_to_H.py -p example/sample.fas -l example/hap.list```      
-**生成文件：** out_hap.fasta（FASTA文件，由单倍型组成的fasta文件）。          
+**生成文件：** 
+- `output/<原GB文件名>.fas`（多个FASTA文件）。 
+
+**示例：**
+
+比如需要将 `example/gb_isolate` 文件中GB文件转换为FASTA文件，执行命令：
+```bash
+python gb_to_fasta.py example/gb_isolate
+``` 
+即可输出对应的结果于文件夹 `output` 中。
+
+> ## 群体遗传学分析快速下载数据流程          
+> 比如要从NCBI下载特定多个群体的 `cox1` 基因，可以先创建一个文件夹，分别列出该群体不同个体的 `cox1` 基因的GI编号（可以在NCBI直接导出），并将每个群体的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的GB文件；再运行脚本2.02，依据isolate或其他标签对下载的GB文件进行重命名；最后执行脚本2.03，从而生成以标签值为名称的最终FASTA格式序列文件。
+
+### `2.04 Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]`
+
+**功能描述：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。
+
+- **FASTA_FILE_1：** 第一个序列。
+- **FASTA_FILE_2：** 第二个序列。
+
+**使用场景：** 假设你有来自样本A、B和C的16S和COI序列，出于某种目的，你想要结合来自不同样本的16S和COI序列。您可以使用这个脚本。
+
+**多次调用：** 如果要合并多个序列，可以重复调用此脚本。
+
+**注意事项：** 务必在比对后的序列文件中使用该脚本！
+
+**生成文件：** 
+- `merge.fas`（合并后的FASTA文件）。
+
+**示例：**
+
+比如 `example/fasta_merge` 目录中包含需要合并的序列 `16s.fasta` 和 `co1.fasta`，执行命令：
+```bash
+python Merge_dif_seq.py example/fasta_merge/16s.fasta example/fasta_merge/co1.fasta
+``` 
+输出结果文件 `merge.fas` ，即为16s+co1合并序列。
+
+### 2.05 `S_to_H.py -p [FASTA_FILE_NAME] -l [LIST_NAME]`
+
+**功能描述：** 将FASTA文件中多个样品序列根据单倍型归类。
+
+- **FASTA_FILE_NAME：** 样品序列文件名（参照example/sample.fas）。
+- **LIST_NAME：** 单倍型对应样品的表格（参照example/hap.list）。
+
+**参数说明：** 使用前需要获取两个文件，一个是DnaSP导出的单倍型和样品对应的表格（可能需要手工制作）。另一个是包含所有物种序列的fasta文件。
+
+**使用场景：** 比如，对于包含a、b、c、d、e五个样品的序列数据，其中样品a、b、c的序列完全相同，样品d和e的序列也完全一致，意味着我们拥有两个独特的单倍型。借助这段代码，能够将具有相同序列的样品合并归类为各自的单倍型，有利于后续针对不同单倍型序列进行系统发育分析。参考示例文件和示例代码！！！      
+
+**生成文件：** 
+- `out_hap.fasta`（由单倍型组成的FASTA文件）。
+
+**示例：**
+
+比如 `example/sample.fas` 文件是各个样品的序列文件， `example/hap.list` 文件是单倍型对应样品的表格，执行命令：
+```bash
+python S_to_H.py -p example/sample.fas -l example/hap.list
+``` 
+输出结果文件 `out_hap.fasta` ，即为单倍型序列文件。
 
 ### 2.06 ExtractFasta.py [FASTA_FILE] [LIST_FILE] [Regular_expressions (Optional)]      
 **功能描述：** 根据给定列表，可以从包含多个序列的总体fasta文件中筛选出子集fasta文件。列表中的ID项可以是总体fasta文件中序列ID的一部分，默认情况下，系统将匹配">"符号后直至第一个空格前的文本作为对应ID。若实际情况下的ID对应关系并非如此简单，则可通过配置自定义正则表达式来进行精确匹配。                            
