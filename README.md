@@ -385,109 +385,213 @@ options:
 python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"
 ```  
 
-### 2.13 Extract4DTv.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]          
-**功能描述：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。      
-**使用场景：** 同源基因建树。      
-**注意事项：** 所有参数均与脚本2.12一致，代码内容其实差不多，只是生成的文件名称不同。            
-```python Extract4DTv.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"```          
-**生成文件 1：** 4dtv（文件夹，用于存放提取到的4DTv位点，运行上述命令生成的文件参考example/4dtv）。      
-**生成文件 2：** err_4dtv.txt（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。      
-  
-### 2.14 MergeSequences.py [MATRIX_FILE] [FASTA_FILE_DIR] [SUFFIX] [ORDER_LIST（可选参数）]      
-**功能描述：** 进阶版合并序列脚本。     
-**MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一列是一个样品，每一行的第一个项目是对应的序列名称（fasta文件名,不包含后缀），行和列可以确定每个样品对应序列的序列名称。            
-**FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要合并的fasta格式的比对文件，文件名没有要求，只要包含MATRIX_FILE中所有序列名即可。            
-**ORDER_LIST：** 指定连接顺序，通过指定连接顺序既可以排除某个序列，也可以指定连接顺序，如果不指定则默认按照序列名称的哈希值为序全部连接。            
-**注意事项：** 文件夹中不能包含未比对的序列文件，可能会发生连接错误！         
-***运行下列代码将不指定顺序全连接。***               
-```python MergeSequences.py example/seq_matrix2.txt example/4dtv```          
-***若指定连接顺序运行下列代码。***              
-```python MergeSequences.py example/seq_matrix2.txt example/4dtv example/order.txt```          
-**生成文件 1：** <FASTA_FILE_DIR的名称>.fasta （FASTA文件，每个序列名称为第一行的样品名称）。      
-**生成文件 2：** order.true （实际合并顺序）。      
+### 2.13 `Extract4DTv.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]`
 
-### 2.15 BatchGenerationCodeML_CTL.py [PAML_FILE_DIR] [TREE_FILE]         
-**功能描述：** 批量生成CodeML的配置文件。           
-**PAML_FILE_DIR：** PAML格式的比对文件所在目录，在运行本脚本时要求目录中必须含有需要进行选择压力分析的比对文件，并且尽量不使用相对路径，否则将无法读取需要比对文件路径。            
-**TREE_FILE：** 树文件路径（相对于CodeML运行时的路径），不要求在本脚本运行时该文件存在，但是务必要保证在运行CodeML程序时程序可以读取到该路径。          
-**注意事项：** 本脚本只是生成配置文件，请务必注意脚本导入树文件路径并不是CodeML程序运行时树文件路径！配置文件模板选择的是Branch model模型，如果有其他需求可以直接修改配置文件。                           
-```python BatchGenerationCodeML_CTL.py example/paml_file "./out/a.tree"```          
-**生成文件 1：** codemlnull (文件夹，基于无效假设的配置文件） 。            
-**生成文件 1：** codeml2 (文件夹，基于替代假设的配置文件） 。            
+**功能描述：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。
 
-### 2.16 ParsingCodeMLResults.py [MOD0_DIR] [MOD2_DIR]         
-**功能描述：** 批量解析CodeML结果，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。           
-**MOD0_DIR：** 基于无效假设生成的结果。            
-**MOD2_DIR：** 基于替代假设生成的结果。            
-```python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2```          
-**生成文件：** result.txt (表格，可能需要手动整理） 。            
+**参数说明：** 所有参数均与脚本2.12一致，代码内容其实差不多，只是生成的文件名称不同。
 
+**使用场景：** 同源基因建树。
+
+**生成文件：** 
+- `4dtv`（文件夹，用于存放提取到的4DTv位点，运行上述命令生成的文件参考example/4dtv）。 
+- `err_4dtv.txt`（错误日志文件，显示过滤掉的序列，如果没有错误的序列将不生成）。
+
+**示例：**
+
+```bash
+python Extract4DTv.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"
+``` 
+
+### 2.14 `MergeSequences.py [MATRIX_FILE] [FASTA_FILE_DIR] [SUFFIX] [ORDER_LIST（可选参数）]`
+
+**功能描述：** 进阶版合并序列脚本。
+
+- **MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一列是一个样品，每一行的第一个项目是对应的序列名称（fasta文件名,不包含后缀），行和列可以确定每个样品对应序列的序列名称。
+- **FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要合并的fasta格式的比对文件，文件名没有要求，只要包含MATRIX_FILE中所有序列名即可。
+- **ORDER_LIST：** 指定连接顺序，通过指定连接顺序既可以排除某个序列，也可以指定连接顺序，如果不指定则默认按照序列名称的哈希值为序全部连接。
+
+**注意事项：** 文件夹中不能包含未比对的序列文件，可能会发生连接错误！
+
+**生成文件：** 
+- `<FASTA_FILE_DIR的名称>.fasta` （FASTA文件，每个序列名称为第一行的样品名称）。 
+- `order.true` （实际合并顺序）。
+
+**示例：**
+
+```bash
+# 运行下列代码将不指定顺序全连接：
+python MergeSequences.py example/seq_matrix2.txt example/4dtv
+
+#若指定连接顺序运行下列代码：
+python MergeSequences.py example/seq_matrix2.txt example/4dtv example/order.txt
+``` 
+
+### 2.15 `BatchGenerationCodeML_CTL.py [PAML_FILE_DIR] [TREE_FILE]`
+
+**功能描述：** 批量生成CodeML的配置文件。
+
+- **PAML_FILE_DIR：** PAML格式的比对文件所在目录，在运行本脚本时要求目录中必须含有需要进行选择压力分析的比对文件，并且尽量不使用相对路径，否则将无法读取需要比对文件路径。
+- **TREE_FILE：** 树文件路径（相对于CodeML运行时的路径），不要求在本脚本运行时该文件存在，但是务必要保证在运行CodeML程序时程序可以读取到该路径。
+
+**注意事项：** 本脚本只是生成配置文件，请务必注意脚本导入树文件路径并不是CodeML程序运行时树文件路径！配置文件模板选择的是Branch model模型，如果有其他需求可以直接修改配置文件。
+
+**生成文件：** 
+- `codemlnull` （文件夹，基于无效假设的配置文件） 。 
+- `codeml2`（文件夹，基于替代假设的配置文件） 。
+
+**示例：**
+
+```bash
+python BatchGenerationCodeML_CTL.py example/paml_file "./out/a.tree"
+```
+
+### 2.16 `ParsingCodeMLResults.py [MOD0_DIR] [MOD2_DIR] `
+
+**功能描述：** 批量解析CodeML结果，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。
+
+- **MOD0_DIR：** 基于无效假设生成的结果。
+- **MOD2_DIR：** 基于替代假设生成的结果。
+
+**生成文件：** 
+- `result.txt` （表格，可能需要手动整理） 。
+
+**示例：**
+
+```bash
+python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2
+```  
+> ## 比较基因组学-同源基因建树和选择压力分析流程（一）          
 > 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。         
 
-### 2.17 SplitAXT.py [AXT_FILE]     
-**功能描述：** 将单个AXT格式文件拆分为多个AXT文件，使得每个文件中只包含一对序列比对。   
-**使用场景：** 脚本2.12生成的密码子比对文件后，如果需要进一步进行4dtv分析，需要使用摘抄代码convert_fasta_to_axt.pl（做了适应性修改）将其转换为AXT文件，本脚本可以把上述代码生成的AXT文件按照序列对进行拆分。           
-**AXT_FILE：** 需要拆分的AXT文件。            
-**注意事项：** 本脚本只支持序列对名称中含有数字的AXT文件。                           
-```python SplitAXT.py example/test.axt```          
-***有时你也许需要批处理。***               
-```for i in `ls *axt`;do python SplitAXT.py $i ;done```          
-**生成文件：** \<序列对\>.axt-split (多个axt文件） 。          
+### `2.17 SplitAXT.py [AXT_FILE]`
+     
+**功能描述：** 将单个AXT格式文件拆分为多个AXT文件，使得每个文件中只包含一对序列比对。
 
+- **AXT_FILE：** 需要拆分的AXT文件。
+
+**使用场景：** 脚本2.12生成的密码子比对文件后，如果需要进一步进行4dtv分析，需要使用摘抄代码convert_fasta_to_axt.pl（做了适应性修改）将其转换为AXT文件，本脚本可以把上述代码生成的AXT文件按照序列对进行拆分。
+
+**注意事项：** 本脚本只支持序列对名称中含有数字的AXT文件。
+
+**生成文件：** 
+- `<序列对>.axt-split`（多个axt文件） 。
+
+**示例：**
+
+```bash
+python SplitAXT.py example/test.axt
+          
+# 有时你也许需要批处理。
+for i in `ls *axt`;do python SplitAXT.py $i ;done
+```
+
+> ## 比较基因组学-同源基因建树和选择压力分析流程（二）          
 > 你可以参考 https://yanzhongsino.github.io/2022/09/07/bioinfo_Ks_batch.calculation.Ks 来计算 Ka、Ks和4dtv值，由于calculate_4DTV_correction.pl脚本只支持一对序列的4dtv计算，因此可以使用脚本2.17对AXT文件进行拆分。                 
 
-### 2.18 BaseSiteInformation.py [GFF_FILE] [Q_FILE]         
-**功能描述：** 根据指定染色体位置及碱基位点信息，抽取相应的基因数据，比如位点在哪一个转录本上的哪一个CDS区间中，以及CDS或转录本的位置信息，方便后续注释分析。           
-**使用场景：** 通过随机森林等算法找到不同种群或不同品种的变异位点，需要定位到该位点所在基因。          
-**GFF_FILE：** 基因组GFF文件，只需要保留mRNA和CDS特征，并且每个mRNA需要位于其包含CDS特征的上方，可以选择在运行代码前手动将GFF文件排序！                 
-**Q_FILE：** 查找的条目表格，需要包括标题行，至少包含两列：第一列必须是染色体编号，第二列是对应于染色体上的位置。            
-```python BaseSiteInformation.py example/genome.gene.gff example/base_loc.txt```          
-**生成文件：** out_<Q_FILE>.xls (表格，第一、四列为基因名称，第二列是是否为CDS区域CDS/noCDS，第三列为CDS的起始终止位置以及ORF起始位点，第五列是染色体ID，然后是基因起始位置、得分以及基因CDS数目） 。            
+### 2.18 `BaseSiteInformation.py [GFF_FILE] [Q_FILE]`
 
-### 2.19 MaskSeq.py [FASTA_FILE] [TABLE_FILE] [TARG 可选参数]       
-***待优化！***       
-**功能描述：** 对Fasta文件中的某些区间进行屏蔽（替换为TARG）。           
-**使用场景：** 基因组分析中对基因组的一些序列（比如重复序列）进行屏蔽（ mask）以节约分析过程的算力。          
-**FASTA_FILE：** Fasta文件，里边包含许多序列，对于基因组来说其中包括许多染色体序列，>后边的内容为序列名称。                        
-**TABLE_FILE：** 三列表格，不需要包括标题行，第一列是序列名称（注意和fasta文件名称完全一致），第二、三列分别是屏蔽起始和终止位置（从1开始计数，可以从gff文件中直接复制）。            
-**TARG：** 屏蔽字符，将指定部分碱基替换为该字符，默认是将指定位置的碱基替换为N，你也可以指定替换的字符。         
-***默认替换为N。***                          
-```python MaskSeq.py example/Chr.fa example/masktbl.txt```          
-***替换为?。***                          
-```python MaskSeq.py example/Chr.fa example/masktbl.txt "?"```          
-**生成文件：** maskseq_\<FASTA_FILE> (屏蔽部分序列的FASTA文件） 。    
+**功能描述：** 根据指定染色体位置及碱基位点信息，抽取相应的基因数据，比如位点在哪一个转录本上的哪一个CDS区间中，以及CDS或转录本的位置信息，方便后续注释分析。
 
-### 2.20 BaseCompositionCalculation.py [FASTA_FILE] [TER_CODE 可选参数]       
-**功能描述：** 计算CDS序列中各个序列的各个位点的碱基数目，如A1、T1、G1、G3等。           
+- **GFF_FILE：** 基因组GFF文件，只需要保留mRNA和CDS特征，并且每个mRNA需要位于其包含CDS特征的上方，可以选择在运行代码前手动将GFF文件排序！
+- **Q_FILE：** 查找的条目表格，需要包括标题行，至少包含两列：第一列必须是染色体编号，第二列是对应于染色体上的位置。
+
+**使用场景：** 通过随机森林等算法找到不同种群或不同品种的变异位点，需要定位到该位点所在基因。
+
+**生成文件：** 
+- `out_<Q_FILE参数值>.xls`（表格，第一、四列为基因名称，第二列是是否为CDS区域CDS/noCDS，第三列为CDS的起始终止位置以及ORF起始位点，第五列是染色体ID，然后是基因起始位置、得分以及基因CDS数目） 。
+
+**示例：**
+
+```bash
+python BaseSiteInformation.py example/genome.gene.gff example/base_loc.txt
+```
+
+### 2.19 `MaskSeq.py [FASTA_FILE] [TABLE_FILE] [TARG 可选参数]`
+       
+***待优化！***
+
+**功能描述：** 对Fasta文件中的某些区间进行屏蔽（替换为TARG）。
+
+- **FASTA_FILE：** Fasta文件，里边包含许多序列，对于基因组来说其中包括许多染色体序列，>后边的内容为序列名称。                        
+- **TABLE_FILE：** 三列表格，不需要包括标题行，第一列是序列名称（注意和fasta文件名称完全一致），第二、三列分别是屏蔽起始和终止位置（从1开始计数，可以从gff文件中直接复制）。            
+- **TARG：** 屏蔽字符，将指定部分碱基替换为该字符，默认是将指定位置的碱基替换为N，你也可以指定替换的字符。
+   
+**使用场景：** 基因组分析中对基因组的一些序列（比如重复序列）进行屏蔽（ mask）以节约分析过程的算力。
+
+**注意事项：** TARG参数只能为单一字符。
+
+**生成文件：** 
+- `maskseq_<FASTA_FILE>` （屏蔽部分序列的FASTA文件） 。    
+
+**示例：**
+
+```bash
+# 默认替换为N。
+python MaskSeq.py example/Chr.fa example/masktbl.txt
+
+# 替换为?。
+python MaskSeq.py example/Chr.fa example/masktbl.txt "?"
+```
+
+### 2.20 `BaseCompositionCalculation.py [FASTA_FILE] [TER_CODE 可选参数]`
+       
+**功能描述：** 计算CDS序列中各个序列的各个位点的碱基数目，如A1、T1、G1、G3等。
+
+- **FASTA_FILE：** Fasta文件，里边包含许多序列，要求是核酸序列。
+- **TER_CODE：** 终止密码子列表，默认是标准密码子表的TAG,TAA,TGA，如果需要指定，需要保证每个终止密码子之间用半角英文逗号隔开且不含有过多空白，如果你希望统计到终止密码子你可以输入NNN。
+
 **使用场景：** 进行密码子偏好分析时需要获取GC12和GC3等参数可以通过本脚本结果进一步计算。          
-**FASTA_FILE：** Fasta文件，里边包含许多序列，要求是核酸序列。                        
-**TER_CODE：** 终止密码子列表，默认是标准密码子表的TAG,TAA,TGA，如果需要指定，需要保证每个终止密码子之间用半角英文逗号隔开且不含有过多空白，如果你希望统计到终止密码子你可以输入NNN。         
-***默认去除标准终止密码：***                          
-```python BaseCompositionCalculation.py example/base_cds.fa```          
-***希望统计到终止密码：***                          
-```python BaseCompositionCalculation.py example/base_cds.fa NNN```          
-***自定义终止密码：***                          
-```python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA```          
-**生成文件：** BaseComposition.txt (表格文件，包括各个位点的碱基数目，最后一列是碱基总数） 。   
-  
-  
-## 3. Gadget     
-一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。         
 
-### 3.01 MergeTable.py       
-***图形界面的合并表格工具***   
-**功能描述：** 合并多个表格时，可以根据它们的第一列数据进行对应联接操作。       
-**参数说明：** 不需要配置参数。将所有需要依据首列进行合并的表格逐一导入，并通过相应功能一键实现按第一列内容的合并操作。     
+**生成文件：** 
+- `BaseComposition.txt`（表格文件，包括各个位点的碱基数目，最后一列是碱基总数） 。
 
-### 3.02 VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP]     
-**功能描述：** vlookup函数的Python实现。可以自定义键值的位置。   
+**示例：**
+
+```bash
+# 默认去除标准终止密码：
+python BaseCompositionCalculation.py example/base_cds.fa
+
+# 希望统计到终止密码：
+python BaseCompositionCalculation.py example/base_cds.fa NNN
+
+# 自定义终止密码：
+python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA
+```
+
+
+## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
+
+### 3.01 `MergeTable.py`
+
+***图形界面的合并表格工具***
+
+**功能描述：** 合并多个表格时，可以根据它们的第一列数据进行对应联接操作。
+
+**参数说明：** 不需要配置参数。将所有需要依据首列进行合并的表格逐一导入，并通过相应功能一键实现按第一列内容的合并操作。
+
+**注意事项：** 只支持图形化系统。
+
+**示例：**
+
+```bash
+python MergeTable.py
+```
+
+### 3.02 `VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP]`
+
+**功能描述：** vlookup函数的Python实现。可以自定义键值的位置。
+
+- **KEY_FILE：** 一个文件，包含需要检索值的列。   
+- **MAP_FILE：** 在其中检索的表格，需要至少有两个列，其中一个是key，另外一个是值。        
+- **KEY_LOC：** 键列在MAP_FILE表格中位于的列号，比如第一列是key填写1。   
+- **VALUE_LOC：** 值列在MAP_FILE表格中位于的列号，比如第一列是value填写1。    
+- **SEP：** MAP的制表符，比如制表符分隔填写"\t"，注意引号是英文的。   
+
 **使用场景：** 从总注释表中提取一些基因的注释信息。注意这个只能提取一列内容。       
-**KEY_FILE：** 一个文件，包含需要检索值的列。   
-**MAP_FILE：** 在其中检索的表格，需要至少有两个列，其中一个是key，另外一个是值。        
-**KEY_LOC：** 键列在MAP_FILE表格中位于的列号，比如第一列是key填写1。   
-**VALUE_LOC：** 值列在MAP_FILE表格中位于的列号，比如第一列是value填写1。    
-**SEP：** MAP的制表符，比如制表符分隔填写"\t"，注意引号是英文的。      
-**生成文件：** map_\<map file name>（TABLE file）。    
+
+**生成文件：** 
+- `map_<map file name>`（TABLE file）。
 
 ### 3.03 SumByGroup.py [MAP_FILE] [MATRIX_FILE] [KEY_COL_ID] [VALUE_COL_ID]             
 **务必确保map表和matrix表均包含标题行以便正确识别列信息。另外，在进行相对丰度计算时，应当使用all.count的总计数值作为计算每个序列丰度的分母。**       
