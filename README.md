@@ -125,7 +125,7 @@ python splitFromLevel.py example/mpaMatrix.txt f
 
 **功能描述：** 通过GI编号批量下载fasta文件。
 
-- **GI_LIST_DIR：** 存放GI编号的目录路径，脚本自动检测并读取文件夹内所有以 `_gi.txt` 为扩展名的文本文件。这些 `_gi.txt` 文件需要存放待下载序列的GI编号。
+- **GI_LIST_DIR：** 存放GI编号的目录路径，脚本自动检测并读取文件夹内所有以 `_gi.txt` 为扩展名的文本文件。这些 `_gi.txt` 文件包含待下载序列的GI编号。
 
 **使用场景：** 为批量下载大量GenBank（gb）文件，您仅需简便地创建若干个“xxx_gi.txt”文件，每文件内粘贴相应的GI编号列表。此设计灵活性高，根据不同的GI编号列表文件，以列表文件名对结果文件进行区分。方便后续将不同分组文件分类归档，极大便利了群体遗传学中常见的单倍型分析任务。
 
@@ -140,13 +140,31 @@ python splitFromLevel.py example/mpaMatrix.txt f
 ```bash
 python Get_gb_by_gi.py example/gi
 ``` 
-输出文件夹 `gb` ，其中包括以列表名称为前缀的5个gb文件，示例文件 `example/gb` 即为生成样式。
+输出文件夹 `gb` ，其中包括以列表名称为前缀的5个gb文件，示例文件 `example/gb_isolate` 即为生成结果参考。
 
-### 2.02 Name_gb_by_isolate.py     
-**功能描述：** 该脚本能够读取GB文件内的isolate信息，并依据这些信息为对应的GB文件重新命名，尤其适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。      
-**参数说明：** 不需要配置参数。运行应将该脚本直接存放于包含GB文件的目录中，本脚本会自动批量读取目录下所有gb文件。        
-**脚本改写：** 如果你想遵循特定的genbank指令来命名你的序列文件，你可以在我的脚本中适当地重写正则表达式。          
-**生成文件：** output/\<ISOLATE>.gb（多个GENEBANK文件，重新命名的）。    
+### 2.02 `Name_gb_by_isolate.py [GB_DIR] [INFO_NAME]`
+
+**功能描述：** 读取GB文件内的某一样品信息（如isolate信息），并依据这一信息为对应的GB文件重新命名，适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。
+
+- **GB_DIR：** 存放GB文件的目录路径。
+- **INFO_NAME：** 需要对GB文件名称修改的参考信息，务必保证不同GB文件中该样品信息是唯一的。
+
+**注意事项：** 务必使用可以区分所有GB文件的信息！每次运行最好手动将上次运行产生的文件删除或重命名。
+
+**生成文件：** 
+- `output/<样品信息对应的值（空格以下划线替换）>.gb`（`output` 文件夹下的多个GENEBANK文件）。
+
+**示例：**
+
+比如 `example/gb_isolate` 文件和 `example/gb_orgnism` 文件中分别包含以 `isolate` 和 `orgnism` 信息区分的多个样品GB文件，可以执行：
+```bash
+# 以isolate信息命名运行：
+python Name_gb_by_info.py example/gb_isolate isolate
+
+# 以orgnism信息命名运行：
+python Name_gb_by_info.py example/gb_organism organism
+```
+即可输出对应的结果。
      
 ### 2.03 gb_to_fasta.py   
 **功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。       
