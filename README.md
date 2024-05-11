@@ -805,6 +805,7 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 > | GeneA | GO:000002 | mitochondrial genome maintenance | biological_process |         
 > | GeneB | GO:000006 | high-affinity zinc transmembrane transporter activity | molecular_function |        
 > | ... | ... | ... | ... |        
+
 > KEGG富集分析的文件需要按照下列格式修改可以使用代码3.05和EXCEL的vlookup函数生成该文件：           
 > | gene_id | ID | Description | GROUP |            
 > | --- | --- | --- | --- |        
@@ -812,6 +813,7 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 > | GeneA | ko00020 | Citrate cycle (TCA cycle) | Metabolism |         
 > | GeneB | ko04016 | MAPK signaling pathway - plant | Environmental Information Processing |        
 > | ... | ... | ... | ... |        
+
 > **文件2 关注的基因（差异基因/特异基因/正选择基因等）列表 gene.txt**      
 > 至少有一列是以gene_id为列名的列，注意该列不得有重复的基因，否则计算将错误。       
 > | gene_id |                   
@@ -820,6 +822,7 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 > | GeneB |        
 > | GeneD |         
 > | ... |           
+
 > 准备好上述两个文件，即可使用下列代码计算富集统计数，基于富集统计数即可绘制气泡图。       
 > ```bash
 > #富集分析R代码参考的是知乎文章  https://zhuanlan.zhihu.com/p/561522453 中的无参GO富集分析部分。      
