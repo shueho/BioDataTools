@@ -10,7 +10,9 @@
 # Crawl the corresponding genebank file by reading the GI number.
 
 import os
-file_list = os.listdir()
+import sys
+path = sys.argv[1]
+file_list = os.listdir(path)
 file_list = [i.replace("_gi.txt","") for i in file_list if "_gi.txt" in i]
 try:
     os.makedirs("gb")
@@ -37,7 +39,7 @@ def downloadGB(filename):
         gi_list = [i.strip() for i in gi_list if i]
     for gi in gi_list:
         try:
-            with open("gb/"+filename+"_"+gi+".gb","w") as f:
+            with open("gb/"+os.path.basename(filename)+"_"+gi+".gb","w") as f:
                 f.write(getGB(gi))
                 print(gi+"\tsuccess")
         except:
@@ -45,6 +47,6 @@ def downloadGB(filename):
 
 def main():
     for i in file_list:
-        downloadGB(i)
+        downloadGB(path+"/"+i)
 
 main()

@@ -1,0 +1,46 @@
+LOCUS       MN205690                 505 bp    DNA     linear   INV 17-MAR-2020
+DEFINITION  Acanthochitona rubrolineata isolate Nomomachi_03 large subunit
+            ribosomal RNA gene, partial sequence; mitochondrial.
+ACCESSION   MN205690
+VERSION     MN205690.1
+KEYWORDS    .
+SOURCE      mitochondrion Acanthochitona rubrolineata
+  ORGANISM  Acanthochitona rubrolineata
+            Eukaryota; Metazoa; Spiralia; Lophotrochozoa; Mollusca;
+            Polyplacophora; Neoloricata; Chitonida; Acanthochitonina;
+            Acanthochitonidae; Acanthochitona.
+REFERENCE   1  (bases 1 to 505)
+  AUTHORS   Ni,G., Kim,T., Shin,Y., Gil,H. and Park,J.-K.
+  TITLE     Life-history features and oceanography drive the phylogeographic
+            pattern of the chiton Acanthochitona rubrolineata (Lischke, 1873)
+            in the northwestern Pacific
+  JOURNAL   PeerJ (2020) In press
+REFERENCE   2  (bases 1 to 505)
+  AUTHORS   Ni,G., Kim,T., Shin,Y., Gil,H. and Park,J.-K.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2019) EcoScience, Ewha Womans University, 52,
+            Ewhayeodae-gil, Seoul 03760, Republic of Korea
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..505
+                     /organism="Acanthochitona rubrolineata"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /isolate="Nomomachi_03"
+                     /db_xref="taxon:761904"
+     rRNA            <1..>505
+                     /product="large subunit ribosomal RNA"
+ORIGIN      
+        1 cgctctttga aatacaaata taaagagtcg tgcctgccca gtgatttttt ttaacggccg
+       61 cagtaccctg actgtgctaa ggtagcataa tcacttgctt tttaattgaa agctagaatg
+      121 aatggcttga cgaaaacatt actgtctctt ttacattaac taaaaattaa tttttagatg
+      181 aaaaagtcta aataacctca aaagacgaaa agaccctatc gagcttaaaa aaatctttaa
+      241 ttctaattta ctagataaag taaaattaaa atttaatttt ttgttggggc gacagaagaa
+      301 catacaaagc ttcttttaat ttcataaaca aataagttta aaagatccat taatattgat
+      361 taaaagaaaa gttaccgtag ggataacagc gtaatttctt tagagagccc aaattgaaaa
+      421 agaagtttgc gacctcgatg ttggattaaa aaatcttttt gatgcagcag tcaaaaaaga
+      481 aggtctgttc gacctttaaa ttttt
+//
+

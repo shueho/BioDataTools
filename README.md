@@ -87,24 +87,24 @@ python mergeMpa.py example/mpa
 - **SPLIT_LEVEL：** 要指定输出的物种丰度表格的分类级别，可使用以下单个字母标识：'a'（全级别）、'K'（界）、'P'（门）、'C'（纲）、'O'（目）、'F'（科）、'G'（属）、'S'（种），其中'a'表示输出所有分类阶元的丰度表。大写或小写字母均可。
 
 **生成文件：** 
-- `taxLevel_<指定的阶元等级（大写）>_output.<丰度矩阵文件名>`（一个或多个表格文件，物种丰度表）。       
+- `taxLevel_<指定的阶元等级（大写）>_output.<丰度矩阵文件名>`（一个或多个表格文件，物种丰度表）。
 
 **示例：**
 
 比如 `example/mpaMatrix.txt` 文件中包含物种丰度信息，执行命令：
 ```bash
-# 生成各个阶元等级的丰度数据
+# 生成所有阶元等级的丰度数据运行：
 python splitFromLevel.py example/mpaMatrix.txt a
 # 输出7个阶元的结果文件：taxLevel_K/P/C/O/F/G/S_output.mpaMatrix.txt。
 
-# 只生成科阶元的丰度数据：
+# 只生成科阶元的丰度数据运行：
 python splitFromLevel.py example/mpaMatrix.txt f
 # 只输出一个结果文件：taxLevel_F_output.mpaMatrix.txt。
 ```
-即可输出对应的结果。
+即可输出对应的1个或7个结果。
 
 > ## 宏基因组物种定量分析流程     
-> 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，“database_PATH”表示关注物种群体的核酸数据库路径，sp1表示样品名称，首先使用kraken2指定数据库得到report文件，其中“sp1*”是表示双端测序结果的路径。       
+> 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，`database_PATH` 表示关注物种群体的核酸数据库路径，`sp1` 表示样品名称，首先使用kraken2指定数据库得到report文件，其中 `sp1*` 是表示双端测序结果的路径。       
 > ```
 > kraken2 --db database_PATH --paired sp1*  --threads 128 --use-names --report-zero-counts --report sp1.report --output sp1.output
 > ```
@@ -119,15 +119,28 @@ python splitFromLevel.py example/mpaMatrix.txt f
 > 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种丰度矩阵，使用1.04脚本得到各个阶元水平的丰度矩阵，随后可以进行α/β物种多样性分析、LEfSe分析等与物种丰度相关的分析。 
              
 
-## 2. Genetics     
-用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
-        
-### 2.01 Get_gb_by_gi.py
-***需要安装requests库***    
-**功能描述：** 通过GI编号批量下载fasta文件。         
-**参数说明：** 不需要配置参数。该脚本自动检测并读取文件夹内所有以“_gi.txt”为扩展名的文本文件。这些“_gi.txt”文件内部存储着待抓取的GI编号列表。          
-**场景举例：** 比如在需要批量获取大量gb文件的情况下，您只需创建一个或多个名为“xxx_gi.txt”的文本文件，并将所需GI编号粘贴其中。这种设计允许您按照GI编号所存放的列表文件不同，将下载的fasta文件存放在多个独立的文件夹内，这一做法在群体遗传学中针对单倍型分析的情况尤为常见。请注意，通常情况下会批量提取GB（GenBank）文件然后再转换为FASTA格式，这是因为FASTA格式相较于GB格式简化了许多信息。                       
-**生成文件：** gb/\<your gi_list_file name>\_\<GI ACCESSION>.gb（多个GENEBANK文件）。        
+## 2. Genetics 用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
+ 
+### 2.01 `Get_gb_by_gi.py [GI_LIST_DIR]`
+
+**功能描述：** 通过GI编号批量下载fasta文件。
+
+- **GI_LIST_DIR：** 存放GI编号的目录路径，脚本自动检测并读取文件夹内所有以 `_gi.txt` 为扩展名的文本文件。这些 `_gi.txt` 文件需要存放待下载序列的GI编号。
+
+**使用场景：** 为批量下载大量GenBank（gb）文件，您仅需简便地创建若干个“xxx_gi.txt”文件，每文件内粘贴相应的GI编号列表。此设计灵活性高，根据不同的GI编号列表文件，以列表文件名对结果文件进行区分。方便后续将不同分组文件分类归档，极大便利了群体遗传学中常见的单倍型分析任务。
+
+**注意事项：** 需要安装requests库！
+
+**生成文件：** 
+- `gb/<列表名称>_<GI编号>.gb`（在 `gb` 文件夹下生成多个GENEBANK文件）。
+
+**示例：**
+
+比如 `example/gi` 文件中存放有需要下载序列的GI编号，执行命令：
+```bash
+python Get_gb_by_gi.py example/gi
+``` 
+输出文件夹 `gb` ，其中包括以列表名称为前缀的5个gb文件，示例文件 `example/gb` 即为生成样式。
 
 ### 2.02 Name_gb_by_isolate.py     
 **功能描述：** 该脚本能够读取GB文件内的isolate信息，并依据这些信息为对应的GB文件重新命名，尤其适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。      
