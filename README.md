@@ -851,7 +851,60 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 > write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
 > ```       
 
-### 3.11 `GenoSpider`
+### 3.11 `linkTable.py [A-Bs] [B-Cs] [s1（可选）] [s2（可选）]`
+                 
+**功能描述：** 连接向量表：  
+将表格：    
+| GENE | CLA1 |          
+| --- | --- |      
+| G1 | A01;A02; A03 |      
+| G2 | A02 |      
+| G3 |   |      
+| G4 | A04 |      
+| G4 | A05 |   
+
+以及     
+| CLA1 | CLA2 |          
+| --- | --- |      
+| A01 | B1;B2 |      
+| A02 |   |      
+| A03 | B1;B3 |      
+| G05 | B4 |    
+
+合并为：     
+| G1 | B3;B1;B2 |      
+| G2 |   |      
+| G3 |   |      
+| G4 |   |      
+| G4 | B4 |    
+
+其中：原始表格第一列和第二列之间需要制表符隔开，第二列的项目分隔符不一定为”;“，可以自行指定。
+
+- **A-Bs：** 表格一。 
+- **B-Cs：** 表格二。 
+- **s1：** 表格一第二列的分隔符。 
+- **s2：** 表格二第二列的分隔符。  
+
+**使用场景：** 当你获得了基因在X数据库中的注释信息（包括特定位点编号或基因名称），并且也知道X数据库中每个条目在Y数据库中的对应编号或名称时，可以使用本代码来获取基因在Y数据库中的对应名称。你可以将本代码视为VLOOKUP函数的一种变体，它同样适用于从A-B映射与B-C映射中推导出A-C映射的场景。      
+
+**注意事项：** s1和s2参数必须同时指定！   
+
+**生成文件：** 
+- `A-Cs.table`（TABLE file, 连接后的表格）。
+- `A-Cs_err.txt`（TABLE file, 无法在第二个表中匹配到的项目）。 
+
+**示例：**
+
+使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。
+```bash
+#不指定第二列分隔符
+python linkTable.py example/A-Bs.txt example/B-Cs.txt
+
+#指定第二列分隔符（按照实际情况指定，本例都是分号）
+python linkTable.py example/A-Bs.txt example/B-Cs.txt ; ;
+```
+
+### 3.12 `GenoSpider`
 
 **功能描述：** 基因组数据爬虫，详细说明待补充！       
 
