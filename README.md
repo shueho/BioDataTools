@@ -937,7 +937,7 @@ python geneArrangementMap.py example/gene.txt example/color.txt 50
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
 **引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**    
-[1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
+[1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.        
            
         
     <a
