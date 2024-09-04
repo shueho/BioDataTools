@@ -871,7 +871,9 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 | A03 | B1;B3 |      
 | G05 | B4 |    
 
-合并为：     
+合并为：    
+| GENE | CLA2 |       
+| --- | --- |     
 | G1 | B3;B1;B2 |      
 | G2 |   |      
 | G3 |   |      
@@ -880,8 +882,8 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 
 其中：原始表格第一列和第二列之间需要制表符隔开，第二列的项目分隔符不一定为”;“，可以自行指定。
 
-- **A-Bs：** 表格一。 
-- **B-Cs：** 表格二。 
+- **A-Bs：** 表格一路径。 
+- **B-Cs：** 表格二路径。 
 - **s1：** 表格一第二列的分隔符。 
 - **s2：** 表格二第二列的分隔符。  
 
