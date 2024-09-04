@@ -908,8 +908,7 @@ python linkTable.py example/A-Bs.txt example/B-Cs.txt ; ;
 
 ### 3.12 `GenoSpider`
 
-**功能描述：** 基因组数据爬虫，详细说明见毕业论文！    
-**薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.**
+**功能描述：** 基因组数据爬虫，详细说明见硕士毕业论文！    
 
 ## 4.Plotscript 绘图代码工具集。     
 
@@ -921,7 +920,7 @@ python linkTable.py example/A-Bs.txt example/B-Cs.txt ; ;
 - **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
 - **Vertical_spacing：** Spacing of adjacent row genomes, default 50.
 
-** 生成文件:** 
+**生成文件:** 
 - `out.svg` （SVG file）。
 
 **示例：**
@@ -937,7 +936,10 @@ python geneArrangementMap.py example/gene.txt example/color.txt 50
 ==============      
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
-**引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**            
+**引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**    
+[1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
+
+        
     <a
     id="cy-effective-orcid-url"
     class="underline"
