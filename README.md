@@ -937,19 +937,9 @@ python geneArrangementMap.py example/gene.txt example/color.txt 50
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
 **引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**    
-[1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.        
-           
+[1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.               
         
-    <a
-    id="cy-effective-orcid-url"
-    class="underline"
-     href="https://orcid.org/0000-0001-9708-3575"
-     target="orcid.widget"
-     rel="me noopener noreferrer"
-     style="vertical-align: top">
-     <img
-        src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
-        style="width: 1em; margin-inline-start: 0.5em"
-        alt="ORCID iD icon"/>
-      https://orcid.org/0000-0001-9708-3575
-    </a>     
+<a href="https://orcid.org/0000-0001-9708-3575" target="_blank" rel="noopener noreferrer me">
+  <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID iD icon" style="width: 1em; margin-inline-start: 0.5em" />
+  https://orcid.org/0000-0001-9708-3575
+</a>
