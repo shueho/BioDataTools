@@ -54,5 +54,5 @@ for i in ls:
 	tem.append(getItem(i))
 
 with open("simp_"+os.path.basename(path),"w") as f:
-	f.write("Simplified by https://github.com/shueho/BioDataTools.\n"+"\n".join(tem)+"\n")
+	f.write("#Simplified by https://github.com/shueho/BioDataTools.\n"+"\n".join(tem)+"\n")
 	
