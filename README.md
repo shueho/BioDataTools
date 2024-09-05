@@ -6,62 +6,46 @@
 
 本README文档提供了各个模块下的脚本文件及其简要功能描述。
 
-### 宏基因组分析
-
-| 模块        | 脚本/.py   | 功能简述                                 |
-|-------------|------------|------------------------------------------|
-| Quast汇总   | get_sum    | Quast软件评估结果汇总                    |
-| Fasta重命名 | fasta_rename | 为Fasta格式序列编号                     |
-| 合并MPA     | mergeMpa   | 合并kraken1/2或bracken生成的MPA文件      |
-| 重构物种表  | splitFromLevel | 按照阶元等级重构物种丰度表               |
-
-### 基因组分析
-
-| 模块                | 脚本/.py          | 功能简述                                      |
-|---------------------|-------------------|------------------------------------------------|
-| 批量下载Fasta       | Get_gb_by_gi      | 以GI号批量下载Fasta文件                        |
-| 重命名GB文件        | Name_gb_by_isolate | 以Isolate批量重命名GB文件                      |
-| GB转Fasta           | gb_to_fasta       | GB文件批量转换为Fasta文件                      |
-| 序列合并（低阶）    | Merge_dif_seq     | 两序列合并（低阶）                            |
-| 序列转换            | S_to_H            | 将样品序列转换为单倍型序列                     |
-| 提取Fasta子序列集   | ExtractFasta      | 正则表达式提取Fasta文件子序列集                |
-| 获取蛋白质理化性质  | ProteinPropertyFromExpasy | 批量获取蛋白质理化性质                  |
-| 统计特征数据        | FeaturesBaseComponents | 细胞器基因组特征数据统计                    |
-| 提取子序列并重命名   | ExAndRename       | 从Fasta文件提取子序列并重命名                 |
-| Fasta转PAML         | BatchFastaToPam   | Fasta文件批量转换为PAML文件                   |
-| 重新分配序列        | ReassignSequence  | 重新分配序列所在的Fasta文件                   |
-| 蛋白质比对转密码子  | BatchAlignedProteinToDNA | 将蛋白质比对文件转换为密码子比对文件     |
-| 提取四倍简并位点    | Extract4DTv       | 四倍简并位点提取                              |
-| 合并序列（高阶）    | MergeSequences    | 合并序列（高阶）                              |
-| 生成CodeML配置文件  | BatchGenerationCodeML_CTL | 批量生成CodeML的配置文件                  |
-| 解析CodeML结果      | ParsingCodeMLResults | 批量解析CodeML结果                           |
-| 拆分AXT文件         | SplitAXT          | 拆分AXT文件                                   |
-| 提取碱基位点信息    | BaseSiteInformation | 碱基位点信息提取                              |
-| 序列屏蔽            | MaskSeq           | 序列屏蔽（基因组mask）                        |
-| 统计分位点碱基数    | BaseCompositionCalculation | 分位点碱基数目统计                            |
-
-### 通用工具
-
-| 模块        | 脚本/.py   | 功能简述                                     |
-|-------------|------------|----------------------------------------------|
-| 合并表格    | MergeTable | 超大表格合并                                 |
-| Vlookup     | VLookup    | Vlookup函数（高阶）                          |
-| 分组求和    | SumByGroup | 分组求和（高阶）                             |
-| 分组计数    | CountByGroup | 分组计数（高阶）                             |
-| 拆分Fasta   | splitFasta | 按指定序列数拆分Fasta文件                     |
-| 解析KEGG    | read_keg   | 解析KEGG注释文件                             |
-| KEGG通路统计 | KEGG_pathway_geneNum | KEGG通路数目统计                             |
-| 解析GO obo  | read_goOBO | 解析GO注释obo文件                            |
-| 转换GO表格  | ConvertGene-GO | 转换GO注释表格                               |
-| 添加GO描述  | getGOinfo  | 添加GO注释的描述和分类内容                    |
-| 爬虫工具    | GenoSpider | 基因组信息爬虫                               |
-
-### 绘图
-
-| 模块            | 脚本/.py      | 功能简述                       |
-|-----------------|---------------|--------------------------------|
-| 基因排布图      | geneArrangementMap | 基因组特征排布图               |
-
+| 部分              | 编号        | 脚本/.py   | 功能简述                                 |
+|:-----------------:|:-----------:|:----------:|:----------------------------------------:|
+| 宏基因组分析      | 1.01        | get_sum    | Quast软件评估结果汇总                    |
+|                  | 1.02        | fasta_rename | 为Fasta格式序列编号                     |
+|                  | 1.03        | mergeMpa   | 合并kraken1/2或bracken生成的MPA文件      |
+|                  | 1.04        | splitFromLevel | 按照阶元等级重构物种丰度表               |
+| 基因组分析        | 2.01        | Get_gb_by_gi      | 以GI号批量下载Fasta文件                        |
+|                  | 2.02        | Name_gb_by_isolate | 以Isolate批量重命名GB文件                      |
+|                  | 2.03        | gb_to_fasta       | GB文件批量转换为Fasta文件                      |
+|                  | 2.04        | Merge_dif_seq     | 两序列合并（低阶）                            |
+|                  | 2.05        | S_to_H            | 将样品序列转换为单倍型序列                     |
+|                  | 2.06        | ExtractFasta      | 正则表达式提取Fasta文件子序列集                |
+|                  | 2.07        | ProteinPropertyFromExpasy | 批量获取蛋白质理化性质                  |
+|                  | 2.08        | FeaturesBaseComponents | 细胞器基因组特征数据统计                    |
+|                  | 2.09        | ExAndRename       | 从Fasta文件提取子序列并重命名                 |
+|                  | 2.10        | BatchFastaToPam   | Fasta文件批量转换为PAML文件                   |
+|                  | 2.11        | ReassignSequence  | 重新分配序列所在的Fasta文件                   |
+|                  | 2.12        | BatchAlignedProteinToDNA | 将蛋白质比对文件转换为密码子比对文件     |
+|                  | 2.13        | Extract4DTv       | 四倍简并位点提取                              |
+|                  | 2.14        | MergeSequences    | 合并序列（高阶）                              |
+|                  | 2.15        | BatchGenerationCodeML_CTL | 批量生成CodeML的配置文件                  |
+|                  | 2.16        | ParsingCodeMLResults | 批量解析CodeML结果                           |
+|                  | 2.17        | SplitAXT          | 拆分AXT文件                                   |
+|                  | 2.18        | BaseSiteInformation | 碱基位点信息提取                              |
+|                  | 2.19        | MaskSeq           | 序列屏蔽（基因组mask）                        |
+|                  | 2.20        | BaseCompositionCalculation | 分位点碱基数目统计                            |
+|                  | 2.21        | simplifiedGFF | 简化GFF文件                                |
+| 通用工具          | 3.01        | MergeTable | 超大表格合并                                 |
+|                  | 3.02        | VLookup    | Vlookup函数（高阶）                          |
+|                  | 3.03        | SumByGroup | 分组求和（高阶）                             |
+|                  | 3.04        | CountByGroup | 分组计数（高阶）                             |
+|                  | 3.05        | splitFasta | 按指定序列数拆分Fasta文件                     |
+|                  | 3.06        | read_keg   | 解析KEGG注释文件                             |
+|                  | 3.07        | KEGG_pathway_geneNum | KEGG通路数目统计                             |
+|                  | 3.08        | read_goOBO | 解析GO注释obo文件                            |
+|                  | 3.09        | ConvertGene-GO | 转换GO注释表格                               |
+|                  | 3.10        | getGOinfo  | 添加GO注释的描述和分类内容                    |
+|                  | 3.11        | linkTable | 将A-Bs和B-Cs表格连接成A-Cs                  |
+|                  | 3.12        | GenoSpider | 基因组信息爬虫                               |
+| 绘图              | 4.01        | geneArrangementMap | 基因组特征排布图               |
 
 ## 1. Metagenome 宏基因组分析相关脚本
    
