@@ -637,7 +637,7 @@ python simplifiedGFF.py example/maize.gff3 chromosome country
 
 ### 2.22 `getFeatureNearBaseSites.py [GFF_FILE] [LOC_FILE] [DISTANCE] [FEATURE (可选参数)]`
        
-**功能描述：** 批量获取碱基。
+**功能描述：** 批量获取碱基附件的特征。
 
 - **GFF_FILE：** GFF文件路径，需要是GFF3格式的文件，attributes需要以”;“分隔。  
 - **LOC_FILE：** 描述位点位置的表格，需要有三列：位点名称/染色体名称/在染色体上的位置。注意：不能有标题行，染色体名称需要和GFF文件严格照应。   
