@@ -33,6 +33,7 @@
 |                  | 2.19        | MaskSeq           | 序列屏蔽（基因组mask）                        |
 |                  | 2.20        | BaseCompositionCalculation | 分位点碱基数目统计                            |
 |                  | 2.21        | simplifiedGFF | 简化GFF文件                                |
+|                  | 2.22        | getFeatureNearBaseSites | 获取位点附件的特征（候选基因筛选）                                |
 | 通用工具          | 3.01        | MergeTable | 超大表格合并                                 |
 |                  | 3.02        | VLookup    | Vlookup函数（高阶）                          |
 |                  | 3.03        | SumByGroup | 分组求和（高阶）                             |
@@ -546,7 +547,7 @@ for i in `ls *axt`;do python SplitAXT.py $i ;done
 - **GFF_FILE：** 基因组GFF文件，只需要保留mRNA和CDS特征，并且每个mRNA需要位于其包含CDS特征的上方，可以选择在运行代码前手动将GFF文件排序！
 - **Q_FILE：** 查找的条目表格，需要包括标题行，至少包含两列：第一列必须是染色体编号，第二列是对应于染色体上的位置。
 
-**使用场景：** 通过随机森林等算法找到不同种群或不同品种的变异位点，需要定位到该位点所在基因。
+**使用场景：** 有进阶版本在2.22，通过随机森林等算法找到不同种群或不同品种的变异位点，需要定位到该位点所在基因。
 
 **生成文件：** 
 - `out_<Q_FILE参数值>.xls`（表格，第一、四列为基因名称，第二列是是否为CDS区域CDS/noCDS，第三列为CDS的起始终止位置以及ORF起始位点，第五列是染色体ID，然后是基因起始位置、得分以及基因CDS数目） 。
@@ -632,7 +633,40 @@ python simplifiedGFF.py example/maize.gff3 chromosome
 
 # 希望保留chromosome、country、ID和Parent： 
 python simplifiedGFF.py example/maize.gff3 chromosome country  
+```  
+
+### 2.22 `getFeatureNearBaseSites.py [GFF_FILE] [LOC_FILE] [DISTANCE] ... [FEATURE (可选参数)]`
+       
+**功能描述：** 批量获取碱基。
+
+- **GFF_FILE：** GFF文件路径，需要是GFF3格式的文件，attributes需要以”;“分隔。  
+- **LOC_FILE：** 描述位点位置的表格，需要有三列：位点名称/染色体名称/在染色体上的位置。注意：不能有标题行，染色体名称需要和GFF文件严格照应。   
+- **DISTANCE：** 以碱基位点开始，向外扩展的距离。如果是0则代表搜索该碱基是否位于某一特征，此时是代码2.18的替代。  
+- **FEATURE：** 需要扫描的特征，默认是”gene“，可以选择输入”gene/mRNA/CDS/exon/...“中的其中之一，也可以是其他类型的特征，详见GFF文件。  
+
+**使用场景：** GWAS分析或其他分析得到显著关联SNP位点后搜索候选基因。             
+
+**注意事项：** FEATURE不填写默认扫描基因，如果是”mRNA“则扫描转录本，切记单词不要拼错。          
+
+**生成文件：** 
+- `dis_<DISTANCE>_<FEATURE>_<LOC_FILE>（表格，各列分别表示：位点名称/染色体/位置/基因名称/位点与特征起始的距离/位点与特征结束的距离/基因与位点区间的关系，关系包括Left、Right、To_include和Be_include，分别表示基因在区间左侧、基因在区间右侧、基因覆盖区间以及区间覆盖基因） 。
+
+**示例：**
+
+```bash
+# 获取显著位点14000距离gene：
+python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 14000    
+ 
+# 获取显著位点14000距离mRNA： 
+python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 14000 mRNA  
+
+# 判断位点是否在基因上： 
+python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0  
+
+# 判断位点是否在CDS上： 
+python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0 CDS  
 ```
+
 
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。

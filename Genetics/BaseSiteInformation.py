@@ -50,6 +50,8 @@ for i in ls:
     if tem[0] not in all_:
         all_[tem[0]] = dict()
     #assert int(tem[3]) < int(tem[4])
+    if tem[8][-1] != ";":
+        tem[8]+=";"
     if tem[2] == "mRNA":
         name = re.search("ID=(.*?);",tem[8])[1]
         gene[name] = mRNA(tem[0],*tem[3:6],name)

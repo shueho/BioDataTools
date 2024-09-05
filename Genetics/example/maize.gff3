@@ -1,3 +1,56 @@
+###
+3	gramene	gene	125560575	125561600	.	-	.	ID=gene:Zm00001d041518
+3	gramene	mRNA	125560575	125561600	.	-	.	ID=transcript:Zm00001d041518_T001;Parent=gene:Zm00001d041518
+3	gramene	exon	125560575	125561600	.	-	.	Parent=transcript:Zm00001d041518_T001
+3	gramene	CDS	125560575	125561600	.	-	0	ID=CDS:Zm00001d041518_P001;Parent=transcript:Zm00001d041518_T001
+###
+3	gramene	gene	125563618	125564283	.	+	.	ID=gene:Zm00001d041519
+3	gramene	mRNA	125563618	125564283	.	+	.	ID=transcript:Zm00001d041519_T001;Parent=gene:Zm00001d041519
+3	gramene	exon	125563618	125564283	.	+	.	Parent=transcript:Zm00001d041519_T001
+3	gramene	CDS	125563618	125564283	.	+	0	ID=CDS:Zm00001d041519_P001;Parent=transcript:Zm00001d041519_T001
+###
+1	gramene	gene	4402312	4404440	.	+	.	ID=gene:Zm00001d027399
+1	gramene	mRNA	4402312	4404440	.	+	.	ID=transcript:Zm00001d027399_T001;Parent=gene:Zm00001d027399
+1	gramene	exon	4402312	4402544	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	five_prime_UTR	4402312	4402544	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	five_prime_UTR	4402810	4402815	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4402810	4402935	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4402816	4402935	.	+	0	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4403091	4403141	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4403091	4403141	.	+	0	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4403713	4403764	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4403713	4403764	.	+	0	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4404088	4404284	.	+	2	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4404088	4404440	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	three_prime_UTR	4404285	4404440	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	mRNA	4402663	4404440	.	+	.	ID=transcript:Zm00001d027399_T002;Parent=gene:Zm00001d027399
+1	gramene	five_prime_UTR	4402663	4402815	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4402663	4402935	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4402816	4402935	.	+	0	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4403091	4403141	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4403091	4403141	.	+	0	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4403713	4403764	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4403713	4403764	.	+	0	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4404088	4404284	.	+	2	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4404088	4404440	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	three_prime_UTR	4404285	4404440	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	mRNA	4402667	4404330	.	+	.	ID=transcript:Zm00001d027399_T003;Parent=gene:Zm00001d027399
+1	gramene	five_prime_UTR	4402667	4402815	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4402667	4402935	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4402816	4402935	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4403091	4403141	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4403091	4403141	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4403713	4403764	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4403713	4403764	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4403826	4403902	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4403826	4403902	.	+	2	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4404088	4404186	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4404088	4404330	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	three_prime_UTR	4404187	4404330	.	+	.	Parent=transcript:Zm00001d027399_T003
+
+
+
+
 ##gff-version 3
 ##sequence-region   1 1 307041717
 ##sequence-region   10 1 150982314
