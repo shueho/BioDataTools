@@ -635,7 +635,7 @@ python simplifiedGFF.py example/maize.gff3 chromosome
 python simplifiedGFF.py example/maize.gff3 chromosome country  
 ```  
 
-### 2.22 `getFeatureNearBaseSites.py [GFF_FILE] [LOC_FILE] [DISTANCE] ... [FEATURE (可选参数)]`
+### 2.22 `getFeatureNearBaseSites.py [GFF_FILE] [LOC_FILE] [DISTANCE] [FEATURE (可选参数)]`
        
 **功能描述：** 批量获取碱基。
 
