@@ -2,9 +2,9 @@
 
 这是一套生物信息学脚本，结合了组学和生态遗传分析，支持多种数据处理工具，适应广泛的研究需求。   
 
-## 脚本工具概述
+## 脚本工具目录
 
-本README文档提供了各个模块下的脚本文件及其简要功能描述。
+本README文档提供了各个模块下的脚本文件及其简要功能描述，同时还对部分分析流程进行简述。
 
 | 模块              | 编号        | 脚本/.py   | 功能简述                                 |
 |:-----------------:|:-----------:|:----------:|:----------------------------------------:|
@@ -46,6 +46,11 @@
 |                  | 3.11        | linkTable | 将A-Bs和B-Cs表格连接成A-Cs                  |
 |                  | 3.12        | GenoSpider | 基因组信息爬虫                               |
 | 绘图              | 4.01        | geneArrangementMap | 基因组特征排布图               |
+| 分析流程          |             | 宏基因组物种定量分析流程 | 位于1.04脚本之后               |
+|                  |             | 群体遗传学分析快速下载数据流程 | 位于2.03脚本之后               |
+|                  |             | 比较基因组学-同源基因建树和选择压力分析流程（一） | 位于2.16脚本之后               |
+|                  |             | 比较基因组学-同源基因建树和选择压力分析流程（二） | 位于2.17脚本之后               |
+|                  |             | 无参GO/KEGG富集分析流程 | 位于3.10脚本之后               |
 
 ## 1. Metagenome 宏基因组分析相关脚本
    
@@ -211,7 +216,7 @@ python Name_gb_by_info.py example/gb_organism organism
 ```
 即可输出对应的结果于文件夹 `output` 中。
      
-### 2.03 `gb_to_fasta.py [GB_DIR]
+### 2.03 `gb_to_fasta.py [GB_DIR]`
 `
 **功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。
 
@@ -231,7 +236,7 @@ python gb_to_fasta.py example/gb_isolate
 > ## 群体遗传学分析快速下载数据流程          
 > 比如要从NCBI下载特定多个群体的 `cox1` 基因，可以先创建一个文件夹，分别列出该群体不同个体的 `cox1` 基因的GI编号（可以在NCBI直接导出），并将每个群体的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的GB文件；再运行脚本2.02，依据isolate或其他标签对下载的GB文件进行重命名；最后执行脚本2.03，从而生成以标签值为名称的最终FASTA格式序列文件。
 
-### `2.04 Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]`
+### 2.04 `Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]`
 
 **功能描述：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。
 
@@ -614,7 +619,7 @@ python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA
 **注意事项：** ID和Parent无需指定，不要重复指定项目，否则生成的文件会有重复的内容。          
 
 **生成文件：** 
-- `simp_[GFF_FILE]`（GFF文件，简化后的文件） 。
+- `simp_<GFF_FILE>`（GFF文件，简化后的文件） 。
 
 **示例：**
 
@@ -967,7 +972,6 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 
 **示例：**
 
-使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。
 ```bash
 #不指定第二列分隔符
 python linkTable.py example/A-Bs.txt example/B-Cs.txt
