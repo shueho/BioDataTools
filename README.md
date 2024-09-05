@@ -559,6 +559,31 @@ python BaseCompositionCalculation.py example/base_cds.fa NNN
 python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA
 ```
 
+### 2.21 `simplifiedGFF.py [GFF_FILE] [ITEM_1 可选参数] [ITEM_2 可选参数] ... [ITEM_n 可选参数]`
+       
+**功能描述：** 简化GFF文件的attributes的内容，过滤不关注的信息，以减少GFF文件大小。
+
+- **GFF_FILE：** GFF文件路径，需要是GFF3格式的文件，attributes需要以”;“分隔，键和值之间以”=“连接。
+- **ITEM_X：** 需要保留的attributes key，其中ID和Parent由于常用无需指定，不同的key作为不同参数输入。   
+
+**注意事项：** ID和Parent无需指定，不要重复指定项目，否则生成的文件会有重复的内容。          
+
+**生成文件：** 
+- `simp_[GFF_FILE]`（GFF文件，简化后的文件） 。
+
+**示例：**
+
+```bash
+# 只保留ID和Parent：
+python simplifiedGFF.py example/maize.gff3   
+ 
+# 还希望保留chromosome： 
+python simplifiedGFF.py example/maize.gff3 chromosome  
+
+# 希望保留chromosome、country、ID和Parent： 
+python simplifiedGFF.py example/maize.gff3 chromosome country  
+```
+
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
