@@ -6,30 +6,8 @@
 
 本README文档提供了各个模块下的脚本文件及其简要功能描述，同时还对部分分析流程进行简述。
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<title>示例表格</title>
-<style>
-  table {
-    margin: 0 auto;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  th, td {
-    border: 1px solid #ccc;
-    padding: 5px;
-    text-align: center;
-  }
-  th {
-    font-weight: bold;
-  }
-</style>
-</head>
-<body>
-
-<table border="1" cellspacing="0" cellpadding="5">
+<div style="display: flex; justify-content: center;">
+<table border="0" cellspacing="0" cellpadding="5">
   <tr>
     <th>编号</th>
     <th>脚本/.py</th>
@@ -271,6 +249,7 @@
     <td>位于3.10脚本之后</td>
   </tr>
 </table>
+</div>
 
 ## 1. Metagenome 宏基因组分析相关脚本
    
