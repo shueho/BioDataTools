@@ -6,6 +6,29 @@
 
 本README文档提供了各个模块下的脚本文件及其简要功能描述，同时还对部分分析流程进行简述。
 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>示例表格</title>
+<style>
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+  }
+  th {
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
     <th>编号</th>
