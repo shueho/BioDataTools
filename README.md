@@ -17,7 +17,7 @@
   <tr><td>1.02</td><td>fasta_rename</td><td>为Fasta格式序列编号</td></tr>
   <tr><td>1.03</td><td>mergeMpa</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
   <tr><td>1.04</td><td>splitFromLevel</td><td>按照阶元等级重构物种丰度表</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics 基因组分析模块th></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics 基因组分析模块</th></tr>
   <tr><td>2.01</td><td>Get_gb_by_gi</td><td>以GI号批量下载Fasta文件</td></tr>
   <tr><td>2.02</td><td>Name_gb_by_isolate</td><td>以Isolate批量重命名GB文件</td></tr>
   <tr><td>2.03</td><td>gb_to_fasta</td><td>GB文件批量转换为Fasta文件</td></tr>
