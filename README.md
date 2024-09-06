@@ -55,8 +55,8 @@
   <tr><td>3.12</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
   <tr><td>4.01</td><td>geneArrangementMap</td><td>基因组特征排布图</td></tr>
-  <tr><td colspan="3" style="text-align:center; font-weight:bold;">分析流程</td></tr>
-  <tr><td></td><td>宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">分析流程</th></tr>
+  <tr><td colspan="2">宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
   <tr><td colspan="2">群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
   <tr><td colspan="2">比较基因组学-同源基因建树和选择压力分析流程（一）</td><td>位于2.16脚本之后</td></tr>
   <tr><td colspan="2">比较基因组学-同源基因建树和选择压力分析流程（二）</td><td>位于2.17脚本之后</td></tr>
