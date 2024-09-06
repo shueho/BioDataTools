@@ -12,7 +12,7 @@
     <th>脚本/.py</th>
     <th>功能简述</th>
   </tr>
-  <tr><td colspan="3" style="text-align:center; font-weight:bold;">宏基因组分析</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">宏基因组分析</th></tr>
   <tr><td>1.01</td><td>get_sum</td><td>Quast软件评估结果汇总</td></tr>
   <tr><td>1.02</td><td>fasta_rename</td><td>为Fasta格式序列编号</td></tr>
   <tr><td>1.03</td><td>mergeMpa</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
