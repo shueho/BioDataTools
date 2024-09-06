@@ -12,12 +12,12 @@
     <th>脚本/.py</th>
     <th>功能简述</th>
   </tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">宏基因组分析</th></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Metagenome 宏基因组分析模块</th></tr>
   <tr><td>1.01</td><td>get_sum</td><td>Quast软件评估结果汇总</td></tr>
   <tr><td>1.02</td><td>fasta_rename</td><td>为Fasta格式序列编号</td></tr>
   <tr><td>1.03</td><td>mergeMpa</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
   <tr><td>1.04</td><td>splitFromLevel</td><td>按照阶元等级重构物种丰度表</td></tr>
-  <tr><td colspan="3" style="text-align:center; font-weight:bold;">基因组分析</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics 基因组分析模块th></tr>
   <tr><td>2.01</td><td>Get_gb_by_gi</td><td>以GI号批量下载Fasta文件</td></tr>
   <tr><td>2.02</td><td>Name_gb_by_isolate</td><td>以Isolate批量重命名GB文件</td></tr>
   <tr><td>2.03</td><td>gb_to_fasta</td><td>GB文件批量转换为Fasta文件</td></tr>
@@ -40,7 +40,7 @@
   <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>分位点碱基数目统计</td></tr>
   <tr><td>2.21</td><td>simplifiedGFF</td><td>简化GFF文件</td></tr>
   <tr><td>2.22</td><td>getFeatureNearBaseSites</td><td>获取位点附件的特征（候选基因筛选）</td></tr>
-  <tr><td colspan="3" style="text-align:center; font-weight:bold;">通用工具</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
   <tr><td>3.03</td><td>SumByGroup</td><td>分组求和（高阶）</td></tr>
@@ -53,14 +53,14 @@
   <tr><td>3.10</td><td>getGOinfo</td><td>添加GO注释的描述和分类内容</td></tr>
   <tr><td>3.11</td><td>linkTable</td><td>将A-Bs和B-Cs表格连接成A-Cs</td></tr>
   <tr><td>3.12</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
-  <tr><td colspan="3" style="text-align:center; font-weight:bold;">绘图</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
   <tr><td>4.01</td><td>geneArrangementMap</td><td>基因组特征排布图</td></tr>
   <tr><td colspan="3" style="text-align:center; font-weight:bold;">分析流程</td></tr>
   <tr><td></td><td>宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
-  <tr><td></td><td>群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
-  <tr><td></td><td>比较基因组学-同源基因建树和选择压力分析流程（一）</td><td>位于2.16脚本之后</td></tr>
-  <tr><td></td><td>比较基因组学-同源基因建树和选择压力分析流程（二）</td><td>位于2.17脚本之后</td></tr>
-  <tr><td></td><td>无参GO/KEGG富集分析流程</td><td>位于3.10脚本之后</td></tr>
+  <tr><td colspan="2">群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
+  <tr><td colspan="2">比较基因组学-同源基因建树和选择压力分析流程（一）</td><td>位于2.16脚本之后</td></tr>
+  <tr><td colspan="2">比较基因组学-同源基因建树和选择压力分析流程（二）</td><td>位于2.17脚本之后</td></tr>
+  <tr><td colspan="2">无参GO/KEGG富集分析流程</td><td>位于3.10脚本之后</td></tr>
 </table>
 
 
