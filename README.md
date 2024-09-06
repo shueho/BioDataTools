@@ -6,57 +6,248 @@
 
 本README文档提供了各个模块下的脚本文件及其简要功能描述，同时还对部分分析流程进行简述。
 
-| 编号        | 脚本/.py   | 功能简述                                 |
-|:-----------:|:----------:|:----------------------------------------:|
-| **宏基因组分析** |
-| 1.01        | get_sum    | Quast软件评估结果汇总                    |
-| 1.02        | fasta_rename | 为Fasta格式序列编号                     |
-| 1.03        | mergeMpa   | 合并kraken1/2或bracken生成的MPA文件      |
-| 1.04        | splitFromLevel | 按照阶元等级重构物种丰度表               |
-| **基因组分析** |
-| 2.01        | Get_gb_by_gi      | 以GI号批量下载Fasta文件                        |
-| 2.02        | Name_gb_by_isolate | 以Isolate批量重命名GB文件                      |
-| 2.03        | gb_to_fasta       | GB文件批量转换为Fasta文件                      |
-| 2.04        | Merge_dif_seq     | 两序列合并（低阶）                            |
-| 2.05        | S_to_H            | 将样品序列转换为单倍型序列                     |
-| 2.06        | ExtractFasta      | 正则表达式提取Fasta文件子序列集                |
-| 2.07        | ProteinPropertyFromExpasy | 批量获取蛋白质理化性质                  |
-| 2.08        | FeaturesBaseComponents | 细胞器基因组特征数据统计                    |
-| 2.09        | ExAndRename       | 从Fasta文件提取子序列并重命名                 |
-| 2.10        | BatchFastaToPam   | Fasta文件批量转换为PAML文件                   |
-| 2.11        | ReassignSequence  | 重新分配序列所在的Fasta文件                   |
-| 2.12        | BatchAlignedProteinToDNA | 将蛋白质比对文件转换为密码子比对文件     |
-| 2.13        | Extract4DTv       | 四倍简并位点提取                              |
-| 2.14        | MergeSequences    | 合并序列（高阶）                              |
-| 2.15        | BatchGenerationCodeML_CTL | 批量生成CodeML的配置文件                  |
-| 2.16        | ParsingCodeMLResults | 批量解析CodeML结果                           |
-| 2.17        | SplitAXT          | 拆分AXT文件                                   |
-| 2.18        | BaseSiteInformation | 碱基位点信息提取                              |
-| 2.19        | MaskSeq           | 序列屏蔽（基因组mask）                        |
-| 2.20        | BaseCompositionCalculation | 分位点碱基数目统计                            |
-| 2.21        | simplifiedGFF | 简化GFF文件                                |
-| 2.22        | getFeatureNearBaseSites | 获取位点附件的特征（候选基因筛选）                                |
-| **通用工具** |
-| 3.01        | MergeTable | 超大表格合并                                 |
-| 3.02        | VLookup    | Vlookup函数（高阶）                          |
-| 3.03        | SumByGroup | 分组求和（高阶）                             |
-| 3.04        | CountByGroup | 分组计数（高阶）                             |
-| 3.05        | splitFasta | 按指定序列数拆分Fasta文件                     |
-| 3.06        | read_keg   | 解析KEGG注释文件                             |
-| 3.07        | KEGG_pathway_geneNum | KEGG通路数目统计                             |
-| 3.08        | read_goOBO | 解析GO注释obo文件                            |
-| 3.09        | ConvertGene-GO | 转换GO注释表格                               |
-| 3.10        | getGOinfo  | 添加GO注释的描述和分类内容                    |
-| 3.11        | linkTable | 将A-Bs和B-Cs表格连接成A-Cs                  |
-| 3.12        | GenoSpider | 基因组信息爬虫                               |
-| **绘图** |
-| 4.01        | geneArrangementMap | 基因组特征排布图               |
-| **分析流程** |
-|             | 宏基因组物种定量分析流程 | 位于1.04脚本之后               |
-|             | 群体遗传学分析快速下载数据流程 | 位于2.03脚本之后               |
-|             | 比较基因组学-同源基因建树和选择压力分析流程（一） | 位于2.16脚本之后               |
-|             | 比较基因组学-同源基因建树和选择压力分析流程（二） | 位于2.17脚本之后               |
-|             | 无参GO/KEGG富集分析流程 | 位于3.10脚本之后               |
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>编号</th>
+    <th>脚本/.py</th>
+    <th>功能简述</th>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:center; font-weight:bold;">宏基因组分析</td>
+  </tr>
+  <tr>
+    <td>1.01</td>
+    <td>get_sum</td>
+    <td>Quast软件评估结果汇总</td>
+  </tr>
+  <tr>
+    <td>1.02</td>
+    <td>fasta_rename</td>
+    <td>为Fasta格式序列编号</td>
+  </tr>
+  <tr>
+    <td>1.03</td>
+    <td>mergeMpa</td>
+    <td>合并kraken1/2或bracken生成的MPA文件</td>
+  </tr>
+  <tr>
+    <td>1.04</td>
+    <td>splitFromLevel</td>
+    <td>按照阶元等级重构物种丰度表</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>宏基因组物种定量分析流程</td>
+    <td>位于1.04脚本之后</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:center; font-weight:bold;">基因组分析</td>
+  </tr>
+  <tr>
+    <td>2.01</td>
+    <td>Get_gb_by_gi</td>
+    <td>以GI号批量下载Fasta文件</td>
+  </tr>
+  <tr>
+    <td>2.02</td>
+    <td>Name_gb_by_isolate</td>
+    <td>以Isolate批量重命名GB文件</td>
+  </tr>
+  <tr>
+    <td>2.03</td>
+    <td>gb_to_fasta</td>
+    <td>GB文件批量转换为Fasta文件</td>
+  </tr>
+  <tr>
+    <td>2.04</td>
+    <td>Merge_dif_seq</td>
+    <td>两序列合并（低阶）</td>
+  </tr>
+  <tr>
+    <td>2.05</td>
+    <td>S_to_H</td>
+    <td>将样品序列转换为单倍型序列</td>
+  </tr>
+  <tr>
+    <td>2.06</td>
+    <td>ExtractFasta</td>
+    <td>正则表达式提取Fasta文件子序列集</td>
+  </tr>
+  <tr>
+    <td>2.07</td>
+    <td>ProteinPropertyFromExpasy</td>
+    <td>批量获取蛋白质理化性质</td>
+  </tr>
+  <tr>
+    <td>2.08</td>
+    <td>FeaturesBaseComponents</td>
+    <td>细胞器基因组特征数据统计</td>
+  </tr>
+  <tr>
+    <td>2.09</td>
+    <td>ExAndRename</td>
+    <td>从Fasta文件提取子序列并重命名</td>
+  </tr>
+  <tr>
+    <td>2.10</td>
+    <td>BatchFastaToPam</td>
+    <td>Fasta文件批量转换为PAML文件</td>
+  </tr>
+  <tr>
+    <td>2.11</td>
+    <td>ReassignSequence</td>
+    <td>重新分配序列所在的Fasta文件</td>
+  </tr>
+  <tr>
+    <td>2.12</td>
+    <td>BatchAlignedProteinToDNA</td>
+    <td>将蛋白质比对文件转换为密码子比对文件</td>
+  </tr>
+  <tr>
+    <td>2.13</td>
+    <td>Extract4DTv</td>
+    <td>四倍简并位点提取</td>
+  </tr>
+  <tr>
+    <td>2.14</td>
+    <td>MergeSequences</td>
+    <td>合并序列（高阶）</td>
+  </tr>
+  <tr>
+    <td>2.15</td>
+    <td>BatchGenerationCodeML_CTL</td>
+    <td>批量生成CodeML的配置文件</td>
+  </tr>
+  <tr>
+    <td>2.16</td>
+    <td>ParsingCodeMLResults</td>
+    <td>批量解析CodeML结果</td>
+  </tr>
+  <tr>
+    <td>2.17</td>
+    <td>SplitAXT</td>
+    <td>拆分AXT文件</td>
+  </tr>
+  <tr>
+    <td>2.18</td>
+    <td>BaseSiteInformation</td>
+    <td>碱基位点信息提取</td>
+  </tr>
+  <tr>
+    <td>2.19</td>
+    <td>MaskSeq</td>
+    <td>序列屏蔽（基因组mask）</td>
+  </tr>
+  <tr>
+    <td>2.20</td>
+    <td>BaseCompositionCalculation</td>
+    <td>分位点碱基数目统计</td>
+  </tr>
+  <tr>
+    <td>2.21</td>
+    <td>simplifiedGFF</td>
+    <td>简化GFF文件</td>
+  </tr>
+  <tr>
+    <td>2.22</td>
+    <td>getFeatureNearBaseSites</td>
+    <td>获取位点附件的特征（候选基因筛选）</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:center; font-weight:bold;">通用工具</td>
+  </tr>
+  <tr>
+    <td>3.01</td>
+    <td>MergeTable</td>
+    <td>超大表格合并</td>
+  </tr>
+  <tr>
+    <td>3.02</td>
+    <td>VLookup</td>
+    <td>Vlookup函数（高阶）</td>
+  </tr>
+  <tr>
+    <td>3.03</td>
+    <td>SumByGroup</td>
+    <td>分组求和（高阶）</td>
+  </tr>
+  <tr>
+    <td>3.04</td>
+    <td>CountByGroup</td>
+    <td>分组计数（高阶）</td>
+  </tr>
+  <tr>
+    <td>3.05</td>
+    <td>splitFasta</td>
+    <td>按指定序列数拆分Fasta文件</td>
+  </tr>
+  <tr>
+    <td>3.06</td>
+    <td>read_keg</td>
+    <td>解析KEGG注释文件</td>
+  </tr>
+  <tr>
+    <td>3.07</td>
+    <td>KEGG_pathway_geneNum</td>
+    <td>KEGG通路数目统计</td>
+  </tr>
+  <tr>
+    <td>3.08</td>
+    <td>read_goOBO</td>
+    <td>解析GO注释obo文件</td>
+  </tr>
+  <tr>
+    <td>3.09</td>
+    <td>ConvertGene-GO</td>
+    <td>转换GO注释表格</td>
+  </tr>
+  <tr>
+    <td>3.10</td>
+    <td>getGOinfo</td>
+    <td>添加GO注释的描述和分类内容</td>
+  </tr>
+  <tr>
+    <td>3.11</td>
+    <td>linkTable</td>
+    <td>将A-Bs和B-Cs表格连接成A-Cs</td>
+  </tr>
+  <tr>
+    <td>3.12</td>
+    <td>GenoSpider</td>
+    <td>基因组信息爬虫</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:center; font-weight:bold;">绘图</td>
+  </tr>
+  <tr>
+    <td>4.01</td>
+    <td>geneArrangementMap</td>
+    <td>基因组特征排布图</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:center; font-weight:bold;">分析流程</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>群体遗传学分析快速下载数据流程</td>
+    <td>位于2.03脚本之后</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>比较基因组学-同源基因建树和选择压力分析流程（一）</td>
+    <td>位于2.16脚本之后</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>比较基因组学-同源基因建树和选择压力分析流程（二）</td>
+    <td>位于2.17脚本之后</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>无参GO/KEGG富集分析流程</td>
+    <td>位于3.10脚本之后</td>
+  </tr>
+</table>
 
 ## 1. Metagenome 宏基因组分析相关脚本
    
