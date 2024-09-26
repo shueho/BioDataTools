@@ -61,7 +61,7 @@ def findGene(sname,ch,pos1,pos2):
             else:
                 st = "To_include"
             name = all_[ch][i]
-            tem.append([sname,name,star,end,st])
+            tem.append([sname,name,s,e,st])
 
     return tem
 
@@ -69,7 +69,7 @@ with open(q) as f:
     lt = f.readlines() #gene/chr/pos
 
 f = open("Inter"+"_"+fe+"_"+os.path.basename(q),"w")
-tem = ["site_name","site_chr","site_s","site_e","gene_name","star_dis","end_dis","position"]
+tem = ["site_name","site_chr","site_s","site_e","gene_name",fe+"_s",fe+"_e","position"]
 f.write("\t".join(tem)+"\n")
 for i in lt:
     tem_list = i.strip().split("\t")
