@@ -692,7 +692,7 @@ python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0 CDS
 **注意事项：** FEATURE不填写默认扫描基因，如果是”mRNA“则扫描转录本，切记单词不要拼错。          
 
 **生成文件：** 
-- `Inter_<DISTANCE>_<FEATURE>_<LOC_FILE>`（表格，各列分别表示：位点名称/染色体/区间起始位置/区间终止位置/基因名称/特征起始位置/特征结束位置/基因与位点区间的关系，关系包括Left、Right、To_include和Be_include，分别表示基因在区间左侧、基因在区间右侧、基因覆盖区间以及区间覆盖基因） 。
+- `Inter_<FEATURE>_<LOC_FILE>`（表格，各列分别表示：位点名称/染色体/区间起始位置/区间终止位置/基因名称/特征起始位置/特征结束位置/基因与位点区间的关系，关系包括Left、Right、To_include和Be_include，分别表示基因在区间左侧、基因在区间右侧、基因覆盖区间以及区间覆盖基因） 。
 
 **示例：**
 
