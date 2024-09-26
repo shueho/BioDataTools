@@ -39,7 +39,8 @@
   <tr><td>2.19</td><td>MaskSeq</td><td>序列屏蔽（基因组mask）</td></tr>
   <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>分位点碱基数目统计</td></tr>
   <tr><td>2.21</td><td>simplifiedGFF</td><td>简化GFF文件</td></tr>
-  <tr><td>2.22</td><td>getFeatureNearBaseSites</td><td>获取位点附件的特征（候选基因筛选）</td></tr>
+  <tr><td>2.22</td><td>getFeatureNearBaseSites</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
+  <tr><td>2.23</td><td>getFeatureFromInterval</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -677,6 +678,31 @@ python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0
 # 判断位点是否在CDS上： 
 python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0 CDS  
 ```
+
+### 2.23 `getFeatureFromInterval.py [GFF_FILE] [LOC_FILE] [FEATURE (可选参数)]`
+       
+**功能描述：** 批量获取碱基附件的特征。
+
+- **GFF_FILE：** GFF文件路径，需要是GFF3格式的文件，attributes需要以”;“分隔。  
+- **LOC_FILE：** 描述位点位置的表格，需要有四列：位点名称/染色体名称/在染色体上的起始位置/终止位置。注意：不能有标题行，染色体名称需要和GFF文件严格照应。   
+- **FEATURE：** 需要扫描的特征，默认是”gene“，可以选择输入”gene/mRNA/CDS/exon/...“中的其中之一，也可以是其他类型的特征，详见GFF文件。  
+
+**使用场景：** QTL定位或其他分析得到显著关联QTL区域后后搜索候选基因。可以认为是2.22的进阶版本。             
+
+**注意事项：** FEATURE不填写默认扫描基因，如果是”mRNA“则扫描转录本，切记单词不要拼错。          
+
+**生成文件：** 
+- `Inter_<DISTANCE>_<FEATURE>_<LOC_FILE>`（表格，各列分别表示：位点名称/染色体/起始位置/终止位置/基因名称/位点与特征起始的距离/位点与特征结束的距离/基因与位点区间的关系，关系包括Left、Right、To_include和Be_include，分别表示基因在区间左侧、基因在区间右侧、基因覆盖区间以及区间覆盖基因） 。
+
+**示例：**
+
+```bash
+# 获取区间内gene：
+python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt    
+ 
+# 获取区间内mRNA： 
+python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt mRNA  
+```     
 
 
 
