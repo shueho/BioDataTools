@@ -42,6 +42,7 @@
   <tr><td>2.22</td><td>getFeatureNearBaseSites</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
   <tr><td>2.23</td><td>getFeatureFromInterval</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
   <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取基因对应的全部转录本/蛋白质/cdna等</td></tr>
+  <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>对应多组学fasta序列（对应核酸序列和蛋白质序列）</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -724,6 +725,22 @@ python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt mRNA
 比如 `example/pro.fasta` 是完整的蛋白质FASTA文件，执行命令：
 ```bash
 python ExtractFastaWithGene.py example/pro.fasta example/list3.txt    
+```     
+
+### 2.25 `CorrespondingNucleotideProteinFasta.py [FASTA_N] [FASTA_P]`
+
+**功能描述：** 将转录本序列和蛋白质序列对应到表格文件。    
+
+- **FASTA_N：** Fasta格式的核酸序列文件，cdna或转录本序列数据，命名规则【基因名_Txxx】。
+- **FASTA_P：** Fasta格式的氨基酸序列文件，蛋白质序列数据，命名规则【基因名_Pxxx】。
+
+**生成文件：** 
+- `out_match_seq.tab`（表格文件，分别为：基因/转录本或蛋白质编号/核苷酸序列/氨基酸序列，没有找到对应的序列以“-”标注）。
+
+**示例：**
+
+```bash
+python CorrespondingNucleotideProteinFasta.py example/cdna.fasta example/pro.fasta   
 ```     
 
 
