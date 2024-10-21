@@ -43,6 +43,7 @@
   <tr><td>2.23</td><td>getFeatureFromInterval</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
   <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取基因对应的全部转录本/蛋白质/cdna等</td></tr>
   <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>对应多组学fasta序列（对应核酸序列和蛋白质序列）</td></tr>
+  <tr><td>2.26</td><td>BatchModificationSequence</td><td>批量将固定序列前的序列替换为指定序列</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -743,6 +744,28 @@ python ExtractFastaWithGene.py example/pro.fasta example/list3.txt
 python CorrespondingNucleotideProteinFasta.py example/cdna.fasta example/pro.fasta   
 ```     
 
+### 2.26 `BatchModificationSequence.py [FASTA_FILE] [FIX_SEQ] [NEW_SEQ]`
+
+**功能描述：** 批量将固定序列前的序列替换为指定序列。    
+
+- **FASTA_FILE：** Fasta格式的核酸序列文件，即需要修改的所有序列。
+- **FIX_SEQ：** 固定序列。
+- **NEW_SEQ：** 替换成为的序列。 
+
+**使用场景：** 通过某种方法使得序列中包含固定的序列，固定序列前的序列必须修改为特定的序列才能正常翻译（可能是这个概念）。
+
+**生成文件：** 
+- `modif_seq.tab`（表格文件，分别为：序列名称/原始序列/固定序列起始位置/固定序列终止位置/替换后的序列，没有找到固定序列最后三列以“-”标注）。
+
+**示例：**
+
+```bash
+# 比如需要把ATACGACGTACCAGATTACGCTCATATG序列前边的部分替换为ATGGAGTACCC   
+python BatchModificationSequence.py example/modif_seq.fasta ATACGACGTACCAGATTACGCTCATATG ATGGAGTACCC     
+
+# 搞笑的是如果后边两个参数设定为不存在的字符，本代码可以实现fasta文件转换为table文件。。。运行完把除了第一二列删除！   
+python BatchModificationSequence.py example/modif_seq.fasta - -
+```     
 
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
