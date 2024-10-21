@@ -41,6 +41,7 @@
   <tr><td>2.21</td><td>simplifiedGFF</td><td>简化GFF文件</td></tr>
   <tr><td>2.22</td><td>getFeatureNearBaseSites</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
   <tr><td>2.23</td><td>getFeatureFromInterval</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
+  <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取基因对应的全部转录本/蛋白质/cdna等</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -304,6 +305,8 @@ python S_to_H.py -p example/sample.fas -l example/hap.list
 - **Regular_expressions：** 可选参数，假如你的列表中的名称与FASTA文件序列名称有所不同，你可以指定正则表达式对序列进行提取。如果没有填写，默认为："\_(.*?)".，这意味着你将“>”之后第一个空格前的内容作为ID名称。
 
 **使用场景：** 在进行共线性分析或同源基因分群时，频繁遇到从NCBI获取的pep文件含有大量冗余数据。为优化此过程，可选择性下载仅涵盖染色体编码的非冗余蛋白质序列数据库。此脚本特地设计用来根据用户提供的序列名称，从庞大的pep文件中抽取出所需片段。此外，它还支持抽取对应的编码序列（CDS），考虑到蛋白质序列ID与CDS ID间可能存在的差异，引入正则表达式自定义匹配规则显得尤为重要。如需进一步简化流程，推荐采用升级版代码2.09，该版本同样能有效执行此类抽取任务。
+
+**注意事项：** 不可用于提取某一基因多个转录本！本代码不支持提取同名基因不同转录本/蛋白质序列！只能提取唯一基因名称的序列！如果你有该需求，可以关注脚本2.24！     
 
 **生成文件：** 
 - `out_match_seq.fasta`（FASTA文件）。
@@ -702,6 +705,25 @@ python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt
  
 # 获取区间内mRNA： 
 python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt mRNA  
+```     
+
+### 2.24 `ExtractFastaWithGene.py [FASTA_FILE] [LIST_FILE]`
+
+**功能描述：** 依据提供的基因ID列表，该脚本能从全FASTA文件中抽取出基因对应的全部转录本/蛋白质/cdna序列，生成子FASTA文件。    
+
+- **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组的pep或者cdna序列。
+- **LIST_FILE：** 需要提取的基因列表，比如基因：G001，可以提取所有以G001_开头的序列。
+
+**使用场景：** 已知基因列表，想要获取每个基因全部的转录本/蛋白质/cdna序列。
+
+**生成文件：** 
+- `out_match_seq.fasta`（FASTA文件）。
+
+**示例：**
+
+比如 `example/pro.fasta` 是完整的蛋白质FASTA文件，执行命令：
+```bash
+python ExtractFastaWithGene.py example/pro.fasta example/list3.txt    
 ```     
 
 
