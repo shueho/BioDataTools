@@ -5,7 +5,7 @@
 # @Time    : 2024/3/24 14:20
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : ConvertGene-GO.py
+# @File    : GOTableConverter.py
 #
 # The comparison tables of gene and multiple GO were converted to Gene-GO one-to-one format.
 

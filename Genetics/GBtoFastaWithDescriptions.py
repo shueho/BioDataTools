@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : gb_to_fasta.py
+# @File    : GBtoFastaWithDescriptions.py
 #
 # Convert the GB file into a FASTA file, and take the GB file name as the content of the modifier after ">" in the FASTA file.It is mainly used for batch processing of a large number of GB files.
 

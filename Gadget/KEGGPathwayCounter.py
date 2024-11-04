@@ -5,7 +5,7 @@
 # @Time    : 2024/1/3 20:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : KEGG_pathway_geneNum.py
+# @File    : KEGGPathwayCounter.py
 #
 # KEGG pathway gene number statistics.
 

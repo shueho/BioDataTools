@@ -5,7 +5,7 @@
 # @Time    : 2024/9/5 10:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : simplifiedGFF.py
+# @File    : GFFSimplifier.py
 #
 # Simplified GFF information to reduce GFF file size.
 

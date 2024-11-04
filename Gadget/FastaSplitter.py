@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : splitFasta.py
+# @File    : FastaSplitter.py
 #
 # Split FASTA files into smaller FASTA files according to the number of sequences.
 

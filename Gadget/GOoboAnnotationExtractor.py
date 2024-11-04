@@ -5,7 +5,7 @@
 # @Time    : 2024/3/11 16:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : read_goOBO.py
+# @File    : GOoboAnnotationExtractor.py
 #
 # Parse the go.OBO file.
 

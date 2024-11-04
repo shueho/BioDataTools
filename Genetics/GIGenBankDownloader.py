@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : Get_gb_by_gi.py
+# @File    : GIGenBankDownloader.py
 #
 # Crawl the corresponding genebank file by reading the GI number.
 

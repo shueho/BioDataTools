@@ -13,17 +13,17 @@
     <th>功能简述</th>
   </tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Metagenome 宏基因组分析模块</th></tr>
-  <tr><td>1.01</td><td>get_sum</td><td>Quast软件评估结果汇总</td></tr>
-  <tr><td>1.02</td><td>fasta_rename</td><td>为Fasta格式序列编号</td></tr>
-  <tr><td>1.03</td><td>mergeMpa</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
-  <tr><td>1.04</td><td>splitFromLevel</td><td>按照阶元等级重构物种丰度表</td></tr>
+  <tr><td>1.01</td><td>QuastAssemblerSummary</td><td>Quast软件评估结果汇总</td></tr>
+  <tr><td>1.02</td><td>FastaSeqsRenamerUniqueContinuous</td><td>为Fasta格式序列编号</td></tr>
+  <tr><td>1.03</td><td>MPAtoMatrix</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
+  <tr><td>1.04</td><td>TaxLevelMatrixSplitter</td><td>按照阶元等级重构物种丰度表</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics 基因组分析模块</th></tr>
-  <tr><td>2.01</td><td>Get_gb_by_gi</td><td>以GI号批量下载Fasta文件</td></tr>
-  <tr><td>2.02</td><td>Name_gb_by_isolate</td><td>以Isolate批量重命名GB文件</td></tr>
-  <tr><td>2.03</td><td>gb_to_fasta</td><td>GB文件批量转换为Fasta文件</td></tr>
-  <tr><td>2.04</td><td>Merge_dif_seq</td><td>两序列合并（低阶）</td></tr>
-  <tr><td>2.05</td><td>S_to_H</td><td>将样品序列转换为单倍型序列</td></tr>
-  <tr><td>2.06</td><td>ExtractFasta</td><td>正则表达式提取Fasta文件子序列集</td></tr>
+  <tr><td>2.01</td><td>GIGenBankDownloader</td><td>以GI号批量下载Fasta文件</td></tr>
+  <tr><td>2.02</td><td>GBRenameByX</td><td>以某信息批量重命名GB文件</td></tr>
+  <tr><td>2.03</td><td>GBtoFastaWithDescriptions</td><td>GB文件批量转换为Fasta文件</td></tr>
+  <tr><td>2.04</td><td>CombineTwoSequences</td><td>两序列合并（低阶）</td></tr>
+  <tr><td>2.05</td><td>FastaToHaplotypes</td><td>将样品序列转换为单倍型序列</td></tr>
+  <tr><td>2.06</td><td>CustomFastaExtractor</td><td>正则表达式提取Fasta文件子序列集</td></tr>
   <tr><td>2.07</td><td>ProteinPropertyFromExpasy</td><td>批量获取蛋白质理化性质</td></tr>
   <tr><td>2.08</td><td>FeaturesBaseComponents</td><td>细胞器基因组特征数据统计</td></tr>
   <tr><td>2.09</td><td>ExAndRename</td><td>从Fasta文件提取子序列并重命名</td></tr>
@@ -38,27 +38,29 @@
   <tr><td>2.18</td><td>BaseSiteInformation</td><td>碱基位点信息提取</td></tr>
   <tr><td>2.19</td><td>MaskSeq</td><td>序列屏蔽（基因组mask）</td></tr>
   <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>分位点碱基数目统计</td></tr>
-  <tr><td>2.21</td><td>simplifiedGFF</td><td>简化GFF文件</td></tr>
-  <tr><td>2.22</td><td>getFeatureNearBaseSites</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
-  <tr><td>2.23</td><td>getFeatureFromInterval</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
+  <tr><td>2.21</td><td>GFFSimplifier</td><td>简化GFF文件</td></tr>
+  <tr><td>2.22</td><td>BaseSiteFeatureFinder</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
+  <tr><td>2.23</td><td>IntervalFeatureFinder</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
   <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取基因对应的全部转录本/蛋白质/cdna等</td></tr>
   <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>对应多组学fasta序列（对应核酸序列和蛋白质序列）</td></tr>
   <tr><td>2.26</td><td>BatchModificationSequence</td><td>批量将固定序列前的序列替换为指定序列</td></tr>
+  <tr><td>2.27</td><td>TableToMultipleFasta</td><td>按照表格的行拆分Fasta文件</td></tr>
+  <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到单独的表格中</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
   <tr><td>3.03</td><td>SumByGroup</td><td>分组求和（高阶）</td></tr>
   <tr><td>3.04</td><td>CountByGroup</td><td>分组计数（高阶）</td></tr>
-  <tr><td>3.05</td><td>splitFasta</td><td>按指定序列数拆分Fasta文件</td></tr>
-  <tr><td>3.06</td><td>read_keg</td><td>解析KEGG注释文件</td></tr>
-  <tr><td>3.07</td><td>KEGG_pathway_geneNum</td><td>KEGG通路数目统计</td></tr>
-  <tr><td>3.08</td><td>read_goOBO</td><td>解析GO注释obo文件</td></tr>
-  <tr><td>3.09</td><td>ConvertGene-GO</td><td>转换GO注释表格</td></tr>
-  <tr><td>3.10</td><td>getGOinfo</td><td>添加GO注释的描述和分类内容</td></tr>
-  <tr><td>3.11</td><td>linkTable</td><td>将A-Bs和B-Cs表格连接成A-Cs</td></tr>
+  <tr><td>3.05</td><td>FastaSplitter</td><td>按指定序列数拆分Fasta文件</td></tr>
+  <tr><td>3.06</td><td>KeggAnnotationParser</td><td>解析KEGG注释文件</td></tr>
+  <tr><td>3.07</td><td>KEGGPathwayCounter</td><td>KEGG通路数目统计</td></tr>
+  <tr><td>3.08</td><td>GOoboAnnotationExtractor</td><td>解析GO注释obo文件</td></tr>
+  <tr><td>3.09</td><td>GOTableConverter</td><td>转换GO注释表格</td></tr>
+  <tr><td>3.10</td><td>AddGOAnnotations</td><td>添加GO注释的描述和分类内容</td></tr>
+  <tr><td>3.11</td><td>VectorTableMerger</td><td>将A-Bs和B-Cs表格连接成A-Cs</td></tr>
   <tr><td>3.12</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
-  <tr><td>4.01</td><td>geneArrangementMap</td><td>基因组特征排布图</td></tr>
+  <tr><td>4.01</td><td>GeneArrangementMap</td><td>基因组特征排布图</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">分析流程</th></tr>
   <tr><td colspan="2">宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
   <tr><td colspan="2">群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
@@ -70,7 +72,7 @@
 
 ## 1. Metagenome 宏基因组分析相关脚本
    
-### 1.01 `get_sum.py [DIR_PATH]`
+### 1.01 `QuastAssemblerSummary.py [DIR_PATH]`
 
 **功能描述：** 整合由Quast软件输出的多个样本组装评估结果，生成一个组装信息表矩阵。
 
@@ -95,7 +97,7 @@ example/
 ```
 执行命令：
 ```bash
-python get_sum.py example/quast
+python QuastAssemblerSummary.py example/quast
 ```
 输出结果文件 `summary.tsv`，内容示例：
 ```
@@ -105,7 +107,7 @@ sp2       12000   5500000         85            30000       41.7      ...
 sp3       15000   6000000         70            40000       43.1      ...
 ```
 
-### 1.02 `fasta_rename.py [FASTA_FILE_PATH]` 
+### 1.02 `FastaSeqsRenamerUniqueContinuous.py [FASTA_FILE_PATH]` 
 
 **功能描述：** 对FASTA格式序列文件中各个序列标头进行统一命名规范，确保每个序列标识唯一且编号连续。
 
@@ -122,11 +124,11 @@ sp3       15000   6000000         70            40000       43.1      ...
 
 比如 `example/origin_seq.fa` 文件中包含重复标识的序列，执行命令：
 ```bash
-python fasta_rename.py example/origin_seq.fa
+python FastaSeqsRenamerUniqueContinuous.py example/origin_seq.fa
 ``` 
 输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
 
-### 1.03 `mergeMpa.py  [MPA_PATH]` 
+### 1.03 `MPAtoMatrix.py  [MPA_PATH]` 
 
 **功能描述：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。
 
@@ -141,15 +143,15 @@ python fasta_rename.py example/origin_seq.fa
 
 比如 `example/mpa` 文件中包含重复标识的序列，执行命令：
 ```bash
-python mergeMpa.py example/mpa
+python MPAtoMatrix.py example/mpa
 ``` 
 输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵。
 
-### 1.04 `splitFromLevel.py [MPA_MERGE_FILE] [SPLIT_LEVEL]` 
+### 1.04 `TaxLevelMatrixSplitter.py [MPA_MERGE_FILE] [SPLIT_LEVEL]` 
 
 **功能描述：** 该脚本物种丰度表中提取各分类阶元的物种丰度数据并构建相应的丰度矩阵。
 
-- **MPA_MERGE_FILE：** 由 `1.03 mergeMpa.py` 脚本生成的 `mpaMatrix.txt` 文件路径，也可以将您的丰度表修改为示例文件的样式。
+- **MPA_MERGE_FILE：** 由 `1.03 MPAtoMatrix.py` 脚本生成的 `mpaMatrix.txt` 文件路径，也可以将您的丰度表修改为示例文件的样式。
 - **SPLIT_LEVEL：** 要指定输出的物种丰度表格的分类级别，可使用以下单个字母标识：'a'（全级别）、'K'（界）、'P'（门）、'C'（纲）、'O'（目）、'F'（科）、'G'（属）、'S'（种），其中'a'表示输出所有分类阶元的丰度表。大写或小写字母均可。
 
 **生成文件：** 
@@ -160,11 +162,11 @@ python mergeMpa.py example/mpa
 比如 `example/mpaMatrix.txt` 文件中包含物种丰度信息，执行命令：
 ```bash
 # 生成所有阶元等级的丰度数据运行：
-python splitFromLevel.py example/mpaMatrix.txt a
+python TaxLevelMatrixSplitter.py example/mpaMatrix.txt a
 # 输出7个阶元的结果文件：taxLevel_K/P/C/O/F/G/S_output.mpaMatrix.txt。
 
 # 只生成科阶元的丰度数据运行：
-python splitFromLevel.py example/mpaMatrix.txt f
+python TaxLevelMatrixSplitter.py example/mpaMatrix.txt f
 # 只输出一个结果文件：taxLevel_F_output.mpaMatrix.txt。
 ```
 即可输出对应的1个或7个结果。
@@ -187,9 +189,9 @@ python splitFromLevel.py example/mpaMatrix.txt f
 
 ## 2. Genetics 用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
  
-### 2.01 `Get_gb_by_gi.py [GI_LIST_DIR]`
+### 2.01 `GIGenBankDownloader.py [GI_LIST_DIR]`
 
-**功能描述：** 通过GI编号批量下载fasta文件。
+**功能描述：** 通过GI编号批量下载GenBank文件。
 
 - **GI_LIST_DIR：** 存放GI编号的目录路径，脚本自动检测并读取文件夹内所有以 `_gi.txt` 为扩展名的文本文件。这些 `_gi.txt` 文件包含待下载序列的GI编号。
 
@@ -204,11 +206,11 @@ python splitFromLevel.py example/mpaMatrix.txt f
 
 比如 `example/gi` 文件中存放有需要下载序列的GI编号，执行命令：
 ```bash
-python Get_gb_by_gi.py example/gi
+python GIGenBankDownloader.py example/gi
 ``` 
 输出文件夹 `gb` ，其中包括以列表名称为前缀的5个gb文件，示例文件 `example/gb_isolate` 即为生成结果参考。
 
-### 2.02 `Name_gb_by_isolate.py [GB_DIR] [INFO_NAME]`
+### 2.02 `GBRenameByX.py [GB_DIR] [INFO_NAME]`
 
 **功能描述：** 读取GB文件内的某一样品信息（如isolate信息），并依据这一信息为对应的GB文件重新命名，适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。
 
@@ -225,14 +227,14 @@ python Get_gb_by_gi.py example/gi
 比如 `example/gb_isolate` 文件和 `example/gb_orgnism` 文件中分别包含以 `isolate` 和 `orgnism` 信息区分的多个样品GB文件，可以执行：
 ```bash
 # 以isolate信息命名运行：
-python Name_gb_by_info.py example/gb_isolate isolate
+python GBRenameByX.py example/gb_isolate isolate
 
 # 以orgnism信息命名运行：
-python Name_gb_by_info.py example/gb_organism organism
+python GBRenameByX.py example/gb_organism organism
 ```
 即可输出对应的结果于文件夹 `output` 中。
      
-### 2.03 `gb_to_fasta.py [GB_DIR]`
+### 2.03 `GBtoFastaWithDescriptions.py [GB_DIR]`
 `
 **功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。
 
@@ -245,14 +247,14 @@ python Name_gb_by_info.py example/gb_organism organism
 
 比如需要将 `example/gb_isolate` 文件中GB文件转换为FASTA文件，执行命令：
 ```bash
-python gb_to_fasta.py example/gb_isolate
+python GBtoFastaWithDescriptions.py example/gb_isolate
 ``` 
 即可输出对应的结果于文件夹 `output` 中。
 
 > ## 群体遗传学分析快速下载数据流程          
 > 比如要从NCBI下载特定多个群体的 `cox1` 基因，可以先创建一个文件夹，分别列出该群体不同个体的 `cox1` 基因的GI编号（可以在NCBI直接导出），并将每个群体的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的GB文件；再运行脚本2.02，依据isolate或其他标签对下载的GB文件进行重命名；最后执行脚本2.03，从而生成以标签值为名称的最终FASTA格式序列文件。
 
-### 2.04 `Merge_dif_seq.py [FASTA_FILE_1] [FASTA_FILE_2]`
+### 2.04 `CombineTwoSequences.py [FASTA_FILE_1] [FASTA_FILE_2]`
 
 **功能描述：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。
 
@@ -272,11 +274,11 @@ python gb_to_fasta.py example/gb_isolate
 
 比如 `example/fasta_merge` 目录中包含需要合并的序列 `16s.fasta` 和 `co1.fasta`，执行命令：
 ```bash
-python Merge_dif_seq.py example/fasta_merge/16s.fasta example/fasta_merge/co1.fasta
+python CombineTwoSequences.py example/fasta_merge/16s.fasta example/fasta_merge/co1.fasta
 ``` 
 输出结果文件 `merge.fas` ，即为16s+co1合并序列。
 
-### 2.05 `S_to_H.py -p [FASTA_FILE_NAME] -l [LIST_NAME]`
+### 2.05 `FastaToHaplotypes.py -p [FASTA_FILE_NAME] -l [LIST_NAME]`
 
 **功能描述：** 将FASTA文件中多个样品序列根据单倍型归类。
 
@@ -294,11 +296,11 @@ python Merge_dif_seq.py example/fasta_merge/16s.fasta example/fasta_merge/co1.fa
 
 比如 `example/sample.fas` 文件是各个样品的序列文件， `example/hap.list` 文件是单倍型对应样品的表格，执行命令：
 ```bash
-python S_to_H.py -p example/sample.fas -l example/hap.list
+python FastaToHaplotypes.py -p example/sample.fas -l example/hap.list
 ``` 
 输出结果文件 `out_hap.fasta` ，即为单倍型序列文件。
 
-### 2.06 `ExtractFasta.py [FASTA_FILE] [LIST_FILE] [Regular_expressions (Optional)]`
+### 2.06 `CustomFastaExtractor.py [FASTA_FILE] [LIST_FILE] [Regular_expressions (Optional)]`
 
 **功能描述：** 依据提供的ID列表，该脚本能从一个整合多序列的FASTA文件中抽取出相应序列，生成子FASTA文件。默认配置下，系统识别">"符号后至首个空格前的文本为ID，与列表中的条目匹配。针对复杂情况，支持自定义正则表达式以实现ID的精准匹配，确保灵活高效地筛选目标序列。
 
@@ -318,13 +320,13 @@ python S_to_H.py -p example/sample.fas -l example/hap.list
 比如 `example/text.fa` 是完整的FASTA文件，执行命令：
 ```bash
 # 如果你所需要提取的序列名称是第一个空格前的内容，尤其是针对那些直接从NCBI下载的fasta文件，你可以直接运行：
-python ExtractFasta.py example/text.fa example/list1.txt
+python CustomFastaExtractor.py example/text.fa example/list1.txt
 
 # 常用！如果你所需要提取的序列名称是>后的所有内容，你可以直接运行：
-python ExtractFasta.py example/text2.fa example/list2.txt "\>(.*)"
+python CustomFastaExtractor.py example/text2.fa example/list2.txt "\>(.*)"
 
 # 如果使用正则表达式提取：
-python ExtractFasta.py example/text.fa example/list2.txt "\_(.*?) "
+python CustomFastaExtractor.py example/text.fa example/list2.txt "\_(.*?) "
 ```
 即可输出对应的子序列文件。
 
@@ -627,7 +629,7 @@ python BaseCompositionCalculation.py example/base_cds.fa NNN
 python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA
 ```
 
-### 2.21 `simplifiedGFF.py [GFF_FILE] [ITEM_1 可选参数] [ITEM_2 可选参数] ... [ITEM_n 可选参数]`
+### 2.21 `GFFSimplifier.py [GFF_FILE] [ITEM_1 可选参数] [ITEM_2 可选参数] ... [ITEM_n 可选参数]`
        
 **功能描述：** 简化GFF文件的attributes的内容，过滤不关注的信息，以减少GFF文件大小。
 
@@ -643,16 +645,16 @@ python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA
 
 ```bash
 # 只保留ID和Parent：
-python simplifiedGFF.py example/maize.gff3   
+python GFFSimplifier.py example/maize.gff3   
  
 # 还希望保留chromosome： 
-python simplifiedGFF.py example/maize.gff3 chromosome  
+python GFFSimplifier.py example/maize.gff3 chromosome  
 
 # 希望保留chromosome、country、ID和Parent： 
-python simplifiedGFF.py example/maize.gff3 chromosome country  
+python GFFSimplifier.py example/maize.gff3 chromosome country  
 ```  
 
-### 2.22 `getFeatureNearBaseSites.py [GFF_FILE] [LOC_FILE] [DISTANCE] [FEATURE (可选参数)]`
+### 2.22 `BaseSiteFeatureFinder.py [GFF_FILE] [LOC_FILE] [DISTANCE] [FEATURE (可选参数)]`
        
 **功能描述：** 批量获取碱基附件的特征。
 
@@ -672,19 +674,19 @@ python simplifiedGFF.py example/maize.gff3 chromosome country
 
 ```bash
 # 获取显著位点14000距离gene：
-python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 14000    
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 14000    
  
 # 获取显著位点14000距离mRNA： 
-python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 14000 mRNA  
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 14000 mRNA  
 
 # 判断位点是否在基因上： 
-python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0  
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 0  
 
 # 判断位点是否在CDS上： 
-python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0 CDS  
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 0 CDS  
 ```
 
-### 2.23 `getFeatureFromInterval.py [GFF_FILE] [LOC_FILE] [FEATURE (可选参数)]`
+### 2.23 `IntervalFeatureFinder.py [GFF_FILE] [LOC_FILE] [FEATURE (可选参数)]`
        
 **功能描述：** 批量获取指定区间内的特征。
 
@@ -703,10 +705,10 @@ python getFeatureNearBaseSites.py example/maize.gff3 example/base_loc2.txt 0 CDS
 
 ```bash
 # 获取区间内gene：
-python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt    
+python IntervalFeatureFinder.py example/maize.gff3 example/base_loc3.txt    
  
 # 获取区间内mRNA： 
-python getFeatureFromInterval.py example/maize.gff3 example/base_loc3.txt mRNA  
+python IntervalFeatureFinder.py example/maize.gff3 example/base_loc3.txt mRNA  
 ```     
 
 ### 2.24 `ExtractFastaWithGene.py [FASTA_FILE] [LIST_FILE]`
@@ -765,6 +767,44 @@ python BatchModificationSequence.py example/modif_seq.fasta ATACGACGTACCAGATTACG
 
 # 搞笑的是如果后边两个参数设定为不存在的字符，本代码可以实现fasta文件转换为table文件。。。运行完把除了第一二列删除！   
 python BatchModificationSequence.py example/modif_seq.fasta - -
+```     
+
+### 2.27 `TableToMultipleFasta.py [TABLE_FILE]`
+
+**功能描述：** 将表格按照行转换为Fasta文件，每一行中多个序列放置在相同文件中。    
+
+- **TABLE_FILE：** 表格文件，每一行将生成一个单独的Fasta文件，同一行的序列拆分到同一Fasta文件中，第一列是Fasta文件名。
+
+**使用场景：** 快速拆分多个来源（不同物种、不同转录本、不同样品或不同基因家族等）同一序列（基因或氨基酸）用于后续分析。比如你如果想要快速完成每个Fasta文件的比对，可以使用CLUSTALW的命令行批量对输出文件夹的Fasta文件进行比对。  
+
+**注意事项：** 表格第一列为拆分后的FASTA文件名称，不要重复!!!需要按照系统文件命名规则不能使用特殊符号。          
+
+**生成文件：** 
+- `out_fastas`（文件夹，其中有许多Fasta文件，文件命名是表格第一列的内容）。
+
+**示例：**
+
+```bash
+python TableToMultipleFasta.py example/fasta_per_row.txt
+```     
+
+### 2.28 `MultipleFastaToTable.py [FASTA_DIR]`
+
+**功能描述：** 将多个Fasta文件转化为一个表格，同一文件的序列存放到同一行中（2.27的反转换）。    
+
+- **FASTA_DIR：** 文件夹路径，该文件夹下存放用于合并的Fasta文件。
+
+**使用场景：** 快速合并多个来源（不同物种、不同转录本、不同样品或不同基因家族等）同一序列（基因或氨基酸）用于后续分析。  
+
+**注意事项：** 生成的表格中各个序列包含原来的名称，如果想转换为纯序列可以使用EXCEL打开，替换`*~~`为空白，切记一定要两个波浪线！          
+
+**生成文件：** 
+- `merge.tab`（表格文件，第一列为Fasta文件名，后续各列是这个文件中的所有序列）。
+
+**示例：**
+
+```bash
+python MultipleFastaToTable.py example/mul_fastas
 ```     
 
 
@@ -864,7 +904,7 @@ options:
 python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0
 ```
 
-### 3.05 `splitFasta.py [FASTA_FILE_PATH] [Number_of_split_files]`
+### 3.05 `FastaSplitter.py [FASTA_FILE_PATH] [Number_of_split_files]`
        
 **功能描述：** 针对含有大量序列的FASTA文件，可根据序列数量对其进行分割，形成多个较小的FASTA文件。
 
@@ -880,10 +920,10 @@ python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0
 
 运行下列代码将7个序列的fasta文件分为3个2序列的文件（不够整除最后一个文件只有一个序列）。
 ```bash
-python splitFasta.py example/text.fa 2
+python FastaSplitter.py example/text.fa 2
 ```
 
-### 3.06 `read_keg.py [KEG_FILE]`
+### 3.06 `KeggAnnotationParser.py [KEG_FILE]`
    
 **功能描述：** 解析KEG文件。可以解析从KEGG网页下载的.keg注释文件，用于富集分析或基因注释时手动构建背景基因集。
 
@@ -906,13 +946,13 @@ python splitFasta.py example/text.fa 2
 
 ```bash
 # 比如解析通用keg文件：
-python read_keg.py example/ko00001.keg
+python KeggAnnotationParser.py example/ko00001.keg
 
 # 比如解析人类keg文件：
-python read_keg.py example/hsa00001.keg
+python KeggAnnotationParser.py example/hsa00001.keg
 ```
 
-### 3.07 `KEGG_pathway_geneNum.py [3.06_生成文件_1] [GENE_KO]`
+### 3.07 `KEGGPathwayCounter.py [3.06_生成文件_1] [GENE_KO]`
     
 **功能描述：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。
 
@@ -929,10 +969,10 @@ python read_keg.py example/hsa00001.keg
 **示例：**
 
 ```bash
-python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt
+python KEGGPathwayCounter.py example/output_ko00001.txt example/gene_ko.txt
 ```
 
-### 3.08 `read_goOBO.py [obo_FILE]`
+### 3.08 `GOoboAnnotationExtractor.py [obo_FILE]`
 
 **功能描述：** 从obo文件读取并解析GO号对应的描述及分类，生成GO编号\t描述信息\t分类的三列表格，你可以直接使用示例文件中的go_term_list.txt，要注意这个文件可能不是最新的版本，因此推荐使用该脚本提取最新的GO注释信息。
 
@@ -947,10 +987,10 @@ python KEGG_pathway_geneNum.py example/output_ko00001.txt example/gene_ko.txt
 
 比如你将网页复制或保存到了abc.txt，你可以运行下方代码：
 ```bash
-python read_goOBO.py abc.txt
+python GOoboAnnotationExtractor.py abc.txt
 ```
 
-### 3.09 `ConvertGene-GO.py [GENE_GOs_MAP]`
+### 3.09 `GOTableConverter.py [GENE_GOs_MAP]`
                  
 **功能描述：** 转换GO注释表格：  
 将表格：    
@@ -976,10 +1016,10 @@ python read_goOBO.py abc.txt
 **示例：**
 
 ```bash
-python ConvertGene-GO.py example/seq_gos.txt
+python GOTableConverter.py example/seq_gos.txt
 ```
       
-### 3.10 `getGOinfo.py [go_term_list] [GENE_GO_MAP]`
+### 3.10 `AddGOAnnotations.py [go_term_list] [GENE_GO_MAP]`
                  
 **功能描述：** 给gene-go文件加上GO注释的描述和分类内容。通过运行这个命令生成的文件配合R包clusterProfiler完成富集分析的内容。
 
@@ -997,7 +1037,7 @@ awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_fi
 
 使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。
 ```bash
-python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
+python AddGOAnnotations.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 ```
 
 > ## 无参GO/KEGG富集分析流程    
@@ -1059,7 +1099,7 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 > write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
 > ```       
 
-### 3.11 `linkTable.py [A-Bs] [B-Cs] [s1（可选）] [s2（可选）]`
+### 3.11 `VectorTableMerger.py [A-Bs] [B-Cs] [s1（可选）] [s2（可选）]`
                  
 **功能描述：** 连接向量表：  
 将表格：    
@@ -1107,10 +1147,10 @@ python getGOinfo.py example/2024-01-17_go_term_list.txt example/gene_go.txt
 
 ```bash
 #不指定第二列分隔符
-python linkTable.py example/A-Bs.txt example/B-Cs.txt
+python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt
 
 #指定第二列分隔符（按照实际情况指定，本例都是分号）
-python linkTable.py example/A-Bs.txt example/B-Cs.txt ; ;
+python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt ; ;
 ```
 
 ### 3.12 `GenoSpider`
@@ -1119,7 +1159,7 @@ python linkTable.py example/A-Bs.txt example/B-Cs.txt ; ;
 
 ## 4.Plotscript 绘图代码工具集。     
 
-### 4.01 `geneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
+### 4.01 `GeneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
      
 **功能描述：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。
 
@@ -1133,7 +1173,7 @@ python linkTable.py example/A-Bs.txt example/B-Cs.txt ; ;
 **示例：**
 
 ```bash
-python geneArrangementMap.py example/gene.txt example/color.txt 50
+python GeneArrangementMap.py example/gene.txt example/color.txt 50
 ```
 
 

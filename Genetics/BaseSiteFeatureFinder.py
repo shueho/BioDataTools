@@ -5,7 +5,7 @@
 # @Time    : 2024/9/5 13:21
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : getFeatureNearBaseSites.py
+# @File    : BaseSiteFeatureFinder.py
 #
 # According to the specified chromosome position and base site information, the corresponding feature data were extracted.
 

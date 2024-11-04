@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : Name_gb_by_info.py
+# @File    : GBRenameByX.py
 #
 # Read a information in the GB file and name the GB file through the information.It is mainly used for batch processing of a large number of GB files.
 

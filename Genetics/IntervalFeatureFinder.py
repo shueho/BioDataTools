@@ -5,7 +5,7 @@
 # @Time    : 2024/9/26 13:04
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : getFeatureFromInterval.py
+# @File    : IntervalFeatureFinder.py
 #
 # According to the specified chromosome position information, the corresponding feature data were extracted.
 

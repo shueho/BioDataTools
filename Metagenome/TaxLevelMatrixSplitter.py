@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : splitFromLevel.py
+# @File    : TaxLevelMatrixSplitter.py
 #
 # The species abundance matrix was extracted.
 

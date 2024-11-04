@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : Merge_dif_seq.py
+# @File    : CombineTwoSequences.py
 #
 # Merge different sequences of the same sample (recommendation is the result of the comparison).
 

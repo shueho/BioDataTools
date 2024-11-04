@@ -5,7 +5,7 @@
 # @Time    : 2023/8/4 21:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : geneArrangementMap.py
+# @File    : GeneArrangementMap.py
 #
 # The linear arrangement of genes is distinguished according to different colors.
 

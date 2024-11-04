@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : S_to_H.py
+# @File    : FastaToHaplotypes.py
 #
 # Convert fasta files of sample sequences to fasta files consisting of haplotypes. Realize the merging of identical sequences!
 

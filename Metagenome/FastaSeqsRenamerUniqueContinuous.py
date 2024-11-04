@@ -5,7 +5,7 @@
 # @Time    : 2023/7/30 13:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : fasta_rename.py
+# @File    : FastaSeqsRenamerUniqueContinuous.py
 #
 # Modify the name in each sequence of the specified FASTA file to make it standardized and uniform. 
 

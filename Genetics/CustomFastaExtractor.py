@@ -5,7 +5,7 @@
 # @Time    : 2024/1/12 18:50
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : ExtractFasta.py
+# @File    : CustomFastaExtractor.py
 #
 # Extract the fasta sequence in the list.
 

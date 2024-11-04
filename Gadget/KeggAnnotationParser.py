@@ -6,7 +6,7 @@
 # @Update  : 2024/3/26 18:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : read_keg.py
+# @File    : KeggAnnotationParser.py
 #
 # Parse the KEG file.
 

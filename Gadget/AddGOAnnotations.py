@@ -5,7 +5,7 @@
 # @Time    : 2024/3/11 18:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : getGOinfo.py
+# @File    : AddGOAnnotations.py
 #
 # Merge gene GO annotation table.
 

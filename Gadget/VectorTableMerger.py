@@ -5,7 +5,7 @@
 # @Time    : 2024/9/4 16:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : linkTable.py
+# @File    : VectorTableMerger.py
 #
 # Connect the A-Bs and B-Cs forms to form an A-Cs form.
 
