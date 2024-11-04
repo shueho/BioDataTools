@@ -46,6 +46,7 @@
   <tr><td>2.26</td><td>BatchModificationSequence</td><td>批量将固定序列前的序列替换为指定序列</td></tr>
   <tr><td>2.27</td><td>TableToMultipleFasta</td><td>按照表格的行拆分Fasta文件</td></tr>
   <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到单独的表格中</td></tr>
+  <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>简易版可视化序列比对结果</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -796,7 +797,7 @@ python TableToMultipleFasta.py example/fasta_per_row.txt
 
 **使用场景：** 快速合并多个来源（不同物种、不同转录本、不同样品或不同基因家族等）同一序列（基因或氨基酸）用于后续分析。  
 
-**注意事项：** 生成的表格中各个序列包含原来的名称，如果想转换为纯序列可以使用EXCEL打开，替换`*~~`为空白，切记一定要两个波浪线！          
+**注意事项：** 生成的表格中各个序列包含原来的名称，如果想转换为纯序列可以使用EXCEL打开，替换`*~~`为空白，切记一定要两个波浪线！文件夹中不能有其他文件。          
 
 **生成文件：** 
 - `merge.tab`（表格文件，第一列为Fasta文件名，后续各列是这个文件中的所有序列）。
@@ -805,6 +806,23 @@ python TableToMultipleFasta.py example/fasta_per_row.txt
 
 ```bash
 python MultipleFastaToTable.py example/mul_fastas
+```     
+
+### 2.29 `AlignConsistencyChecker.py [FASTA_DIR]`
+
+**功能描述：** 将比对后的Fasta文件，将每个位点对应，并比较是否有完全一致的位点。    
+
+- **FASTA_DIR：** 文件夹路径，该文件夹下存放多个经过序列比对的Fasta文件。
+
+**注意事项：** 生成的文件需要用EXCEL打开，并且将文字字体改为宋体等等宽字体！务必使用经过比对过的结果！文件夹中不能有其他文件。          
+
+**生成文件：** 
+- `aln_res.txt`（文本文件，建议用EXCEL打开，并调整为宋体字体查看，不同比对结果用空白行隔开，“**ALN**”行为序列比较结果，完全一致的位点为“*”，不一致的位点为“_”）。
+
+**示例：**
+
+```bash
+python AlignConsistencyChecker.py example/aln_fasta
 ```     
 
 
