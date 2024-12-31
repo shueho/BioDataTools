@@ -47,6 +47,7 @@
   <tr><td>2.27</td><td>TableToMultipleFasta</td><td>按照表格的行拆分Fasta文件</td></tr>
   <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到单独的表格中</td></tr>
   <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>简易版可视化序列比对结果</td></tr>
+  <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并将重复序列去冗余</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -116,7 +117,7 @@ sp3       15000   6000000         70            40000       43.1      ...
 
 **使用场景：** 在宏基因组等组学分析项目中，该脚本通过统一重命名各FASTA文件中的序列ID为连续数字（1, 2, 3...），确保合并样品组装数据时标识唯一性，为后续基因丰度分析及注释规范序列名称，便于差异基因追踪及原始序列比对。
 
-**注意事项：** 本代码只适用于后续不再讨论原始序列标识的场景，切勿在定量、注释等下游分析后使用该脚本！
+**注意事项：** 本代码只适用于后续不再讨论原始序列标识的场景，切勿在定量、注释等下游分析后使用该脚本！不要和2.30搞混，本脚本是将序列重新编号（无论序列是否一致都会赋予不同的ID）；而2.30是将重复序列赋予统一ID，如果原本文件中有相同的ID（无论是否是相同序列）都只保留最后一个。  
 
 **生成文件：** 
 - `out_<原始FASTA文件名称>`（FASTA文件，各个序列被重新编码）。    
@@ -823,6 +824,33 @@ python MultipleFastaToTable.py example/mul_fastas
 
 ```bash
 python AlignConsistencyChecker.py example/aln_fasta
+```     
+
+### 2.30 `MergeMultipleFasta.py [FASTA_1] [FASTA_2] ... [FASTA_n]`
+
+**功能描述：** 将多个Fasta文件合并，并将重复的序列去冗余。    
+
+- **FASTA_1/2/.../n：** Fasta文件路径，需要至少指定1个参数。
+
+**使用场景：** 1.只指定1个Fasta文件时，相当于将单个Fasta文件中的序列去冗余；2.指定多个Fasta文件时，不仅可以将序列去冗余，还能得到不同Fasta文件中序列ID的对照表。  
+
+**注意事项：** 至少指定1个参数。当指定1个参数时，不要和1.02搞混，1.02是将序列重新编号（无论序列是否一致都会赋予不同的ID）；而本脚本是将重复序列赋予统一ID，如果原本文件中有相同的ID（无论是否是相同序列）都只保留最后一个。         
+
+**生成文件：** 
+- `merge.fasta`（Fasta文件）。  
+- `GeneIDMatch.table`（表格文件，各个序列在不同Fasta文件中的ID对照表）。   
+
+**示例：**
+
+```bash
+# 只指定1个参数，单个文件去冗余   
+python MergeMultipleFasta.py example/merge_fasta/File1.fasta     
+
+# 指定2个参数，对比两个文件中的序列ID  
+python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta/File2.fasta
+
+# 指定3个参数，对比三个文件中的序列ID
+python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta/File2.fasta example/merge_fasta/File3.fasta
 ```     
 
 
