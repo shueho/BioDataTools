@@ -48,6 +48,8 @@
   <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到单独的表格中</td></tr>
   <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>简易版可视化序列比对结果</td></tr>
   <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并将重复序列去冗余</td></tr>
+  <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
+  <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -853,6 +855,37 @@ python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta
 python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta/File2.fasta example/merge_fasta/File3.fasta
 ```     
 
+### 2.31 `MitosToGFF.py [MITOS_FILE]`
+
+**功能描述：** 将Mitos注释结果转换为GFF文件格式。    
+
+- **MITOS_FILE：** 由Mitos生成的.mitos文件。   
+        
+**生成文件：** 
+- `result_mitos.gff`（GFF文件）。
+
+**示例：**
+
+```bash
+python MitosToGFF.py example/result.mitos
+```  
+   
+### 2.32 `MitosToFasta.py [MITOS_FILE] [FASTA_FILE]`
+
+**功能描述：** 将Mitos注释结果转换为GFF文件格式。    
+
+- **MITOS_FILE：** 由Mitos生成的.mitos文件。  
+- **FASTA_FILE：** 导入Mitos程序/网页的Fasta文件，也就是用于基因组注释的文件。   
+        
+**生成文件：** 
+- `result_mitos.fasta`（Fasta文件，对于tRNA在序列ID上注明了反密码子和二级结构）。
+
+**示例：**
+
+```bash
+python MitosToFasta.py example/result.mitos example/mitos.fasta  
+```     
+
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
@@ -1201,7 +1234,50 @@ python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt ; ;
 
 ### 3.12 `GenoSpider`
 
-**功能描述：** 基因组数据爬虫，详细说明见硕士毕业论文！    
+**功能描述：** 基因组数据爬虫，详细说明见硕士毕业论文！  
+
+**参数说明：** 
+
+```bash
+#工具包括两种执行方式，分为交互模式和命令行模式。其中命令行模式只支持单一分类流程化输入和输出，交互式包含更个性化的运行方式。
+
+#命令行模式
+python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w WIDTH] [-H HEIGHT] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
+
+##输入“python GenoSpider.py -n Aves -u -r -l superorder”即可得到鸟纲的所有参考基因组信息
+
+##GenoSpider.py -h=[输出帮助信息] -s=[简化组装信息表信息，开关参数，默认否]
+##-f=[输出图片格式，可选择jpg, png, svg, eps中的一种，默认jpg]
+##-p=[输出图像像素，默认300] -r=[只输出参考基因组，开关参数，默认否]
+##-u=[离线模式，开关参数，默认否] -l=[输出图像所统计的阶元等级]
+##-w=[图片宽度，默认8] -H=[图片高度，默认10] -g=[子图间隔，默认0.4]
+##-n=[拉丁名，与-i只需指定其中一个] -i=[物种ID，与-u只需指定其中一个]
+
+#交互模式
+python GenoSpider.py
+
+##不加参数运行“python GenoSpider.py”启用交互模式，进入交互模式可以在面板中输入对应的功能序号或者功能名称执行对应操作。
+
+>> 功能序号	功能名称	对应操作
+>> 1    getTaxInfoFromName      Get taxonomic information for Scientific name of species.
+>> 2    getTaxInfoFromNameList  Get taxonomic information for all species in a list.
+>> 3    getTaxInfoFromTid       Get taxonomic information for Tax ID of species.
+>> 4    getTaxInfoFromTidList   Get taxonomic information for Tax ID in a list.
+>> 5    getAssembleFromName     Get information about all genomes in a given category. It is not recommended due to the occurrence of species with the same name.
+>> 6    getAssembleFromTid      Get information about all genomes in a given Tax ID.
+>> 7    getAssembleFromTidList  Get information about all genomes in a given Tax ID in a list.
+>> 8    getTaxInfoFromAssemble  The taxonomic information is obtained from the assembly information file. This is equivalent to the getTaxInfoFromTidList being triggered automatically after manually executing the command to get the assembly information.
+>> 9    mergeAssemble_TaxInfo   Merge assembly information and species classification information files.
+>> p    dataVisualization       Output visual image.
+>> c    com     Output a list of all functions.
+>> h    help    Get complete help information.
+>> f    settingOutputFormat     View or configure the output format.
+>> e    exit    exit the program.
+
+```
+
+**注意事项：** 需要安装requests、pandas和matplotlib库！  
+  
 
 ## 4.Plotscript 绘图代码工具集。     
 
