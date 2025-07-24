@@ -1337,7 +1337,7 @@ python GeneArrangementMap.py example/gene.txt example/color.txt 50
 **视频教学：** 即将发布。
 
 **生成文件：** 
-- `modified`（文件夹，①modified_*.svg文件是单个二级结构的美化与原始文件一一对应，*处为原始文件名第一个“-”前的部分；②group_*.svg文件是同一行的组合图片；③final.svg文件是没有为碱基上色的组合图版本，个人比较偏向该版本的使用；④final_color.svg文件是为碱基上色的版本）。
+- `modified`（文件夹，①modified_X.svg文件是单个二级结构的美化与原始文件一一对应，X处为原始文件名第一个“-”前的部分；②group_X.svg文件是同一行的组合图片；③final.svg文件是没有为碱基上色的组合图版本，个人比较偏向该版本的使用；④final_color.svg文件是为碱基上色的版本）。
 
 **示例：**
 
@@ -1366,5 +1366,5 @@ python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -
 </a>
 
 ==============      
-** 感谢支持！ **    
+**感谢支持！**    
 <img src="additional/pic/donate.png" alt="Donate" height="300" />
