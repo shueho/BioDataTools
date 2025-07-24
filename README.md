@@ -1365,5 +1365,6 @@ python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -
   https://orcid.org/0000-0001-9708-3575
 </a>
 
-
+==============    
+** 感谢支持！ **
 <img src="additional/pic/donate.png" alt="Donate" height="300" />
