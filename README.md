@@ -65,6 +65,7 @@
   <tr><td>3.12</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
   <tr><td>4.01</td><td>GeneArrangementMap</td><td>基因组特征排布图</td></tr>
+  <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>tRNA二级结构图美化</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">分析流程</th></tr>
   <tr><td colspan="2">宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
   <tr><td colspan="2">群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
@@ -1298,6 +1299,57 @@ python GenoSpider.py
 python GeneArrangementMap.py example/gene.txt example/color.txt 50
 ```
 
+### 4.01 `TrnaStructureBeautifier.py [-h] -i INPUT [-s SIZE_WEIGHT] [-p PER_ROW] [-hg HORIZONTAL_GAP] [-vg VERTICAL_GAP] [-ac ADJACENT_COLOR] [-pc PAIR_COLOR] [-bf BASE_FILL] [-bs BASE_STROKE] [-A BASE_A] [-U BASE_U] [-G BASE_G] [-C BASE_C]`
+         
+**功能描述：** 对使用ViennaRNA包的RNAplot功能绘出的tRNA二级结构进行美化，如Mitos的注释结果非常适用本脚本。
+
+**参数说明：** 
+
+```options:
+  -h, --help            show this help message and exit
+  -i, --input INPUT     SVG文件或者SVG文件存放的文件夹路径
+  -s, --size-weight SIZE_WEIGHT
+                        图形缩放比例（默认 1.4）
+  -p, --per-row PER_ROW
+                        每行图片数量（默认 4）
+  -hg, --horizontal-gap HORIZONTAL_GAP
+                        图片水平间隔（默认 8）
+  -vg, --vertical-gap VERTICAL_GAP
+                        图片垂直间隔（默认 5）
+  -ac, --adjacent-color ADJACENT_COLOR
+                        相邻碱基连线颜色（支持名称或 HEX，如 "blue" 或 "#00FF00"，默认 "blue"）
+  -pc, --pair-color PAIR_COLOR
+                        配对碱基连线颜色（支持名称或 HEX，如 "red" 或 "#FF0000"，默认 "red"）
+  -bf, --base-fill BASE_FILL
+                        碱基圆圈填充色（默认 "white"）
+  -bs, --base-stroke BASE_STROKE
+                        碱基圆圈轮廓色（默认 "black"）
+  -A, --base-a BASE_A   美化A碱基圆圈填充色（默认 "red"）
+  -U, --base-u BASE_U   美化U/T碱基圆圈填充色（默认 "blue"）
+  -G, --base-g BASE_G   美化G碱基圆圈填充色（默认 "green"）
+  -C, --base-c BASE_C   美化C碱基圆圈填充色（默认 "yellow"）        
+```
+
+**使用场景：** 已经得到SVG版本的tRNA二级结构初稿图，有美化和合并需求。
+
+**注意事项：** ①脚本以第一个“-”前的文字做为RNA的名称（如果没有则是文件名称），在使用脚本之前需要注意调整文件名称格式；②只适合调用RNAplot绘制的二级结构图（比如Miotos软件）美化；③-i参数是必需的，可以是单个SVG文件，也可以是包含很多SVG文件的文件夹其他参数都有默认值可以根据出图效果调整参数！ ④如果出图有文字覆盖情况可以调整图片间隙和缩放比例，如果是微调建议使用adobe illustrator等软件对SVG文件进行编辑；⑤如果-i指定的是一个文件夹，文件夹里可以包含其他文件或文件夹，但是不能包含额外的SVG文件，比如使用Mitos绘图在plot文件夹里还包含rRNA的二级结构，需要将这些文件移除；⑥如果需要再次运行脚本可以将原来的modified文件夹清空或删除，虽然再次运行会对上次运行的结果产生覆盖，但是会多出莫名其妙的文件。
+
+**视频教学：** 即将发布。
+
+**生成文件：** 
+- `modified`（文件夹，①modified_*.svg文件是单个二级结构的美化与原始文件一一对应，*处为原始文件名第一个“-”前的部分；②group_*.svg文件是同一行的组合图片；③final.svg文件是没有为碱基上色的组合图版本，个人比较偏向该版本的使用；④final_color.svg文件是为碱基上色的版本）。
+
+**示例：**
+
+```bash
+# 使用默认参数美化图片
+python TrnaStructureBeautifier.py -i example/mitos_RNA_plot #指定一个文件夹  
+python TrnaStructureBeautifier.py -i example/trnG.svg #指定一个文件  
+
+# 使用全部配置参数
+python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -vg 7 -ac "red" -pc "#FF0000" -bf "#FFFF00" -bs "#000000" -A "#FF0000" -U "#0000FF" -G "#00FF00" -C "#FFFF00" 
+```
+
 
 
 
@@ -1312,3 +1364,6 @@ python GeneArrangementMap.py example/gene.txt example/color.txt 50
   <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID iD icon" style="width: 1em; margin-inline-start: 0.5em" />
   https://orcid.org/0000-0001-9708-3575
 </a>
+
+
+<img src="additional/pic/donate.png" alt="Donate" width="200" />
