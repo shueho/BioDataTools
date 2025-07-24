@@ -1366,4 +1366,4 @@ python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -
 </a>
 
 
-<img src="additional/pic/donate.png" alt="Donate" width="200" />
+<img src="additional/pic/donate.png" alt="Donate" width="200" height="500" />
