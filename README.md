@@ -1299,7 +1299,7 @@ python GenoSpider.py
 python GeneArrangementMap.py example/gene.txt example/color.txt 50
 ```
 
-### 4.01 `TrnaStructureBeautifier.py [-h] -i INPUT [-s SIZE_WEIGHT] [-p PER_ROW] [-hg HORIZONTAL_GAP] [-vg VERTICAL_GAP] [-ac ADJACENT_COLOR] [-pc PAIR_COLOR] [-bf BASE_FILL] [-bs BASE_STROKE] [-A BASE_A] [-U BASE_U] [-G BASE_G] [-C BASE_C]`
+### 4.02 `TrnaStructureBeautifier.py [-h] -i INPUT [-s SIZE_WEIGHT] [-p PER_ROW] [-hg HORIZONTAL_GAP] [-vg VERTICAL_GAP] [-ac ADJACENT_COLOR] [-pc PAIR_COLOR] [-bf BASE_FILL] [-bs BASE_STROKE] [-A BASE_A] [-U BASE_U] [-G BASE_G] [-C BASE_C]`
          
 **功能描述：** 对使用ViennaRNA包的RNAplot功能绘出的tRNA二级结构进行美化，如Mitos的注释结果非常适用本脚本。
 
