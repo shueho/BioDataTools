@@ -1295,7 +1295,7 @@ python GenoSpider.py
 
 **示例：**
 
-```bash
+```bash 
 python GeneArrangementMap.py example/gene.txt example/color.txt 50
 ```
 
@@ -1305,7 +1305,8 @@ python GeneArrangementMap.py example/gene.txt example/color.txt 50
 
 **参数说明：** 
 
-```options:
+```bash
+options:
   -h, --help            show this help message and exit
   -i, --input INPUT     SVG文件或者SVG文件存放的文件夹路径
   -s, --size-weight SIZE_WEIGHT
