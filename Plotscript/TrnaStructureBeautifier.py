@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # _*_ coding:gbk _*_
 #
-# @Version : 1.0
+# @Version : 1.1
 # @Time    : 2025/7/23 20:00
+# @Update  : 2025/8/13 14:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
 # @File    : TrnaStructureBeautifier.py
@@ -144,7 +145,7 @@ def set_new_text(x_y_char,fill_=args.base_fill,stroke_=args.base_stroke):
 	x = x_y_char[0]
 	y = x_y_char[1]
 	t = x_y_char[2].upper().replace("T","U")
-	return '<circle cx="{}" cy="{}" r="5" fill="{}" stroke="{}" />\n  <text x="{}" y="{}" text-anchor="middle" dominant-baseline="central"\n  font-size="10" fill="black">{}</text>\n'.format(x,y,fill_,stroke_,x,y,t)
+	return '<circle cx="{}" cy="{}" r="5" fill="{}" stroke="{}" />\n  <text x="{}" y="{}" text-anchor="middle" dy="3.33333"\n  font-size="10" fill="black">{}</text>\n'.format(x,y,fill_,stroke_,x,y,t)
 	
 def set_new_lines(x_y_char_1, x_y_char_2,stroke_):
     x1, y1, _ = x_y_char_1
@@ -186,7 +187,7 @@ def extract_text_info(svg_text):
     content = '<g style="font-family: Times New Roman" transform="translate(-4.6, 4)" id="seq">\n'
     content += get_add_line(svg_text)
     for i in range(1,len(result)):
-        content += set_new_text(result[i])
+        #content += set_new_text(result[i])
         content += set_new_lines(result[i-1],result[i],args.adjacent_color)
         content += set_new_text(result[i-1])
 
