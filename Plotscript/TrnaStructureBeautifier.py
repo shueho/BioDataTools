@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# _*_ coding:gbk _*_
+# _*_ coding:utf-8 _*_
 #
 # @Version : 1.1
 # @Time    : 2025/7/23 20:00
@@ -15,114 +15,114 @@ import argparse
 
 #old = sys.argv[1]
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="RNA½á¹¹Í¼ÃÀ»¯²ÎÊıÅäÖÃ")
+    parser = argparse.ArgumentParser(description="RNAç»“æ„å›¾ç¾åŒ–å‚æ•°é…ç½®")
 
-    # === ÊäÈë¿ØÖÆ ===
+    # === è¾“å…¥æ§åˆ¶ ===
     parser.add_argument(
         "-i", "--input",
         type=str,
         required=True,
-        help="SVGÎÄ¼ş»òÕßSVGÎÄ¼ş´æ·ÅµÄÎÄ¼ş¼ĞÂ·¾¶"
+        help="SVGæ–‡ä»¶æˆ–è€…SVGæ–‡ä»¶å­˜æ”¾çš„æ–‡ä»¶å¤¹è·¯å¾„"
     )
 
-    # === »ù´¡²¼¾Ö ===
+    # === åŸºç¡€å¸ƒå±€ ===
     parser.add_argument(
         "-s", "--size-weight",
         type=float,
         default=1.4,
-        help="Í¼ĞÎËõ·Å±ÈÀı£¨Ä¬ÈÏ 1.4£©"
+        help="å›¾å½¢ç¼©æ”¾æ¯”ä¾‹ï¼ˆé»˜è®¤ 1.4ï¼‰"
     )
     parser.add_argument(
         "-p", "--per-row",
         type=int,
         default=4,
-        help="Ã¿ĞĞÍ¼Æ¬ÊıÁ¿£¨Ä¬ÈÏ 4£©"
+        help="æ¯è¡Œå›¾ç‰‡æ•°é‡ï¼ˆé»˜è®¤ 4ï¼‰"
     )
     parser.add_argument(
         "-hg", "--horizontal-gap",
         type=int,
         default=8,
-        help="Í¼Æ¬Ë®Æ½¼ä¸ô£¨Ä¬ÈÏ 8£©"
+        help="å›¾ç‰‡æ°´å¹³é—´éš”ï¼ˆé»˜è®¤ 8ï¼‰"
     )
     parser.add_argument(
         "-vg", "--vertical-gap",
         type=int,
         default=5,
-        help="Í¼Æ¬´¹Ö±¼ä¸ô£¨Ä¬ÈÏ 5£©"
+        help="å›¾ç‰‡å‚ç›´é—´éš”ï¼ˆé»˜è®¤ 5ï¼‰"
     )
 	
-    # === ¼î»ùÁ¬ÏßÑÕÉ« ===
+    # === ç¢±åŸºè¿çº¿é¢œè‰² ===
     parser.add_argument(
         "-ac", "--adjacent-color",
         type=str,
         default="blue",
-        help='ÏàÁÚ¼î»ùÁ¬ÏßÑÕÉ«£¨Ö§³ÖÃû³Æ»ò HEX£¬Èç "blue" »ò "#00FF00"£¬Ä¬ÈÏ "blue"£©'
+        help='ç›¸é‚»ç¢±åŸºè¿çº¿é¢œè‰²ï¼ˆæ”¯æŒåç§°æˆ– HEXï¼Œå¦‚ "blue" æˆ– "#00FF00"ï¼Œé»˜è®¤ "blue"ï¼‰'
     )
     parser.add_argument(
         "-pc", "--pair-color",
         type=str,
         default="red",
-        help='Åä¶Ô¼î»ùÁ¬ÏßÑÕÉ«£¨Ö§³ÖÃû³Æ»ò HEX£¬Èç "red" »ò "#FF0000"£¬Ä¬ÈÏ "red"£©'
+        help='é…å¯¹ç¢±åŸºè¿çº¿é¢œè‰²ï¼ˆæ”¯æŒåç§°æˆ– HEXï¼Œå¦‚ "red" æˆ– "#FF0000"ï¼Œé»˜è®¤ "red"ï¼‰'
     )
 
-    # === ¼î»ùÔ²È¦ÑùÊ½ ===
+    # === ç¢±åŸºåœ†åœˆæ ·å¼ ===
     parser.add_argument(
         "-bf", "--base-fill",
         type=str,
         default="white",
-        help='¼î»ùÔ²È¦Ìî³äÉ«£¨Ä¬ÈÏ "white"£©'
+        help='ç¢±åŸºåœ†åœˆå¡«å……è‰²ï¼ˆé»˜è®¤ "white"ï¼‰'
     )
     parser.add_argument(
         "-bs", "--base-stroke",
         type=str,
         default="black",
-        help='¼î»ùÔ²È¦ÂÖÀªÉ«£¨Ä¬ÈÏ "black"£©'
+        help='ç¢±åŸºåœ†åœˆè½®å»“è‰²ï¼ˆé»˜è®¤ "black"ï¼‰'
     )
 
-    # === ¼î»ùÃÀ»¯Í¼ ===
+    # === ç¢±åŸºç¾åŒ–å›¾ ===
     parser.add_argument(
         "-A", "--base-a",
         type=str,
         default="red",
-        help='ÃÀ»¯A¼î»ùÔ²È¦Ìî³äÉ«£¨Ä¬ÈÏ "red"£©'
+        help='ç¾åŒ–Aç¢±åŸºåœ†åœˆå¡«å……è‰²ï¼ˆé»˜è®¤ "red"ï¼‰'
     )
     parser.add_argument(
         "-U", "--base-u",
         type=str,
         default="blue",
-        help='ÃÀ»¯U/T¼î»ùÔ²È¦Ìî³äÉ«£¨Ä¬ÈÏ "blue"£©'
+        help='ç¾åŒ–U/Tç¢±åŸºåœ†åœˆå¡«å……è‰²ï¼ˆé»˜è®¤ "blue"ï¼‰'
     )
     parser.add_argument(
         "-G", "--base-g",
         type=str,
         default="green",
-        help='ÃÀ»¯G¼î»ùÔ²È¦Ìî³äÉ«£¨Ä¬ÈÏ "green"£©'
+        help='ç¾åŒ–Gç¢±åŸºåœ†åœˆå¡«å……è‰²ï¼ˆé»˜è®¤ "green"ï¼‰'
     )
     parser.add_argument(
         "-C", "--base-c",
         type=str,
         default="yellow",
-        help='ÃÀ»¯C¼î»ùÔ²È¦Ìî³äÉ«£¨Ä¬ÈÏ "yellow"£©'
+        help='ç¾åŒ–Cç¢±åŸºåœ†åœˆå¡«å……è‰²ï¼ˆé»˜è®¤ "yellow"ï¼‰'
     )
 		
-    # === ·´ÃÜÂë×Ó¿ØÖÆ ===
+    # === åå¯†ç å­æ§åˆ¶ ===
     #parser.add_argument(
     #    "-af", "--anticodon-file",
     #    type=str,
     #    default=None,
-    #    help="·´ÃÜÂë×ÓÎ»µãÎÄ¼şÂ·¾¶£¨ÎÄ±¾ÎÄ¼ş£¬Ã¿ĞĞÒ»¸öÎ»ÖÃ£©"
+    #    help="åå¯†ç å­ä½ç‚¹æ–‡ä»¶è·¯å¾„ï¼ˆæ–‡æœ¬æ–‡ä»¶ï¼Œæ¯è¡Œä¸€ä¸ªä½ç½®ï¼‰"
     #)
     #parser.add_argument(
     #    "-aF", "--anti-fill",
     #    type=str,
     #    default="red",
-    #    help='·´ÃÜÂë×ÓÔ²È¦Ìî³äÉ«£¨Ä¬ÈÏ "red"£©'
+    #    help='åå¯†ç å­åœ†åœˆå¡«å……è‰²ï¼ˆé»˜è®¤ "red"ï¼‰'
     #)
     #parser.add_argument(
     #    "-aS", "--anti-stroke",
     #    type=str,
     #    default="black",
-    #    help='·´ÃÜÂë×ÓÔ²È¦ÂÖÀªÉ«£¨Ä¬ÈÏ "black"£©'
+    #    help='åå¯†ç å­åœ†åœˆè½®å»“è‰²ï¼ˆé»˜è®¤ "black"ï¼‰'
     #)
 
     args = parser.parse_args()
@@ -131,11 +131,11 @@ def parse_arguments():
 
 args = parse_arguments()
 base_color = {"A":args.base_a,"U":args.base_u,"G":args.base_g,"C":args.base_c,}
-# ÉèÖÃÄ¿±êÎÄ¼ş¼ĞÃû³Æ
+# è®¾ç½®ç›®æ ‡æ–‡ä»¶å¤¹åç§°
 modified_folder = "modified"
-# ´´½¨ÎÄ¼ş¼Ğ£¨Èç¹ûÒÑ´æÔÚÔòºöÂÔ£©
+# åˆ›å»ºæ–‡ä»¶å¤¹ï¼ˆå¦‚æœå·²å­˜åœ¨åˆ™å¿½ç•¥ï¼‰
 os.makedirs(modified_folder, exist_ok=True)
-print("ÒÑ´´½¨ÎÄ¼ş¼Ğ: modified")
+print("å·²åˆ›å»ºæ–‡ä»¶å¤¹: modified")
 	
 def read_svg(spath):
 	with open(spath) as f:
@@ -166,12 +166,12 @@ def get_add_line(svg_text):
             y2 = float(y2_str)
             result.append(set_new_lines((x1, y1, ""), (x2, y2, ""),args.pair_color))
         except ValueError:
-            # Èç¹û×ø±êÎŞ·¨×ª»»Îª float£¬Ìø¹ı¸ÃÔªËØ
+            # å¦‚æœåæ ‡æ— æ³•è½¬æ¢ä¸º floatï¼Œè·³è¿‡è¯¥å…ƒç´ 
             continue		
     return "".join(result)
 	
 def extract_text_info(svg_text):
-    # ÕıÔò±í´ïÊ½Æ¥Åä <text> ±êÇ©ÖĞµÄ x¡¢y ºÍ×Ö·ûÄÚÈİ
+    # æ­£åˆ™è¡¨è¾¾å¼åŒ¹é… <text> æ ‡ç­¾ä¸­çš„ xã€y å’Œå­—ç¬¦å†…å®¹
     #pattern = r'<text\s+x="([^"]+)"\s+y="([^"]+)"[^>]*>([^<]+)</text>'
     pattern = r'<text\b[^>]*\s*x="([^"]+)"[^>]*\s*y="([^"]+)"[^>]*>(.*?)<\/text>'
     matches = re.findall(pattern, svg_text)
@@ -182,7 +182,7 @@ def extract_text_info(svg_text):
             y = float(y_str)
             result.append((x, y, char))
         except ValueError:
-            # Èç¹û x »ò y ÎŞ·¨×ª»»Îª float£¬Ìø¹ı¸ÃÔªËØ
+            # å¦‚æœ x æˆ– y æ— æ³•è½¬æ¢ä¸º floatï¼Œè·³è¿‡è¯¥å…ƒç´ 
             continue
     content = '<g style="font-family: Times New Roman" transform="translate(-4.6, 4)" id="seq">\n'
     content += get_add_line(svg_text)
@@ -339,7 +339,7 @@ def update_circle_colors(svg_content, base_color_map):
     ls = svg_content.split("\n")
     for i in range(len(ls)):
         if "<circle cx" in ls[i]:
-            flag = re.findall(r'(?<=>)[ATUGC](?=<\/text>)',ls[i+2])[0]
+            flag = re.findall(r'(?<=>)[A-Z](?=<\/text>)',ls[i+2])[0]
             if flag not in base_color_map:
                 new_ += ls[i]+"\n"
                 continue
@@ -349,35 +349,35 @@ def update_circle_colors(svg_content, base_color_map):
     return new_
 	
 if __name__ == "__main__":
-    # Ê¾Àıµ÷ÓÃ
-    print("²ÎÊı½âÎö½á¹û:")
-    #print(f"Ö÷Êı¾İÎÄ¼ş: {args.input}")
-    print(f"´óĞ¡È¨ÖØ: {args.size_weight}")
-    print(f"Ã¿ĞĞÍ¼Æ¬ÊıÁ¿: {args.per_row}")
-    print(f"Í¼Æ¬Ë®Æ½¼ä¸ô: {args.horizontal_gap}")
-    print(f"Í¼Æ¬´¹Ö±¼ä¸ô: {args.vertical_gap}")
-    print(f"ÏàÁÚ¼î»ùÁ¬ÏßÑÕÉ«: {args.adjacent_color}")
-    print(f"Åä¶Ô¼î»ùÁ¬ÏßÑÕÉ«: {args.pair_color}")
-    print(f"¼î»ùÌî³äÉ«: {args.base_fill}")
-    print(f"¼î»ùÂÖÀªÉ«: {args.base_stroke}")
-    #print(f"·´ÃÜÂë×ÓÎÄ¼ş: {args.anticodon_file}")
-    #print(f"·´ÃÜÂë×ÓÌî³äÉ«: {args.anti_fill}")
-    #print(f"·´ÃÜÂë×ÓÂÖÀªÉ«: {args.anti_stroke}")
-    #Èç¹ûÊÇÎÄ¼ş£¬Ö±½ÓÌí¼Óµ½ÁĞ±í
+    # ç¤ºä¾‹è°ƒç”¨
+    print("å‚æ•°è§£æç»“æœ:")
+    #print(f"ä¸»æ•°æ®æ–‡ä»¶: {args.input}")
+    print(f"å¤§å°æƒé‡: {args.size_weight}")
+    print(f"æ¯è¡Œå›¾ç‰‡æ•°é‡: {args.per_row}")
+    print(f"å›¾ç‰‡æ°´å¹³é—´éš”: {args.horizontal_gap}")
+    print(f"å›¾ç‰‡å‚ç›´é—´éš”: {args.vertical_gap}")
+    print(f"ç›¸é‚»ç¢±åŸºè¿çº¿é¢œè‰²: {args.adjacent_color}")
+    print(f"é…å¯¹ç¢±åŸºè¿çº¿é¢œè‰²: {args.pair_color}")
+    print(f"ç¢±åŸºå¡«å……è‰²: {args.base_fill}")
+    print(f"ç¢±åŸºè½®å»“è‰²: {args.base_stroke}")
+    #print(f"åå¯†ç å­æ–‡ä»¶: {args.anticodon_file}")
+    #print(f"åå¯†ç å­å¡«å……è‰²: {args.anti_fill}")
+    #print(f"åå¯†ç å­è½®å»“è‰²: {args.anti_stroke}")
+    #å¦‚æœæ˜¯æ–‡ä»¶ï¼Œç›´æ¥æ·»åŠ åˆ°åˆ—è¡¨
     file_list = []
     group_size = args.per_row
     if os.path.isfile(args.input):
         file_list.append(args.input)
-        print(f"ÒÑÌí¼ÓÎÄ¼ş: {args.input}")
+        print(f"å·²æ·»åŠ æ–‡ä»¶: {args.input}")
     
-    # Èç¹ûÊÇÎÄ¼ş¼Ğ£¬Ìí¼ÓÎÄ¼ş¼ĞÄÚËùÓĞÎÄ¼ş£¨²»µİ¹é×ÓÎÄ¼ş¼Ğ£©
+    # å¦‚æœæ˜¯æ–‡ä»¶å¤¹ï¼Œæ·»åŠ æ–‡ä»¶å¤¹å†…æ‰€æœ‰æ–‡ä»¶ï¼ˆä¸é€’å½’å­æ–‡ä»¶å¤¹ï¼‰
     elif os.path.isdir(args.input):
         for filename in os.listdir(args.input):
             file_path = os.path.join(args.input, filename)
-            if os.path.isfile(file_path) and "modified_" not in file_path and ".svg" == file_path[-4:]:  # Ö»´¦ÀíÎÄ¼ş
+            if os.path.isfile(file_path) and "modified_" not in file_path and ".svg" == file_path[-4:]:  # åªå¤„ç†æ–‡ä»¶
                 file_list.append(file_path)
-
-    print(f"ÒÑÌí¼ÓÎÄ¼ş¼ĞÄÚËùÓĞÎÄ¼ş: {args.input}")
+    file_list.sort()
+    print(f"å·²æ·»åŠ æ–‡ä»¶å¤¹å†…æ‰€æœ‰æ–‡ä»¶: {args.input}")
     modi_files = []
     for i in file_list:
         n = modi_svg(i)
@@ -398,13 +398,13 @@ if __name__ == "__main__":
     # Step 3: Merge all groups vertically
     final_output = "modified/final.svg"
     merge_vertical_groups(group_files, str(final_output))
-    print(f"Î´ÉÏÉ«SVG±£´æµ½: {final_output}")
-    print(f"ÃÀ»¯A¼î»ùÌî³äÉ«: {args.base_a}")
-    print(f"ÃÀ»¯U¼î»ùÌî³äÉ«: {args.base_u}")
-    print(f"ÃÀ»¯G¼î»ùÌî³äÉ«: {args.base_g}")
-    print(f"ÃÀ»¯C¼î»ùÌî³äÉ«: {args.base_c}")
+    print(f"æœªä¸Šè‰²SVGä¿å­˜åˆ°: {final_output}")
+    print(f"ç¾åŒ–Aç¢±åŸºå¡«å……è‰²: {args.base_a}")
+    print(f"ç¾åŒ–Uç¢±åŸºå¡«å……è‰²: {args.base_u}")
+    print(f"ç¾åŒ–Gç¢±åŸºå¡«å……è‰²: {args.base_g}")
+    print(f"ç¾åŒ–Cç¢±åŸºå¡«å……è‰²: {args.base_c}")
     fisvg = read_svg(str(final_output))
     cosvg = update_circle_colors(fisvg,base_color)
     save_svg(cosvg,"modified/final_color.svg")
-    print(f"ÉÏÉ«SVG±£´æµ½: modified/final.svg")
+    print(f"ä¸Šè‰²SVGä¿å­˜åˆ°: modified/final.svg")
 #print(modi_files)

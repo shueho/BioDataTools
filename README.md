@@ -49,7 +49,8 @@
   <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>简易版可视化序列比对结果</td></tr>
   <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并将重复序列去冗余</td></tr>
   <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
-  <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr>
+  <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
+  <tr><td>2.33</td><td>SsToRNAplot</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot包支持的格式</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -885,6 +886,24 @@ python MitosToGFF.py example/result.mitos
 
 ```bash
 python MitosToFasta.py example/result.mitos example/mitos.fasta  
+```     
+
+### 2.33 `SsToRNAplot.py [SS_FILE]`
+
+**功能描述：** 将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot包支持的格式。    
+
+- **SS_FILE：** 由tRNAscan-SE生成的.ss文件。  
+        
+**生成文件：** 
+- `plot.ssf`（Fasta文件变体，每个序列由>序列名称/序列/二级结构三行构成）。
+
+**示例：**
+
+```bash
+python SsToRNAplot.py example/trnascanse.ss  
+
+#后续可以使用RNAplot包进行绘制tRNA二级结构图，然后使用4.02脚本美化。
+RNAplot -f svg plot.ssf  
 ```     
 
 
