@@ -50,7 +50,7 @@
   <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并将重复序列去冗余</td></tr>
   <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
   <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
-  <tr><td>2.33</td><td>SsToRNAplot</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot包支持的格式</td></tr> 
+  <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -888,22 +888,61 @@ python MitosToGFF.py example/result.mitos
 python MitosToFasta.py example/result.mitos example/mitos.fasta  
 ```     
 
-### 2.33 `SsToRNAplot.py [SS_FILE]`
+### 2.33 `SsToFold.py [SS_FILE]`
 
-**功能描述：** 将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot包支持的格式。    
+**功能描述：** 将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的fold格式（与由RNAfold程序生成的文件相同格式）。 
+将文件：   
+```    
+NC_020585.1.trna1 (1155-1222)	Length: 68 bp
+Type: Phe	Anticodon: GAA at 32-34 (1186-1188)	Score: 73.8
+         *    |    *    |    *    |    *    |    *    |    *    |    *  
+Seq: GCCCACATAGCTTAACCCAAAGCATGACACTGAAGATGTTAAGATGGTACCCATACTACCTGTGGACA
+Str: >.>>>>>..>>>>......<<<<.>>>>>.......<<<<<....>>>>.......<<<<<<<<<.<.
+
+NC_020585.1.trna2 (2188-2258)	Length: 71 bp
+Type: Val	Anticodon: TAC at 33-35 (2220-2222)	Score: 81.3
+         *    |    *    |    *    |    *    |    *    |    *    |    *    |
+Seq: CAAGGCGTAGCTATAAACCAAAGCACTCAGCTTACACCTGAAAGATGCCTTCAAAgaTAAGGTCGCCTTGA
+Str: >>>>>>>..>>>.........<<<..>>>>.......<<<<.....>>>>.........<<<<<<<<<<<.
+
+NC_020585.1.trna3 (3876-3949)	Length: 74 bp
+Type: Leu	Anticodon: TAA at 36-38 (3911-3913)	Score: 111.8
+         *    |    *    |    *    |    *    |    *    |    *    |    *    |   
+Seq: GCTAGCGTGGCAGAGCTcGGTaAATGCAAAAGGCTTAAGCCCTTTCCCCAGAGGTTCAAATCCTCTCCCTAGCT
+Str: >>>>>.>..>>>............<<<.>>>>>.......<<<<<....>>>>>.......<<<<<<.<<<<<.
+
+```
+
+转换为    
+```
+>trnF-1155-1222
+GCCCACATAGCTTAACCCAAAGCATGACACTGAAGATGTTAAGATGGTACCCATACTACCTGTGGACA
+(.(((((..((((......)))).(((((.......)))))....((((.......))))))))).).
+>trnV-2188-2258
+CAAGGCGTAGCTATAAACCAAAGCACTCAGCTTACACCTGAAAGATGCCTTCAAAgaTAAGGTCGCCTTGA
+(((((((..(((.........)))..((((.......)))).....((((.........))))))))))).
+>trnL1-3876-3949
+GCTAGCGTGGCAGAGCTcGGTaAATGCAAAAGGCTTAAGCCCTTTCCCCAGAGGTTCAAATCCTCTCCCTAGCT
+(((((.(..(((............))).(((((.......)))))....(((((.......)))))).))))).
+>trnI-4934-5004
+GGAAGCGTGCCTGAATAAAAGGACCACTATGATAAAGTGGACATAGAGGTAAAacAATCCTCTCGCCTCCT
+(((.(((..(((.......))).(((((.......)))))....(((((.........)))))))).))).
+```
+
+可以看到该脚本还能将氨基酸三字母缩写改为单字母缩写。   
 
 - **SS_FILE：** 由tRNAscan-SE生成的.ss文件。  
         
 **生成文件：** 
-- `plot.ssf`（Fasta文件变体，每个序列由>序列名称/序列/二级结构三行构成）。
+- `plot.fold`（与RNAfold程序生成的文件格式一致，支持RNAplot程序批量绘图每个序列包含三行，第一行为序列名称/第二行为碱基序列/第三行为二级结构式）。
 
 **示例：**
 
 ```bash
-python SsToRNAplot.py example/trnascanse.ss  
+python SsToFold.py example/trnascanse.ss  
 
 #后续可以使用RNAplot包进行绘制tRNA二级结构图，然后使用4.02脚本美化。
-RNAplot -f svg plot.ssf  
+RNAplot -f svg plot.fold  
 ```     
 
 
