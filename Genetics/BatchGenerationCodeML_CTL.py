@@ -2,6 +2,7 @@
 # _*_ coding:utf-8 _*_
 #
 # @Version : 1.0
+# @Project : https://github.com/shueho/BioDataTools
 # @Time    : 2024/4/4 20:30
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
