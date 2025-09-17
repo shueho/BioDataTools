@@ -63,10 +63,12 @@
   <tr><td>3.09</td><td>GOTableConverter</td><td>转换GO注释表格</td></tr>
   <tr><td>3.10</td><td>AddGOAnnotations</td><td>添加GO注释的描述和分类内容</td></tr>
   <tr><td>3.11</td><td>VectorTableMerger</td><td>将A-Bs和B-Cs表格连接成A-Cs</td></tr>
-  <tr><td>3.12</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
   <tr><td>4.01</td><td>GeneArrangementMap</td><td>基因组特征排布图</td></tr>
   <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>tRNA二级结构图美化</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider 生物学数据库爬虫工具模块</th></tr>
+  <tr><td>5.01</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
+  <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE数据库信息爬虫</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">分析流程</th></tr>
   <tr><td colspan="2">宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
   <tr><td colspan="2">群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
@@ -1293,52 +1295,6 @@ python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt
 #指定第二列分隔符（按照实际情况指定，本例都是分号）
 python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt ; ;
 ```
-
-### 3.12 `GenoSpider`
-
-**功能描述：** 基因组数据爬虫，详细说明见硕士毕业论文！  
-
-**参数说明：** 
-
-```bash
-#工具包括两种执行方式，分为交互模式和命令行模式。其中命令行模式只支持单一分类流程化输入和输出，交互式包含更个性化的运行方式。
-
-#命令行模式
-python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w WIDTH] [-H HEIGHT] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
-
-##输入“python GenoSpider.py -n Aves -u -r -l superorder”即可得到鸟纲的所有参考基因组信息
-
-##GenoSpider.py -h=[输出帮助信息] -s=[简化组装信息表信息，开关参数，默认否]
-##-f=[输出图片格式，可选择jpg, png, svg, eps中的一种，默认jpg]
-##-p=[输出图像像素，默认300] -r=[只输出参考基因组，开关参数，默认否]
-##-u=[离线模式，开关参数，默认否] -l=[输出图像所统计的阶元等级]
-##-w=[图片宽度，默认8] -H=[图片高度，默认10] -g=[子图间隔，默认0.4]
-##-n=[拉丁名，与-i只需指定其中一个] -i=[物种ID，与-u只需指定其中一个]
-
-#交互模式
-python GenoSpider.py
-
-##不加参数运行“python GenoSpider.py”启用交互模式，进入交互模式可以在面板中输入对应的功能序号或者功能名称执行对应操作。
-
->> 功能序号	功能名称	对应操作
->> 1    getTaxInfoFromName      Get taxonomic information for Scientific name of species.
->> 2    getTaxInfoFromNameList  Get taxonomic information for all species in a list.
->> 3    getTaxInfoFromTid       Get taxonomic information for Tax ID of species.
->> 4    getTaxInfoFromTidList   Get taxonomic information for Tax ID in a list.
->> 5    getAssembleFromName     Get information about all genomes in a given category. It is not recommended due to the occurrence of species with the same name.
->> 6    getAssembleFromTid      Get information about all genomes in a given Tax ID.
->> 7    getAssembleFromTidList  Get information about all genomes in a given Tax ID in a list.
->> 8    getTaxInfoFromAssemble  The taxonomic information is obtained from the assembly information file. This is equivalent to the getTaxInfoFromTidList being triggered automatically after manually executing the command to get the assembly information.
->> 9    mergeAssemble_TaxInfo   Merge assembly information and species classification information files.
->> p    dataVisualization       Output visual image.
->> c    com     Output a list of all functions.
->> h    help    Get complete help information.
->> f    settingOutputFormat     View or configure the output format.
->> e    exit    exit the program.
-
-```
-
-**注意事项：** 需要安装requests、pandas和matplotlib库！  
   
 
 ## 4.Plotscript 绘图代码工具集。     
@@ -1412,6 +1368,71 @@ python TrnaStructureBeautifier.py -i example/trnG.svg #指定一个文件
 python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -vg 7 -ac "red" -pc "#FF0000" -bf "#FFFF00" -bs "#000000" -A "#FF0000" -U "#0000FF" -G "#00FF00" -C "#FFFF00" 
 ```
 
+## 5.BioDataSpider 生物学数据库爬虫工具模块。  
+
+### 5.01 `GenoSpider`
+
+**功能描述：** 基因组数据爬虫，详细说明见硕士毕业论文！  
+
+**参数说明：** 
+
+```bash
+#工具包括两种执行方式，分为交互模式和命令行模式。其中命令行模式只支持单一分类流程化输入和输出，交互式包含更个性化的运行方式。
+
+#命令行模式
+python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w WIDTH] [-H HEIGHT] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
+
+##输入“python GenoSpider.py -n Aves -u -r -l superorder”即可得到鸟纲的所有参考基因组信息
+
+##GenoSpider.py -h=[输出帮助信息] -s=[简化组装信息表信息，开关参数，默认否]
+##-f=[输出图片格式，可选择jpg, png, svg, eps中的一种，默认jpg]
+##-p=[输出图像像素，默认300] -r=[只输出参考基因组，开关参数，默认否]
+##-u=[离线模式，开关参数，默认否] -l=[输出图像所统计的阶元等级]
+##-w=[图片宽度，默认8] -H=[图片高度，默认10] -g=[子图间隔，默认0.4]
+##-n=[拉丁名，与-i只需指定其中一个] -i=[物种ID，与-u只需指定其中一个]
+
+#交互模式
+python GenoSpider.py
+
+##不加参数运行“python GenoSpider.py”启用交互模式，进入交互模式可以在面板中输入对应的功能序号或者功能名称执行对应操作。
+
+>> 功能序号	功能名称	对应操作
+>> 1    getTaxInfoFromName      Get taxonomic information for Scientific name of species.
+>> 2    getTaxInfoFromNameList  Get taxonomic information for all species in a list.
+>> 3    getTaxInfoFromTid       Get taxonomic information for Tax ID of species.
+>> 4    getTaxInfoFromTidList   Get taxonomic information for Tax ID in a list.
+>> 5    getAssembleFromName     Get information about all genomes in a given category. It is not recommended due to the occurrence of species with the same name.
+>> 6    getAssembleFromTid      Get information about all genomes in a given Tax ID.
+>> 7    getAssembleFromTidList  Get information about all genomes in a given Tax ID in a list.
+>> 8    getTaxInfoFromAssemble  The taxonomic information is obtained from the assembly information file. This is equivalent to the getTaxInfoFromTidList being triggered automatically after manually executing the command to get the assembly information.
+>> 9    mergeAssemble_TaxInfo   Merge assembly information and species classification information files.
+>> p    dataVisualization       Output visual image.
+>> c    com     Output a list of all functions.
+>> h    help    Get complete help information.
+>> f    settingOutputFormat     View or configure the output format.
+>> e    exit    exit the program.
+
+```
+
+**注意事项：** 需要安装requests、pandas和matplotlib库！  
+
+### 5.02 `PrideSpider.py [SP_LIST]`   
+
+**功能描述：** 用于爬取PRIDE数据库信息的爬虫！  
+
+- **SP_LIST：** 物种拉丁名/常用名，每一行是一个物种。
+
+**注意事项：** 目前实现了批量下载json格式结果，后续会更新解析json的功能。  
+
+**生成文件：** 
+- log.txt (日志文件，可以查看物种拉丁名/常用名下有多少个信息条目，如果由于网络原因，可以查看哪些物种已经跑过了就不用重复请求数据)  
+- json_result (文件夹，内含爬取的json格式信息，文件名以“拉丁名-页码”的形式命名)   
+
+**示例：**
+
+```bash
+python PrideSpider.py example/sp.txt
+```
 
 
 
