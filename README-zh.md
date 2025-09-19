@@ -171,9 +171,9 @@ ATCGGCATATATCTTATTATATTTCCCCAAA
 
 ### 1.03 `MPAtoMatrix.py  [MPA_PATH]` 
 
-**功能描述：** 此脚本能够将多个MPA文件转换为单一的物种丰度矩阵。
+**功能描述：** 将Kraken1/2或Bracken软件生成的mpa文件转换为物种丰度矩阵。
 
-- **MPA_PATH：** 存放所有样品的MPA文件的路径。
+- **MPA_PATH：** 存放所有样本的MPA文件的路径。
 
 **注意事项：** 本脚本支持处理由Kraken 1、Kraken 2或Bracken输出的MPA文件目录。运行前，请先利用kreport2mpa.py脚本将结果转换为MPA格式。重要的是，所有MPA文件必须基于相同的核酸数据库生成，因为物种丰度的排列顺序取决于所选数据库，确保数据一致性。
 
@@ -182,11 +182,37 @@ ATCGGCATATATCTTATTATATTTCCCCAAA
 
 **示例：**
 
-比如 `example/mpa` 文件中包含重复标识的序列，执行命令：
+比如 `example/mpa` 文件中包含多个样本的MPA文件：
+```
+example/
+└── mpa/
+    ├── sp1.mpa   
+    ├── sp2.mpa   
+    ├── sp3.mpa 
+    └── sp4.mpa
+```
+执行命令：
 ```bash
 python MPAtoMatrix.py example/mpa
 ``` 
-输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵。
+输出结果文件 `mpaMatrix.txt` 即为物种丰度矩阵，第一列是注释到的物种分类学信息，其余每一列是各个样品注释到的物种丰度：
+```
+#Classification	sp1	sp2	sp3	sp4
+k__Eukaryota	13682	9638	9039	14460
+k__Eukaryota|k__Fungi	13682	9638	9039	14460
+k__Eukaryota|k__Fungi|p__Ascomycota	12398	8678	8176	12898
+k__Eukaryota|k__Fungi|p__Ascomycota|c__Sordariomycetes	8893	5998	5014	8723
+k__Eukaryota|k__Fungi|p__Ascomycota|c__Sordariomycetes|o__Hypocreales	4102	2580	2178	3841
+k__Eukaryota|k__Fungi|p__Ascomycota|c__Sordariomycetes|o__Hypocreales|f__Ophiocordycipitaceae	1937	1338	1155	1969
+...
+k__Eukaryota|k__Fungi|p__Microsporidia	11	5	7	14
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae	11	5	7	14
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon	11	5	7	14
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_intestinalis	5	1	3	3
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_romaleae	2	2	0	5
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_hellem	2	1	3	4
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_cuniculi	1	1	0	2
+```  
 
 ### 1.04 `TaxLevelMatrixSplitter.py [MPA_MERGE_FILE] [SPLIT_LEVEL]` 
 
@@ -200,7 +226,25 @@ python MPAtoMatrix.py example/mpa
 
 **示例：**
 
-比如 `example/mpaMatrix.txt` 文件中包含物种丰度信息，执行命令：
+比如 `example/mpaMatrix.txt` 文件中包含物种丰度信息：
+```
+#Classification	sp1	sp2	sp3	sp4
+k__Eukaryota	13682	9638	9039	14460
+k__Eukaryota|k__Fungi	13682	9638	9039	14460
+k__Eukaryota|k__Fungi|p__Ascomycota	12398	8678	8176	12898
+k__Eukaryota|k__Fungi|p__Ascomycota|c__Sordariomycetes	8893	5998	5014	8723
+k__Eukaryota|k__Fungi|p__Ascomycota|c__Sordariomycetes|o__Hypocreales	4102	2580	2178	3841
+k__Eukaryota|k__Fungi|p__Ascomycota|c__Sordariomycetes|o__Hypocreales|f__Ophiocordycipitaceae	1937	1338	1155	1969
+...
+k__Eukaryota|k__Fungi|p__Microsporidia	11	5	7	14
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae	11	5	7	14
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon	11	5	7	14
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_intestinalis	5	1	3	3
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_romaleae	2	2	0	5
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_hellem	2	1	3	4
+k__Eukaryota|k__Fungi|p__Microsporidia|f__Unikaryonidae|g__Encephalitozoon|s__Encephalitozoon_cuniculi	1	1	0	2
+```  
+执行命令：
 ```bash
 # 生成所有阶元等级的丰度数据运行：
 python TaxLevelMatrixSplitter.py example/mpaMatrix.txt a
@@ -210,7 +254,44 @@ python TaxLevelMatrixSplitter.py example/mpaMatrix.txt a
 python TaxLevelMatrixSplitter.py example/mpaMatrix.txt f
 # 只输出一个结果文件：taxLevel_F_output.mpaMatrix.txt。
 ```
-即可输出对应的1个或7个结果。
+即可输出对应的1个或7个结果：
+```
+#taxLevel_K_output.mpaMatrix.txt
+k	sp1	sp2	sp3	sp4
+Eukaryota	13682	9638	9039	14460
+Fungi	13682	9638	9039	14460
+
+#taxLevel_P_output.mpaMatrix.txt
+k	p	sp1	sp2	sp3	sp4
+Fungi	Ascomycota	12398	8678	8176	12898
+Fungi	Basidiomycota	1273	954	856	1548
+Fungi	Microsporidia	11	5	7	14
+
+#taxLevel_C_output.mpaMatrix.txt
+k	p	c	sp1	sp2	sp3	sp4
+Fungi	Ascomycota	Sordariomycetes	8893	5998	5014	8723
+Fungi	Ascomycota	Leotiomycetes	36	20	25	49
+Fungi	Ascomycota	Eurotiomycetes	1016	811	1542	1224
+Fungi	Ascomycota	Dothideomycetes	530	410	370	616
+Fungi	Ascomycota	Saccharomycetes	1409	1010	847	1650
+Fungi	Ascomycota	Schizosaccharomycetes	511	427	374	635
+Fungi	Basidiomycota	Ustilaginomycetes	658	436	430	679
+Fungi	Basidiomycota	Malasseziomycetes	196	167	126	263
+Fungi	Basidiomycota	Agaricomycetes	153	124	110	171
+Fungi	Basidiomycota	Tremellomycetes	100	91	59	145
+Fungi	Basidiomycota	Pucciniomycetes	164	134	130	287
+
+...
+#taxLevel_S_output.mpaMatrix.txt
+k	p	c	o	f	g	s	sp1	sp2	sp3	sp4
+Fungi	Ascomycota	Sordariomycetes	Hypocreales	Ophiocordycipitaceae	Purpureocillium	Purpureocillium_takamizusanense	998	692	605	1019
+Fungi	Ascomycota	Sordariomycetes	Hypocreales	Ophiocordycipitaceae	Drechmeria	Drechmeria_coniospora	939	646	549	949
+Fungi	Ascomycota	Sordariomycetes	Hypocreales	Nectriaceae	Fusarium	Fusarium_falciforme	390	181	140	284
+...
+Fungi	Microsporidia	-	-	Unikaryonidae	Encephalitozoon	Encephalitozoon_romaleae	2	2	0	5
+Fungi	Microsporidia	-	-	Unikaryonidae	Encephalitozoon	Encephalitozoon_hellem	2	1	3	4
+Fungi	Microsporidia	-	-	Unikaryonidae	Encephalitozoon	Encephalitozoon_cuniculi	1	1	0	2
+```
 
 > ## 宏基因组物种定量分析流程     
 > 宏基因组分析中的物种注释分析可以使用kraken2和bracken分析软件，`database_PATH` 表示关注物种群体的核酸数据库路径，`sp1` 表示样品名称，首先使用kraken2指定数据库得到report文件，其中 `sp1*` 是表示双端测序结果的路径。       
@@ -228,7 +309,7 @@ python TaxLevelMatrixSplitter.py example/mpaMatrix.txt f
 > 上述流程只是对sp1样品进行了分析，实际分析中需要编写循环语句批量对各个样品结果进行输出。得到的mpa文件使用1.03脚本可以获取物种丰度矩阵，使用1.04脚本得到各个阶元水平的丰度矩阵，随后可以进行α/β物种多样性分析、LEfSe分析等与物种丰度相关的分析。 
              
 
-## 2. Genetics 用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
+## 2. Genetics：用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
  
 ### 2.01 `GIGenBankDownloader.py [GI_LIST_DIR]`
 
