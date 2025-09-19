@@ -1,3 +1,5 @@
+[Chinese](README-zh.md) | [English](README.md)              
+
 # BioDataTools
 
 这是一套生物信息学脚本，结合了组学和生态遗传分析，支持多种数据处理工具，适应广泛的研究需求。   
