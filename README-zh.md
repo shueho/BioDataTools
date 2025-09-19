@@ -1,4 +1,4 @@
-[中文](README-zh.md) | [English](README.md)              
+[中文](README-zh.md) | [英文](README.md)              
 
 # BioDataTools
 
@@ -319,18 +319,37 @@ Fungi	Microsporidia	-	-	Unikaryonidae	Encephalitozoon	Encephalitozoon_cuniculi	1
 
 **使用场景：** 为批量下载大量GenBank（gb）文件，您仅需简便地创建若干个“xxx_gi.txt”文件，每文件内粘贴相应的GI编号列表。此设计灵活性高，根据不同的GI编号列表文件，以列表文件名对结果文件进行区分。方便后续将不同分组文件分类归档，极大便利了群体遗传学中常见的单倍型分析任务。
 
-**注意事项：** 需要安装requests库！
+**注意事项：** 需要安装requests库！如果需要下载的序列较多不推荐使用本脚本，推荐使用https://www.ncbi.nlm.nih.gov/sites/batchentrez?批量下载序列。  
 
 **生成文件：** 
 - `gb/<列表名称>_<GI编号>.gb`（在 `gb` 文件夹下生成多个GENEBANK文件）。
 
 **示例：**
 
-比如 `example/gi` 文件中存放有需要下载序列的GI编号，执行命令：
+比如 `example/gi` 文件中存放有需要下载序列的GI编号：
+```
+#example/gi/Kinaisemen_gi.txt
+1820426935
+1820426934
+
+#example/gi/Nomomachi_gi.txt
+1820426946
+1820426945
+1820426944
+```
+执行命令：
 ```bash
 python GIGenBankDownloader.py example/gi
 ``` 
-输出文件夹 `gb` ，其中包括以列表名称为前缀的5个gb文件，示例文件 `example/gb_isolate` 即为生成结果参考。
+输出文件夹 `gb` ，其中包括以列表名称为前缀的多个gb文件。
+```
+gb/
+├── Kinaisemen_1820426934.gb   
+├── Kinaisemen_1820426935.gb   
+├── Nomomachi_1820426944.gb 
+├── Nomomachi_1820426945.gb 
+└── Nomomachi_1820426946.gb
+```
 
 ### 2.02 `GBRenameByX.py [GB_DIR] [INFO_NAME]`
 
@@ -346,7 +365,25 @@ python GIGenBankDownloader.py example/gi
 
 **示例：**
 
-比如 `example/gb_isolate` 文件和 `example/gb_orgnism` 文件中分别包含以 `isolate` 和 `orgnism` 信息区分的多个样品GB文件，可以执行：
+比如 `example/gb_isolate` 文件：
+```
+example/
+└── gb_isolate/
+    ├── Kinaisemen_1820426934.gb   
+    ├── Kinaisemen_1820426935.gb   
+    ├── Nomomachi_1820426944.gb 
+    ├── Nomomachi_1820426945.gb 
+    └── Nomomachi_1820426946.gb
+```
+和 `example/gb_orgnism` 文件：
+```
+example/
+└── gb_organism/
+    ├── Ansan_1820426827.gb   
+    ├── Buan_1820426866.gb   
+    └── Kinaisemen_1820426929.gb
+```
+中分别包含以 `isolate` 和 `orgnism` 信息区分的多个样品GB文件，可以执行：
 ```bash
 # 以isolate信息命名运行：
 python GBRenameByX.py example/gb_isolate isolate
@@ -354,7 +391,22 @@ python GBRenameByX.py example/gb_isolate isolate
 # 以orgnism信息命名运行：
 python GBRenameByX.py example/gb_organism organism
 ```
-即可输出对应的结果于文件夹 `output` 中。
+即可输出对应的结果于文件夹 `output` 中： 
+```
+#isolate
+output/
+├── Kinaisemen_06.gb   
+├── Kinaisemen_07.gb   
+├── Nomomachi_01.gb 
+├── Nomomachi_02.gb 
+└── Nomomachi_03.gb
+
+#organism
+output/
+├── A_a.gb   
+├── A_b.gb   
+└── A_k.gb
+```
      
 ### 2.03 `GBtoFastaWithDescriptions.py [GB_DIR]`
 `
@@ -367,11 +419,29 @@ python GBRenameByX.py example/gb_organism organism
 
 **示例：**
 
-比如需要将 `example/gb_isolate` 文件中GB文件转换为FASTA文件，执行命令：
+比如需要将 `example/gb_isolate` 文件夹中GB文件转换为FASTA文件：
+```
+example/
+└── gb_isolate/
+    ├── Kinaisemen_1820426934.gb   
+    ├── Kinaisemen_1820426935.gb   
+    ├── Nomomachi_1820426944.gb 
+    ├── Nomomachi_1820426945.gb 
+    └── Nomomachi_1820426946.gb
+```
+执行命令：
 ```bash
 python GBtoFastaWithDescriptions.py example/gb_isolate
 ``` 
-即可输出对应的结果于文件夹 `output` 中。
+即可输出对应的结果于文件夹 `output` 中：
+```
+output/
+├── Kinaisemen_1820426934.fas   
+├── Kinaisemen_1820426935.fas   
+├── Nomomachi_1820426944.fas 
+├── Nomomachi_1820426945.fas 
+└── Nomomachi_1820426946.fas
+```
 
 > ## 群体遗传学分析快速下载数据流程          
 > 比如要从NCBI下载特定多个群体的 `cox1` 基因，可以先创建一个文件夹，分别列出该群体不同个体的 `cox1` 基因的GI编号（可以在NCBI直接导出），并将每个群体的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的GB文件；再运行脚本2.02，依据isolate或其他标签对下载的GB文件进行重命名；最后执行脚本2.03，从而生成以标签值为名称的最终FASTA格式序列文件。
@@ -394,11 +464,33 @@ python GBtoFastaWithDescriptions.py example/gb_isolate
 
 **示例：**
 
-比如 `example/fasta_merge` 目录中包含需要合并的序列 `16s.fasta` 和 `co1.fasta`，执行命令：
+比如 `example/fasta_merge` 目录中包含需要合并的序列 `16s.fasta` 和 `co1.fasta`：
+```
+#example/fasta_merge/16s.fasta
+>AN012
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+>AN015
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+
+#example/fasta_merge/co1.fasta
+>AN012
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+>AN015
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+```
+执行命令：
 ```bash
 python CombineTwoSequences.py example/fasta_merge/16s.fasta example/fasta_merge/co1.fasta
 ``` 
-输出结果文件 `merge.fas` ，即为16s+co1合并序列。
+输出结果文件 `merge.fas` ，即为16s+co1合并序列：
+```
+>AN012
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+>AN015
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+```
 
 ### 2.05 `FastaToHaplotypes.py -p [FASTA_FILE_NAME] -l [LIST_NAME]`
 
@@ -416,11 +508,40 @@ python CombineTwoSequences.py example/fasta_merge/16s.fasta example/fasta_merge/
 
 **示例：**
 
-比如 `example/sample.fas` 文件是各个样品的序列文件， `example/hap.list` 文件是单倍型对应样品的表格，执行命令：
+比如 `example/sample.fas` 文件是各个样品的序列文件：
+```
+>a001
+ATCGGCTA
+>a002
+ATCGGCTA
+>b001
+AT-GCCTA
+>b002
+AT-GCCTA
+>b003
+AT-GCCTA
+>c001
+--CGGCTA
+```
+`example/hap.list` 文件是单倍型对应样品的表格：
+```
+[Hap_1:  2    a001 a002]
+[Hap_2:  3    b001 b002 b003]
+[Hap_3:  1    c001]
+```
+执行命令：
 ```bash
 python FastaToHaplotypes.py -p example/sample.fas -l example/hap.list
 ``` 
-输出结果文件 `out_hap.fasta` ，即为单倍型序列文件。
+输出结果文件 `out_hap.fasta` ，即为单倍型序列文件：
+```
+>H1
+ATCGGCTA
+>H2
+AT-GCCTA
+>H3
+--CGGCTA
+```
 
 ### 2.06 `CustomFastaExtractor.py [FASTA_FILE] [LIST_FILE] [Regular_expressions (Optional)]`
 
@@ -439,18 +560,69 @@ python FastaToHaplotypes.py -p example/sample.fas -l example/hap.list
 
 **示例：**
 
-比如 `example/text.fa` 是完整的FASTA文件，执行命令：
+比如 `example/text1.fa` 与`example/text2.fa`是完整的FASTA文件：
+```
+#example/text1.fa
+>KAF7112153.1 hypothetical protein RHSIM_RhsimUnG0257300 [Rhododendron simsii]
+MASVKNRVRNKLFKCFRPAAIDDDPIKPDATDGPGNSVFTSISGKGKSGKISNLLSGEKGKVYSEGGDAGGDRSNKERSH...
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+
+#example/text2.fa
+>Rhsim01G0033600
+ATCGGTAC
+>Rhsim01G0241100
+ATACCCCCVHHHHH
+>abc
+ADFAAFAFAF
+>def
+DAFAFAFAGFAG
+```
+列表`example/list1.txt` 与`example/list1.txt`中是需要提取的序列名称：
+```
+#example/list1.txt
+KAF7112159.1
+KAF7153261.1
+
+#example/list2.txt
+Rhsim01G0033600
+Rhsim01G0241100
+```
+
+执行命令：
 ```bash
 # 如果你所需要提取的序列名称是第一个空格前的内容，尤其是针对那些直接从NCBI下载的fasta文件，你可以直接运行：
-python CustomFastaExtractor.py example/text.fa example/list1.txt
+python CustomFastaExtractor.py example/text1.fa example/list1.txt
 
 # 常用！如果你所需要提取的序列名称是>后的所有内容，你可以直接运行：
 python CustomFastaExtractor.py example/text2.fa example/list2.txt "\>(.*)"
 
 # 如果使用正则表达式提取：
-python CustomFastaExtractor.py example/text.fa example/list2.txt "\_(.*?) "
+python CustomFastaExtractor.py example/text1.fa example/list2.txt "\_(.*?) "
 ```
-即可输出对应的子序列文件。
+即可输出对应的子序列文件：
+```
+#python CustomFastaExtractor.py example/text1.fa example/list1.txt
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+>KAF7153261.1 hypothetical protein RHSIM_Rhsim01G0033600 [Rhododendron simsii]
+MDQVGKSHQQALVSVITEAAQSQLKNEVTESPQCPTSSSELSPTSVTQSISSGPTNKKLSLVANTNSACMPEVVRQNSSN
+
+#python CustomFastaExtractor.py example/text2.fa example/list2.txt "\>(.*)"
+>Rhsim01G0033600
+ATCGGTAC
+>Rhsim01G0241100
+ATACCCCCVHHHHH
+
+#python CustomFastaExtractor.py example/text1.fa example/list2.txt "\_(.*?) "
+>KAF7153261.1 hypothetical protein RHSIM_Rhsim01G0033600 [Rhododendron simsii]
+MDQVGKSHQQALVSVITEAAQSQLKNEVTESPQCPTSSSELSPTSVTQSISSGPTNKKLSLVANTNSACMPEVVRQNSSN...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
 
 ### 2.07 `ProteinPropertyFromExpasy.py [FASTA_FILE]`
 
@@ -463,11 +635,29 @@ python CustomFastaExtractor.py example/text.fa example/list2.txt "\_(.*?) "
 
 **示例：**
 
-比如 `example/text.fa` 是蛋白序列的FASTA文件，执行命令：
+比如 `example/text.fa` 是蛋白序列的FASTA文件：
+```
+>KAF7112153.1 hypothetical protein RHSIM_RhsimUnG0257300 [Rhododendron simsii]
+MASVKNRVRNKLFKCFRPAAIDDDPIKPDATDGPGNSVFTSISGKGKSGKISNLLSGEKGKVYSEGGDAGGDRSNKERSH...
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
+执行命令：
 ```bash
 python ProteinPropertyFromExpasy.py example/text.fa
 ``` 
-即可输出对应结果。
+即可输出对应结果：
+```
+id	Number of amino acids	Molecular weight	Theoretical pI	Instability index	Aliphatic index	Grand average of hydropathicity (GRAVY)
+KAF7112153.1	242	26387.53	9.6	46.09	65.33	-0.683
+KAF7112159.1	215	23735.82	4.91	46.08	73.02	-0.329
+KAF7154833.1	86	9692.81	9.84	59.07	40.81	-0.852
+KAF7153261.1	397	43507.84	9.07	56.96	61.64	-0.763
+KAF7152831.1	548	60491.94	8.44	57.65	43.27	-0.965
+```
 
 ### 2.08 `FeaturesBaseComponents.py [FASTA_FILE] [TABLE]`
 
@@ -475,6 +665,8 @@ python ProteinPropertyFromExpasy.py example/text.fa
 
 - **FASTA_FILE：** 只包含一个序列的fasta文件。
 - **TABLE：** 表格包含特征名称、组别和起始位置的表。第一列为基因组，第二列为基因，第三列为基因起始位置，第四列为基因终止位置。基因是名义上的概念，你可以给任何片段分配分组。
+
+**使用场景：** 如果fasta文件是线粒体基因组，表格文件第一列是特征（比如tRNA、CDS等）、第二类是特征名称（比如基因名称、D-Loop等），可以得到各个区域的碱基使用情况表格。
 
 **注意事项：** 如果序列中含有中间终止密码子慎用，并且如果不是+链编码的基因会提取到其反向互补序列。
 
@@ -484,11 +676,59 @@ python ProteinPropertyFromExpasy.py example/text.fa
 
 **示例：**
 
-比如 `example/all.fa` 是小片段序列的FASTA文件， `example/matrix.txt` 是特征位置矩阵，执行命令：
+比如 `example/all.fa` 是小片段序列的FASTA文件：
+```
+>test dna [LEN=30]
+GATTTAGCAG
+TAAGATGAGA
+TCATCCCCAG
+```
+`example/matrix.txt` 是特征位置矩阵：
+```
+A;B	ab	9	11
+A	a1	16	21
+A	a2	6	10
+b	b	14	23
+```
+执行命令：
 ```bash
 python FeaturesBaseComponents.py example/all.fa example/matrix.txt
 ``` 
-即可输出对应结果。
+即可输出对应结果：
+```
+#ex_seq.fasta
+>ab
+AGT
+>a1
+TGAGAT
+>a2
+AGCAG
+>b
+GATGAGATCA
+
+>GR%A
+AGCAGTTGAGAT
+>GR%B
+AGT
+>GR%b
+GATGAGATCA
+>$all
+GATTTAGCAGTAAGATGAGATCATCCCCAG
+>$other
+GATTTAATCCCCAG
+
+#Base_composition.txt
+SEQ	A	T	G	C
+ab	1	1	1	0	
+a1	2	2	2	0	
+a2	2	0	2	1	
+b	4	2	3	1	
+GR%A	4	3	4	1	
+GR%B	1	1	1	0	
+GR%b	4	2	3	1	
+$all	10	7	7	6	
+$other	4	4	2	4	
+```
 
 ### 2.09 `ExAndRename.py [MAP_FILE] [FASTA_FILE]`
 
@@ -504,9 +744,35 @@ python FeaturesBaseComponents.py example/all.fa example/matrix.txt
 
 **示例：**
 
+比如 `eexample/map.txt` 是旧ID（第一列）和新ID（第二列）的对应表格：
+```
+KAF7154833.1	a
+KAF7152831.1	b
+aaa	c
+```
+`example/text.fa` 是所有序列：
+```
+>KAF7112153.1 hypothetical protein RHSIM_RhsimUnG0257300 [Rhododendron simsii]
+MASVKNRVRNKLFKCFRPAAIDDDPIKPDATDGPGNSVFTSISGKGKSGKISNLLSGEKGKVYSEGGDAGGDRSNKERSH...
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
+执行命令：
 ```bash
 python ExAndRename.py example/map.txt example/text.fa
 ``` 
+即可生成：
+```
+>a
+MFRFAMWNRGWSWWTSPTDKERVDVVMETKGGKKKSSSSSTSTSSSRSSSLQYEAPLGYSIEDIRPNGGIEKFRSAAYSN...
+
+>b
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
+需要注意的是aaa序列不存在，因此没有提取。   
        
 ### 2.10 `BatchFastaToPam.py [FASTA_FILE_DIR]`
 
@@ -521,8 +787,22 @@ python ExAndRename.py example/map.txt example/text.fa
 
 **示例：**
 
+比如 `example/ali_fasta` 文件夹中包含需要转换的fasta文件：
+```
+example/
+└── ali_fasta/
+    ├── OG0002719.fa   
+    └── OG0002724.fa
+```
+执行命令：
 ```bash
 python BatchFastaToPam.py example/ali_fasta
+```
+即可输出对应的结果于文件夹 `pamlfile` 中：
+```
+pamlfile/
+├── OG0002719.fa.pam   
+└── OG0002724.fa.pam
 ```
 
 ### 2.11 `ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]`
@@ -542,9 +822,49 @@ python BatchFastaToPam.py example/ali_fasta
 
 **示例：**
 
+比如 `example/ali_fasta` 文件夹中包含需要重新分配的fasta文件：
+```
+example/
+└── ali_fasta/
+    ├── OG0002719.fa   
+    └── OG0002724.fa
+```
+`example/seq_matrix.txt` 是对fasta文件所有序列指定分组，第一行内容不重要：
+```
+Orthogroup	A	B	C	
+OG01	XP_010706234.2	XP_032302195.1	jirou002500.1	
+OG02	NP_001026572.1	XP_038029232.1		
+OG03	XP_032302195.1	XP_048781468.1		
+OG04	jirou002516.1	XP_015134329.2	XP_035425170.1	XP_035170945.1
+```
+执行命令：
 ```bash
 python ReassignSequence.py example/ali_fasta example/seq_matrix.txt out
 ``` 
+即可从所有fasta文件中找到相应的序列提取到 `out` 的不同文件中：
+```
+out/
+├── OG01.fna   
+├── OG02.fna 
+├── OG03.fna 
+└── OG04.fna
+
+#OG01
+>XP_010706234.2	
+...
+>XP_032302195.1	
+...
+>jirou002500.1
+...
+
+#OG02
+>NP_001026572.1	
+...
+>XP_038029232.1	
+...
+
+...
+```
 
 ### 2.12 `BatchAlignedProteinToDNA.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]`
 

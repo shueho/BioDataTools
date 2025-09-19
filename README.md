@@ -1,4 +1,4 @@
-[中文](README-zh.md) | [English](README.md)              
+[Chinese](README-zh.md) | [English](README.md)              
 
 # BioDataTools
 
@@ -310,242 +310,562 @@ Fungi	Microsporidia	-	-	Unikaryonidae	Encephalitozoon	Encephalitozoon_cuniculi	1
 > The above process only analyzes the sp1 sample. In actual analysis, loop statements need to be written to batch-process the results of each sample. The obtained mpa files can be used with the 1.03 script to generate a species abundance matrix, and the 1.04 script to obtain abundance matrices at various taxonomic levels. Subsequently, analyses related to species abundance, such as α/β species diversity analysis and LEfSe analysis, can be performed.   
              
 
-## 2. Genetics 用于基因组和比较基因组学研究中的数据处理，涵盖从NCBI批量获取数据，以及批量提取和批量转化数据信息内容的脚本。           
+## 2. Genetics: Scripts for data processing in genomic and comparative genomic studies, covering batch data retrieval from NCBI, as well as batch extraction and batch conversion of data information content.            
  
 ### 2.01 `GIGenBankDownloader.py [GI_LIST_DIR]`
 
-**功能描述：** 通过GI编号批量下载GenBank文件。
+**Function Description:** Batch download GenBank files by GI number. 
 
-- **GI_LIST_DIR：** 存放GI编号的目录路径，脚本自动检测并读取文件夹内所有以 `_gi.txt` 为扩展名的文本文件。这些 `_gi.txt` 文件包含待下载序列的GI编号。
+- **GI_LIST_DIR:** Path to the directory containing GI numbers. The script automatically detects and reads all text files with the `_gi.txt` extension within the folder. These `_gi.txt` files contain the GI numbers of the sequences to be downloaded. 
 
-**使用场景：** 为批量下载大量GenBank（gb）文件，您仅需简便地创建若干个“xxx_gi.txt”文件，每文件内粘贴相应的GI编号列表。此设计灵活性高，根据不同的GI编号列表文件，以列表文件名对结果文件进行区分。方便后续将不同分组文件分类归档，极大便利了群体遗传学中常见的单倍型分析任务。
+**Usage scenario:** To batch download a large number of GenBank (gb) files, you simply need to create several "xxx_gi.txt" files and paste the corresponding list of GI numbers into each file. This design offers high flexibility, allowing results to be distinguished by the list filename. It facilitates the subsequent classification and archiving of different group files, greatly aiding common haplotype analysis tasks in population genetics.  
 
-**注意事项：** 需要安装requests库！
+**Notes:** The requests library is required! If you need to download a large number of sequences, it is not recommended to use this script. It is recommended to use https://www.ncbi.nlm.nih.gov/sites/batchentrez for batch sequence download. 
 
-**生成文件：** 
-- `gb/<列表名称>_<GI编号>.gb`（在 `gb` 文件夹下生成多个GENEBANK文件）。
+**Generated File:** 
+- `gb/<List Name>_<GI Number>.gb`(Multiple GENEBANK files are generated in the `gb` folder).  
 
-**示例：**
+**Example:**
 
-比如 `example/gi` 文件中存放有需要下载序列的GI编号，执行命令：
+For example, the `example/gi` folder contains the GI numbers of the sequences to be downloaded: 
+```
+#example/gi/Kinaisemen_gi.txt
+1820426935
+1820426934
+
+#example/gi/Nomomachi_gi.txt
+1820426946
+1820426945
+1820426944
+```
+Execute command:
 ```bash
 python GIGenBankDownloader.py example/gi
 ``` 
-输出文件夹 `gb` ，其中包括以列表名称为前缀的5个gb文件，示例文件 `example/gb_isolate` 即为生成结果参考。
+Output folder `gb` containing multiple gb files prefixed with the list name. 
+```
+gb/
+├── Kinaisemen_1820426934.gb   
+├── Kinaisemen_1820426935.gb   
+├── Nomomachi_1820426944.gb 
+├── Nomomachi_1820426945.gb 
+└── Nomomachi_1820426946.gb
+```
 
 ### 2.02 `GBRenameByX.py [GB_DIR] [INFO_NAME]`
 
-**功能描述：** 读取GB文件内的某一样品信息（如isolate信息），并依据这一信息为对应的GB文件重新命名，适用于群体遗传学分析中对大批量GB文件进行统一管理和组织。
+**Function Description:** Reads specific sample information (e.g., isolate information) from a GB file and renames the corresponding GB file based on this information. This is suitable for unified management and organization of large batches of GB files in population genetics analysis.  
 
-- **GB_DIR：** 存放GB文件的目录路径。
-- **INFO_NAME：** 需要对GB文件名称修改的参考信息，务必保证不同GB文件中该样品信息是唯一的。
+- **GB_DIR:** Directory path where the GB files are stored. 
+- **INFO_NAME:** Reference information needed to modify the GB file names. It is essential to ensure that this sample information is unique within different GB files.  
 
-**注意事项：** 务必使用可以区分所有GB文件的信息！每次运行最好手动将上次运行产生的文件删除或重命名。
+**Notes:** Be sure to use information that can distinguish all GB files! It's best to manually delete or rename the files generated from the previous run each time you execute the script. 
 
-**生成文件：** 
-- `output/<样品信息对应的值（空格以下划线替换）>.gb`（`output` 文件夹下的多个GENEBANK文件）。
+**Generated File:** 
+- `output/<Value corresponding to the sample information (spaces replaced by underscores)>.gb` (Multiple GENEBANK files in the`output` folder). 
 
-**示例：**
+**Example:**
 
-比如 `example/gb_isolate` 文件和 `example/gb_orgnism` 文件中分别包含以 `isolate` 和 `orgnism` 信息区分的多个样品GB文件，可以执行：
+For example, the `example/gb_isolate` folder:
+```
+example/
+└── gb_isolate/
+    ├── Kinaisemen_1820426934.gb   
+    ├── Kinaisemen_1820426935.gb   
+    ├── Nomomachi_1820426944.gb 
+    ├── Nomomachi_1820426945.gb 
+    └── Nomomachi_1820426946.gb
+```
+And the `example/gb_orgnism` folder: 
+```
+example/
+└── gb_organism/
+    ├── Ansan_1820426827.gb   
+    ├── Buan_1820426866.gb   
+    └── Kinaisemen_1820426929.gb
+```
+contains multiple sample GB files distinguished by `isolate` & `orgnism` information, respectively. You can execute: 
 ```bash
-# 以isolate信息命名运行：
+# Run with naming based on isolate information:
 python GBRenameByX.py example/gb_isolate isolate
 
-# 以orgnism信息命名运行：
+# Run with naming based on organism information:
 python GBRenameByX.py example/gb_organism organism
 ```
-即可输出对应的结果于文件夹 `output` 中。
+The corresponding results will be output to the `output` folder:   
+```
+#isolate
+output/
+├── Kinaisemen_06.gb   
+├── Kinaisemen_07.gb   
+├── Nomomachi_01.gb 
+├── Nomomachi_02.gb 
+└── Nomomachi_03.gb
+
+#organism
+output/
+├── A_a.gb   
+├── A_b.gb   
+└── A_k.gb
+```
      
 ### 2.03 `GBtoFastaWithDescriptions.py [GB_DIR]`
 `
-**功能描述：** 批量地将GB文件转换为FASTA格式，并且在转换过程中，将原GB文件的文件名插入到FASTA格式序列记录的描述行（“>”后面的部分），以便于追踪源文件信息。这对于高效处理大量的GB文件，在进行诸如群体遗传学分析等工作时尤为重要。
+**Function Description:** Batch convert GB files to FASTA format. During the conversion process, the original GB file name is inserted into the description line of the FASTA sequence record (the part following ">") to facilitate tracking of the source file information. This is particularly important for efficiently processing large numbers of GB files, especially when conducting tasks such as population genetics analysis.  
 
-- **GB_DIR：** 存放GB文件的目录路径。
+- **GB_DIR:** Directory path where the GB files are stored.  
 
-**生成文件：** 
-- `output/<原GB文件名>.fas`（多个FASTA文件）。 
+**Generated File:** 
+- `output/<Original GB file name>.fas`(Multiple FASTA files).  
 
-**示例：**
+**Example:**
 
-比如需要将 `example/gb_isolate` 文件中GB文件转换为FASTA文件，执行命令：
+For example, to convert GB files in the  `example/gb_isolate` folder to FASTA files: 
+```
+example/
+└── gb_isolate/
+    ├── Kinaisemen_1820426934.gb   
+    ├── Kinaisemen_1820426935.gb   
+    ├── Nomomachi_1820426944.gb 
+    ├── Nomomachi_1820426945.gb 
+    └── Nomomachi_1820426946.gb
+```
+Execute command:
 ```bash
 python GBtoFastaWithDescriptions.py example/gb_isolate
 ``` 
-即可输出对应的结果于文件夹 `output` 中。
+The corresponding results will be output to the `output` folder:
+```
+output/
+├── Kinaisemen_1820426934.fas   
+├── Kinaisemen_1820426935.fas   
+├── Nomomachi_1820426944.fas 
+├── Nomomachi_1820426945.fas 
+└── Nomomachi_1820426946.fas
+```
 
-> ## 群体遗传学分析快速下载数据流程          
-> 比如要从NCBI下载特定多个群体的 `cox1` 基因，可以先创建一个文件夹，分别列出该群体不同个体的 `cox1` 基因的GI编号（可以在NCBI直接导出），并将每个群体的编号保存在独立的xxx_gi.txt文件中；接着运行脚本2.01来下载相应的GB文件；再运行脚本2.02，依据isolate或其他标签对下载的GB文件进行重命名；最后执行脚本2.03，从而生成以标签值为名称的最终FASTA格式序列文件。
+> ## Population Genetics Analysis: Rapid Data Download Workflow          
+> For example, to download specific `cox1` genes from multiple populations from NCBI, you can first create a folder and list the GI numbers of the `cox1` gene for different individuals within each population in separate xxx_gi.txt files (these can be directly exported from NCBI). Then, run script 2.01 to download the corresponding GB files. Next, run script 2.02 to rename the downloaded GB files based on the 'isolate' or other tags. Finally, execute script 2.03 to generate the final FASTA format sequence files named after the tag values.   
 
 ### 2.04 `CombineTwoSequences.py [FASTA_FILE_1] [FASTA_FILE_2]`
 
-**功能描述：** 合并序列的低级版本，后续会提供该脚本的进阶版本（脚本2.14）。
+**Function Description:** A basic version for merging sequences, an advanced version of this script (script 2.14) will be provided subsequently.  
 
-- **FASTA_FILE_1：** 第一个序列。
-- **FASTA_FILE_2：** 第二个序列。
+- **FASTA_FILE_1:** First sequence.
+- **FASTA_FILE_2:** Second sequence.
 
-**使用场景：** 假设你有来自样本A、B和C的16S和COI序列，出于某种目的，你想要结合来自不同样本的16S和COI序列。您可以使用这个脚本。
+**Usage scenario:** Assuming you have 16S and COI sequences from samples A, B, and C, for a certain purpose, you want to combine 16S and COI sequences from different samples. You can use this script.  
 
-**多次调用：** 如果要合并多个序列，可以重复调用此脚本。
+**Multiple calls:** If you want to merge multiple sequences, you can call this script repeatedly.
 
-**注意事项：** 务必在比对后的序列文件中使用该脚本！
+**Notes:** Be sure to use this script on aligned sequence files!  
 
-**生成文件：** 
-- `merge.fas`（合并后的FASTA文件）。
+**Generated File:** 
+- `merge.fas`(Merged FASTA file).  
 
-**示例：**
+**Example:**
 
-比如 `example/fasta_merge` 目录中包含需要合并的序列 `16s.fasta` 和 `co1.fasta`，执行命令：
+For example, the `example/fasta_merge` directory contains the sequences `16s.fasta` and `co1.fasta`that need to be merged: 
+```
+#example/fasta_merge/16s.fasta
+>AN012
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+>AN015
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+
+#example/fasta_merge/co1.fasta
+>AN012
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+>AN015
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+```
+Execute command:
 ```bash
 python CombineTwoSequences.py example/fasta_merge/16s.fasta example/fasta_merge/co1.fasta
 ``` 
-输出结果文件 `merge.fas` ，即为16s+co1合并序列。
+The output result file `merge.fas` is the merged sequence of 16s+co1:  
+```
+>AN012
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+>AN015
+-------------CGCTCTTTGAAATACAAATATAGAGAGTCGTGCCTGCCCAGTGATTT...
+--TACTTTATATATTTTGTTTGGGATTTGGTCTGGATTGGTTGGAACAGCTTTAAGACTA...
+```
 
 ### 2.05 `FastaToHaplotypes.py -p [FASTA_FILE_NAME] -l [LIST_NAME]`
 
-**功能描述：** 将FASTA文件中多个样品序列根据单倍型归类。
+**Function Description:** Classify multiple sample sequences in a FASTA file according to haplotypes.
 
-- **FASTA_FILE_NAME：** 样品序列文件名（参照example/sample.fas）。
-- **LIST_NAME：** 单倍型对应样品的表格（参照example/hap.list）。
+- **FASTA_FILE_NAME：** Sample sequence file name (refer to example/sample.fas).
+- **LIST_NAME：** Table of haplotypes corresponding to samples (refer to example/hap.list).
 
-**参数说明：** 使用前需要获取两个文件，一个是DnaSP导出的单倍型和样品对应的表格（可能需要手工制作）。另一个是包含所有物种序列的fasta文件。
+**Notes:** Before use, two files need to be obtained: one is a table exported from DnaSP corresponding haplotypes to samples (which might need manual creation). The other is a FASTA file containing all species sequences.  
 
-**使用场景：** 比如，对于包含a、b、c、d、e五个样品的序列数据，其中样品a、b、c的序列完全相同，样品d和e的序列也完全一致，意味着我们拥有两个独特的单倍型。借助这段代码，能够将具有相同序列的样品合并归类为各自的单倍型，有利于后续针对不同单倍型序列进行系统发育分析。参考示例文件和示例代码！！！      
+**Usage scenario:** For example, for sequence data containing five samples (a, b, c, d, e), where the sequences of samples a, b, and c are identical, and the sequences of samples d and e are also identical, this implies we have two unique haplotypes. Using this code, samples with identical sequences can be merged and classified into their respective haplotypes, which is beneficial for subsequent phylogenetic analysis focusing on different haplotype sequences. Refer to the example files and example code!!!        
 
-**生成文件：** 
-- `out_hap.fasta`（由单倍型组成的FASTA文件）。
+**Generated File:** 
+- `out_hap.fasta`(FASTA file composed of haplotypes).
 
-**示例：**
+**Example:**
 
-比如 `example/sample.fas` 文件是各个样品的序列文件， `example/hap.list` 文件是单倍型对应样品的表格，执行命令：
+For example, the `example/sample.fas` file is the sequence file for each sample:  
+```
+>a001
+ATCGGCTA
+>a002
+ATCGGCTA
+>b001
+AT-GCCTA
+>b002
+AT-GCCTA
+>b003
+AT-GCCTA
+>c001
+--CGGCTA
+```
+The `example/hap.list`  file is a table corresponding haplotypes to samples:  
+```
+[Hap_1:  2    a001 a002]
+[Hap_2:  3    b001 b002 b003]
+[Hap_3:  1    c001]
+```
+Execute command:
 ```bash
 python FastaToHaplotypes.py -p example/sample.fas -l example/hap.list
 ``` 
-输出结果文件 `out_hap.fasta` ，即为单倍型序列文件。
+The output result file `out_hap.fasta`  is the haplotype sequence file:  
+```
+>H1
+ATCGGCTA
+>H2
+AT-GCCTA
+>H3
+--CGGCTA
+```
 
 ### 2.06 `CustomFastaExtractor.py [FASTA_FILE] [LIST_FILE] [Regular_expressions (Optional)]`
 
-**功能描述：** 依据提供的ID列表，该脚本能从一个整合多序列的FASTA文件中抽取出相应序列，生成子FASTA文件。默认配置下，系统识别">"符号后至首个空格前的文本为ID，与列表中的条目匹配。针对复杂情况，支持自定义正则表达式以实现ID的精准匹配，确保灵活高效地筛选目标序列。
+**Function Description:** Based on a provided ID list, this script can extract corresponding sequences from a single multi-sequence FASTA file to generate a subset FASTA file. By default, the system identifies the text following the ">" symbol up to the first space as the ID, matching it against the entries in the list. For complex scenarios, custom regular expressions are supported to achieve precise ID matching, ensuring flexible and efficient target sequence screening.
 
-- **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组的pep或者CDS序列。
-- **LIST_FILE：** 列表中应包含希望提取的序列编号或名称，这部分信息可以是FASTA_FILE中每条序列“>”符号后紧跟的整个描述字段，也可以只是该描述字段中的一部分内容。
-- **Regular_expressions：** 可选参数，假如你的列表中的名称与FASTA文件序列名称有所不同，你可以指定正则表达式对序列进行提取。如果没有填写，默认为："\_(.*?)".，这意味着你将“>”之后第一个空格前的内容作为ID名称。
+- **FASTA_FILE：** A sequence file in Fasta format, which includes all sequences, such as the pep or CDS sequences of a whole genome.  
+- **LIST_FILE：** The list should contain the sequence IDs or names you wish to extract. This information can be the entire description field immediately following the ">" symbol for each sequence in the FASTA_FILE, or just a part of that description field.  
+- **Regular_expressions：** Optional parameter: If the names in your list differ from the sequence names in the FASTA file, you can specify a regular expression to extract the sequences. If left blank, the default is: "\_(.*?)". This means the content before the first space after ">" will be used as the ID name.
 
-**使用场景：** 在进行共线性分析或同源基因分群时，频繁遇到从NCBI获取的pep文件含有大量冗余数据。为优化此过程，可选择性下载仅涵盖染色体编码的非冗余蛋白质序列数据库。此脚本特地设计用来根据用户提供的序列名称，从庞大的pep文件中抽取出所需片段。此外，它还支持抽取对应的编码序列（CDS），考虑到蛋白质序列ID与CDS ID间可能存在的差异，引入正则表达式自定义匹配规则显得尤为重要。如需进一步简化流程，推荐采用升级版代码2.09，该版本同样能有效执行此类抽取任务。
+**Usage scenario:** 在During collinearity analysis or homologous gene clustering, it is common to encounter pep files downloaded from NCBI containing a large amount of redundant data. To optimize this process, one can optionally download a non-redundant protein sequence database covering only chromosome-encoded sequences. This script is specifically designed to extract the required segments from the large pep file based on user-provided sequence names. Furthermore, it supports extracting the corresponding coding sequences (CDS). Considering potential differences between protein sequence IDs and CDS IDs, introducing custom matching rules via regular expressions is particularly important. For further process simplification, it is recommended to use the upgraded code version 2.09, which can also effectively perform such extraction tasks.  
 
-**注意事项：** 不可用于提取某一基因多个转录本！本代码不支持提取同名基因不同转录本/蛋白质序列！只能提取唯一基因名称的序列！如果你有该需求，可以关注脚本2.24！     
+**Notes:** Cannot be used to extract multiple transcripts of a single gene! This code does not support extracting different transcript/protein sequences of the same gene name! It can only extract sequences with unique gene names! If you have this requirement, please refer to script 2.24!       
 
-**生成文件：** 
-- `out_match_seq.fasta`（FASTA文件）。
+**Generated File:** 
+- `out_match_seq.fasta`(FASTA file).
 
-**示例：**
+**Example:**
 
-比如 `example/text.fa` 是完整的FASTA文件，执行命令：
+For example, `example/text1.fa` and`example/text2.fa`are complete FASTA files:
+```
+#example/text1.fa
+>KAF7112153.1 hypothetical protein RHSIM_RhsimUnG0257300 [Rhododendron simsii]
+MASVKNRVRNKLFKCFRPAAIDDDPIKPDATDGPGNSVFTSISGKGKSGKISNLLSGEKGKVYSEGGDAGGDRSNKERSH...
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+
+#example/text2.fa
+>Rhsim01G0033600
+ATCGGTAC
+>Rhsim01G0241100
+ATACCCCCVHHHHH
+>abc
+ADFAAFAFAF
+>def
+DAFAFAFAGFAG
+```
+The list `example/list1.txt` and `example/list1.txt`contain the names of the sequences to be extracted: 
+```
+#example/list1.txt
+KAF7112159.1
+KAF7153261.1
+
+#example/list2.txt
+Rhsim01G0033600
+Rhsim01G0241100
+```
+
+Execute command:
 ```bash
-# 如果你所需要提取的序列名称是第一个空格前的内容，尤其是针对那些直接从NCBI下载的fasta文件，你可以直接运行：
-python CustomFastaExtractor.py example/text.fa example/list1.txt
+# If the sequence names you need to extract are the content before the first space, especially for FASTA files downloaded directly from NCBI, you can run directly: 
+python CustomFastaExtractor.py example/text1.fa example/list1.txt
 
-# 常用！如果你所需要提取的序列名称是>后的所有内容，你可以直接运行：
+# Commonly used! If the sequence names you need to extract are all the content after >, you can run directly: 
 python CustomFastaExtractor.py example/text2.fa example/list2.txt "\>(.*)"
 
-# 如果使用正则表达式提取：
-python CustomFastaExtractor.py example/text.fa example/list2.txt "\_(.*?) "
+# If using regular expressions for extraction: 
+python CustomFastaExtractor.py example/text1.fa example/list2.txt "\_(.*?) "
 ```
-即可输出对应的子序列文件。
+The corresponding subset sequence files will be output:
+```
+#python CustomFastaExtractor.py example/text1.fa example/list1.txt
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+>KAF7153261.1 hypothetical protein RHSIM_Rhsim01G0033600 [Rhododendron simsii]
+MDQVGKSHQQALVSVITEAAQSQLKNEVTESPQCPTSSSELSPTSVTQSISSGPTNKKLSLVANTNSACMPEVVRQNSSN
+
+#python CustomFastaExtractor.py example/text2.fa example/list2.txt "\>(.*)"
+>Rhsim01G0033600
+ATCGGTAC
+>Rhsim01G0241100
+ATACCCCCVHHHHH
+
+#python CustomFastaExtractor.py example/text1.fa example/list2.txt "\_(.*?) "
+>KAF7153261.1 hypothetical protein RHSIM_Rhsim01G0033600 [Rhododendron simsii]
+MDQVGKSHQQALVSVITEAAQSQLKNEVTESPQCPTSSSELSPTSVTQSISSGPTNKKLSLVANTNSACMPEVVRQNSSN...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
 
 ### 2.07 `ProteinPropertyFromExpasy.py [FASTA_FILE]`
 
-**功能描述：** 从Expasy（ https://web.expasy.org/protparam ）中批量获得蛋白质的理化性质。
+**Function Description:** Batch obtain physicochemical properties of proteins from ExPASy (https://web.expasy.org/protparam). 
 
-- **FASTA_FILE：** 提供蛋白质序列的FASTA格式，可以是包含多个序列的文件。
+- **FASTA_FILE：** Provide protein sequences in FASTA format, which can be a file containing multiple sequences. 
 
-**生成文件：** 
-- `expasy_output.csv`（表格文件，包含部分蛋白质序列的理化性质）。
+**Generated File:** 
+- `expasy_output.csv`(Table file, containing physicochemical properties of some protein sequences). 
 
-**示例：**
+**Example:**
 
-比如 `example/text.fa` 是蛋白序列的FASTA文件，执行命令：
+For example, `example/text.fa` is a FASTA file of protein sequences: 
+```
+>KAF7112153.1 hypothetical protein RHSIM_RhsimUnG0257300 [Rhododendron simsii]
+MASVKNRVRNKLFKCFRPAAIDDDPIKPDATDGPGNSVFTSISGKGKSGKISNLLSGEKGKVYSEGGDAGGDRSNKERSH...
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
+Execute command:
 ```bash
 python ProteinPropertyFromExpasy.py example/text.fa
 ``` 
-即可输出对应结果。
+The corresponding results can then be output:  
+```
+id	Number of amino acids	Molecular weight	Theoretical pI	Instability index	Aliphatic index	Grand average of hydropathicity (GRAVY)
+KAF7112153.1	242	26387.53	9.6	46.09	65.33	-0.683
+KAF7112159.1	215	23735.82	4.91	46.08	73.02	-0.329
+KAF7154833.1	86	9692.81	9.84	59.07	40.81	-0.852
+KAF7153261.1	397	43507.84	9.07	56.96	61.64	-0.763
+KAF7152831.1	548	60491.94	8.44	57.65	43.27	-0.965
+```
 
 ### 2.08 `FeaturesBaseComponents.py [FASTA_FILE] [TABLE]`
 
-**功能描述：** 细胞器基因组专用，特征提取和碱基组成统计。如果你想基于开始和结束位置截断fasta文件，你也可以使用这个脚本!  
+**Function Description:** Organelle genome specific, feature extraction and base composition statistics. If you want to truncate a fasta file based on start and end positions, you can also use this script!   
 
-- **FASTA_FILE：** 只包含一个序列的fasta文件。
-- **TABLE：** 表格包含特征名称、组别和起始位置的表。第一列为基因组，第二列为基因，第三列为基因起始位置，第四列为基因终止位置。基因是名义上的概念，你可以给任何片段分配分组。
+- **FASTA_FILE：** A FASTA file containing only one sequence. 
+- **TABLE：** A table containing feature names, groups, and start positions. The first column is the genome, the second column is the gene, the third column is the gene start position, and the fourth column is the gene end position. "Gene" is a nominal concept; you can assign any fragment to a group. 
 
-**注意事项：** 如果序列中含有中间终止密码子慎用，并且如果不是+链编码的基因会提取到其反向互补序列。
+**Usage scenario:** If the FASTA file is a mitochondrial genome and the table file's first column contains features (e.g., tRNA, CDS, etc.) and the second column contains feature names (e.g., gene names, D-Loop, etc.), you can obtain a table showing the base usage for each region.  
 
-**生成文件：** 
-- `ex_seq.fasta`（FASTA文件，提取到的小片段序列）。
-- `Base_composition.txt` （表格ATGC的碱基占比）。
+**Notes:** Use with caution if the sequence contains internal stop codons, and note that if the gene is not encoded on the + strand, the reverse complement sequence will be extracted.  
 
-**示例：**
+**Generated File:** 
+- `ex_seq.fasta`(FASTA file, extracted short fragment sequences).
+- `Base_composition.txt` (Table of ATGC base composition percentages).  
 
-比如 `example/all.fa` 是小片段序列的FASTA文件， `example/matrix.txt` 是特征位置矩阵，执行命令：
+**Example:**
+
+For example,  `example/all.fa` is a FASTA file containing short fragment sequences:  
+```
+>test dna [LEN=30]
+GATTTAGCAG
+TAAGATGAGA
+TCATCCCCAG
+```
+`example/matrix.txt`  is the feature position matrix:  
+```
+A;B	ab	9	11
+A	a1	16	21
+A	a2	6	10
+b	b	14	23
+```
+Execute command:
 ```bash
 python FeaturesBaseComponents.py example/all.fa example/matrix.txt
 ``` 
-即可输出对应结果。
+The corresponding results can then be output: 
+```
+#ex_seq.fasta
+>ab
+AGT
+>a1
+TGAGAT
+>a2
+AGCAG
+>b
+GATGAGATCA
+
+>GR%A
+AGCAGTTGAGAT
+>GR%B
+AGT
+>GR%b
+GATGAGATCA
+>$all
+GATTTAGCAGTAAGATGAGATCATCCCCAG
+>$other
+GATTTAATCCCCAG
+
+#Base_composition.txt
+SEQ	A	T	G	C
+ab	1	1	1	0	
+a1	2	2	2	0	
+a2	2	0	2	1	
+b	4	2	3	1	
+GR%A	4	3	4	1	
+GR%B	1	1	1	0	
+GR%b	4	2	3	1	
+$all	10	7	7	6	
+$other	4	4	2	4	
+```
 
 ### 2.09 `ExAndRename.py [MAP_FILE] [FASTA_FILE]`
 
-**功能描述：** 从FASTA文件中提取部分序列，并对这些序列按照规则修改名称。
+**Function Description:** Extract partial sequences from a FASTA file and modify their names according to rules.  
 
-- **MAP_FILE：** 在提供的信息中，第一列所列出的是欲提取或重命名的序列名，它对应fasta文件中“>”符号之后，首个空格之前的文本内容；若无空格，则为“>”符号之后的完整序列标识符。第二列则是期望修改为目标的新名称。当第一列与第二列内容相同时，这一操作相当于执行代码2.06的功能。
-- **FASTA_FILE：** Fasta格式的序列文件，也就是包括所有序列的文件，比如全基因组fa文件、pep或者CDS序列。
+- **MAP_FILE：** In the provided information, the first column lists the sequence names to be extracted or renamed, corresponding to the text content after the ">" symbol and before the first space in the FASTA file; if there is no space, it refers to the complete sequence identifier after the ">" symbol. The second column is the new name desired for the modification. When the content of the first column is the same as the second column, this operation is equivalent to performing the function of code 2.06.  
+- **FASTA_FILE：** A sequence file in Fasta format, which includes all sequences, such as a whole genome fa file, pep, or CDS sequences.  
 
-**使用场景：** 适用于从全基因组序列中提取染色体并修改名称。
+**Usage scenario:** Suitable for extracting chromosomes from whole genome sequences and modifying their names. 
 
-**生成文件：** 
-- `subset_fasta.faa`（FASTA文件，如果在map表存在多余的内容会有提示）。              
+**Generated File:** 
+- `subset_fasta.faa`(FASTA file. If there is excess content in the map table, a prompt will be given).                
 
-**示例：**
+**Example:**
 
+For example, `eexample/map.txt`  is a table corresponding old IDs (first column) to new IDs (second column):  
+```
+KAF7154833.1	a
+KAF7152831.1	b
+aaa	c
+```
+`example/text.fa` contains all sequences:  
+```
+>KAF7112153.1 hypothetical protein RHSIM_RhsimUnG0257300 [Rhododendron simsii]
+MASVKNRVRNKLFKCFRPAAIDDDPIKPDATDGPGNSVFTSISGKGKSGKISNLLSGEKGKVYSEGGDAGGDRSNKERSH...
+>KAF7112159.1 hypothetical protein RHSIM_RhsimUnG0256100 [Rhododendron simsii]
+MASNTQSSFEDFLPIMAHKLGGEALIGELCNGFRLLMDGDKGVITFDSLKKNAAVLGLQELTDGDLRSMLREGDFDGDGA...
+...
+>KAF7152831.1 hypothetical protein RHSIM_Rhsim01G0241100 [Rhododendron simsii]
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
+Execute command:
 ```bash
 python ExAndRename.py example/map.txt example/text.fa
 ``` 
+The following can then be generated:  
+```
+>a
+MFRFAMWNRGWSWWTSPTDKERVDVVMETKGGKKKSSSSSTSTSSSRSSSLQYEAPLGYSIEDIRPNGGIEKFRSAAYSN...
+
+>b
+MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF...
+```
+It should be noted that the 'aaa' sequence does not exist, so it was not extracted.  
        
 ### 2.10 `BatchFastaToPam.py [FASTA_FILE_DIR]`
 
-**功能描述：** 批量将比对过的FASTA文件转换为paml比对文件。
+**Function Description:** Batch convert aligned FASTA files to PAML alignment files. 
 
-- **FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要转换的FASTA格式的比对文件。
+- **FASTA_FILE_DIR：** Directory path name, containing the aligned FASTA format files to be converted within this directory.  
 
-**注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！
+**Notes:** The folder must not contain unaligned sequence files or any other files, otherwise an error will occur!
 
-**生成文件：** 
-- `pamlfile`（文件夹，其中包含需要转换的fasta文件名+pam后缀）。      
+**Generated File:** 
+- `pamlfile`(Folder, containing the FASTA files to be converted with a .pam suffix).     
 
-**示例：**
+**Example:**
 
+For example, the `example/ali_fasta` folder contains the FASTA files to be converted:  
+```
+example/
+└── ali_fasta/
+    ├── OG0002719.fa   
+    └── OG0002724.fa
+```
+Execute command:
 ```bash
 python BatchFastaToPam.py example/ali_fasta
+```
+The corresponding results will be output to the `pamlfile`  folder:
+```
+pamlfile/
+├── OG0002719.fa.pam   
+└── OG0002724.fa.pam
 ```
 
 ### 2.11 `ReassignSequence.py [IN_FASTA_FILE_DIR] [MATRIX_FILE] [OUT_FASTA_FILE_DIR]`
 
-**功能描述：** 将fasta文件中的序列按照要求分配到不同的fasta文件中。
+**Function Description:** Distribute sequences from a FASTA file into different FASTA files as required.  
 
-- **IN_FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要重新分配的fasta格式序列文件，可以是DNA、CDS、转录本、蛋白质或其他序列。
-- **MATRIX_FILE：** 矩阵文件位置，制表符隔开，包含标题行！每一行的第一个项目是新分配后的文件名，其余位置是该文件中包含的序列名称。
-- **OUT_FASTA_FILE_DIR：** 文件夹路径名，输出路径。
+- **IN_FASTA_FILE_DIR：** Directory path name, containing the FASTA format sequence files to be redistributed within this directory. These can be DNA, CDS, transcripts, proteins, or other sequences.  
+- **MATRIX_FILE：** Matrix file location, tab-separated, including a header row! The first item of each row is the new file name after redistribution, and the remaining items are the sequence names contained in that file.  
+- **OUT_FASTA_FILE_DIR：** Directory path name, output path.  
 
-**使用场景：** ①单拷贝同源基因每个基因家族的序列提取过程中，将下载的CDS序列按照基因家族分组将CDS分别归属到新的不同的文件中，用于后续CDS和蛋白质序列的匹配，矩阵文件是Orthogroups/Orthogroups.tsv（MATRIX_FILE，可以参照示例文件example/seq_matrix2.txt），你只需要从NCBI下载每个物种的fna文件（重要：需要使用cut命令分列并保留第一列，使得每个序列的名称只包含ID号！）放置在同一文件夹中（IN_FASTA_FILE_DIR），然后指定输出文件就可以将不同物种的CDS文件分配到已基因家族名称命名的fasta文件中；②提取同一基因家族的基因进行合并分析。       
+**Usage scenario:** ① During the extraction of sequences for each gene family of single-copy orthologs, downloaded CDS sequences are grouped according to gene families and assigned to new, distinct files. This is used for subsequent matching of CDS and protein sequences. The matrix file is Orthogroups/Orthogroups.tsv (MATRIX_FILE, refer to the example file example/seq_matrix2.txt). You only need to download the fna file for each species from NCBI (important: use the cut command to split columns and retain only the first column, so that each sequence name contains only the ID number!), place them in the same folder (IN_FASTA_FILE_DIR), and then specify the output file to distribute the CDS files of different species into fasta files named after the gene family names. ② Extract genes from the same gene family for combined analysis.             
 
-**注意事项：** 索引表格一定要包含标题行，可以是标准的同行数同列数的矩阵，但不强制要求。
+**Notes:** The index table must contain a header row. It can be a standard matrix with the same number of rows and columns, but this is not mandatory.  
 
-**生成文件：** 
-- `<OUT_FASTA_FILE_DIR参数>` (文件夹，其中包含重新分配后的序列)       
+**Generated File:** 
+- `<OUT_FASTA_FILE_DIR>` (Folder, containing the redistributed sequences).       
 
-**示例：**
+**Example:**
 
+For example, the `example/ali_fasta`  folder contains the FASTA files to be redistributed:  
+```
+example/
+└── ali_fasta/
+    ├── OG0002719.fa   
+    └── OG0002724.fa
+```
+`example/seq_matrix.txt` specifies the grouping for all sequences in the FASTA file. The content of the first row is not important:  
+```
+Orthogroup	A	B	C	
+OG01	XP_010706234.2	XP_032302195.1	jirou002500.1	
+OG02	NP_001026572.1	XP_038029232.1		
+OG03	XP_032302195.1	XP_048781468.1		
+OG04	jirou002516.1	XP_015134329.2	XP_035425170.1	XP_035170945.1
+```
+Execute command:
 ```bash
 python ReassignSequence.py example/ali_fasta example/seq_matrix.txt out
 ``` 
+The corresponding sequences can then be extracted from all FASTA files and placed into different files within the `out` directory: 
+```
+out/
+├── OG01.fna   
+├── OG02.fna 
+├── OG03.fna 
+└── OG04.fna
+
+#OG01
+>XP_010706234.2	
+...
+>XP_032302195.1	
+...
+>jirou002500.1
+...
+
+#OG02
+>NP_001026572.1	
+...
+>XP_038029232.1	
+...
+
+...
+```
 
 ### 2.12 `BatchAlignedProteinToDNA.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]`
 
@@ -1565,4 +1885,4 @@ python PrideSpider.py example/sp.txt
 
 ==============      
 **感谢支持！**    
-<img src="additional/pic/donate.png" alt="Donate" height="300" />
+<img src="additional/pic/donate.png" alt="Donate" height
