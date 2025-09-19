@@ -1,4 +1,4 @@
-[Chinese](README-zh.md) | [English](README.md)              
+[中文](README-zh.md) | [English](README.md)              
 
 # BioDataTools
 
@@ -132,11 +132,42 @@ sp3       15000   6000000         70            40000       43.1      ...
 
 **示例：**
 
-比如 `example/origin_seq.fa` 文件中包含重复标识的序列，执行命令：
+比如 `example/origin_seq.fa` 文件中包含重复标识的序列：  
+```
+>aaa
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>abc
+ATCGGCATATATCTTATTATATTTCCCCAAA
+TTCCATCA
+>aaa
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>ac
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>at
+ATCGGCATATATCTTATTATATTTCCCCAAA
+TTCCATCA
+>aa
+ATCGGCATATATCTTATTATATTTCCCCAAA
+```
+执行命令：
 ```bash
 python FastaSeqsRenamerUniqueContinuous.py example/origin_seq.fa
 ``` 
-输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
+输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件： 
+```
+>N_0000000001 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>N_0000000002 
+ATCGGCATATATCTTATTATATTTCCCCAAATTCCATCA
+>N_0000000003 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>N_0000000004 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>N_0000000005 
+ATCGGCATATATCTTATTATATTTCCCCAAATTCCATCA
+>N_0000000006 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+```  
 
 ### 1.03 `MPAtoMatrix.py  [MPA_PATH]` 
 

@@ -1,4 +1,4 @@
-[Chinese](README-zh.md) | [English](README.md)              
+[中文](README-zh.md) | [English](README.md)              
 
 # BioDataTools
 
@@ -89,7 +89,7 @@ This README document provides script files under each module and their brief fun
 
 - **DIR_PATH：** Path to the Quast results folder, containing the `transposed_report.tsv` file for each sample. 
 
-**Generated file:**
+**Generated File:**
 
 - `sumary.tsv`(Table file, where each column represents a sample and each row corresponds to an assembled dataset).  
 
@@ -120,24 +120,55 @@ sp3       15000   6000000         70            40000       43.1      ...
 
 ### 1.02 `FastaSeqsRenamerUniqueContinuous.py [FASTA_FILE_PATH]` 
 
-**功能描述：** 对FASTA格式序列文件中各个序列标头进行统一命名规范，确保每个序列标识唯一且编号连续。
+**Function Description:** Modify the name in each sequence of the specified FASTA file to make it standardized and uniform.
 
-- **FASTA_FILE_PATH：** 原FASTA文件路径。
+- **FASTA_FILE_PATH:** Original FASTA file path.
 
-**使用场景：** 在宏基因组等组学分析项目中，该脚本通过统一重命名各FASTA文件中的序列ID为连续数字（1, 2, 3...），确保合并样品组装数据时标识唯一性，为后续基因丰度分析及注释规范序列名称，便于差异基因追踪及原始序列比对。
+**Usage Scenario:** In omics analysis projects such as metagenomics, this script ensures the uniqueness of identifiers when merging sample assembly data by uniformly renaming sequence IDs in each FASTA file to consecutive numbers (1, 2, 3...). This standardizes sequence names for subsequent gene abundance analysis and annotation, facilitating the tracking of differentially expressed genes and alignment to original sequences.
 
-**注意事项：** 本代码只适用于后续不再讨论原始序列标识的场景，切勿在定量、注释等下游分析后使用该脚本！不要和2.30搞混，本脚本是将序列重新编号（无论序列是否一致都会赋予不同的ID）；而2.30是将重复序列赋予统一ID，如果原本文件中有相同的ID（无论是否是相同序列）都只保留最后一个。  
+**Notes:** This code is only suitable for scenarios where the original sequence identifiers are no longer discussed subsequently. Do not use this script after downstream analyses such as quantification or annotation! Do not confuse this with script 2.30. This script renumbers sequences (assigning different IDs regardless of sequence identity), whereas 2.30 assigns a unified ID to duplicate sequences, retaining only the last occurrence if identical IDs exist in the original files (regardless of sequence similarity).  
 
-**生成文件：** 
-- `out_<原始FASTA文件名称>`（FASTA文件，各个序列被重新编码）。    
+**Generated File:** 
+- `out_<Original FASTA File Name>`(FASTA file with sequences re-numbered).     
 
-**示例：**
+**Example:**
 
-比如 `example/origin_seq.fa` 文件中包含重复标识的序列，执行命令：
+For example, the `example/origin_seq.fa` file contains sequences with duplicate identifiers:  
+```
+>aaa
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>abc
+ATCGGCATATATCTTATTATATTTCCCCAAA
+TTCCATCA
+>aaa
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>ac
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>at
+ATCGGCATATATCTTATTATATTTCCCCAAA
+TTCCATCA
+>aa
+ATCGGCATATATCTTATTATATTTCCCCAAA
+```
+Execute command:  
 ```bash
 python FastaSeqsRenamerUniqueContinuous.py example/origin_seq.fa
 ``` 
-输出结果文件 `out_origin_seq.fa` ，即为序列标识唯一的FASTA文件。
+The output result file `out_origin_seq.fa` is the FASTA file with unique sequence identifiers: 
+```
+>N_0000000001 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>N_0000000002 
+ATCGGCATATATCTTATTATATTTCCCCAAATTCCATCA
+>N_0000000003 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>N_0000000004 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>N_0000000005 
+ATCGGCATATATCTTATTATATTTCCCCAAATTCCATCA
+>N_0000000006 
+ATCGGCATATATCTTATTATATTTCCCCAAA
+```  
 
 ### 1.03 `MPAtoMatrix.py  [MPA_PATH]` 
 
