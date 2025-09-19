@@ -6,30 +6,30 @@
 
 ## 脚本工具目录
 
-本README文档提供了各个模块下的脚本文件及其简要功能描述，同时还对部分分析流程进行简述。
+这个README文档提供了每个模块下的脚本文件及其简短的功能描述，以及某些分析工作流的简明概述。本文档有中英文两种版本，您可以根据自己的喜好进行切换。  
 
 <table border="0" cellspacing="0" cellpadding="5">
   <tr>
-    <th>编号</th>
-    <th>脚本/.py</th>
+    <th>脚本编号</th>
+    <th>脚本名称</th>
     <th>功能简述</th>
   </tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Metagenome 宏基因组分析模块</th></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Metagenome：宏基因组分析模块</th></tr>
   <tr><td>1.01</td><td>QuastAssemblerSummary</td><td>Quast软件评估结果汇总</td></tr>
-  <tr><td>1.02</td><td>FastaSeqsRenamerUniqueContinuous</td><td>为Fasta格式序列编号</td></tr>
+  <tr><td>1.02</td><td>FastaSeqsRenamerUniqueContinuous</td><td>为Fasta格式的每条序列重新编号</td></tr>
   <tr><td>1.03</td><td>MPAtoMatrix</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
-  <tr><td>1.04</td><td>TaxLevelMatrixSplitter</td><td>按照阶元等级重构物种丰度表</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics 基因组分析模块</th></tr>
-  <tr><td>2.01</td><td>GIGenBankDownloader</td><td>以GI号批量下载Fasta文件</td></tr>
-  <tr><td>2.02</td><td>GBRenameByX</td><td>以某信息批量重命名GB文件</td></tr>
-  <tr><td>2.03</td><td>GBtoFastaWithDescriptions</td><td>GB文件批量转换为Fasta文件</td></tr>
-  <tr><td>2.04</td><td>CombineTwoSequences</td><td>两序列合并（低阶）</td></tr>
-  <tr><td>2.05</td><td>FastaToHaplotypes</td><td>将样品序列转换为单倍型序列</td></tr>
-  <tr><td>2.06</td><td>CustomFastaExtractor</td><td>正则表达式提取Fasta文件子序列集</td></tr>
+  <tr><td>1.04</td><td>TaxLevelMatrixSplitter</td><td>按照阶元等级分割物种丰度表</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics：基因组分析模块</th></tr>
+  <tr><td>2.01</td><td>GIGenBankDownloader</td><td>按GI号批量下载Fasta文件</td></tr>
+  <tr><td>2.02</td><td>GBRenameByX</td><td>根据具体信息批量重命名GB文件</td></tr>
+  <tr><td>2.03</td><td>GBtoFastaWithDescriptions</td><td>批量转换GB文件到Fasta文件</td></tr>
+  <tr><td>2.04</td><td>CombineTwoSequences</td><td>合并两个序列（低阶）</td></tr>
+  <tr><td>2.05</td><td>FastaToHaplotypes</td><td>将样本序列转换为单倍型序列</td></tr>
+  <tr><td>2.06</td><td>CustomFastaExtractor</td><td>使用正则表达式从Fasta文件中提取序列子集</td></tr>
   <tr><td>2.07</td><td>ProteinPropertyFromExpasy</td><td>批量获取蛋白质理化性质</td></tr>
   <tr><td>2.08</td><td>FeaturesBaseComponents</td><td>细胞器基因组特征数据统计</td></tr>
   <tr><td>2.09</td><td>ExAndRename</td><td>从Fasta文件提取子序列并重命名</td></tr>
-  <tr><td>2.10</td><td>BatchFastaToPam</td><td>Fasta文件批量转换为PAML文件</td></tr>
+  <tr><td>2.10</td><td>BatchFastaToPam</td><td>批量转换Fasta文件到PAML格式的文件</td></tr>
   <tr><td>2.11</td><td>ReassignSequence</td><td>重新分配序列所在的Fasta文件</td></tr>
   <tr><td>2.12</td><td>BatchAlignedProteinToDNA</td><td>将蛋白质比对文件转换为密码子比对文件</td></tr>
   <tr><td>2.13</td><td>Extract4DTv</td><td>四倍简并位点提取</td></tr>
@@ -37,23 +37,23 @@
   <tr><td>2.15</td><td>BatchGenerationCodeML_CTL</td><td>批量生成CodeML的配置文件</td></tr>
   <tr><td>2.16</td><td>ParsingCodeMLResults</td><td>批量解析CodeML结果</td></tr>
   <tr><td>2.17</td><td>SplitAXT</td><td>拆分AXT文件</td></tr>
-  <tr><td>2.18</td><td>BaseSiteInformation</td><td>碱基位点信息提取</td></tr>
+  <tr><td>2.18</td><td>BaseSiteInformation</td><td>获得核苷酸在基因组上的位置信息</td></tr>
   <tr><td>2.19</td><td>MaskSeq</td><td>序列屏蔽（基因组mask）</td></tr>
-  <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>分位点碱基数目统计</td></tr>
+  <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>分密码子位碱基数目统计</td></tr>
   <tr><td>2.21</td><td>GFFSimplifier</td><td>简化GFF文件</td></tr>
-  <tr><td>2.22</td><td>BaseSiteFeatureFinder</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
-  <tr><td>2.23</td><td>IntervalFeatureFinder</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
-  <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取基因对应的全部转录本/蛋白质/cdna等</td></tr>
-  <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>对应多组学fasta序列（对应核酸序列和蛋白质序列）</td></tr>
+  <tr><td>2.22</td><td>BaseSiteFeatureFinder</td><td>检索一个位点附近的特征（在指定距离内筛选候选基因）</td></tr>
+  <tr><td>2.23</td><td>IntervalFeatureFinder</td><td>检索指定区域内的特征（在指定间隔内筛选候选基因）</td></tr>
+  <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取一个基因对应的所有转录本/蛋白/cDNA等</td></tr>
+  <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>将转录序列与蛋白质序列关联</td></tr>
   <tr><td>2.26</td><td>BatchModificationSequence</td><td>批量将固定序列前的序列替换为指定序列</td></tr>
   <tr><td>2.27</td><td>TableToMultipleFasta</td><td>按照表格的行拆分Fasta文件</td></tr>
-  <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到单独的表格中</td></tr>
+  <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到一个表中</td></tr>
   <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>简易版可视化序列比对结果</td></tr>
-  <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并将重复序列去冗余</td></tr>
+  <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并删除冗余序列</td></tr>
   <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
   <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
   <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
   <tr><td>3.03</td><td>SumByGroup</td><td>分组求和（高阶）</td></tr>
@@ -65,10 +65,10 @@
   <tr><td>3.09</td><td>GOTableConverter</td><td>转换GO注释表格</td></tr>
   <tr><td>3.10</td><td>AddGOAnnotations</td><td>添加GO注释的描述和分类内容</td></tr>
   <tr><td>3.11</td><td>VectorTableMerger</td><td>将A-Bs和B-Cs表格连接成A-Cs</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
-  <tr><td>4.01</td><td>GeneArrangementMap</td><td>基因组特征排布图</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript：绘图工具模块</th></tr>
+  <tr><td>4.01</td><td>GeneArrangementMap</td><td>绘制基因组特征排布图</td></tr>
   <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>tRNA二级结构图美化</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider 生物学数据库爬虫工具模块</th></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider：生物学数据库爬虫工具模块</th></tr>
   <tr><td>5.01</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE数据库信息爬虫</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">分析流程</th></tr>
@@ -80,7 +80,7 @@
 </table>
 
 
-## 1. Metagenome 宏基因组分析相关脚本
+## 1. Metagenome：宏基因组分析相关脚本
    
 ### 1.01 `QuastAssemblerSummary.py [DIR_PATH]`
 

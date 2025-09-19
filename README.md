@@ -2,99 +2,100 @@
 
 # BioDataTools
 
-这是一套生物信息学脚本，结合了组学和生态遗传分析，支持多种数据处理工具，适应广泛的研究需求。   
+This is a set of bioinformatics scripts that integrates omics and ecological genetic analyses, supports various data processing tools, and accommodates a wide range of research needs.
+   
 
-## 脚本工具目录
+## Script Tools Directory
 
-本README文档提供了各个模块下的脚本文件及其简要功能描述，同时还对部分分析流程进行简述。
+This README document provides script files under each module and their brief functional descriptions, as well as concise overviews of certain analysis workflows.  The document is available in both Chinese and English versions, and you may switch between them according to your preference.  
 
 <table border="0" cellspacing="0" cellpadding="5">
   <tr>
-    <th>编号</th>
-    <th>脚本/.py</th>
-    <th>功能简述</th>
+    <th>Script No.</th>
+    <th>Script Name</th>
+    <th>Brief Function Description</th>
   </tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Metagenome 宏基因组分析模块</th></tr>
-  <tr><td>1.01</td><td>QuastAssemblerSummary</td><td>Quast软件评估结果汇总</td></tr>
-  <tr><td>1.02</td><td>FastaSeqsRenamerUniqueContinuous</td><td>为Fasta格式序列编号</td></tr>
-  <tr><td>1.03</td><td>MPAtoMatrix</td><td>合并kraken1/2或bracken生成的MPA文件</td></tr>
-  <tr><td>1.04</td><td>TaxLevelMatrixSplitter</td><td>按照阶元等级重构物种丰度表</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics 基因组分析模块</th></tr>
-  <tr><td>2.01</td><td>GIGenBankDownloader</td><td>以GI号批量下载Fasta文件</td></tr>
-  <tr><td>2.02</td><td>GBRenameByX</td><td>以某信息批量重命名GB文件</td></tr>
-  <tr><td>2.03</td><td>GBtoFastaWithDescriptions</td><td>GB文件批量转换为Fasta文件</td></tr>
-  <tr><td>2.04</td><td>CombineTwoSequences</td><td>两序列合并（低阶）</td></tr>
-  <tr><td>2.05</td><td>FastaToHaplotypes</td><td>将样品序列转换为单倍型序列</td></tr>
-  <tr><td>2.06</td><td>CustomFastaExtractor</td><td>正则表达式提取Fasta文件子序列集</td></tr>
-  <tr><td>2.07</td><td>ProteinPropertyFromExpasy</td><td>批量获取蛋白质理化性质</td></tr>
-  <tr><td>2.08</td><td>FeaturesBaseComponents</td><td>细胞器基因组特征数据统计</td></tr>
-  <tr><td>2.09</td><td>ExAndRename</td><td>从Fasta文件提取子序列并重命名</td></tr>
-  <tr><td>2.10</td><td>BatchFastaToPam</td><td>Fasta文件批量转换为PAML文件</td></tr>
-  <tr><td>2.11</td><td>ReassignSequence</td><td>重新分配序列所在的Fasta文件</td></tr>
-  <tr><td>2.12</td><td>BatchAlignedProteinToDNA</td><td>将蛋白质比对文件转换为密码子比对文件</td></tr>
-  <tr><td>2.13</td><td>Extract4DTv</td><td>四倍简并位点提取</td></tr>
-  <tr><td>2.14</td><td>MergeSequences</td><td>合并序列（高阶）</td></tr>
-  <tr><td>2.15</td><td>BatchGenerationCodeML_CTL</td><td>批量生成CodeML的配置文件</td></tr>
-  <tr><td>2.16</td><td>ParsingCodeMLResults</td><td>批量解析CodeML结果</td></tr>
-  <tr><td>2.17</td><td>SplitAXT</td><td>拆分AXT文件</td></tr>
-  <tr><td>2.18</td><td>BaseSiteInformation</td><td>碱基位点信息提取</td></tr>
-  <tr><td>2.19</td><td>MaskSeq</td><td>序列屏蔽（基因组mask）</td></tr>
-  <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>分位点碱基数目统计</td></tr>
-  <tr><td>2.21</td><td>GFFSimplifier</td><td>简化GFF文件</td></tr>
-  <tr><td>2.22</td><td>BaseSiteFeatureFinder</td><td>获取位点附件的特征（指定距离内候选基因筛选）</td></tr>
-  <tr><td>2.23</td><td>IntervalFeatureFinder</td><td>获取指定区间内的特征（指定区域内候选基因筛选）</td></tr>
-  <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>提取基因对应的全部转录本/蛋白质/cdna等</td></tr>
-  <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>对应多组学fasta序列（对应核酸序列和蛋白质序列）</td></tr>
-  <tr><td>2.26</td><td>BatchModificationSequence</td><td>批量将固定序列前的序列替换为指定序列</td></tr>
-  <tr><td>2.27</td><td>TableToMultipleFasta</td><td>按照表格的行拆分Fasta文件</td></tr>
-  <tr><td>2.28</td><td>MultipleFastaToTable</td><td>将多个Fasta文件合并到单独的表格中</td></tr>
-  <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>简易版可视化序列比对结果</td></tr>
-  <tr><td>2.30</td><td>MergeMultipleFasta</td><td>合并多个Fasta文件并将重复序列去冗余</td></tr>
-  <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
-  <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
-  <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget 通用工具模块</th></tr>
-  <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
-  <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
-  <tr><td>3.03</td><td>SumByGroup</td><td>分组求和（高阶）</td></tr>
-  <tr><td>3.04</td><td>CountByGroup</td><td>分组计数（高阶）</td></tr>
-  <tr><td>3.05</td><td>FastaSplitter</td><td>按指定序列数拆分Fasta文件</td></tr>
-  <tr><td>3.06</td><td>KeggAnnotationParser</td><td>解析KEGG注释文件</td></tr>
-  <tr><td>3.07</td><td>KEGGPathwayCounter</td><td>KEGG通路数目统计</td></tr>
-  <tr><td>3.08</td><td>GOoboAnnotationExtractor</td><td>解析GO注释obo文件</td></tr>
-  <tr><td>3.09</td><td>GOTableConverter</td><td>转换GO注释表格</td></tr>
-  <tr><td>3.10</td><td>AddGOAnnotations</td><td>添加GO注释的描述和分类内容</td></tr>
-  <tr><td>3.11</td><td>VectorTableMerger</td><td>将A-Bs和B-Cs表格连接成A-Cs</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript 绘图工具模块</th></tr>
-  <tr><td>4.01</td><td>GeneArrangementMap</td><td>基因组特征排布图</td></tr>
-  <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>tRNA二级结构图美化</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider 生物学数据库爬虫工具模块</th></tr>
-  <tr><td>5.01</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
-  <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE数据库信息爬虫</td></tr>
-  <tr><th colspan="3" style="text-align:center; font-weight:bold;">分析流程</th></tr>
-  <tr><td colspan="2">宏基因组物种定量分析流程</td><td>位于1.04脚本之后</td></tr>
-  <tr><td colspan="2">群体遗传学分析快速下载数据流程</td><td>位于2.03脚本之后</td></tr>
-  <tr><td colspan="2">比较基因组学-同源基因建树和选择压力分析流程（一）</td><td>位于2.16脚本之后</td></tr>
-  <tr><td colspan="2">比较基因组学-同源基因建树和选择压力分析流程（二）</td><td>位于2.17脚本之后</td></tr>
-  <tr><td colspan="2">无参GO/KEGG富集分析流程</td><td>位于3.10脚本之后</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Metagenome: Metagenomic Analysis Module</th></tr>
+  <tr><td>1.01</td><td>QuastAssemblerSummary</td><td>Summary of Quast software evaluation results</td></tr>
+  <tr><td>1.02</td><td>FastaSeqsRenamerUniqueContinuous</td><td>Re-number each sequence in Fasta format</td></tr>
+  <tr><td>1.03</td><td>MPAtoMatrix</td><td>Merge MPA files generated by Kraken1/2 or Bracken</td></tr>
+  <tr><td>1.04</td><td>TaxLevelMatrixSplitter</td><td>Split the species abundance table according to taxonomic ranks</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Genetics: Genome Analysis Module</th></tr>
+  <tr><td>2.01</td><td>GIGenBankDownloader</td><td>Batch download Fasta files by GI number</td></tr>
+  <tr><td>2.02</td><td>GBRenameByX</td><td>Batch rename GB files based on specific information</td></tr>
+  <tr><td>2.03</td><td>GBtoFastaWithDescriptions</td><td>Batch convert GB files to Fasta files</td></tr>
+  <tr><td>2.04</td><td>CombineTwoSequences</td><td>Merge two sequences</td></tr>
+  <tr><td>2.05</td><td>FastaToHaplotypes</td><td>Convert sample sequences into haplotype sequences</td></tr>
+  <tr><td>2.06</td><td>CustomFastaExtractor</td><td>Extract a subset of sequences from a Fasta file using regular expressions</td></tr>
+  <tr><td>2.07</td><td>ProteinPropertyFromExpasy</td><td>Batch retrieval of protein physicochemical properties</td></tr>
+  <tr><td>2.08</td><td>FeaturesBaseComponents</td><td>Summary statistics of organellar genome features</td></tr>
+  <tr><td>2.09</td><td>ExAndRename</td><td>Extract subsequences from a Fasta file and rename them</td></tr>
+  <tr><td>2.10</td><td>BatchFastaToPam</td><td>Batch convert Fasta files to PAML format files</td></tr>
+  <tr><td>2.11</td><td>ReassignSequence</td><td>Reassign sequences to their respective Fasta file</td></tr>
+  <tr><td>2.12</td><td>BatchAlignedProteinToDNA</td><td>Convert a protein alignment file to a codon alignment file</td></tr>
+  <tr><td>2.13</td><td>Extract4DTv</td><td>Extract 4DTv sites</td></tr>
+  <tr><td>2.14</td><td>MergeSequences</td><td>Merge sequences (advanced)</td></tr>
+  <tr><td>2.15</td><td>BatchGenerationCodeML_CTL</td><td>Batch generate configuration files for CodeML</td></tr>
+  <tr><td>2.16</td><td>ParsingCodeMLResults</td><td>Batch parse CodeML results</td></tr>
+  <tr><td>2.17</td><td>SplitAXT</td><td>Split AXT files</td></tr>
+  <tr><td>2.18</td><td>BaseSiteInformation</td><td>Obtain the positional information of nucleotides on the genome</td></tr>
+  <tr><td>2.19</td><td>MaskSeq</td><td>Genome mask</td></tr>
+  <tr><td>2.20</td><td>BaseCompositionCalculation</td><td>Statistical analysis of base counts by codon position</td></tr>
+  <tr><td>2.21</td><td>GFFSimplifier</td><td>Simplify GFF file</td></tr>
+  <tr><td>2.22</td><td>BaseSiteFeatureFinder</td><td>Retrieve features near a site (candidate gene screening within a specified distance)</td></tr>
+  <tr><td>2.23</td><td>IntervalFeatureFinder</td><td>Retrieve features within a specified region (candidate gene screening within a defined interval)</td></tr>
+  <tr><td>2.24</td><td>ExtractFastaWithGene</td><td>Extract all transcripts/proteins/cDNA, etc. corresponding to a gene</td></tr>
+  <tr><td>2.25</td><td>CorrespondingNucleotideProteinFasta</td><td>Associate transcript sequences with protein sequences</td></tr>
+  <tr><td>2.26</td><td>BatchModificationSequence</td><td>Batch replace the sequence preceding a fixed sequence with a specified sequence</td></tr>
+  <tr><td>2.27</td><td>TableToMultipleFasta</td><td>Split a Fasta file according to the rows in a table</td></tr>
+  <tr><td>2.28</td><td>MultipleFastaToTable</td><td>Merge multiple Fasta files into a single table</td></tr>
+  <tr><td>2.29</td><td>AlignConsistencyChecker</td><td>Simple visualization of sequence alignment results</td></tr>
+  <tr><td>2.30</td><td>MergeMultipleFasta</td><td>Merge multiple Fasta files and remove redundant sequences</td></tr>
+  <tr><td>2.31</td><td>MitosToGFF</td><td>Convert Mitos annotation results to GFF file</td></tr>
+  <tr><td>2.32</td><td>MitosToFasta</td><td>Convert Mitos annotation results to Fasta file</td></tr> 
+  <tr><td>2.33</td><td>SsToFold</td><td>Convert secondary structure files (.ss) generated by tRNAscan-SE into a format supported by RNAplot</td></tr> 
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
+  <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
+  <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
+  <tr><td>3.03</td><td>SumByGroup</td><td>Grouped summation (advanced)</td></tr>
+  <tr><td>3.04</td><td>CountByGroup</td><td>Grouped counting (advanced)</td></tr>
+  <tr><td>3.05</td><td>FastaSplitter</td><td>Split Fasta file by specified number of sequences</td></tr>
+  <tr><td>3.06</td><td>KeggAnnotationParser</td><td>Parse KEGG annotation file</td></tr>
+  <tr><td>3.07</td><td>KEGGPathwayCounter</td><td>KEGG pathway count statistics</td></tr>
+  <tr><td>3.08</td><td>GOoboAnnotationExtractor</td><td>Parse GO annotation obo file</td></tr>
+  <tr><td>3.09</td><td>GOTableConverter</td><td>Convert GO annotation table</td></tr>
+  <tr><td>3.10</td><td>AddGOAnnotations</td><td>Add GO annotation descriptions and category information</td></tr>
+  <tr><td>3.11</td><td>VectorTableMerger</td><td>Join table A-Bs and table B-Cs to form table A-Cs</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript: Plotting Tools Module</th></tr>
+  <tr><td>4.01</td><td>GeneArrangementMap</td><td>Draw a genomic feature arrangement chart</td></tr>
+  <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>Beautification of tRNA secondary structure diagram</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider: Biological Database Web Scraping Tools Module</th></tr>
+  <tr><td>5.01</td><td>GenoSpider</td><td>Genome information web scraper</td></tr>
+  <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE database information web scraper</td></tr>
+  <tr><th colspan="3" style="text-align:center; font-weight:bold;">Analysis Pipeline</th></tr>
+  <tr><td colspan="2">Metagenomic Species Quantification Analysis Pipeline</td><td>Located after script 1.04</td></tr>
+  <tr><td colspan="2">Population Genetics Analysis: Rapid Data Download Workflow</td><td>Located after script 2.03</td></tr>
+  <tr><td colspan="2">Comparative Genomics - Homologous Gene Phylogenetic Tree Construction and Selection Pressure Analysis Pipeline (I)</td><td>Located after script 2.16</td></tr>
+  <tr><td colspan="2">Comparative Genomics - Homologous Gene Phylogenetic Tree Construction and Selection Pressure Analysis Pipeline (II)</td><td>Located after script 2.17</td></tr>
+  <tr><td colspan="2">GO/KEGG Enrichment Analysis Pipeline without a Reference Genome</td><td>Located after script 3.10</td></tr>
 </table>
 
 
-## 1. Metagenome 宏基因组分析相关脚本
+## 1. Metagenome: Scripts related to metagenomic analysis
    
 ### 1.01 `QuastAssemblerSummary.py [DIR_PATH]`
 
-**功能描述：** 整合由Quast软件输出的多个样本组装评估结果，生成一个组装信息表矩阵。
+**Function Description:** Place the script in the parent directory of the assembly evaluation results completed by quast software to obtain the assembly evaluation information summary table.  
 
-- **DIR_PATH：** Quast结果文件夹路径，内含各个样本的 `transposed_report.tsv` 文件。
+- **DIR_PATH：** Path to the Quast results folder, containing the `transposed_report.tsv` file for each sample. 
 
-**生成文件：**
+**Generated file:**
 
-- `sumary.tsv`（表格文件，每一列表示一个样本，每一行对应一个组装数据）。      
+- `sumary.tsv`(Table file, where each column represents a sample and each row corresponds to an assembled dataset).  
 
-**示例：**
+**Example:**
 
-如 `example/quast` 文件中包含由Quast软件得到的各样品组装评估结果，其文件结构如下：
+For example, the `example/quast` folder contains the assembly evaluation results for each sample obtained using the Quast software. Its file structure is as follows: 
 ```
 example/
 └── quast/
@@ -105,11 +106,11 @@ example/
     └── sp3/
         └── transposed_report.tsv
 ```
-执行命令：
+Execute command:  
 ```bash
 python QuastAssemblerSummary.py example/quast
 ```
-输出结果文件 `summary.tsv`，内容示例：
+Output result file `summary.tsv`, content example:  
 ```
 Sample    N50    Total Length    # Contigs    Largest Contig    GC (%)    ...
 sp1       10000   5000000         100           25000       42.3      ...
