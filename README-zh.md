@@ -1402,58 +1402,50 @@ python SsToFold.py example/trnascanse.ss
 
 **示例：**
 
-比如 `example/all.fa` 是小片段序列的FASTA文件：
+比如 `example/pcgs.fa` 是提取到的蛋白编码基因的CDS序列：
 ```
->test dna [LEN=30]
-GATTTAGCAG
-TAAGATGAGA
-TCATCCCCAG
+>nad1
+ATGACCCCACTAACCCCAATAAACCTCACAATCATAACTTTATCTTACATAATCCCAAT...
+...
+>nad6
+ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGGGGTTTTAGCTGTAGC...
 ```
-`example/matrix.txt` 是特征位置矩阵：
-```
-A;B	ab	9	11
-A	a1	16	21
-A	a2	6	10
-b	b	14	23
-```
-执行命令：
+此外已经在本地下载了本脚本，假设将脚本放置在`xxx/xxx/RSCUPlot.R`位置，可以打开R或者RStudio,执行命令：
 ```bash
-python FeaturesBaseComponents.py example/all.fa example/matrix.txt
+source("xxx/xxx/RSCUPlot.R")
+# 需要注意source到脚本具体路径！
+
+# 如果已经把工作目录设定到了脚本所在文件夹，可以直接运行：
+# source("RSCUPlot.R")
 ``` 
-即可输出对应结果：
+如果是第一次运行可能需要下载几个R包，加载完成后可以使用下面代码或函数：
 ```
-#ex_seq.fasta
->ab
-AGT
->a1
-TGAGAT
->a2
-AGCAG
->b
-GATGAGATCA
+# 设定蛋白编码基因所在路径
+pcg = "example/pcgs.fa"
 
->GR%A
-AGCAGTTGAGAT
->GR%B
-AGT
->GR%b
-GATGAGATCA
->$all
-GATTTAGCAGTAAGATGAGATCATCCCCAG
->$other
-GATTTAATCCCCAG
+# 设定密码子表，建议查看https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes，选择正确的密码子表。
+# 示例选择的是第二套密码子表，因此输入数字2：
+codonTable = 2
 
-#Base_composition.txt
-SEQ	A	T	G	C
-ab	1	1	1	0	
-a1	2	2	2	0	
-a2	2	0	2	1	
-b	4	2	3	1	
-GR%A	4	3	4	1	
-GR%B	1	1	1	0	
-GR%b	4	2	3	1	
-$all	10	7	7	6	
-$other	4	4	2	4	
+# 运行函数，即可生成7个结果文件，其中包括所有蛋白编码基因总体的RSCU柱形图。
+df = main_fun(pcg,codonTable)
+
+# 如果想导出指定基因的RSCU柱形图可以指定gene参数
+# df = main_fun(pcg,codonTable,gene="nad6")
+# 注意默认输出全部蛋白编码基因的结果，即gene="Total"。
+
+# 如果对导出的图片尺寸不满意，可以调用：
+# plot_rscu(rscu_d, out_path,h1=0.6,h2=6,yLim=6.2)
+# 其中rscu_d是绘图用到的数据框，即main_fun函数的返回值df；
+# out_path是输出文件路径；
+# h1与密码子矩形垂直间隙有关，如果矩形重叠可以适当增加该值；
+# h2是输出图片的高度，注意增加h2必须相应调整h1参数可以美观；
+# yLim是柱形图最高限度，除了第5套密码子，各个氨基酸的RSCU值之和不超过6，因此6.2是合适的，第5套密码子Ser氨基酸对应有8个密码子，所以需要设置8左右是合适的。
+# 通过作者测试h1=0.6，h2=6可以生成较好的扁平图形，h1=0.2，h2=12可以生成近似正方形的图形。
+# 自定义绘图的例子：plot_rscu(df,"111.pdf",0.1,24,8.2)
+# 绘制完之后建议使用PDF编辑软件，缩小密码子和柱形图的垂直距离。
+# 如果觉得默认图案不太美观，可以自行修改函数！
+	
 ```
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
