@@ -53,6 +53,7 @@
   <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
   <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
   <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
+  <tr><td>2.34</td><td>RSCUPlot</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -1384,6 +1385,76 @@ python SsToFold.py example/trnascanse.ss
 #将所有的svg文件整理到一个文件中，可以使用代码4.03进行美化。
 ```     
 
+### 2.34 `RSCUPlot.R`
+
+**功能描述：** 得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图。  
+
+**注意事项：** 本R脚本提供了数据统计及绘图函数，不可以直接通过命令行调用。
+
+**生成文件：** 
+- `01-sequences.csv`（表格文件，包含各个蛋白编码基因的序列及起始终止密码子信息）。
+- `02-Codon_occurrence_in_all_gene.csv` （表格文件，所有蛋白编码基因的密码子使用频数及频率）。
+- `03-Codon_occurrence_matrix.csv`（表格文件，密码子偏好矩阵）。
+- `04-RSCU_matrix.csv` （表格文件，RSCU矩阵）。
+- `05-<基因名>_RSCU.csv`（表格文件，指定基因的RSCU值及密码子使用频数）。
+- `06-<基因名>_RSCU_plot_file.csv` （表格文件，用于自定义绘图的原始数据）。
+- `07-<基因名>_RSCU_plot.pdf`（使用默认参数绘制的图形）。
+
+**示例：**
+
+比如 `example/all.fa` 是小片段序列的FASTA文件：
+```
+>test dna [LEN=30]
+GATTTAGCAG
+TAAGATGAGA
+TCATCCCCAG
+```
+`example/matrix.txt` 是特征位置矩阵：
+```
+A;B	ab	9	11
+A	a1	16	21
+A	a2	6	10
+b	b	14	23
+```
+执行命令：
+```bash
+python FeaturesBaseComponents.py example/all.fa example/matrix.txt
+``` 
+即可输出对应结果：
+```
+#ex_seq.fasta
+>ab
+AGT
+>a1
+TGAGAT
+>a2
+AGCAG
+>b
+GATGAGATCA
+
+>GR%A
+AGCAGTTGAGAT
+>GR%B
+AGT
+>GR%b
+GATGAGATCA
+>$all
+GATTTAGCAGTAAGATGAGATCATCCCCAG
+>$other
+GATTTAATCCCCAG
+
+#Base_composition.txt
+SEQ	A	T	G	C
+ab	1	1	1	0	
+a1	2	2	2	0	
+a2	2	0	2	1	
+b	4	2	3	1	
+GR%A	4	3	4	1	
+GR%B	1	1	1	0	
+GR%b	4	2	3	1	
+$all	10	7	7	6	
+$other	4	4	2	4	
+```
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
