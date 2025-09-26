@@ -894,8 +894,59 @@ options:
 
 **示例：**
 
+比如 `example` 文件夹中包含需要的文件：
+```
+```
+example/
+├── cod.txt
+├── SequenceIDs.txt
+├── cds/
+│  ├── OG0002719.fna  
+│  ├── ... 
+│  └── OG0002837.fna
+└── pep/
+    ├── OG0002719.fa  
+    ├── ... 
+    └── OG0002837.fa
+
+#cod.txt
+A	GCG 
+A	GCA 	
+A	GCT 
+...
+Y	TAT 
+Y	TAC 
+*	TGA 
+*	TAG
+*	TAA
+
+#SequenceIDs.txt
+0_0	XP_010706234.2
+1_7	XP_032302195.1
+2_3	XP_021240136.1
+3_3	XP_040400452.1
+...
+7_222	XP_027313668.2
+8_291	NP_001025904.2
+9_249	XP_048815064.1
+10_2438	jirou002303.1
+```
+蛋白质序列后缀是.fa，CDS序列后缀是.fna，执行命令：
 ```bash
 python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"
+```
+即可得到CDS的比对文件存放在 `output` 的不同文件中：
+```
+output/
+├── OG0002719.fa   
+├── OG0002724.fa 
+└── OG0002729.fa
+```  
+也会有部分序列存在问题，在 `err_cds.txt` 可以看到具体问题：
+```
+OG0002721.fa	Sequence mismatch
+OG0002761.fa	There is N in the CDS.
+OG0002837.fa	The CDS is not a multiple of 3.
 ```  
 
 ### 2.13 `Extract4DTv.py [-h] [-c CODON] [-m MAPFILE] [-p PEP] [-C CDS] [-s SUFFIX_P] [-S SUFFIX_C]`
@@ -903,6 +954,17 @@ python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt
 **功能描述：** 批量提取蛋白质序列比对结果中的4DTv（四倍简并位点）。
 
 **参数说明：** 所有参数均与脚本2.12一致，代码内容其实差不多，只是生成的文件名称不同。
+
+```bash
+options:
+  -h, --help            显示帮助信息
+  -c CODON, --codon 密码子表文件，第一列为氨基酸单字母缩写，第二列是对应的密码子，示例文件中cod.txt为标准密码子表。
+  -m MAPFILE, --mapfile 索引表文件，蛋白质序列名称及其对应的CDS序列名称表。第一列是蛋白质名称，第二列是对应CDS名称。
+  -p PEP, --pep 包含所有蛋白质序列的目录，蛋白质系列需要是被比对过的。
+  -C CDS, --cds 包含所有CDS序列的目录，推荐使用脚本2.11生成的。
+  -s SUFFIX_P, --suffix_p 蛋白质序列的扩展名，即蛋白质序列文件最后的.后的内容，默认是fa。
+  -S SUFFIX_C, --suffix_c CDS序列的扩展名，即CDS序列文件最后的.后的内容，默认是fna。
+``` 
 
 **使用场景：** 同源基因建树。
 
@@ -912,9 +974,60 @@ python BatchAlignedProteinToDNA.py -c example/cod.txt -m example/SequenceIDs.txt
 
 **示例：**
 
+比如 `example` 文件夹中包含需要的文件：
+```
+```
+example/
+├── cod.txt
+├── SequenceIDs.txt
+├── cds/
+│  ├── OG0002719.fna  
+│  ├── ... 
+│  └── OG0002837.fna
+└── pep/
+    ├── OG0002719.fa  
+    ├── ... 
+    └── OG0002837.fa
+
+#cod.txt
+A	GCG 
+A	GCA 	
+A	GCT 
+...
+Y	TAT 
+Y	TAC 
+*	TGA 
+*	TAG
+*	TAA
+
+#SequenceIDs.txt
+0_0	XP_010706234.2
+1_7	XP_032302195.1
+2_3	XP_021240136.1
+3_3	XP_040400452.1
+...
+7_222	XP_027313668.2
+8_291	NP_001025904.2
+9_249	XP_048815064.1
+10_2438	jirou002303.1
+```  
+蛋白质序列后缀是.fa，CDS序列后缀是.fna，执行命令：
 ```bash
 python Extract4DTv.py -c example/cod.txt -m example/SequenceIDs.txt -p example/pep -C example/cds -s "fa" -S "fna"
 ``` 
+即可提取到4DTv位点存放在 `4dtv` 的不同文件中：
+```
+4dtv/
+├── OG0002719.fa   
+├── OG0002724.fa 
+└── OG0002729.fa
+```  
+也会有部分序列存在问题，在 `err_4dtv.txt` 可以看到具体问题：
+```
+OG0002721.fa	Sequence mismatch
+OG0002761.fa	There is N in the CDS.
+OG0002837.fa	The CDS is not a multiple of 3.
+```  
 
 ### 2.14 `MergeSequences.py [MATRIX_FILE] [FASTA_FILE_DIR] [SUFFIX] [ORDER_LIST（可选参数）]`
 
@@ -932,12 +1045,41 @@ python Extract4DTv.py -c example/cod.txt -m example/SequenceIDs.txt -p example/p
 
 **示例：**
 
+比如 `example` 文件夹中包含需要的文件：
+```
+```
+example/
+├── seq_matrix.txt
+├── order.txt
+└── 4dtv/
+    ├── OG0002719.fa  
+    ├── OG0002724.fa
+    └── OG0002729.fa
+
+#seq_matrix.txt
+Orthogroup	s1	s2	s3	s4	s5	...
+OG0002719	XP_010706234.2	XP_032302195.1	XP_021240136.1	XP_040400452.1	XP_032063692.1	...
+OG0002724	XP_010727090.1	XP_015706975.1	XP_021239881.1	XP_040400939.1	XP_032038059.1	...
+OG0002729	XP_010706070.1	XP_015712434.1	XP_021239916.1	XP_040401487.1	XP_032053636.1	...
+
+#order.txt
+OG0002729
+OG0002724
+```  
+执行命令： 
 ```bash
 # 运行下列代码将不指定顺序全连接：
-python MergeSequences.py example/seq_matrix2.txt example/4dtv
+python MergeSequences.py example/seq_matrix.txt example/4dtv
 
 #若指定连接顺序运行下列代码：
-python MergeSequences.py example/seq_matrix2.txt example/4dtv example/order.txt
+python MergeSequences.py example/seq_matrix.txt example/4dtv example/order.txt
+``` 
+即可生成合并后序列文件和实际合并顺序文件，其中合并后的序列文件：
+```
+>s1
+...
+>s2
+...
 ``` 
 
 ### 2.15 `BatchGenerationCodeML_CTL.py [PAML_FILE_DIR] [TREE_FILE]`
@@ -955,13 +1097,106 @@ python MergeSequences.py example/seq_matrix2.txt example/4dtv example/order.txt
 
 **示例：**
 
+比如 `example` 文件夹中包含需要的文件夹 `paml_file`：
+```
+example/
+└── paml_file/
+    ├── OG0005572.fa.nuc  
+    ├── OG0005964.fa.nuc
+    ├── OG0008612.fa.nuc
+    └── OG0010932.fa.nuc
+
+#OG0005572.fa.nuc
+11	201
+s0  
+ATGATCATCCCGGTCAGGTGTTTCACGTGCGGCAAAATCGTCGGA...
+s1  
+ATGATCATCCCGGTGCGATGCTTCACGTGCGGCAAGATCGTGGGC...
+...
+s10  
+ATGATCATCCCGGTCAGGTGCTTCACGTGCGGCAAAATCGTTGGA...
+```  
+执行命令： 
 ```bash
 python BatchGenerationCodeML_CTL.py example/paml_file "./out/a.tree"
 ```
+注意"./out/a.tree"并不是本脚本需要的文件，而是需要写入到配置文件时树的路径生成以下文件夹：
+```
+#基于无效假设的配置文件
+codemlnull/
+├── OG0005572.fa.nuc.ctl  
+├── OG0005964.fa.nuc.ctl
+├── OG0008612.fa.nuc.ctl
+└── OG0010932.fa.nuc.ctl
+
+#基于替代假设的配置文件
+codeml2/
+├── OG0005572.fa.nuc.ctl  
+├── OG0005964.fa.nuc.ctl
+├── OG0008612.fa.nuc.ctl
+└── OG0010932.fa.nuc.ctl
+
+#举个例子，基于无效假设的配置文件：OG0005572.fa.nuc.ctl
+
+      seqfile = ../example/paml_file/OG0005572.fa.nuc  * sequence data filename
+     treefile = ./out/a.tree  * tree file name
+
+      outfile = ./output0/OG0005572.fa.nuc/abc.txt           * main result file name
+   
+        noisy = 9  * 0,1,2,3,9: how much rubbish on the screen
+      verbose = 2  * 0: concise; 1: detailed, 2: too much
+      runmode = 0  * 0: user tree;  1: semi-automatic;  2: automatic
+                   * 3: StepwiseAddition; (4,5):PerturbationNNI; -2: pairwise
+
+      seqtype = 1  * 1:codons; 2:AAs; 3:codons-->AAs
+    CodonFreq = 2 * 0 : 1/61 each, 1:F1X4, 2:F3X4, 3:codon table
+                   * 4:F1x4MG, 5:F3x4MG, 6:FMutSel0, 7:FMutSel
+        model = 0
+                   * models for codons:
+                      * 0:one, 1:b, 2:2 or more dN/dS ratios for branches, 6:FromCodon
+                   * models for AAs or codon-translated AAs:
+                      * 0:poisson, 1:proportional, 2:Empirical, 3:Empirical+F
+                      * 6:FromCodon, 7:AAClasses, 8:REVaa_0, 9:REVaa(nr=189)
+
+      NSsites = 0 * 23 24 25 26   * 23 24 25 26 * 0:one w; 1:NearlyNeutral; 2:PositiveSelection; 3:discrete;
+                   * 4:freqs; 5:gamma; 6:2gamma; 7:beta; 8:beta&w+; 9:beta&gamma;
+                   * 10:beta&gamma+1; 11:beta&normal>1; 12:0&2normal>1;
+                   * 13:3normal>0; 
+                   * 22:M2a_Old(M2a_rel); 
+                   * 23:Tgamma; 24:Tinvgamma; 25:Tgamma+1; 26:Tinvgamma+1.
+
+        clock = 0  * 0:no clock, 1:global clock; 2:local clock
+       aaDist = 0  * 0:equal, +:geometric; -:linear, 1-6:G1974,Miyata,c,p,v,a
+   aaRatefile = ../dat/wag.dat * for aa seqs under model = 3 (empirical+F)
+                   * dayhoff.dat, jones.dat, wag.dat, mtmam.dat, or your own
+
+    fix_kappa = 0  * 1: kappa fixed, 0: kappa to be estimated
+        kappa = 3  * initial or fixed kappa
+    fix_omega = 0  * 1: omega or omega_1 fixed, 0: estimate
+        omega = 1  * initial or fIf yoixed omega, for codons or codon-based AAs
+
+    fix_alpha = 1  * 0: estimate gamma shape parameter; 1: fix it at alpha
+        alpha = 0. * initial or fixed alpha, 0:infinity (constant rate)
+       Malpha = 0  * different alphas for genes
+        ncatG = 10  * # of categories in dG of NSsites models
+
+        getSE = 0  * 0: don't want them, 1: want S.E.s of estimates
+ RateAncestor = 0  * (0,1,2): rates (alpha>0) or ancestral states (1 or 2)
+   Small_Diff = 1e-8
+*    cleandata = 1  * remove sites with ambiguity data (1:yes, 0:no)?
+*  fix_blength = 1  * 0: ignore, -1: random, 1: initial, 2: fixed
+*       method = 0  * Optimization method 0: simultaneous; 1: one branch a time
+
+* Genetic codes: 0:universal, 1:mammalian mt., 2:yeast mt., 3:mold mt.,
+* 4: invertebrate mt., 5: ciliate nuclear, 6: echinoderm mt., 
+* 7: euplotid mt., 8: alternative yeast nu. 9: ascidian mt., 
+* 10: blepharisma nu., 11: Yang's regularized code 
+* These codes correspond to transl_table 1 to 11 of GenBank.
+```  
 
 ### 2.16 `ParsingCodeMLResults.py [MOD0_DIR] [MOD2_DIR] `
 
-**功能描述：** 批量解析CodeML结果，如果以2.15生成的脚本，结果会生成在m0和m2文件夹中。
+**功能描述：** 批量解析CodeML结果，如果以2.15生成的脚本运行CodeML，结果会生成在m0和m2文件夹中。
 
 - **MOD0_DIR：** 基于无效假设生成的结果。
 - **MOD2_DIR：** 基于替代假设生成的结果。
@@ -971,9 +1206,34 @@ python BatchGenerationCodeML_CTL.py example/paml_file "./out/a.tree"
 
 **示例：**
 
+比如 `example/codeml` 文件夹中包含两种假设下的CodeML结果：
+```
+example/
+└── codeml/
+        ├── m0/
+        │     ├── OG0002719_m0.txt  
+        │     ├── OG0002724_m0.txt
+        │     └── OG0002729_m0.txt
+        └── m2/
+               ├── OG0002719_m2.txt  
+               ├── OG0002724_m2.txt
+               └── OG0002729_m2.txt
+```  
+执行命令： 
 ```bash
 python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2
-```  
+```
+即可生成结果文件 `result.txt` ：
+```
+path	flag	ntime	np	lnL	omega
+example/codeml/m0/OG0002719_m0.txt	null	20	22	-5245.294651	0.23258
+example/codeml/m0/OG0002724_m0.txt	null	20	22	-6740.507258	0.04957
+example/codeml/m0/OG0002729_m0.txt	null	20	22	-3588.001403	0.07700
+example/codeml/m2/OG0002719_m2.txt	m2	20	23	-5237.515508	0.18756 0.61602
+example/codeml/m2/OG0002724_m2.txt	m2	20	23	-6753.685334	0.03988 0.06959
+example/codeml/m2/OG0002729_m2.txt	m2	20	23	-3584.953121	0.08111 0.00010
+```   
+
 > ## 比较基因组学-同源基因建树和选择压力分析流程（一）          
 > 在比较基因组学分析中对同源基因进行扫描后需要进行4DTv或建树分析，提取4DTv位点的过程可以使用2.11、2.13和2.14脚本。除此之外还会使用PAML软件包的CodeML程序对筛选出的单拷贝基因进行选择压力分析，首先需要使用2.10将2.12得到的文件进行格式转化，然后需要配置ctl文件，比较繁琐可以使用脚本2.15批量生成配置文件，然后使用循环批量运行程序，程序运行完成后使用脚本2.16解析结果，将m0和m2的结果对应起来，得到lnL0、lnL2，（lnL2-lnL0）×2的绝对值服从自由度np2-np0自由度的卡方分布，使用excel的CHISQ.DIST.RT函数可以得到显著性。         
 
@@ -992,12 +1252,33 @@ python ParsingCodeMLResults.py example/codeml/m0 example/codeml/m2
 
 **示例：**
 
+比如 `example/test.axt` 文件是需要拆分的AXT文件，内容为：
+```
+5_13054-1_13901
+------ ... CTGCAAAGAAGGAT
+------ ... CCGCAAAGAAGGAC
+
+5_13054-8_15414
+------ ... CTGCAAAGAAGGAT
+------ ... CTGCAAAGAAGGAT
+```  
+执行命令： 
 ```bash
 python SplitAXT.py example/test.axt
           
 # 有时你也许需要批处理。
 for i in `ls *axt`;do python SplitAXT.py $i ;done
 ```
+示例中会生成两个文件：
+```
+#5_13054-1_13901.axt-split
+------ ... CTGCAAAGAAGGAT
+------ ... CCGCAAAGAAGGAC
+
+#5_13054-8_15414.axt-split
+------ ... CTGCAAAGAAGGAT
+------ ... CTGCAAAGAAGGAT
+```  
 
 > ## 比较基因组学-同源基因建树和选择压力分析流程（二）          
 > 你可以参考 https://yanzhongsino.github.io/2022/09/07/bioinfo_Ks_batch.calculation.Ks 来计算 Ka、Ks和4dtv值，由于calculate_4DTV_correction.pl脚本只支持一对序列的4dtv计算，因此可以使用脚本2.17对AXT文件进行拆分。                 
@@ -1016,9 +1297,53 @@ for i in `ls *axt`;do python SplitAXT.py $i ;done
 
 **示例：**
 
+比如 `example` 文件夹中包含两个文件：
+```
+example/
+├── genome.gene.gff   
+└── base_loc.txt
+
+#genome.gene.gff
+chr6	mod	mRNA	61479002	61483066	0.999299	-	.	ID=shibie_GLEAN_10005360;
+chr6	mod	CDS	61482857	61483066	.	-	0	Parent=shibie_GLEAN_10005360;
+chr6	mod	CDS	61480913	61481015	.	-	0	Parent=shibie_GLEAN_10005360;
+chr6	mod	CDS	61480545	61480595	.	-	2	Parent=shibie_GLEAN_10005360;
+chr6	mod	CDS	61479002	61480122	.	-	2	Parent=shibie_GLEAN_10005360;
+...
+unplaced_scaffold9	mod	CDS	9320	9504	.	-	0	Parent=shibie_GLEAN_10000001;
+unplaced_scaffold9	mod	CDS	7041	7117	.	-	1	Parent=shibie_GLEAN_10000001;
+unplaced_scaffold9	mod	CDS	6377	6435	.	-	2	Parent=shibie_GLEAN_10000001;
+unplaced_scaffold9	mod	CDS	4737	5270	.	-	0	Parent=shibie_GLEAN_10000001;
+
+#base_loc.txt
+CHROM	POS	IncMSE(Importance)	IncNodePurity	CHROM	POS	REF	ALT	BYQ10	BYQ3
+chr6	1508314	-1.134209981	229.6628618	chr6	1508314	A	T	W	W
+chr6	2238474	1.503310682	85.34757716	chr6	2238474	G	C	G	G
+chr6	2692990	0.23640024	195.3846105	chr6	2692990	G	A	R	R
+chr6	2914183	-0.436014622	115.9339111	chr6	2914183	C	A	C	M
+chr6	3013236	0.922900751	815.7366022	chr6	3013236	T	C	T	T
+...
+chr8	51046810	1.229196235	487.9762709	chr8	51046810	C	T	C	C
+chr8	51530461	1.487830764	1463.658822	chr8	51530461	C	T	C	C
+chr8	53281836	1.090568252	684.2414242	chr8	53281836	C	A	C	C
+chr8	53557595	0.954201007	510.2543934	chr8	53557595	T	G	T	T
+```  
+执行命令： 
 ```bash
 python BaseSiteInformation.py example/genome.gene.gff example/base_loc.txt
 ```
+即可生成结果文件 `out_base_loc.txt.xls` ：
+```
+gene_name	CDS/noCDS	CDS(start,end,codon start pos)	gene	ChrID	gene_start_pos	gene_end_pos	score	CDS_num	CHROM	POS	IncMSE(Importance)	IncNodePurity	CHROM	POS	REF	ALT	BYQ10	BYQ3
+shibie_GLEAN_10003636	noCDS	-	shibie_GLEAN_10003636	chr6	1479415	1511307	0.99885	21	chr6	1508314	-1.134209981	229.6628618	chr6	1508314	A	T	W	W
+shibie_GLEAN_10003659	CDS	(2238236, 2238538, '2')	shibie_GLEAN_10003659	chr6	2227463	2239321	0.999821	7	chr6	2238474	1.503310682	85.34757716	chr6	2238474	G	C	G	G
+-	-	-	-	-	-	-	-	-	chr6	2692990	0.23640024	195.3846105	chr6	2692990	G	A	R	R
+...
+shibie_GLEAN_10001336	noCDS	-	shibie_GLEAN_10001336	chr8	51009683	51060709	0.998932	23	chr8	51046810	1.229196235	487.9762709	chr8	51046810	C	T	C	C
+-	-	-	-	-	-	-	-	-	chr8	51530461	1.487830764	1463.658822	chr8	51530461	C	T	C	C
+shibie_GLEAN_10001391	noCDS	-	shibie_GLEAN_10001391	chr8	53278535	53293780	0.847545	8	chr8	53281836	1.090568252	684.2414242	chr8	53281836	C	A	C	C
+shibie_GLEAN_10001401	noCDS	-	shibie_GLEAN_10001401	chr8	53548014	53561536	0.9986	10	chr8	53557595	0.954201007	510.2543934	chr8	53557595	T	G	T	T
+```   
 
 ### 2.19 `MaskSeq.py [FASTA_FILE] [TABLE_FILE] [TARG 可选参数]`
        
@@ -1039,6 +1364,28 @@ python BaseSiteInformation.py example/genome.gene.gff example/base_loc.txt
 
 **示例：**
 
+比如 `example` 文件夹中包含两个文件：
+```
+example/
+├── Chr.fa   
+└── masktbl.txt
+
+#Chr.fa
+>Chr1
+ATCGGCATATATCTTATTATATTTCCCCAAA
+>Chr2
+ATCGGCATATATCTTATTATATTTCCCCAAA
+TTCCATCA
+>MT
+ATCGGCATATATCTTATTATATTTCCCCAAA
+
+#masktbl.txt
+Chr1	2	8
+Chr2	1	5
+Chr2	7	10
+Chr3	10	20
+```  
+执行命令： 
 ```bash
 # 默认替换为N。
 python MaskSeq.py example/Chr.fa example/masktbl.txt
@@ -1046,6 +1393,24 @@ python MaskSeq.py example/Chr.fa example/masktbl.txt
 # 替换为?。
 python MaskSeq.py example/Chr.fa example/masktbl.txt "?"
 ```
+即可完成片段屏蔽：
+```
+#默认替换为N
+>Chr1
+ANNNNNNNATATCTTATTATATTTCCCCAAA
+>Chr2
+NNNNNCNNNNATCTTATTATATTTCCCCAAATTCCATCA
+>MT
+ATCGGCATATATCTTATTATATTTCCCCAAA
+
+#替换为?
+>Chr1
+A???????ATATCTTATTATATTTCCCCAAA
+>Chr2
+?????C????ATCTTATTATATTTCCCCAAATTCCATCA
+>MT
+ATCGGCATATATCTTATTATATTTCCCCAAA
+```  
 
 ### 2.20 `BaseCompositionCalculation.py [FASTA_FILE] [TER_CODE 可选参数]`
        
@@ -1061,6 +1426,16 @@ python MaskSeq.py example/Chr.fa example/masktbl.txt "?"
 
 **示例：**
 
+比如 `example/base_cds.fa` 文件是包括全部CDS序列的fasta文件：
+```
+>1
+AAAATAG
+>2
+ATTATTTAG
+>3
+ATCGATCGATCGTAG
+```  
+执行命令： 
 ```bash
 # 默认去除标准终止密码：
 python BaseCompositionCalculation.py example/base_cds.fa
@@ -1071,6 +1446,26 @@ python BaseCompositionCalculation.py example/base_cds.fa NNN
 # 自定义终止密码：
 python BaseCompositionCalculation.py example/base_cds.fa TGA,TAA
 ```
+即可完成统计：
+```
+#默认去除标准终止密码：
+name	A1	T1	G1	C1	A2	T2	G2	C2	A3	T3	G3	C3	all
+1	-	-	-	-	-	-	-	-	-	-	-	-	-
+2	2	0	0	0	0	2	0	0	0	2	0	0	6	
+3	1	1	1	1	1	1	1	1	1	1	1	1	12	
+
+#希望统计到终止密码：
+name	A1	T1	G1	C1	A2	T2	G2	C2	A3	T3	G3	C3	all
+1	-	-	-	-	-	-	-	-	-	-	-	-	-
+2	2	1	0	0	1	2	0	0	0	2	1	0	9	
+3	1	2	1	1	2	1	1	1	1	1	2	1	15	
+
+#自定义终止密码：
+name	A1	T1	G1	C1	A2	T2	G2	C2	A3	T3	G3	C3	all
+1	-	-	-	-	-	-	-	-	-	-	-	-	-
+2	2	1	0	0	1	2	0	0	0	2	1	0	9	
+3	1	2	1	1	2	1	1	1	1	1	2	1	15	
+```  
 
 ### 2.21 `GFFSimplifier.py [GFF_FILE] [ITEM_1 可选参数] [ITEM_2 可选参数] ... [ITEM_n 可选参数]`
        
@@ -1945,6 +2340,4 @@ python PrideSpider.py example/sp.txt
   https://orcid.org/0000-0001-9708-3575
 </a>
 
-==============      
-**感谢支持！**    
-<img src="additional/pic/donate.png" alt="Donate" height="300" />
+
