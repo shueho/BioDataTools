@@ -1473,7 +1473,9 @@ name	A1	T1	G1	C1	A2	T2	G2	C2	A3	T3	G3	C3	all
 **功能描述：** 简化GFF文件的attributes的内容，过滤不关注的信息，以减少GFF文件大小。
 
 - **GFF_FILE：** GFF文件路径，需要是GFF3格式的文件，attributes需要以”;“分隔，键和值之间以”=“连接。
-- **ITEM_X：** 需要保留的attributes key，其中ID和Parent由于常用无需指定，不同的key作为不同参数输入。   
+- **ITEM_X：** 需要保留的attributes key，其中ID和Parent由于常用无需指定，不同的key作为不同参数输入。 
+
+**使用场景：** 进行GFF文件部分信息的简化可以减小文件大小，为后续分析提供便利。             
 
 **注意事项：** ID和Parent无需指定，不要重复指定项目，否则生成的文件会有重复的内容。          
 
@@ -1482,15 +1484,48 @@ name	A1	T1	G1	C1	A2	T2	G2	C2	A3	T3	G3	C3	all
 
 **示例：**
 
+比如 `example/maize.gff3` 文件是玉米参考基因组B73 RefGen_v4的GFF文件部分内容：
+```
+###
+3	gramene	gene	125560575	125561600	.	-	.	ID=gene:Zm00001d041518
+3	gramene	mRNA	125560575	125561600	.	-	.	ID=transcript:Zm00001d041518_T001;Parent=gene:Zm00001d041518
+3	gramene	exon	125560575	125561600	.	-	.	Parent=transcript:Zm00001d041518_T001
+3	gramene	CDS	125560575	125561600	.	-	0	ID=CDS:Zm00001d041518_P001;Parent=transcript:Zm00001d041518_T001
+###
+...
+NC_024460.2	RefSeq	CDS	40178	41023	.	-	0	ID=cds-ONM11916.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;Dbxref=NCBI_GP:ONM11916.1;Name=ONM11916.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d001763;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;product=putative methyltransferase;protein_id=ONM11916.1
+NC_024460.2	RefSeq	gene	99801	117243	.	-	.	ID=gene-ZEAMMB73_Zm00001d001765;Name=ZEAMMB73_Zm00001d001765;gbkey=Gene;gene_biotype=protein_coding;locus_tag=ZEAMMB73_Zm00001d001765;old_locus_tag=GRMZM2G046590%2CGRMZM2G074530
+```  
+内容是为了测试截取的片段，应该和实际下载的不太一致，但无伤大雅，执行命令： 
 ```bash
 # 只保留ID和Parent：
-python GFFSimplifier.py example/maize.gff3   
+python GFFSimplifier.py example/maize.gff3
  
 # 还希望保留chromosome： 
 python GFFSimplifier.py example/maize.gff3 chromosome  
 
 # 希望保留chromosome、country、ID和Parent： 
 python GFFSimplifier.py example/maize.gff3 chromosome country  
+```  
+即可完成简化：
+```
+#只保留ID和Parent
+#Simplified by https://github.com/shueho/BioDataTools.
+###
+3	gramene	gene	125560575	125561600	.	-	.	ID=gene:Zm00001d041518
+3	gramene	mRNA	125560575	125561600	.	-	.	ID=transcript:Zm00001d041518_T001;Parent=gene:Zm00001d041518
+3	gramene	exon	125560575	125561600	.	-	.	Parent=transcript:Zm00001d041518_T001
+3	gramene	CDS	125560575	125561600	.	-	0	ID=CDS:Zm00001d041518_P001;Parent=transcript:Zm00001d041518_T001
+###   
+...
+NC_024460.2	RefSeq	CDS	40178	41023	.	-	0	ID=cds-ONM11916.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763
+NC_024460.2	RefSeq	gene	99801	117243	.	-	.	ID=gene-ZEAMMB73_Zm00001d001765
+
+#还希望保留chromosome：
+...
+
+#希望保留chromosome、country、ID和Parent：
+...
 ```  
 
 ### 2.22 `BaseSiteFeatureFinder.py [GFF_FILE] [LOC_FILE] [DISTANCE] [FEATURE (可选参数)]`
@@ -1511,18 +1546,74 @@ python GFFSimplifier.py example/maize.gff3 chromosome country
 
 **示例：**
 
+比如 `example/maize.gff3` 文件是玉米参考基因组B73 RefGen_v4的GFF文件部分内容同2.21，`example/base_loc.txt` 包含关注的位点信息：
+```
+S1_4399947	1	4399947
+S1_4399947	1	4399947
+S1_44365387	1	44365387
+S3_115984758	3	115984758
+S3_125574288	3	125574288
+S3_125574288	3	125574288
+```  
+位点信息第一列为位点名称，只需设定唯一值即可，随后可以执行：
 ```bash
 # 获取显著位点14000距离gene：
-python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 14000    
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc.txt 14000    
  
 # 获取显著位点14000距离mRNA： 
-python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 14000 mRNA  
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc.txt 14000 mRNA  
 
 # 判断位点是否在基因上： 
-python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 0  
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc.txt 0  
 
 # 判断位点是否在CDS上： 
-python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 0 CDS  
+python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc.txt 0 CDS  
+```
+即可生成结果文件：
+```
+#获取显著位点14000距离gene：dis_14000_gene_base_loc.txt
+site_name	site_chr	site_pos	gene_name	star_dis	end_dis	position
+S1_4399947	1	4399947	gene:Zm00001d027399	-2365	-4493	Be_include
+S1_4399947	1	4399947	gene:Zm00001d027399	-2365	-4493	Be_include
+S1_44365387	1	44365387	,-	-	-	-
+S3_115984758	3	115984758	,-	-	-	-
+S3_125574288	3	125574288	gene:Zm00001d041518	13713	12688	Be_include
+S3_125574288	3	125574288	gene:Zm00001d041519	10670	10005	Be_include
+S3_125574288	3	125574288	gene:Zm00001d041518	13713	12688	Be_include
+S3_125574288	3	125574288	gene:Zm00001d041519	10670	10005	Be_include 
+
+#获取显著位点14000距离mRNA：dis_14000_mRNA_base_loc.txt
+site_name	site_chr	site_pos	gene_name	star_dis	end_dis	position
+S1_4399947	1	4399947	transcript:Zm00001d027399_T001	-2365	-4493	Be_include
+S1_4399947	1	4399947	transcript:Zm00001d027399_T002	-2716	-4493	Be_include
+S1_4399947	1	4399947	transcript:Zm00001d027399_T003	-2720	-4383	Be_include
+S1_4399947	1	4399947	transcript:Zm00001d027399_T001	-2365	-4493	Be_include
+S1_4399947	1	4399947	transcript:Zm00001d027399_T002	-2716	-4493	Be_include
+S1_4399947	1	4399947	transcript:Zm00001d027399_T003	-2720	-4383	Be_include
+S1_44365387	1	44365387	,-	-	-	-
+S3_115984758	3	115984758	,-	-	-	-
+S3_125574288	3	125574288	transcript:Zm00001d041518_T001	13713	12688	Be_include
+S3_125574288	3	125574288	transcript:Zm00001d041519_T001	10670	10005	Be_include
+S3_125574288	3	125574288	transcript:Zm00001d041518_T001	13713	12688	Be_include
+S3_125574288	3	125574288	transcript:Zm00001d041519_T001	10670	10005	Be_include 
+
+#判断位点是否在基因上： dis_0_gene_base_loc.txt
+site_name	site_chr	site_pos	gene_name	star_dis	end_dis	position
+S1_4399947	1	4399947	,-	-	-	-
+S1_4399947	1	4399947	,-	-	-	-
+S1_44365387	1	44365387	,-	-	-	-
+S3_115984758	3	115984758	,-	-	-	-
+S3_125574288	3	125574288	,-	-	-	-
+S3_125574288	3	125574288	,-	-	-	-
+
+#判断位点是否在CDS上： dis_0_CDS_base_loc.txt
+site_name	site_chr	site_pos	gene_name	star_dis	end_dis	position
+S1_4399947	1	4399947	,-	-	-	-
+S1_4399947	1	4399947	,-	-	-	-
+S1_44365387	1	44365387	,-	-	-	-
+S3_115984758	3	115984758	,-	-	-	-
+S3_125574288	3	125574288	,-	-	-	-
+S3_125574288	3	125574288	,-	-	-	-
 ```
 
 ### 2.23 `IntervalFeatureFinder.py [GFF_FILE] [LOC_FILE] [FEATURE (可选参数)]`
@@ -1542,13 +1633,47 @@ python BaseSiteFeatureFinder.py example/maize.gff3 example/base_loc2.txt 0 CDS
 
 **示例：**
 
+比如 `example/maize.gff3` 文件是玉米参考基因组B73 RefGen_v4的GFF文件部分内容同2.21，`example/base_loc.txt` 包含关注的区间信息：
+```
+a	1	4385947	4413947
+b	1	4399947	4399947
+c	1	44351387	44379387
+d	3	115970758	115998758
+e	3	125560288	125588288
+f	3	125574288	125574288
+```  
+区间信息第一列为区间名称，只需设定唯一值即可，随后可以执行：
 ```bash
 # 获取区间内gene：
-python IntervalFeatureFinder.py example/maize.gff3 example/base_loc3.txt    
+python IntervalFeatureFinder.py example/maize.gff3 example/base_loc.txt    
  
 # 获取区间内mRNA： 
-python IntervalFeatureFinder.py example/maize.gff3 example/base_loc3.txt mRNA  
-```     
+python IntervalFeatureFinder.py example/maize.gff3 example/base_loc.txt mRNA  
+``` 
+即可生成结果文件： 
+```
+#获取区间内gene：Inter_gene_base_loc.txt
+site_name	site_chr	site_s	site_e	gene_name	gene_s	gene_e	position
+a	1	4385947	4413947	gene:Zm00001d027399	4402312	4404440	Be_include
+b	1	4399947	4399947	,-	-	-	-
+c	1	44351387	44379387	,-	-	-	-
+d	3	115970758	115998758	,-	-	-	-
+e	3	125560288	125588288	gene:Zm00001d041518	125560575	125561600	Be_include
+e	3	125560288	125588288	gene:Zm00001d041519	125563618	125564283	Be_include
+f	3	125574288	125574288	,-	-	-	-
+ 
+#获取区间内mRNA：Inter_mRNA_base_loc.txt 
+site_name	site_chr	site_s	site_e	gene_name	mRNA_s	mRNA_e	position
+a	1	4385947	4413947	transcript:Zm00001d027399_T001	4402312	4404440	Be_include
+a	1	4385947	4413947	transcript:Zm00001d027399_T002	4402663	4404440	Be_include
+a	1	4385947	4413947	transcript:Zm00001d027399_T003	4402667	4404330	Be_include
+b	1	4399947	4399947	,-	-	-	-
+c	1	44351387	44379387	,-	-	-	-
+d	3	115970758	115998758	,-	-	-	-
+e	3	125560288	125588288	transcript:Zm00001d041518_T001	125560575	125561600	Be_include
+e	3	125560288	125588288	transcript:Zm00001d041519_T001	125563618	125564283	Be_include
+f	3	125574288	125574288	,-	-	-	-
+``` 
 
 ### 2.24 `ExtractFastaWithGene.py [FASTA_FILE] [LIST_FILE]`
 
@@ -1564,10 +1689,35 @@ python IntervalFeatureFinder.py example/maize.gff3 example/base_loc3.txt mRNA
 
 **示例：**
 
-比如 `example/pro.fasta` 是完整的蛋白质FASTA文件，执行命令：
+比如 `example/pro.fasta` 是完整的蛋白质FASTA文件：
+```
+>Zm00001eb423440_P001
+MPNGGGKRWLLLLPLSRYVEVDEQQGVQLFYYFVRSERDPYEDPLLLWLSGGPGCSGISG...
+>Zm00001eb423440_P004
+MPNGGGKRWLLLLPLSRWVLLLGSLQLPAVGGSGHVVTRMRGFDGPLPFYLETGYVEVDE...
+...
+>Zm00001eb400040_P001
+MASLCMFTISSTPHVPQGCRRRCSDAVSSRPRSYLVCQSHLPSGPPASGGGGGGGGEEKT...
+``` 
+`example/list.txt` 是提取的基因列表：
+```
+Zm00001eb423440
+Zm00001eb413340
+``` 
+执行命令：
 ```bash
-python ExtractFastaWithGene.py example/pro.fasta example/list3.txt    
-```     
+python ExtractFastaWithGene.py example/pro.fasta example/list.txt    
+```    
+即可生成结果文件 `out_match_seq.fasta`：
+```
+>Zm00001eb423440_P001
+MPNGGGKRWLLLLPLSRYVEVDEQQGVQLFYYFVRSERDPYEDPLLLWLSGGPGCSGISG...
+>Zm00001eb423440_P004
+MPNGGGKRWLLLLPLSRWVLLLGSLQLPAVGGSGHVVTRMRGFDGPLPFYLETGYVEVDE...
+...
+>Zm00001eb413340_P004
+MQQIISACKLPHTQRAAAFLPPRPSLRRLPVPGLDRPGGAPPPRRLVVRRRCQEENKQQQ...
+``` 
 
 ### 2.25 `CorrespondingNucleotideProteinFasta.py [FASTA_N] [FASTA_P]`
 
@@ -1581,9 +1731,37 @@ python ExtractFastaWithGene.py example/pro.fasta example/list3.txt
 
 **示例：**
 
+比如 `example/pro.fasta` 是完整的蛋白质FASTA文件，格式同2.25，`example/pro.fasta是cdna数据：
+```
+#example/pro.fasta
+>Zm00001eb423440_P001
+MPNGGGKRWLLLLPLSRYVEVDEQQGVQLFYYFVRSERDPYEDPLLLWLSGGPGCSGISG...
+>Zm00001eb423440_P004
+MPNGGGKRWLLLLPLSRWVLLLGSLQLPAVGGSGHVVTRMRGFDGPLPFYLETGYVEVDE...
+...
+>Zm00001eb400040_P001
+MASLCMFTISSTPHVPQGCRRRCSDAVSSRPRSYLVCQSHLPSGPPASGGGGGGGGEEKT...
+
+#example/pro.fasta
+>Zm00001eb423440_T001
+GTTTATTTCTCTATTTGGTGCTTGCATGCCAACACATCTGTTTTTATATATTTTTAGTGG...
+>Zm00001eb423440_T004
+ATAGGGACCGGAGTGGCATTTGACCAGCTGAAGTCAACAGGCATGCCGAACGGTGGCGGC...
+...
+>Zm00001eb181160_T001
+ATATGGGAAATGTATTTTACTCTTCATGCTTTTCCCCTTCGTGCAAGCAAAGCTAAACAA...
+``` 
+执行命令：
 ```bash
 python CorrespondingNucleotideProteinFasta.py example/cdna.fasta example/pro.fasta   
-```     
+```   
+即可生成结果文件 `out_match_seq.tab`：
+```
+Zm00001eb413340	Zm00001eb413340_X001	GCCTCAACGG...	MQQIISACK...
+Zm00001eb181160	Zm00001eb181160_X001	ATATGGGAAA...	-
+Zm00001eb413340	Zm00001eb413340_X004	GCCTCAACGG...	MQQIISACK...
+...
+```   
 
 ### 2.26 `BatchModificationSequence.py [FASTA_FILE] [FIX_SEQ] [NEW_SEQ]`
 
@@ -1600,13 +1778,38 @@ python CorrespondingNucleotideProteinFasta.py example/cdna.fasta example/pro.fas
 
 **示例：**
 
+比如 `example/modif_seq.fasta` 是需要修改的序列fasta文件：
+```
+>pAbAi-GSL4-67
+NGCACGTAGACCATACGACGTACCAGATTAC...
+>pAbAi-GSL4-24
+CCCGTGAAGAACCATACGACGTACCAGATTA...
+...
+>pAbAi-GSL4-82
+NCCCGATGACCATACGACGTACCAGATTACG...
+``` 
+执行命令：
 ```bash
 # 比如需要把ATACGACGTACCAGATTACGCTCATATG序列前边的部分替换为ATGGAGTACCC   
 python BatchModificationSequence.py example/modif_seq.fasta ATACGACGTACCAGATTACGCTCATATG ATGGAGTACCC     
 
 # 搞笑的是如果后边两个参数设定为不存在的字符，本代码可以实现fasta文件转换为table文件。。。运行完把除了第一二列删除！   
 python BatchModificationSequence.py example/modif_seq.fasta - -
-```     
+```  
+即可生成结果文件 `modif_seq.tab`：
+```
+#比如需要把ATACGACGTACCAGATTACGCTCATATG序列前边的部分替换为ATGGAGTACCC   
+pAbAi-GSL4-67	NGCACGTAGACCATACGACGTA...	13	40	ATGGAGTACCCATACGACGTACC...
+pAbAi-GSL4-24	CCCGTGAAGAACCATACGACGT...	14	41	ATGGAGTACCCATACGACGTACC...
+pAbAi-GSL4-3	CATACGCACGTACCAGTATTAC...	-	-	-
+...
+
+#本代码可以实现fasta文件转换为table文件。把除了第一二列删除！   
+pAbAi-GSL4-67	NGCACGTAGACCATACGACGTA...	-	-	-
+pAbAi-GSL4-24	CCCGTGAAGAACCATACGACGT...	-	-	-
+pAbAi-GSL4-3	CATACGCACGTACCAGTATTAC...	-	-	-
+...
+```      
 
 ### 2.27 `TableToMultipleFasta.py [TABLE_FILE]`
 
@@ -1623,9 +1826,31 @@ python BatchModificationSequence.py example/modif_seq.fasta - -
 
 **示例：**
 
+比如 `example/fasta_per_row.txt` 是需要的文件：
+```
+Work-001	MEYPYDVPDYAHMTSLYKKVGRGQ...	MAANSTATKHAFKRILTSLI...		
+Work-002	MEYPYDVPDYAHMTSLYKKVGSRP...	CRPCTALIPCRQQQRWRRGY...	WRRGYRRPISTSTSPR...	
+Work-003	MEYPYDVPDYAHMTSLYKKVGSSP...			
+...
+``` 
+执行命令：
 ```bash
 python TableToMultipleFasta.py example/fasta_per_row.txt
-```     
+```    
+即可生成多个fasta文件：
+```
+out_fastas/
+├── Work-001.fa  
+├── Work-002.fa
+├── ...
+└── Work-005.fa
+
+#Work-001.fa
+>Work-001_1
+MEYPYDVPDYAHMTSLYKKVGRGQ...
+>Work-001_2
+MAANSTATKHAFKRILTSLI...
+``` 
 
 ### 2.28 `MultipleFastaToTable.py [FASTA_DIR]`
 
@@ -1642,10 +1867,33 @@ python TableToMultipleFasta.py example/fasta_per_row.txt
 
 **示例：**
 
+有多个fasta文件：
+```
+example/
+├── Work-001.fa  
+├── Work-002.fa
+├── ...
+└── Work-005.fa
+
+#Work-001.fa
+>Work-001_1
+MEYPYDVPDYAHMTSLYKKVGRGQ...
+>Work-001_2
+MAANSTATKHAFKRILTSLI...
+``` 
+可以执行：
 ```bash
 python MultipleFastaToTable.py example/mul_fastas
-```     
-
+```  
+即可生成结果文件 `merge.tab`：
+```
+Work-001	MEYPYDVPDYAHMTSLYKKVGRGQ...	MAANSTATKHAFKRILTSLI...		
+Work-002	MEYPYDVPDYAHMTSLYKKVGSRP...	CRPCTALIPCRQQQRWRRGY...	WRRGYRRPISTSTSPR...	
+Work-003	MEYPYDVPDYAHMTSLYKKVGSSP...			
+...
+```
+可以看出本脚本是2.28的逆操作！        
+   
 ### 2.29 `AlignConsistencyChecker.py [FASTA_DIR]`
 
 **功能描述：** 将比对后的Fasta文件，将每个位点对应，并比较是否有完全一致的位点。    
@@ -1659,9 +1907,35 @@ python MultipleFastaToTable.py example/mul_fastas
 
 **示例：**
 
+有多个比对过的fasta文件：
+```
+example/
+├── Work-001.fa  
+├── Work-002.fa
+└── Work-003.fa
+
+#Work-001.fa
+>Work-001_1
+------------------------------------------------------------...
+>Work-001_2
+MAANSTATKHAFKRILTSLIKPGGGEYGKFFSLPALNDPRIDKLPYSIRVLLESAIRHCD...
+>Work-001_3
+MAANSTAT--AFKRILTSLIKPKGGEYGKFFSLPALNDPRIDKLPYSIRVLLESAIRHCD...
+``` 
+可以执行：
 ```bash
 python AlignConsistencyChecker.py example/aln_fasta
-```     
+``` 
+即可生成结果文件 `aln_res.txt`：
+```
+Work-001.fa
+Work-001_1	------------------------------------------------------------...
+Work-001_2	MAANSTATKHAFKRILTSLIKPGGGEYGKFFSLPALNDPRIDKLPYSIRVLLESAIRHCD...
+Work-001_3	MAANSTAT--AFKRILTSLIKPKGGEYGKFFSLPALNDPRIDKLPYSIRVLLESAIRHCD...
+**ALN**	_________________________________________________________...
+Work-002.fa
+...		
+```    
 
 ### 2.30 `MergeMultipleFasta.py [FASTA_1] [FASTA_2] ... [FASTA_n]`
 
@@ -1679,6 +1953,14 @@ python AlignConsistencyChecker.py example/aln_fasta
 
 **示例：**
 
+有多个比对过的fasta文件：
+```
+example/merge_fasta/
+├── File1.fasta  
+├── File2.fasta
+└── File3.fasta
+``` 
+可以执行：
 ```bash
 # 只指定1个参数，单个文件去冗余   
 python MergeMultipleFasta.py example/merge_fasta/File1.fasta     
@@ -1689,6 +1971,37 @@ python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta
 # 指定3个参数，对比三个文件中的序列ID
 python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta/File2.fasta example/merge_fasta/File3.fasta
 ```     
+即可生成合并结果文件`merge.fasta`和去冗余概述文件 `GeneIDMatch.table`，以三个fasta文件合并为例：
+```
+#merge.fasta
+>N_0000000001 
+CCAAAAAACCCCC
+>N_0000000002 
+TTAAAGGG
+>N_0000000003 
+ATCGGCTA
+>N_0000000004 
+AGGAACCGG
+>N_0000000005 
+ATGGATTTTTAACG
+>N_0000000006 
+CCGGTTAAAAAA
+>N_0000000007 
+CCGAATTTGGGC
+>N_0000000008 
+AATTGGCAATTGGC
+
+#GeneIDMatch.table
+Nid	example/merge_fasta/File1.fasta	example/merge_fasta/File2.fasta	example/merge_fasta/File3.fasta
+N_0000000001 	-	UniSeq	-
+N_0000000002 	Seq	Seq	-
+N_0000000003 	SameNameSameSeq	SameNameSameSeq	SameNameSameSeq
+N_0000000004 	-	-	SameNameDifSeq
+N_0000000005 	SameNameDifSeq	-	-
+N_0000000006 	UniSeq	-	-
+N_0000000007 	DifNameSameSeq1	DifNameSameSeq2	-
+N_0000000008 	Seq2/Seq3	-	-
+```  
 
 ### 2.31 `MitosToGFF.py [MITOS_FILE]`
 
@@ -1701,10 +2014,28 @@ python MergeMultipleFasta.py example/merge_fasta/File1.fasta example/merge_fasta
 
 **示例：**
 
+比如 `example/result.mitos` 是由MITOS软件生成的注释结果：
+```
+test	rep_origin	OL	mitfi	34	62	-1	3.70E-05	24.8	-	None	.	.	(((((((((...........)))))))))
+test	rep_origin	OH	mitos	244	898	1	13308146.4	.	-	-	.	.	.
+...
+test	tRNA	trnE	mitfi	16617	16685	-1	5.90E-10	60.2	TTC	29	.	.	(((((((..((((....)))).(((((.......)))))....(((((........)))))))))))).
+``` 
+执行命令：
 ```bash
 python MitosToGFF.py example/result.mitos
 ```  
-   
+即可生成结果文件 `result_mitos.gff`：
+```
+test	mitfi	rep_origin	35	63	.	-	.	ID=OL
+test	mitos	rep_origin	245	899	.	+	.	ID=OH
+test	mitfi	tRNA	1155	1222	.	+	.	ID=trnF-GAA
+test	mitfi	rRNA	1222	2188	.	+	.	ID=rrnS
+...
+test	mitos	gene	16095	16616	.	-	.	ID=nad6
+test	mitfi	tRNA	16618	16686	.	-	.	ID=trnE-TTC		
+```  
+  
 ### 2.32 `MitosToFasta.py [MITOS_FILE] [FASTA_FILE]`
 
 **功能描述：** 将Mitos注释结果转换为GFF文件格式。    
@@ -1717,9 +2048,32 @@ python MitosToGFF.py example/result.mitos
 
 **示例：**
 
+比如 `example/result.mitos` 是由MITOS软件生成的注释结果：
+```
+test	rep_origin	OL	mitfi	34	62	-1	3.70E-05	24.8	-	None	.	.	(((((((((...........)))))))))
+test	rep_origin	OH	mitos	244	898	1	13308146.4	.	-	-	.	.	.
+...
+test	tRNA	trnE	mitfi	16617	16685	-1	5.90E-10	60.2	TTC	29	.	.	(((((((..((((....)))).(((((.......)))))....(((((........)))))))))))).
+``` 
+对应的test的fasta序列是`example/mitos.fasta` 执行命令：
 ```bash
 python MitosToFasta.py example/result.mitos example/mitos.fasta  
-```     
+```    
+即可生成每一个特征的序列文件 `result_mitos.fasta`：
+```
+>OL
+TACCCCCCCTGGGGGGGAAAGGGGGGGTA
+
+>OH
+TCCCCCCCCAAGGCACCTAATCTATGAATGGTCACAGGACATA...
+...
+
+>nad6
+ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGG...
+
+>trnE-TTC (((((((..((((....)))).(((((.......)))))....(((((........)))))))))))).
+GTTCCCGTAGTTGAGAACAACGATGGCTTTTCAAGCCGTAGTCCTTGGAGTTTAGGCCAAGCGGGAATA	
+```  
 
 ### 2.33 `SsToFold.py [SS_FILE]`
 
@@ -1906,13 +2260,15 @@ codemlnull/
 
 **参数说明：** 不需要配置参数。将所有需要依据首列进行合并的表格逐一导入，并通过相应功能一键实现按第一列内容的合并操作。
 
-**注意事项：** 只支持图形化系统。
+**注意事项：** 只支持图形化系统，表格支持制表符分隔也支持逗号分隔，如果含有制表符将认为表格是制表符分隔。   
 
 **示例：**
 
+在有有图形化的系统中，运行下面的命令即可打开图形界面：
 ```bash
 python MergeTable.py
-```
+``` 
+点击“Open”可以添加需要合并的表格，点击“Merge！”即可开始合并，如果合并出错会报错。
 
 ### 3.02 `VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP]`
 
@@ -2241,7 +2597,6 @@ python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt
 python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt ; ;
 ```
   
-
 ## 4.Plotscript 绘图代码工具集。     
 
 ### 4.01 `GeneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
