@@ -1,0 +1,7 @@
+#FFD966	F	V	L	I	Q	M	W	A	N	C	Y	S	D	K	G	R	H	S	L	T	P	E
+#DDEBF7	12S	16S																				
+#FFFF00	ND1	ND2	ND3	ND4L	ND4	ND5	ND6															
+#FCE4D6	 COX1	 COX2	 COX3																			
+#70AD47	ATP8	ATP6																				
+#2F75B5	CYTB																					
+#E7E6E6	D-loop																					

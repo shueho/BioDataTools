@@ -1,0 +1,3 @@
+GeneA	Location1	ProteinA
+GeneD	Location4	ProteinD
+GeneC	Location3	ProteinC

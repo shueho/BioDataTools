@@ -1,0 +1,3 @@
+ProteinA
+ProteinB
+ProteinC
