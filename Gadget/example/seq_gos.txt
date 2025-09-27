@@ -1,4 +1,0 @@
-Accession_id	go
-a0	"GO:0004176(molecular_function:ATP-dependent peptidase activity); GO:0004252(molecular_function:serine-type endopeptidase activity)"
-a1	"GO:0043169(molecular_function:cation binding); GO:0004497(molecular_function:monooxygenase activity)"
-a2	"GO:0001234; GO:GO:0004497"

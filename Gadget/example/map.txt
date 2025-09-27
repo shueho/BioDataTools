@@ -1,7 +1,0 @@
-value	key
-a1	A
-a2	A
-b1,d1	B,D
-c1	C
-c2	C
-e1	E

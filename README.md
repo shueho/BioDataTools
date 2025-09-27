@@ -2267,7 +2267,12 @@ codemlnull/
 
 **参数说明：** 不需要配置参数。将所有需要依据首列进行合并的表格逐一导入，并通过相应功能一键实现按第一列内容的合并操作。
 
-**注意事项：** 只支持图形化系统，表格支持制表符分隔也支持逗号分隔，如果含有制表符将认为表格是制表符分隔。   
+**注意事项：** 只支持图形化系统，表格支持制表符分隔也支持逗号分隔，如果含有制表符将认为表格是制表符分隔。  
+
+**生成文件：** 
+
+- `merge.txt`（合并后的表格）。 
+- `error.log`（如果合并失败生成的日志文件）。
 
 **示例：**
 
@@ -2275,9 +2280,51 @@ codemlnull/
 ```bash
 python MergeTable.py
 ``` 
-点击“Open”可以添加需要合并的表格，点击“Merge！”即可开始合并，如果合并出错会报错。
+点击“Open”可以添加需要合并的表格，点击“Merge！”即可开始合并，如果合并出错会报错。  
+```
+#在example文件夹中有一些示例
 
-### 3.02 `VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP]`
+##情况1：正常合并
+#sample1.tsv
+ID	Name	Age
+1	Alice	25
+2	Bob	30
+3	Charlie	35
+
+#sample2.tsv
+Nun	Height	Weight
+1	165	60
+2	175	75
+3	160	55
+
+#合并完成之后：
+fid	Name	Age	Height	Weight
+2	Bob	30	175	75
+1	Alice	25	165	60
+3	Charlie	35	160	55
+#可见无论第一列的标识是什么都作为合并参照。
+
+##情况2：具有缺失值的合并
+#sample3.tsv
+ID	Feature1	Feature2
+1	Value1	ccc
+3	kkk	ValueC
+A	Value2	ValueB
+
+#将三个文件同时输入：
+fid	Name	Age	Height	Weight	Feature1	Feature2
+A	-	-	-	-	Value2	ValueB
+1	Alice	25	165	60	Value1	ccc
+2	Bob	30	175	75	-	-
+3	Charlie	35	160	55	kkk	ValueC
+#可见无论输入文件顺序如何都可以得到内容一致的表格，但是对应的列可能有先后的区别。
+
+#示例中只展示了制表符分隔的情况，逗号分隔表格依然适用，推荐使用制表符分隔。
+#运行完成之后如果终端显示finish!说明运行成功。
+#显示xxx can not merge说明表格合并失败，需要检查是否所有表格都是文本格式的文件（可以用记事本打开）。
+```
+
+### 3.02 `VLookup.py [KEY_FILE] [MAP_FILE] [KEY_LOC] [VALUE_LOC] [SEP（可选参数）]`
 
 **功能描述：** vlookup函数的Python实现。可以自定义键值的位置。
 
@@ -2285,12 +2332,38 @@ python MergeTable.py
 - **MAP_FILE：** 在其中检索的表格，需要至少有两个列，其中一个是key，另外一个是值。        
 - **KEY_LOC：** 键列在MAP_FILE表格中位于的列号，比如第一列是key填写1。   
 - **VALUE_LOC：** 值列在MAP_FILE表格中位于的列号，比如第一列是value填写1。    
-- **SEP：** MAP的制表符，比如制表符分隔填写"\t"，注意引号是英文的。   
+- **SEP：** MAP的制表符，默认制表符分隔"\t"，如果是逗号分隔使用","，注意引号是英文的。   
 
 **使用场景：** 从总注释表中提取一些基因的注释信息。注意这个只能提取一列内容。       
 
 **生成文件：** 
 - `map_<map file name>`（TABLE file）。
+
+**示例：**
+
+示例中有一个包含键的列表 `key.txt`：
+```
+ProteinA
+ProteinB
+ProteinC
+```
+另外还有包括键和值的文件 `map.txt`：
+```
+GeneA	Location1	ProteinA
+GeneD	Location4	ProteinD
+GeneC	Location3	ProteinC
+```
+观察到键位于索引文件的第3列所以KEY_LOC设置为3。如果想要取的值为Gene列设置VALUE_LOC为1，如果是位置列则设置为2。由于map文件为制表符分隔表格设置SEP为默认，故运行：
+```bash
+#提取Gene列
+python VLookup.py example/key.txt example/map.txt 3 1
+``` 
+最后会生成结果文件：  
+```
+ProteinA	GeneA
+ProteinB	-
+ProteinC	GeneC
+```
 
 ### 3.03 `SumByGroup.py [MAP_FILE] [MATRIX_FILE] [KEY_COL_ID] [VALUE_COL_ID]`
 
@@ -2311,9 +2384,44 @@ python MergeTable.py
 
 **示例：**
 
+比如 `example` 里边有map文件和matrix文件：
+```
+#map.txt
+value	key
+a1	A
+a2	A
+b1,d1	B,D
+c1	C
+c2	C
+e1	E
+
+#matrix.txt
+value	a	b	c	d
+a1	123	5	6	100
+a2	1	1	0	0.555
+b1	0.1	0.2	0.3	0.4
+c1	0	2	1.1	4.1
+d1	0	0	1.2	1.0
+```
+观察到key列位于第二列（对应1），value列对应第一列（对应0）,执行命令：
 ```bash
 python SumByGroup.py example/map.txt example/matrix.txt 1 0
 ```
+最后会生成结果文件：  
+```
+#out.count
+value	a	b	c	d
+A	124.0	6.0	6.0	100.555
+B	0.1	0.2	1.5	1.4
+D	0.1	0.2	1.5	1.4
+C	0.0	2.0	1.1	4.1
+E	0.0	0.0	0.0	0.0
+
+#all.count
+value	a	b	c	d
+all_gene	124.1	8.2	8.6	106.055
+```
+将矩阵结果每一列的值（绝对丰度）除以总计数值可以得到相对丰度。
 
 ### 3.04 `CountByGroup.py [-h] [-a MAPA] [-b MAPB] [-k KEA] [-K KEB] [-v VAA] [-V VAB] [-s SEA] [-S SEB] [--seka SEKA] [--sekb SEKB] [--seva SEVA] [--sevb SEVB] [-n HEADA] [-N HEADB]`
          
@@ -2342,7 +2450,7 @@ options:
                         The Number of excluded rows of the small group value. default=0 (0 starts counting).        
 ```
 
-**使用场景：** 比如在生物过程中包括三个GO术语，这三个术语之间存在交集基因，你想统计生物过程下一共的基因数目（去重的）。
+**使用场景：** 比如在生物过程中包括三个GO术语，这三个术语之间存在交集基因，你想统计生物过程下一共的基因数目（去重的），大表格是。
 
 **注意事项：** -a和-b参数是必需的，其他参数都有默认值！
 
@@ -2351,8 +2459,35 @@ options:
 
 **示例：**
 
+比如 `example` 里边有大表格map文件和小表格map文件：
+```
+#map.txt
+value	key
+a1	A
+a2	A
+b1,d1	B,D
+c1	C
+c2	C
+e1	E
+
+#map2.txt
+a1	i1,i2,i3
+a2	i2,i4
+b1	i5,i6
+b2	i1
+c1,a1	i3,i5
+```
+观察到大表格key列位于第二列（对应k为1），value列位于第一列（对应v为0）；小表格key列位于第一列（对应K为0，默认），value位于第二列（对应V为1，默认），大表格包含一行标题行（对应n为1）,执行命令：
 ```bash
 python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0
+```
+随后会生成结果文件：  
+```
+A	5	i2;i3;i5;i1;i4
+B	2	i5;i6
+D	2	i5;i6
+C	2	i5;i3
+E	0	
 ```
 
 ### 3.05 `FastaSplitter.py [FASTA_FILE_PATH] [Number_of_split_files]`
@@ -2369,10 +2504,11 @@ python CountByGroup.py -a example/map.txt -b example/map2.txt -n 1 -k 1 -v 0
 
 **示例：**
 
-运行下列代码将7个序列的fasta文件分为3个2序列的文件（不够整除最后一个文件只有一个序列）。
+运行下列代码将7个序列的fasta文件 `example/text.fa`分为3个2序列的文件（不够整除最后一个文件只有一个序列）。
 ```bash
 python FastaSplitter.py example/text.fa 2
 ```
+随后会生成三个fasta文件。
 
 ### 3.06 `KeggAnnotationParser.py [KEG_FILE]`
    
@@ -2386,8 +2522,7 @@ python FastaSplitter.py example/text.fa 2
 > 将上述网址中的htext=ko00001中的ko替换为物种缩写可以下载特定物种的KEG文件，比如替换为hsa https://www.kegg.jp/kegg-bin/download_htext?htext=hsa00001&format=htext&filedir= 即是人类的KEG文件。
 > 物种缩写你可以参照：  https://www.genome.jp/kegg/catalog/org_list.html   比如老鼠的缩写是mmu。
 
-**注意事项：** 在示例文件中有从KEGG网址下载的人类和通用keg文件，为保证数据库的最新建议手动下载。
-
+**注意事项：** 在示例文件中有从KEGG网址下载的人类和通用keg文件，为保证数据库的最新建议手动下载。  
 
 **生成文件：** 
 - `output_\<你的keg文件名>`（表格文件）
@@ -2402,14 +2537,42 @@ python KeggAnnotationParser.py example/ko00001.keg
 # 比如解析人类keg文件：
 python KeggAnnotationParser.py example/hsa00001.keg
 ```
+将生成结果文件：
+```
+##解析通用keg文件：
+#output_ko00001.txt
+A-PATH	LEVEL-A	B-PATH	LEVEL-B	ID (C-PATH)	LEVEL-C	D-KO
+09100	Metabolism	09101	Carbohydrate metabolism	ko00010	Glycolysis / Gluconeogenesis	K00844  HK; hexokinase [EC:2.7.1.1]
+09100	Metabolism	09101	Carbohydrate metabolism	ko00010	Glycolysis / Gluconeogenesis	K12407  GCK; glucokinase [EC:2.7.1.2]
+...
+
+#ko_map.txt
+ko	Level-A	Level-B	Level-C
+ko02026	Cellular Processes	Cellular community - prokaryotes	Biofilm formation - Escherichia coli
+ko00522	Metabolism	Metabolism of terpenoids and polyketides	Biosynthesis of 12-, 14- and 16-membered macrolides
+ko04061	Environmental Information Processing	Signaling molecules and interaction	Viral protein interaction with cytokine and cytokine receptor
+...
+
+##解析人类keg文件：
+#output_hsa00001.txt
+A-PATH	LEVEL-A	B-PATH	LEVEL-B	ID (C-PATH)	LEVEL-C	D-GENES	D-KO
+09100	Metabolism	09101	Carbohydrate metabolism	hsa00010	Glycolysis / Gluconeogenesis	3101 HK3; hexokinase 3	K00844 HK; hexokinase [EC:2.7.1.1]
+09100	Metabolism	09101	Carbohydrate metabolism	hsa00010	Glycolysis / Gluconeogenesis	3098 HK1; hexokinase 1	K00844 HK; hexokinase [EC:2.7.1.1]
+...
+
+#hsa_map.txt
+hsa	Level-A	Level-B	Level-C
+hsa04370	Environmental Information Processing	Signal transduction	VEGF signaling pathway
+hsa00590	Metabolism	Lipid metabolism	Arachidonic acid metabolism
+hsa00053	Metabolism	Carbohydrate metabolism	Ascorbate and aldarate metabolism
+```
 
 ### 3.07 `KEGGPathwayCounter.py [3.06_生成文件_1] [GENE_KO]`
     
 **功能描述：** KEGG通路基因数量统计，导出用于KEGG注释富集绘图的数据。
 
 - **3.06_ 生成文件_1：** 脚本3.06的生成文件。
-- **GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号（或其他通路编号），多个ko编号可以用逗号隔开，可参考示例文件。
-
+- **GENE_KO：** GENE-KO映射表，第一列是基因ID或名称，第二列为ko编号（或其他通路编号），多个ko编号可以用逗号隔开，可参考示例文件。  
 
 **生成文件：** 
 - A.txt (all_gene is the total number of genes, and you can use this number to find the gene ratio. TABLE file)  
@@ -2419,8 +2582,66 @@ python KeggAnnotationParser.py example/hsa00001.keg
 
 **示例：**
 
+比如 `example` 里边需要的文件：
+```
+#脚本3.06生成的文件：output_ko00001.txt
+A-PATH	LEVEL-A	B-PATH	LEVEL-B	ID (C-PATH)	LEVEL-C	D-KO
+09100	Metabolism	09101	Carbohydrate metabolism	ko00010	Glycolysis / Gluconeogenesis	K00844  HK; hexokinase [EC:2.7.1.1]
+09100	Metabolism	09101	Carbohydrate metabolism	ko00010	Glycolysis / Gluconeogenesis	K12407  GCK; glucokinase [EC:2.7.1.2]
+...
+
+#基因ko注释结果：gene_ko.txt
+g03.1	ko04391,ko04392
+g04.1	ko04142
+g05.1	ko03022
+g06.1	ko03320,ko04360,ko04510,ko05100,ko05131,ko05213
+g08.1	ko04120
+g13.1	ko05010
+```
+执行命令：
 ```bash
 python KEGGPathwayCounter.py example/output_ko00001.txt example/gene_ko.txt
+```
+将生成结果文件：
+```
+#A.txt
+A	num
+all_gene	6
+Environmental Information Processing	1
+Cellular Processes	2
+Genetic Information Processing	2
+Human Diseases	2
+Organismal Systems	1
+
+#A-B.txt
+A	B	num
+Environmental Information Processing	Signal transduction	1
+Cellular Processes	Transport and catabolism	1
+Genetic Information Processing	Transcription	1
+Human Diseases	Infectious disease: bacterial	1
+Organismal Systems	Endocrine system	1
+Cellular Processes	Cellular community - eukaryotes	1
+Human Diseases	Cancer: specific types	1
+Organismal Systems	Development and regeneration	1
+Genetic Information Processing	Folding, sorting and degradation	1
+Human Diseases	Neurodegenerative disease	1
+
+#A-C.txt
+A	B	C	num
+Environmental Information Processing	Signal transduction	Hippo signaling pathway - fly	1
+Environmental Information Processing	Signal transduction	Hippo signaling pathway - multiple species	1
+Cellular Processes	Transport and catabolism	Lysosome	1
+Genetic Information Processing	Transcription	Basal transcription factors	1
+Organismal Systems	Endocrine system	PPAR signaling pathway	1
+Organismal Systems	Development and regeneration	Axon guidance	1
+Cellular Processes	Cellular community - eukaryotes	Focal adhesion	1
+Human Diseases	Infectious disease: bacterial	Bacterial invasion of epithelial cells	1
+Human Diseases	Infectious disease: bacterial	Shigellosis	1
+Human Diseases	Cancer: specific types	Endometrial cancer	1
+Genetic Information Processing	Folding, sorting and degradation	Ubiquitin mediated proteolysis	1
+Human Diseases	Neurodegenerative disease	Alzheimer disease	1
+
+#err.txt
 ```
 
 ### 3.08 `GOoboAnnotationExtractor.py [obo_FILE]`
@@ -2440,6 +2661,7 @@ python KEGGPathwayCounter.py example/output_ko00001.txt example/gene_ko.txt
 ```bash
 python GOoboAnnotationExtractor.py abc.txt
 ```
+因为文件实时更新所以未放置实时的示例文件。
 
 ### 3.09 `GOTableConverter.py [GENE_GOs_MAP]`
                  
@@ -2466,8 +2688,25 @@ python GOoboAnnotationExtractor.py abc.txt
 
 **示例：**
 
+比如 `example/seq_gos.txt` 是所需文件：
+```
+Accession_id	go
+a0	"GO:0004176(molecular_function:ATP-dependent peptidase activity); GO:0004252(molecular_function:serine-type endopeptidase activity)"
+a1	"GO:0043169(molecular_function:cation binding); GO:0004497(molecular_function:monooxygenase activity)"
+a2	"GO:0001234; GO:GO:0004497"
+```
+执行命令：
 ```bash
 python GOTableConverter.py example/seq_gos.txt
+```
+将生成结果文件：
+```
+a0	GO:0004176
+a0	GO:0004252
+a1	GO:0043169
+a1	GO:0004497
+a2	GO:0001234
+a2	GO:0004497
 ```
       
 ### 3.10 `AddGOAnnotations.py [go_term_list] [GENE_GO_MAP]`
@@ -2486,9 +2725,40 @@ awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_fi
 
 **示例：**
 
-使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。
+使用时需要按照3.08生成表格文件xxx-go_term_list.txt，示例中的2024-01-17_go_term_list.txt是版本2024-01-17。建议通过3.08代码获取最新的版本。文件格式：
+```
+#2024-01-17_go_term_list.txt
+GO:0000001	mitochondrion inheritance	biological_process
+GO:0000002	mitochondrial genome maintenance	biological_process
+GO:0000003	reproduction	biological_process
+GO:0019952	reproduction	biological_process
+GO:0050876	reproduction	biological_process
+GO:0000005	obsolete ribosomal chaperone activity	molecular_function
+GO:0000006	high-affinity zinc transmembrane transporter activity	molecular_function
+GO:0000007	low-affinity zinc ion transmembrane transporter activity	molecular_function
+...
+
+#gene_go.txt
+gene1	GO:0000002
+gene1	GO:0000003
+gene1	GO:0000005
+gene1	GO:0000006
+gene2	GO:0000005
+gene2	GO:0000007
+```
+执行命令：
 ```bash
 python AddGOAnnotations.py example/2024-01-17_go_term_list.txt example/gene_go.txt
+```
+将生成结果文件：
+```
+gene_id	ID	Description	ONTOLOGY
+gene1	GO:0000002	mitochondrial genome maintenance	biological_process
+gene1	GO:0000003	reproduction	biological_process
+gene1	GO:0000005	obsolete ribosomal chaperone activity	molecular_function
+gene1	GO:0000006	high-affinity zinc transmembrane transporter activity	molecular_function
+gene2	GO:0000005	obsolete ribosomal chaperone activity	molecular_function
+gene2	GO:0000007	low-affinity zinc ion transmembrane transporter activity	molecular_function
 ```
 
 > ## 无参GO/KEGG富集分析流程    
@@ -2596,12 +2866,46 @@ python AddGOAnnotations.py example/2024-01-17_go_term_list.txt example/gene_go.t
 
 **示例：**
 
+比如 `example` 有两个文件：
+```
+#A-Bs.txt
+GENE	CLA1
+G1	A01; A02; A03
+G2	A02
+G3	
+G4	A04
+G5	A05
+
+#B-Cs.txt
+CLA1	CLA2
+A01	B1 ;B2
+A02	
+A03	B1;B3
+A05	B4
+```
+执行命令：
 ```bash
 #不指定第二列分隔符
 python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt
 
 #指定第二列分隔符（按照实际情况指定，本例都是分号）
 python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt ; ;
+```
+将生成结果文件：
+```
+#A-Cs.table
+GENE	CLA2
+G1	B1;B3;B2
+G2	
+G3	
+G4	
+G5	B4
+
+#A-Cs_err.txt
+GENE	CLA1: not found!
+G1	A01: not found!
+G1	A03: not found!
+G5	A05: not found!
 ```
   
 ## 4.Plotscript 绘图代码工具集。     
@@ -2614,14 +2918,35 @@ python VectorTableMerger.py example/A-Bs.txt example/B-Cs.txt ; ;
 - **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
 - **Vertical_spacing：** Spacing of adjacent row genomes, default 50.
 
+**注意事项：** 本脚本仅供娱乐，不能反映特征的编码方向，只是使用简单的圆圈和方框进行简单拼接，适合在构建好系统发育树之后与本图片拼接到一起，后续会重写更具有观感的基因重排可视化脚本，本脚本不再更新。
+
 **生成文件:** 
 - `out.svg` （SVG file）。
 
 **示例：**
 
+比如 `example` 有两个文件：
+```
+#基因排布式：gene.txt
+F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
+F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
+F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
+...
+
+#特征填充色：color.txt
+#FFD966	F	V	L	I	Q	M	W	A	N	C	Y	S	D	K	G	R	H	S	L	T	P	E
+#DDEBF7	12S	16S																				
+#FFFF00	ND1	ND2	ND3	ND4L	ND4	ND5	ND6															
+#FCE4D6	 COX1	 COX2	 COX3																			
+#70AD47	ATP8	ATP6																				
+#2F75B5	CYTB																					
+#E7E6E6	D-loop	
+```
+执行命令：
 ```bash 
 python GeneArrangementMap.py example/gene.txt example/color.txt 50
 ```
+将生成svg文件，使用浏览器打开即可。
 
 ### 4.02 `TrnaStructureBeautifier.py [-h] -i INPUT [-s SIZE_WEIGHT] [-p PER_ROW] [-hg HORIZONTAL_GAP] [-vg VERTICAL_GAP] [-ac ADJACENT_COLOR] [-pc PAIR_COLOR] [-bf BASE_FILL] [-bs BASE_STROKE] [-A BASE_A] [-U BASE_U] [-G BASE_G] [-C BASE_C]`
          
@@ -2666,6 +2991,7 @@ options:
 
 **示例：**
 
+文件夹中 `example/mitos_RNA_plot`是所有的tRNA二级结构图，`example/trnG.svg` 是单个图：
 ```bash
 # 使用默认参数美化图片
 python TrnaStructureBeautifier.py -i example/mitos_RNA_plot #指定一个文件夹  
@@ -2674,6 +3000,7 @@ python TrnaStructureBeautifier.py -i example/trnG.svg #指定一个文件
 # 使用全部配置参数
 python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -vg 7 -ac "red" -pc "#FF0000" -bf "#FFFF00" -bs "#000000" -A "#FF0000" -U "#0000FF" -G "#00FF00" -C "#FFFF00" 
 ```
+即可在输出文件夹中生成结果，注意如果在组图中看到有tRNA缺失请不要惊慌，或许您通过浏览器打开用滚轮缩小界面就可以看到完整的图片了！  
 
 ## 5.BioDataSpider 生物学数据库爬虫工具模块。  
 
@@ -2718,7 +3045,6 @@ python GenoSpider.py
 >> h    help    Get complete help information.
 >> f    settingOutputFormat     View or configure the output format.
 >> e    exit    exit the program.
-
 ```
 
 **注意事项：** 需要安装requests、pandas和matplotlib库！  
@@ -2737,9 +3063,17 @@ python GenoSpider.py
 
 **示例：**
 
+文件夹中 `example/sp.txt`是几个物种的拉丁名：
+```
+Acipenser ruthenus
+Danio rerio
+Leucoraja erinaceus
+```
+执行命令：
 ```bash
 python PrideSpider.py example/sp.txt
 ```
+就可以下载所有内容了，爬取的内容是json格式，你可以使用AI编写一个解析脚本，也可以直接应用在你的网页中。
 
 
 
@@ -2747,7 +3081,13 @@ python PrideSpider.py example/sp.txt
 ==============      
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
-**引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**    
+**引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**   
+如果必须要引用可以在您的著作中添加："我们使用了 BioDataTools 工具 (https://github.com/shueho/BioDataTools) 进行生物信息学分析"    
+ 
+如果是英文著作："We used BioDataTools (https://github.com/shueho/BioDataTools) for sequence analysis."    
+
+如果在毕业论文中引用：  
+
 [1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.               
         
 <a href="https://orcid.org/0000-0001-9708-3575" target="_blank" rel="noopener noreferrer me">
