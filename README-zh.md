@@ -54,6 +54,7 @@
   <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
   <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
   <tr><td>2.34</td><td>RSCUPlot</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
+  <tr><td>2.35</td><td>splitGB</td><td>拆分多序列的GenBank文件</td></tr>   
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -1765,6 +1766,8 @@ GGAAGCGTGCCTGAATAAAAGGACCACTATGATAAAGTGGACATAGAGGTAAAacAATCCTCTCGCCTCCT
 可以看到该脚本会将氨基酸三字母缩写改为单字母缩写。   
 
 - **SS_FILE：** 由tRNAscan-SE生成的.ss文件。  
+
+**视频教学：** https://www.bilibili.com/video/BV1fwDjYVEx9/  
         
 **生成文件：** 
 - `plot.fold`（与RNAfold程序生成的文件格式一致，支持RNAplot程序批量绘图每个序列包含三行，第一行为序列名称/第二行为碱基序列/第三行为二级结构式）。
@@ -1785,6 +1788,8 @@ python SsToFold.py example/trnascanse.ss
 **功能描述：** 得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图。  
 
 **注意事项：** 本R脚本提供了数据统计及绘图函数，不可以直接通过命令行调用。
+
+**视频教学：** https://www.bilibili.com/video/BV1GQnWztEzF/    
 
 **生成文件：** 
 - `01-sequences.csv`（表格文件，包含各个蛋白编码基因的序列及起始终止密码子信息）。
@@ -1842,6 +1847,54 @@ df = main_fun(pcg,codonTable)
 # 如果觉得默认图案不太美观，可以自行修改函数！
 	
 ```
+
+### 2.35 `splitGB.py [GB_FILE]`
+
+**功能描述：** 拆分多序列GenBank文件。   
+
+- **GB_FILE：** 需要拆分的GenBank文件。  
+
+**使用场景：** 使用NCBI批量下载工具（https://www.ncbi.nlm.nih.gov/sites/batchentrez）下载的GB文件是多序列GB文件，如果有拆分需求可以使用本脚本。  
+        
+**生成文件：** 
+
+- `gb_output/xx.gb`（每一个序列生成一个单独的GB文件）。
+
+**示例：**
+
+比如 `example/sequence.gb` 文件夹包含许多序列：
+```
+LOCUS       NC_036066              16785 bp    DNA     circular INV 03-APR-2023
+DEFINITION  Dorcadia ioffi mitochondrion, complete genome.
+ACCESSION   
+VERSION     NC_036066.1
+DBLINK      BioProject: PRJNA927338
+...
+ 20821 aataacgatt gtattatatt ccctattata taatacaatt tattataaaa ttaactatct
+    20881 aatatatccc gtgtaattaa ttattttaat a
+//
+
+LOCUS       MW310242               18902 bp    DNA     circular INV 24-JUL-2021
+DEFINITION  Xenopsylla cheopis mitochondrion, complete genome.
+ACCESSION   MW310242
+VERSION     MW310242.1
+...
+//
+```
+执行命令：
+
+```bash
+python splitGB.py example/sequence.gb
+```     
+即可生成结果文件夹 `gb_output` ：
+```
+codemlnull/
+├── Ctenocephalides_felis_felis_MW420044.gb  
+├── OG0005964.fa.nuc.ctlDorcadia_ioffi_VERSION.gb
+├── Eukaryota_Metazoa_Ecdysozoa_Arthropoda_Hexapoda_Insecta_NC_040301.gb
+├── Hystrichopsylla_weida_qinlingensis_NC_042380.gb
+└── Xenopsylla_cheopis_MW310242.gb
+```   
 
 ## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
