@@ -1,0 +1,150 @@
+###
+3	gramene	gene	125560575	125561600	.	-	.	ID=gene:Zm00001d041518
+3	gramene	mRNA	125560575	125561600	.	-	.	ID=transcript:Zm00001d041518_T001;Parent=gene:Zm00001d041518
+3	gramene	exon	125560575	125561600	.	-	.	Parent=transcript:Zm00001d041518_T001
+3	gramene	CDS	125560575	125561600	.	-	0	ID=CDS:Zm00001d041518_P001;Parent=transcript:Zm00001d041518_T001
+###
+3	gramene	gene	125563618	125564283	.	+	.	ID=gene:Zm00001d041519
+3	gramene	mRNA	125563618	125564283	.	+	.	ID=transcript:Zm00001d041519_T001;Parent=gene:Zm00001d041519
+3	gramene	exon	125563618	125564283	.	+	.	Parent=transcript:Zm00001d041519_T001
+3	gramene	CDS	125563618	125564283	.	+	0	ID=CDS:Zm00001d041519_P001;Parent=transcript:Zm00001d041519_T001
+###
+1	gramene	gene	4402312	4404440	.	+	.	ID=gene:Zm00001d027399
+1	gramene	mRNA	4402312	4404440	.	+	.	ID=transcript:Zm00001d027399_T001;Parent=gene:Zm00001d027399
+1	gramene	exon	4402312	4402544	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	five_prime_UTR	4402312	4402544	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	five_prime_UTR	4402810	4402815	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4402810	4402935	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4402816	4402935	.	+	0	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4403091	4403141	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4403091	4403141	.	+	0	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4403713	4403764	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4403713	4403764	.	+	0	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	CDS	4404088	4404284	.	+	2	ID=CDS:Zm00001d027399_P001;Parent=transcript:Zm00001d027399_T001
+1	gramene	exon	4404088	4404440	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	three_prime_UTR	4404285	4404440	.	+	.	Parent=transcript:Zm00001d027399_T001
+1	gramene	mRNA	4402663	4404440	.	+	.	ID=transcript:Zm00001d027399_T002;Parent=gene:Zm00001d027399
+1	gramene	five_prime_UTR	4402663	4402815	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4402663	4402935	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4402816	4402935	.	+	0	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4403091	4403141	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4403091	4403141	.	+	0	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4403713	4403764	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4403713	4403764	.	+	0	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	CDS	4404088	4404284	.	+	2	ID=CDS:Zm00001d027399_P002;Parent=transcript:Zm00001d027399_T002
+1	gramene	exon	4404088	4404440	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	three_prime_UTR	4404285	4404440	.	+	.	Parent=transcript:Zm00001d027399_T002
+1	gramene	mRNA	4402667	4404330	.	+	.	ID=transcript:Zm00001d027399_T003;Parent=gene:Zm00001d027399
+1	gramene	five_prime_UTR	4402667	4402815	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4402667	4402935	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4402816	4402935	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4403091	4403141	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4403091	4403141	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4403713	4403764	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4403713	4403764	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4403826	4403902	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4403826	4403902	.	+	2	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	CDS	4404088	4404186	.	+	0	ID=CDS:Zm00001d027399_P003;Parent=transcript:Zm00001d027399_T003
+1	gramene	exon	4404088	4404330	.	+	.	Parent=transcript:Zm00001d027399_T003
+1	gramene	three_prime_UTR	4404187	4404330	.	+	.	Parent=transcript:Zm00001d027399_T003
+
+
+
+
+##gff-version 3
+##sequence-region   1 1 307041717
+##sequence-region   10 1 150982314
+##sequence-region   2 1 244442276
+##sequence-region   3 1 235667834
+##sequence-region   4 1 246994605
+##sequence-region   5 1 223902240
+##sequence-region   6 1 174033170
+##sequence-region   7 1 182381542
+##sequence-region   8 1 181122637
+##sequence-region   9 1 159769782
+##sequence-region   Mt 1 569630
+##sequence-region   Pt 1 140384
+#!genome-build wareLab B73 RefGen_v4
+#!genome-version AGPv4
+#!genome-date 2016-03
+#!genome-build-accession GCA_000005005.6
+#!genebuild-last-updated 2016-12
+1	wareLab	chromosome	1	307041717	.	.	.	ID=chromosome:1
+###
+1	gramene	gene	44289	49837	.	+	.	ID=gene:Zm00001d027230;biotype=protein_coding;description=Mitochondrial transcription termination factor family protein;gene_id=Zm00001d027230;logic_name=maker_gene
+1	gramene	mRNA	44289	49837	.	+	.	ID=transcript:Zm00001d027230_T001;Parent=gene:Zm00001d027230;biotype=protein_coding;transcript_id=Zm00001d027230_T001
+1	gramene	five_prime_UTR	44289	44350	.	+	.	Parent=transcript:Zm00001d027230_T001
+1	gramene	exon	44289	44947	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon1;constitutive=1;ensembl_end_phase=0;ensembl_phase=-1;exon_id=Zm00001d027230_T001.exon1;rank=1
+1	gramene	CDS	44351	44947	.	+	0	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	exon	45666	45803	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon2;constitutive=1;ensembl_end_phase=0;ensembl_phase=0;exon_id=Zm00001d027230_T001.exon2;rank=2
+1	gramene	CDS	45666	45803	.	+	0	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	exon	45888	46133	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon3;constitutive=1;ensembl_end_phase=0;ensembl_phase=0;exon_id=Zm00001d027230_T001.exon3;rank=3
+1	gramene	CDS	45888	46133	.	+	0	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	exon	46229	46342	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon4;constitutive=1;ensembl_end_phase=0;ensembl_phase=0;exon_id=Zm00001d027230_T001.exon4;rank=4
+1	gramene	CDS	46229	46342	.	+	0	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	exon	46451	46633	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon5;constitutive=1;ensembl_end_phase=0;ensembl_phase=0;exon_id=Zm00001d027230_T001.exon5;rank=5
+1	gramene	CDS	46451	46633	.	+	0	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	exon	47045	47262	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon6;constitutive=1;ensembl_end_phase=2;ensembl_phase=0;exon_id=Zm00001d027230_T001.exon6;rank=6
+1	gramene	CDS	47045	47262	.	+	0	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	CDS	47650	47995	.	+	1	ID=CDS:Zm00001d027230_P001;Parent=transcript:Zm00001d027230_T001;protein_id=Zm00001d027230_P001
+1	gramene	exon	47650	48111	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon7;constitutive=1;ensembl_end_phase=-1;ensembl_phase=2;exon_id=Zm00001d027230_T001.exon7;rank=7
+1	gramene	three_prime_UTR	47996	48111	.	+	.	Parent=transcript:Zm00001d027230_T001
+1	gramene	exon	48200	49247	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon8;constitutive=1;ensembl_end_phase=-1;ensembl_phase=-1;exon_id=Zm00001d027230_T001.exon8;rank=8
+1	gramene	three_prime_UTR	48200	49247	.	+	.	Parent=transcript:Zm00001d027230_T001
+1	gramene	exon	49330	49837	.	+	.	Parent=transcript:Zm00001d027230_T001;Name=Zm00001d027230_T001.exon9;constitutive=1;ensembl_end_phase=-1;ensembl_phase=-1;exon_id=Zm00001d027230_T001.exon9;rank=9
+1	gramene	three_prime_UTR	49330	49837	.	+	.	Parent=transcript:Zm00001d027230_T001
+###
+###
+Pt	Ensembl_Plants	ncRNA_gene	139301	139377	.	+	.	ID=gene:ENSRNA049479768;Name=Intron_gpII;biotype=sense_intronic;description=Group II catalytic intron;gene_id=ENSRNA049479768;logic_name=rfam_12.2_gene
+Pt	Ensembl_Plants	lnc_RNA	139301	139377	.	+	.	ID=transcript:ENSRNA049479768-T1;Parent=gene:ENSRNA049479768;biotype=sense_intronic;transcript_id=ENSRNA049479768-T1
+Pt	Ensembl_Plants	exon	139301	139377	.	+	.	Parent=transcript:ENSRNA049479768-T1;Name=ENSRNA049479768-E1;constitutive=1;ensembl_end_phase=-1;ensembl_phase=-1;exon_id=ENSRNA049479768-E1;rank=1
+###
+Pt	gramene	gene	139824	140048	.	+	.	ID=gene:GRMZM5G866064;biotype=protein_coding;gene_id=GRMZM5G866064;logic_name=genebuilder
+Pt	gramene	mRNA	139824	140048	.	+	.	ID=transcript:GRMZM5G866064_T01;Parent=gene:GRMZM5G866064;biotype=protein_coding;transcript_id=GRMZM5G866064_T01
+Pt	gramene	exon	139824	140048	.	+	.	Parent=transcript:GRMZM5G866064_T01;Name=GRMZM5G866064_T01.exon1;constitutive=1;ensembl_end_phase=0;ensembl_phase=0;exon_id=GRMZM5G866064_T01.exon1;rank=1
+Pt	gramene	CDS	139824	140048	.	+	0	ID=CDS:GRMZM5G866064_P01;Parent=transcript:GRMZM5G866064_T01;protein_id=GRMZM5G866064_P01
+###
+Pt	gramene	gene	140068	140361	.	+	.	ID=gene:GRMZM5G855343;biotype=protein_coding;gene_id=GRMZM5G855343;logic_name=genebuilder
+Pt	gramene	mRNA	140068	140361	.	+	.	ID=transcript:GRMZM5G855343_T01;Parent=gene:GRMZM5G855343;biotype=protein_coding;transcript_id=GRMZM5G855343_T01
+Pt	gramene	five_prime_UTR	140068	140133	.	+	.	Parent=transcript:GRMZM5G855343_T01
+Pt	gramene	exon	140068	140361	.	+	.	Parent=transcript:GRMZM5G855343_T01;Name=GRMZM5G855343_T01.exon1;constitutive=1;ensembl_end_phase=-1;ensembl_phase=-1;exon_id=GRMZM5G855343_T01.exon1;rank=1
+Pt	gramene	CDS	140068	140361	.	+	0	ID=CDS:GRMZM5G855343_P01;Parent=transcript:GRMZM5G855343_T01;protein_id=GRMZM5G855343_P01
+
+##gff-version 3
+#!gff-spec-version 1.21
+#!processor NCBI annotwriter
+##sequence-region NC_024459.2 1 307041717
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=Zea+mays
+NC_024459.2	RefSeq	region	1	307041717	.	+	.	ID=NC_024459.2:1..307041717;Name=1;chromosome=1;country=USA;cultivar=B73;gbkey=Src;genome=chromosome;mol_type=genomic DNA;tissue-type=seedling
+NC_024459.2	RefSeq	gene	44289	49837	.	+	.	ID=gene-ZEAMMB73_Zm00001d027230;Name=ZEAMMB73_Zm00001d027230;gbkey=Gene;gene_biotype=protein_coding;locus_tag=ZEAMMB73_Zm00001d027230
+NC_024459.2	RefSeq	mRNA	44289	49837	.	+	.	ID=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Parent=gene-ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	44289	44947	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	45666	45803	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-2;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	45888	46133	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-3;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	46229	46342	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-4;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	46451	46633	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-5;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	47045	47262	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-6;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	47650	48111	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-7;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	48200	49247	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-8;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	exon	49330	49837	.	+	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230-9;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d027230;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein
+NC_024459.2	RefSeq	CDS	44351	44947	.	+	0	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	CDS	45666	45803	.	+	0	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	CDS	45888	46133	.	+	0	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	CDS	46229	46342	.	+	0	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	CDS	46451	46633	.	+	0	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	CDS	47045	47262	.	+	0	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	CDS	47650	47995	.	+	1	ID=cds-ONL92388.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;Dbxref=NCBI_GP:ONL92388.1;Name=ONL92388.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d027230;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d027230;product=Mitochondrial transcription termination factor family protein;protein_id=ONL92388.1
+NC_024459.2	RefSeq	gene	50877	55716	.	-	.	ID=gene-ZEAMMB73_Zm00001d027231;Name=ZEAMMB73_Zm00001d027231;gbkey=Gene;gene_biotype=protein_coding;locus_tag=ZEAMMB73_Zm00001d027231;old_locus_tag=GRMZM2G059865
+
+##gff-version 3
+#!gff-spec-version 1.21
+#!processor NCBI annotwriter
+##sequence-region NC_024460.2 1 244442276
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=Zea+mays
+NC_024460.2	RefSeq	region	1	244442276	.	+	.	ID=NC_024460.2:1..244442276;Name=2;chromosome=2;country=USA;cultivar=B73;gbkey=Src;genome=chromosome;mol_type=genomic DNA;tissue-type=seedling
+NC_024460.2	RefSeq	gene	40178	41023	.	-	.	ID=gene-ZEAMMB73_Zm00001d001763;Name=ZEAMMB73_Zm00001d001763;gbkey=Gene;gene_biotype=protein_coding;locus_tag=ZEAMMB73_Zm00001d001763;old_locus_tag=GRMZM2G172529
+NC_024460.2	RefSeq	mRNA	40178	41023	.	-	.	ID=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;Parent=gene-ZEAMMB73_Zm00001d001763;Note=Probable methyltransferase;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d001763;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d001763;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;product=putative methyltransferase
+NC_024460.2	RefSeq	exon	40178	41023	.	-	.	ID=exon-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763-1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;Note=Probable methyltransferase;gbkey=mRNA;locus_tag=ZEAMMB73_Zm00001d001763;orig_protein_id=gnl|WGS:LPUQ|ZEAMMB73_Zm00001d001763;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;product=putative methyltransferase
+NC_024460.2	RefSeq	CDS	40178	41023	.	-	0	ID=cds-ONM11916.1;Parent=rna-gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;Dbxref=NCBI_GP:ONM11916.1;Name=ONM11916.1;gbkey=CDS;locus_tag=ZEAMMB73_Zm00001d001763;orig_transcript_id=gnl|WGS:LPUQ|mrna.ZEAMMB73_Zm00001d001763;product=putative methyltransferase;protein_id=ONM11916.1
+NC_024460.2	RefSeq	gene	99801	117243	.	-	.	ID=gene-ZEAMMB73_Zm00001d001765;Name=ZEAMMB73_Zm00001d001765;gbkey=Gene;gene_biotype=protein_coding;locus_tag=ZEAMMB73_Zm00001d001765;old_locus_tag=GRMZM2G046590%2CGRMZM2G074530
+
