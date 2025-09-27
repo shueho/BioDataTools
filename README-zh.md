@@ -2208,7 +2208,7 @@ df = main_fun(pcg,codonTable)
 
 - **GB_FILE：** 需要拆分的GenBank文件。  
 
-**使用场景：** 使用NCBI批量下载工具（https://www.ncbi.nlm.nih.gov/sites/batchentrez）下载的GB文件是多序列GB文件，如果有拆分需求可以使用本脚本。  
+**使用场景：** 使用NCBI批量下载工具（ https://www.ncbi.nlm.nih.gov/sites/batchentrez ）下载的GB文件是多序列GB文件，如果有拆分需求可以使用本脚本。  
         
 **生成文件：** 
 
@@ -3076,11 +3076,8 @@ python PrideSpider.py example/sp.txt
 **E-mail: studid@163.com**   
 **引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**   
 如果必须要引用可以在您的著作中添加："我们使用了 BioDataTools 工具 (https://github.com/shueho/BioDataTools) 进行生物信息学分析"    
- 
 如果是英文著作："We used BioDataTools (https://github.com/shueho/BioDataTools) for sequence analysis."    
-
 如果在毕业论文中引用：  
-
 [1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.               
         
 <a href="https://orcid.org/0000-0001-9708-3575" target="_blank" rel="noopener noreferrer me">
