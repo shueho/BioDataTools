@@ -2564,7 +2564,7 @@ hsa00590	Metabolism	Lipid metabolism	Arachidonic acid metabolism
 hsa00053	Metabolism	Carbohydrate metabolism	Ascorbate and aldarate metabolism
 ```
 
-### 3.07 `KEGGPathwayCounter.py [3.06_生成文件_1] [GENE_KO]`
+### 3.07 `KEGGPathwayCounter.py [3.06_ Generated Files_1] [GENE_KO]`
     
 **Function Description:** KEGG pathway gene count statistics, exporting data for KEGG annotation enrichment plotting.
 
@@ -2817,7 +2817,7 @@ gene2	GO:0000007	low-affinity zinc ion transmembrane transporter activity	molecu
 > write.table(tmp, 'gene_rich.add_Ontology.txt', sep = '\t', row.names = FALSE, quote = FALSE)
 > ```       
 
-### 3.11 `VectorTableMerger.py [A-Bs] [B-Cs] [s1（可选）] [s2（可选）]`
+### 3.11 `VectorTableMerger.py [A-Bs] [B-Cs] [s1 (Optional parameter)] [s2 (Optional parameter)]`
                  
 **Function Description:** Join vector table:   
 Convert the table:     
@@ -3089,7 +3089,7 @@ You can then download all the content. The crawled data is in JSON format, which
 You may consider adding the following:  
 In Chinese publications: "我们使用了 BioDataTools 工具 (https://github.com/shueho/BioDataTools) 进行XXX分析"  
 In English publications: "We used BioDataTools (https://github.com/shueho/BioDataTools) for XXX analysis."  
-When citing in a thesis:
+When citing in a thesis:    
 [1] Xue, H. (2024). Genome Structure and Comparative Genomic Analysis of Alectoris magna. Yantai University, Yantai.
         
 <a href="https://orcid.org/0000-0001-9708-3575" target="_blank" rel="noopener noreferrer me">
