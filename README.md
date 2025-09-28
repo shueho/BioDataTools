@@ -89,7 +89,7 @@ This README document provides script files under each module and their brief fun
 
 **Function Description:** Place the script in the parent directory of the assembly evaluation results completed by quast software to obtain the assembly evaluation information summary table.  
 
-- **DIR_PATH: ** Path to the Quast results folder, containing the `transposed_report.tsv` file for each sample. 
+- **DIR_PATH:** Path to the Quast results folder, containing the `transposed_report.tsv` file for each sample. 
 
 **Generated File:**
 
@@ -499,8 +499,8 @@ The output result file `merge.fas` is the merged sequence of 16s+co1:
 
 **Function Description:** Classify multiple sample sequences in a FASTA file according to haplotypes.
 
-- **FASTA_FILE_NAME: ** Sample sequence file name (refer to example/sample.fas).
-- **LIST_NAME: ** Table of haplotypes corresponding to samples (refer to example/hap.list).
+- **FASTA_FILE_NAME:** Sample sequence file name (refer to example/sample.fas).
+- **LIST_NAME:** Table of haplotypes corresponding to samples (refer to example/hap.list).
 
 **Notes:** Before use, two files need to be obtained: one is a table exported from DnaSP corresponding haplotypes to samples (which might need manual creation). The other is a FASTA file containing all species sequences.  
 
@@ -550,9 +550,9 @@ AT-GCCTA
 
 **Function Description:** Based on a provided ID list, this script can extract corresponding sequences from a single multi-sequence FASTA file to generate a subset FASTA file. By default, the system identifies the text following the ">" symbol up to the first space as the ID, matching it against the entries in the list. For complex scenarios, custom regular expressions are supported to achieve precise ID matching, ensuring flexible and efficient target sequence screening.
 
-- **FASTA_FILE: ** A sequence file in Fasta format, which includes all sequences, such as the pep or CDS sequences of a whole genome.  
-- **LIST_FILE: ** The list should contain the sequence IDs or names you wish to extract. This information can be the entire description field immediately following the ">" symbol for each sequence in the FASTA_FILE, or just a part of that description field.  
-- **Regular_expressions: ** Optional parameter: If the names in your list differ from the sequence names in the FASTA file, you can specify a regular expression to extract the sequences. If left blank, the default is: "\_(.*?)". This means the content before the first space after ">" will be used as the ID name.
+- **FASTA_FILE:** A sequence file in Fasta format, which includes all sequences, such as the pep or CDS sequences of a whole genome.  
+- **LIST_FILE:** The list should contain the sequence IDs or names you wish to extract. This information can be the entire description field immediately following the ">" symbol for each sequence in the FASTA_FILE, or just a part of that description field.  
+- **Regular_expressions:** Optional parameter: If the names in your list differ from the sequence names in the FASTA file, you can specify a regular expression to extract the sequences. If left blank, the default is: "\_(.*?)". This means the content before the first space after ">" will be used as the ID name.
 
 **Usage scenario:** During collinearity analysis or homologous gene clustering, it is common to encounter pep files downloaded from NCBI containing a large amount of redundant data. To optimize this process, one can optionally download a non-redundant protein sequence database covering only chromosome-encoded sequences. This script is specifically designed to extract the required segments from the large pep file based on user-provided sequence names. Furthermore, it supports extracting the corresponding coding sequences (CDS). Considering potential differences between protein sequence IDs and CDS IDs, introducing custom matching rules via regular expressions is particularly important. For further process simplification, it is recommended to use the upgraded code version 2.09, which can also effectively perform such extraction tasks.  
 
@@ -631,7 +631,7 @@ MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF
 
 **Function Description:** Batch obtain physicochemical properties of proteins from ExPASy (https://web.expasy.org/protparam). 
 
-- **FASTA_FILE: ** Provide protein sequences in FASTA format, which can be a file containing multiple sequences. 
+- **FASTA_FILE:** Provide protein sequences in FASTA format, which can be a file containing multiple sequences. 
 
 **Generated File:** 
 - `expasy_output.csv`(Table file, containing physicochemical properties of some protein sequences). 
@@ -666,8 +666,8 @@ KAF7152831.1	548	60491.94	8.44	57.65	43.27	-0.965
 
 **Function Description:** Organelle genome specific, feature extraction and base composition statistics. If you want to truncate a fasta file based on start and end positions, you can also use this script!   
 
-- **FASTA_FILE: ** A FASTA file containing only one sequence. 
-- **TABLE: ** A table containing feature names, groups, and start positions. The first column is the genome, the second column is the gene, the third column is the gene start position, and the fourth column is the gene end position. "Gene" is a nominal concept; you can assign any fragment to a group. 
+- **FASTA_FILE:** A FASTA file containing only one sequence. 
+- **TABLE:** A table containing feature names, groups, and start positions. The first column is the genome, the second column is the gene, the third column is the gene start position, and the fourth column is the gene end position. "Gene" is a nominal concept; you can assign any fragment to a group. 
 
 **Usage scenario:** If the FASTA file is a mitochondrial genome and the table file's first column contains features (e.g., tRNA, CDS, etc.) and the second column contains feature names (e.g., gene names, D-Loop, etc.), you can obtain a table showing the base usage for each region.  
 
@@ -737,8 +737,8 @@ $other	4	4	2	4
 
 **Function Description:** Extract partial sequences from a FASTA file and modify their names according to rules.  
 
-- **MAP_FILE: ** In the provided information, the first column lists the sequence names to be extracted or renamed, corresponding to the text content after the ">" symbol and before the first space in the FASTA file; if there is no space, it refers to the complete sequence identifier after the ">" symbol. The second column is the new name desired for the modification. When the content of the first column is the same as the second column, this operation is equivalent to performing the function of code 2.06.  
-- **FASTA_FILE: ** A sequence file in Fasta format, which includes all sequences, such as a whole genome fa file, pep, or CDS sequences.  
+- **MAP_FILE:** In the provided information, the first column lists the sequence names to be extracted or renamed, corresponding to the text content after the ">" symbol and before the first space in the FASTA file; if there is no space, it refers to the complete sequence identifier after the ">" symbol. The second column is the new name desired for the modification. When the content of the first column is the same as the second column, this operation is equivalent to performing the function of code 2.06.  
+- **FASTA_FILE:** A sequence file in Fasta format, which includes all sequences, such as a whole genome fa file, pep, or CDS sequences.  
 
 **Usage scenario:** Suitable for extracting chromosomes from whole genome sequences and modifying their names. 
 
@@ -781,7 +781,7 @@ It should be noted that the 'aaa' sequence does not exist, so it was not extract
 
 **Function Description:** Batch convert aligned FASTA files to PAML alignment files. 
 
-- **FASTA_FILE_DIR: ** Directory path name, containing the aligned FASTA format files to be converted within this directory.  
+- **FASTA_FILE_DIR:** Directory path name, containing the aligned FASTA format files to be converted within this directory.  
 
 **Notes:** The folder must not contain unaligned sequence files or any other files, otherwise an error will occur!
 
@@ -812,9 +812,9 @@ pamlfile/
 
 **Function Description:** Distribute sequences from a FASTA file into different FASTA files as required.  
 
-- **IN_FASTA_FILE_DIR: ** Directory path name, containing the FASTA format sequence files to be redistributed within this directory. These can be DNA, CDS, transcripts, proteins, or other sequences.  
-- **MATRIX_FILE: ** Matrix file location, tab-separated, including a header row! The first item of each row is the new file name after redistribution, and the remaining items are the sequence names contained in that file.  
-- **OUT_FASTA_FILE_DIR: ** Directory path name, output path.  
+- **IN_FASTA_FILE_DIR:** Directory path name, containing the FASTA format sequence files to be redistributed within this directory. These can be DNA, CDS, transcripts, proteins, or other sequences.  
+- **MATRIX_FILE:** Matrix file location, tab-separated, including a header row! The first item of each row is the new file name after redistribution, and the remaining items are the sequence names contained in that file.  
+- **OUT_FASTA_FILE_DIR:** Directory path name, output path.  
 
 **Usage scenario:** ① During the extraction of sequences for each gene family of single-copy orthologs, downloaded CDS sequences are grouped according to gene families and assigned to new, distinct files. This is used for subsequent matching of CDS and protein sequences. The matrix file is Orthogroups/Orthogroups.tsv (MATRIX_FILE, refer to the example file example/seq_matrix2.txt). You only need to download the fna file for each species from NCBI (important: use the cut command to split columns and retain only the first column, so that each sequence name contains only the ID number!), place them in the same folder (IN_FASTA_FILE_DIR), and then specify the output file to distribute the CDS files of different species into fasta files named after the gene family names. ② Extract genes from the same gene family for combined analysis.             
 
@@ -1042,9 +1042,9 @@ OG0002837.fa	The CDS is not a multiple of 3.
 
 **Function Description:** Advanced sequence concatenation script.  
 
-- **MATRIX_FILE: ** Matrix file location, tab-separated, must include a header row! Each column represents a sample, and each row corresponds to a sequence. The first item in each row is the sequence name (i.e., the FASTA filename without the suffix). The intersection of rows and columns specifies the sequence name for each sample.  
-- **FASTA_FILE_DIR: ** Folder path name; this directory contains the aligned FASTA files to be concatenated. The file names have no specific requirements, as long as they include all the sequence names listed in the MATRIX_FILE.  
-- **ORDER_LIST: ** Specify the concatenation order. By defining the order, you can either exclude certain sequences or set a specific sequence for concatenation. If not specified, all sequences will be concatenated by default in the order of the hash value of their sequence names.  
+- **MATRIX_FILE:** Matrix file location, tab-separated, must include a header row! Each column represents a sample, and each row corresponds to a sequence. The first item in each row is the sequence name (i.e., the FASTA filename without the suffix). The intersection of rows and columns specifies the sequence name for each sample.  
+- **FASTA_FILE_DIR:** Folder path name; this directory contains the aligned FASTA files to be concatenated. The file names have no specific requirements, as long as they include all the sequence names listed in the MATRIX_FILE.  
+- **ORDER_LIST:** Specify the concatenation order. By defining the order, you can either exclude certain sequences or set a specific sequence for concatenation. If not specified, all sequences will be concatenated by default in the order of the hash value of their sequence names.  
 
 **Notes:** The folder must not contain unaligned sequence files, as this may cause concatenation errors!  
 
@@ -1094,8 +1094,8 @@ The concatenated sequence file and the actual concatenation order file will then
 
 **Function Description:** Batch generate configuration files for CodeML.  
 
-- **PAML_FILE_DIR: ** Directory containing the PAML-formatted alignment files. When running this script, the directory must contain the alignment files intended for selection pressure analysis. Avoid using relative paths as they may prevent the script from correctly reading the required file paths.  
-- **TREE_FILE: ** Tree file path (relative to the CodeML runtime directory). The file does not need to exist when running this script, but it must be accessible by the specified path when executing the CodeML program.  
+- **PAML_FILE_DIR:** Directory containing the PAML-formatted alignment files. When running this script, the directory must contain the alignment files intended for selection pressure analysis. Avoid using relative paths as they may prevent the script from correctly reading the required file paths.  
+- **TREE_FILE:** Tree file path (relative to the CodeML runtime directory). The file does not need to exist when running this script, but it must be accessible by the specified path when executing the CodeML program.  
 
 **Notes:** This script only generates configuration files. Please note that the tree file path imported by the script is not necessarily the same as the tree file path during CodeML execution! The configuration template uses the Branch model; if you have other requirements, you can directly modify the generated configuration files.   
 
@@ -1206,8 +1206,8 @@ codeml2/
 
 **Function Description:** Batch parse CodeML results. If CodeML was run using the scripts generated by 2.15, the results will be generated in the `m0` and `m2` folders.   
 
-- **MOD0_DIR: ** Results generated based on the null hypothesis.
-- **MOD2_DIR: ** Results generated based on the alternative hypothesis.
+- **MOD0_DIR:** Results generated based on the null hypothesis.
+- **MOD2_DIR:** Results generated based on the alternative hypothesis.
 
 **Generated File:** 
 - `result.txt`  (Table, may require manual arrangement).
@@ -1249,7 +1249,7 @@ example/codeml/m2/OG0002729_m2.txt	m2	20	23	-3584.953121	0.08111 0.00010
      
 **Function Description:** Split a single AXT file into multiple AXT files, with each file containing only one pair of sequence alignments. 
 
-- **AXT_FILE: ** The AXT file to be split.
+- **AXT_FILE:** The AXT file to be split.
 
 **Usage scenario:** After generating codon alignment files using script 2.12, if further 4DTv analysis is required, the Perl script `convert_fasta_to_axt.pl` (adaptively modified) should be used to convert the alignments into AXT format. This script can then split the resulting AXT file (produced by the aforementioned script) into individual files, each containing one sequence pair alignment.  
 
@@ -1295,8 +1295,8 @@ In the example, two files will be generated:
 
 **Function Description:** Extract corresponding gene data based on specified chromosomal positions and base site information, such as which CDS region of a transcript the site falls into, as well as positional information of the CDS or transcript, facilitating subsequent annotation analysis.  
 
-- **GFF_FILE: ** Genome GFF file; only mRNA and CDS features should be retained, and each mRNA entry must appear above the CDS features it contains. You may choose to manually sort the GFF file before running the script!  
-- **Q_FILE: ** Lookup table containing the entries to be searched, must include a header row, and at least two columns: the first column must be the chromosome ID, and the second column must be the corresponding position on the chromosome.  
+- **GFF_FILE:** Genome GFF file; only mRNA and CDS features should be retained, and each mRNA entry must appear above the CDS features it contains. You may choose to manually sort the GFF file before running the script!  
+- **Q_FILE:** Lookup table containing the entries to be searched, must include a header row, and at least two columns: the first column must be the chromosome ID, and the second column must be the corresponding position on the chromosome.  
 
 **Usage scenario:** Advanced versions are available in scripts 2.22 and 2.23, which use algorithms such as random forest to identify variant sites between different populations or varieties, requiring the identification of the genes to which these variant sites belong.
 
@@ -1359,9 +1359,9 @@ shibie_GLEAN_10001401	noCDS	-	shibie_GLEAN_10001401	chr8	53548014	53561536	0.998
 
 **Function Description:** Mask specific regions in a FASTA file (replace with TARG).  
 
-- **FASTA_FILE: ** FASTA file containing multiple sequences; for a genome, this includes sequences of many chromosomes, with the content following ">" being the sequence name.                          
-- **TABLE_FILE: ** Three-column table without a header row. The first column is the sequence name (must exactly match the name in the FASTA file), and the second and third columns are the start and end positions of the masking region (1-based indexing, can be directly copied from a GFF file).             
-- **TARG: ** Masking character: the bases in the specified regions will be replaced with this character. By default, the bases at the specified positions are replaced with N, but you can also specify a different replacement character. 
+- **FASTA_FILE:** FASTA file containing multiple sequences; for a genome, this includes sequences of many chromosomes, with the content following ">" being the sequence name.                          
+- **TABLE_FILE:** Three-column table without a header row. The first column is the sequence name (must exactly match the name in the FASTA file), and the second and third columns are the start and end positions of the masking region (1-based indexing, can be directly copied from a GFF file).             
+- **TARG:** Masking character: the bases in the specified regions will be replaced with this character. By default, the bases at the specified positions are replaced with N, but you can also specify a different replacement character. 
    
 **Usage scenario:** In genome analysis, certain sequences (e.g., repetitive sequences) are masked to reduce computational load during analysis.  
 
@@ -1424,8 +1424,8 @@ ATCGGCATATATCTTATTATATTTCCCCAAA
        
 **Function Description:** Calculate the number of bases at each site of each sequence in the CDS sequences, such as A1, T1, G1, G3, etc. 
 
-- **FASTA_FILE: ** A FASTA file containing multiple sequences, which must be nucleotide sequences. 
-- **TER_CODE: ** List of stop codons. The default values are TAG, TAA, and TGA from the standard genetic code. If custom stop codons are specified, ensure they are separated by half-width commas without extra whitespace. If you wish to include stop codons in the statistics, you can input NNN.  
+- **FASTA_FILE:** A FASTA file containing multiple sequences, which must be nucleotide sequences. 
+- **TER_CODE:** List of stop codons. The default values are TAG, TAA, and TGA from the standard genetic code. If custom stop codons are specified, ensure they are separated by half-width commas without extra whitespace. If you wish to include stop codons in the statistics, you can input NNN.  
 
 **Usage scenario:** When performing codon usage bias analysis, parameters such as GC12 and GC3 can be further calculated based on the results from this script.            
 
@@ -1479,12 +1479,12 @@ name	A1	T1	G1	C1	A2	T2	G2	C2	A3	T3	G3	C3	all
        
 **Function Description:** Simplify the content of the attributes in the GFF file, filter out unneeded information, in order to reduce the size of the GFF file. 
 
-- **GFF_FILE: ** The GFF file path must point to a GFF3 format file, where attributes are separated by ";", and key-value pairs within the attributes are connected by "=".
-- **ITEM_X: ** The attributes keys to be retained—since ID and Parent are commonly used, they need not be specified. Different keys should be provided as separate input parameters. 
+- **GFF_FILE:** The GFF file path must point to a GFF3 format file, where attributes are separated by ";", and key-value pairs within the attributes are connected by "=".
+- **ITEM_X:** The attributes keys to be retained—since ID and Parent are commonly used, they need not be specified. Different keys should be provided as separate input parameters. 
 
 **Usage scenario:** Simplifying partial information in the GFF file can reduce its size, facilitating subsequent analyses.             
 
-**Notes: ** ID and Parent need not be specified; avoid duplicating any items, otherwise the generated file will contain redundant entries.          
+**Notes:** ID and Parent need not be specified; avoid duplicating any items, otherwise the generated file will contain redundant entries.          
 
 **Generated File:** 
 - `simp_<GFF_FILE>`(GFF file, simplified file).  
@@ -1539,14 +1539,14 @@ NC_024460.2	RefSeq	gene	99801	117243	.	-	.	ID=gene-ZEAMMB73_Zm00001d001765
        
 **Function Description:** Batch retrieve features adjacent to nucleotide sequences.  
 
-- **GFF_FILE: ** The GFF file path must point to a GFF3 format file, where attributes are separated by ";".    
-- **LOC_FILE: ** A table describing locus positions, containing three columns: locus name, chromosome name, and position on the chromosome. Note: There should be no header row, and the chromosome names must exactly match those in the GFF file.      
-- **DISTANCE: ** The distance to extend outward from the base locus. If set to 0, it means searching whether the base is located within a certain feature, serving as a replacement for script 2.18.     
-- **FEATURE: ** The feature type to be scanned. Default is "gene". Can choose one from "gene/mRNA/CDS/exon/..." or other feature types present in the GFF file. For details, refer to the GFF file.    
+- **GFF_FILE:** The GFF file path must point to a GFF3 format file, where attributes are separated by ";".    
+- **LOC_FILE:** A table describing locus positions, containing three columns: locus name, chromosome name, and position on the chromosome. Note: There should be no header row, and the chromosome names must exactly match those in the GFF file.      
+- **DISTANCE:** The distance to extend outward from the base locus. If set to 0, it means searching whether the base is located within a certain feature, serving as a replacement for script 2.18.     
+- **FEATURE:** The feature type to be scanned. Default is "gene". Can choose one from "gene/mRNA/CDS/exon/..." or other feature types present in the GFF file. For details, refer to the GFF file.    
 
 **Usage scenario:** After obtaining significantly associated SNP loci from GWAS or other analyses, search for candidate genes.               
 
-**Notes: ** If FEATURE is not specified, genes will be scanned by default. If set to "mRNA", transcripts will be scanned. Make sure the spelling is correct.            
+**Notes:** If FEATURE is not specified, genes will be scanned by default. If set to "mRNA", transcripts will be scanned. Make sure the spelling is correct.            
 
 **Generated File:** 
 - `dis_<DISTANCE>_<FEATURE>_<LOC_FILE>`(Table, with columns representing: locus name / chromosome / position / gene name / distance from locus to feature start / distance to feature end / relationship between gene and locus interval. The relationship can be Left, Right, To_include, or Be_include, indicating that the gene is to the left of the interval, to the right of the interval, spans the interval, or is within the interval, respectively.)
@@ -1627,13 +1627,13 @@ S3_125574288	3	125574288	,-	-	-	-
        
 **Function Description:** Batch retrieve features within specified genomic intervals.
 
-- **GFF_FILE: ** The GFF file path must point to a GFF3 format file, where attributes are separated by ";".  
-- **LOC_FILE: ** A table describing genomic intervals, containing four columns: locus name, chromosome name, start position on the chromosome, and end position. Note: There should be no header row, and the chromosome names must exactly match those in the GFF file.     
-- **FEATURE: ** The feature type to be scanned. Default is "gene". Can choose one from "gene/mRNA/CDS/exon/..." or other feature types present in the GFF file. For details, refer to the GFF file.  
+- **GFF_FILE:** The GFF file path must point to a GFF3 format file, where attributes are separated by ";".  
+- **LOC_FILE:** A table describing genomic intervals, containing four columns: locus name, chromosome name, start position on the chromosome, and end position. Note: There should be no header row, and the chromosome names must exactly match those in the GFF file.     
+- **FEATURE:** The feature type to be scanned. Default is "gene". Can choose one from "gene/mRNA/CDS/exon/..." or other feature types present in the GFF file. For details, refer to the GFF file.  
 
 **Usage scenario:** Search for candidate genes after obtaining significantly associated QTL regions from QTL mapping or other analyses. This can be considered an advanced version of scripts 2.18 and 2.22: when the third and fourth columns of the input position table are identical, it is equivalent to the implementation of 2.18; when the input intervals have equal lengths, it is equivalent to the implementation of 2.22.               
 
-**Notes: ** If FEATURE is not specified, genes will be scanned by default. If set to "mRNA", transcripts will be scanned. Make sure the spelling is correct.             
+**Notes:** If FEATURE is not specified, genes will be scanned by default. If set to "mRNA", transcripts will be scanned. Make sure the spelling is correct.             
 
 **Generated File:** 
 - `Inter_<FEATURE>_<LOC_FILE>`(Table, with columns representing: locus name / chromosome / interval start position / interval end position / gene name / feature start position / feature end position / relationship between gene and locus interval. The relationship can be Left, Right, To_include, or Be_include, indicating that the gene is to the left of the interval, to the right of the interval, spans the interval, or is within the interval, respectively.)
@@ -1686,8 +1686,8 @@ f	3	125574288	125574288	,-	-	-	-
 
 **Function Description:** Given a list of gene IDs, this script can extract all corresponding transcripts/proteins/cDNA sequences of the genes from the full FASTA file and generate a sub-FASTA file.    
 
-- **FASTA_FILE: ** A FASTA-formatted sequence file, i.e., a file containing all sequences, such as the genome-wide pep or cDNA sequences.  
-- **LIST_FILE: ** A list of genes to be extracted. For example, for gene ID G001, all sequences starting with "G001_" will be extracted.   
+- **FASTA_FILE:** A FASTA-formatted sequence file, i.e., a file containing all sequences, such as the genome-wide pep or cDNA sequences.  
+- **LIST_FILE:** A list of genes to be extracted. For example, for gene ID G001, all sequences starting with "G001_" will be extracted.   
 
 **Usage scenario:** Given a list of known genes, retrieve all transcript/protein/cDNA sequences for each gene.  
 
@@ -1730,8 +1730,8 @@ MQQIISACKLPHTQRAAAFLPPRPSLRRLPVPGLDRPGGAPPPRRLVVRRRCQEENKQQQ...
 
 **Function Description:** Map transcript sequences and protein sequences to a tabular file.      
 
-- **FASTA_N: ** A FASTA-formatted nucleotide sequence file, containing cDNA or transcript sequences, with naming convention "gene_name_Txxx".
-- **FASTA_P: ** A FASTA-formatted amino acid sequence file, containing protein sequence data, with naming convention "gene_name_Pxxx".
+- **FASTA_N:** A FASTA-formatted nucleotide sequence file, containing cDNA or transcript sequences, with naming convention "gene_name_Txxx".
+- **FASTA_P:** A FASTA-formatted amino acid sequence file, containing protein sequence data, with naming convention "gene_name_Pxxx".
 
 **Generated File:** 
 - `out_match_seq.tab`(Table file, with columns: gene / transcript or protein ID / nucleotide sequence / amino acid sequence. Sequences that cannot be matched are marked as "-"). 
@@ -1774,9 +1774,9 @@ Zm00001eb413340	Zm00001eb413340_X004	GCCTCAACGG...	MQQIISACK...
 
 **Function Description:** Batch replace the sequence preceding a fixed sequence with a specified sequence.    
 
-- **FASTA_FILE: ** A FASTA-formatted nucleotide sequence file, containing all sequences to be modified.  
-- **FIX_SEQ: ** The fixed sequence.
-- **NEW_SEQ: ** The sequence to replace with.   
+- **FASTA_FILE:** A FASTA-formatted nucleotide sequence file, containing all sequences to be modified.  
+- **FIX_SEQ:** The fixed sequence.
+- **NEW_SEQ:** The sequence to replace with.   
 
 **Usage scenario:** Modify the sequence preceding a fixed sequence to a specific sequence, ensuring that the sequence upstream of the fixed sequence is correctly set for proper translation (this may be the intended concept).
 
@@ -1822,11 +1822,11 @@ pAbAi-GSL4-3	CATACGCACGTACCAGTATTAC...	-	-	-
 
 **Function Description:** Convert the table into a FASTA file by rows, with multiple sequences from each row placed in the same file.      
 
-- **TABLE_FILE: ** A table file, where each row will generate a separate FASTA file. Sequences in the same row are split into the same FASTA file, and the first column contains the FASTA file name.  
+- **TABLE_FILE:** A table file, where each row will generate a separate FASTA file. Sequences in the same row are split into the same FASTA file, and the first column contains the FASTA file name.  
 
 **Usage scenario:** Quickly split sequences from multiple sources (e.g., different species, transcripts, samples, or gene families) of the same sequence type (gene or amino acid) for downstream analysis. For example, if you want to rapidly align each FASTA file, you can use the CLUSTALW command line to batch align all FASTA files in the output directory.     
 
-**Notes: ** The first column of the table specifies the name of the split FASTA file; names must not be duplicated!!! File names must follow system naming conventions and must not contain special characters.            
+**Notes:** The first column of the table specifies the name of the split FASTA file; names must not be duplicated!!! File names must follow system naming conventions and must not contain special characters.            
 
 **Generated File:** 
 - `out_fastas`(Directory containing multiple FASTA files, with file names corresponding to the entries in the first column of the table.)  
@@ -1863,11 +1863,11 @@ MAANSTATKHAFKRILTSLI...
 
 **Function Description:** Convert multiple FASTA files into a single table, with sequences from the same file placed in the same row (reverse operation of 2.27).      
 
-- **FASTA_DIR: ** Folder path containing the FASTA files to be merged.  
+- **FASTA_DIR:** Folder path containing the FASTA files to be merged.  
 
 **Usage scenario:** Quickly merge sequences from multiple sources (e.g., different species, transcripts, samples, or gene families) of the same sequence type (gene or amino acid) for downstream analysis.    
 
-**Notes: ** In the generated table, each sequence retains its original name. To convert to pure sequences, open the file in Excel and replace `*~~` with blank (note: there must be two tildes `~~`). Ensure that there are no other files in the folder.            
+**Notes:** In the generated table, each sequence retains its original name. To convert to pure sequences, open the file in Excel and replace `*~~` with blank (note: there must be two tildes `~~`). Ensure that there are no other files in the folder.            
 
 **Generated File:** 
 - `merge.tab`(Table file, where the first column is the FASTA filename, and subsequent columns contain all sequences from that file.)  
@@ -1905,9 +1905,9 @@ It can be seen that this script is the reverse operation of 2.28!
 
 **Function Description:** Align the sequences from multiple FASTA files, compare them site by site, and identify positions where all sequences are identical.      
 
-- **FASTA_DIR: ** Folder path containing multiple aligned FASTA files to be compared. 
+- **FASTA_DIR:** Folder path containing multiple aligned FASTA files to be compared. 
 
-**Notes: ** The generated file must be opened in Excel, and the text font should be changed to a monospaced font such as SimSun. Be sure to use alignment results that have already been aligned! The folder must not contain any other files.            
+**Notes:** The generated file must be opened in Excel, and the text font should be changed to a monospaced font such as SimSun. Be sure to use alignment results that have already been aligned! The folder must not contain any other files.            
 
 **Generated File:** 
 - `aln_res.txt`(Text file; recommended to open in Excel and adjust the font to SimSun for viewing. Different alignment results are separated by blank lines. Lines marked "**ALN**" show the comparison result: identical sites are denoted by "*", and non-identical sites by "_".)  
@@ -1948,11 +1948,11 @@ Work-002.fa
 
 **Function Description:** Merge multiple FASTA files and remove redundant (duplicate) sequences.      
 
-- **FASTA_1/2/.../n: ** FASTA file path, at least one parameter must be specified.  
+- **FASTA_1/2/.../n:** FASTA file path, at least one parameter must be specified.  
 
 **Usage scenario:** 1.When only one FASTA file is specified, it is equivalent to removing redundancy from the sequences within that single file; 2.When multiple FASTA files are specified, not only are sequences deduplicated, but a correspondence table of sequence IDs across different FASTA files is also generated.  
 
-**Notes: ** At least one parameter must be specified. When only one parameter is provided, do not confuse this with script 1.02: script 1.02 renumbers sequences (assigning different IDs regardless of sequence identity), whereas this script consolidates identical sequences under a single ID. If duplicate IDs exist in the original file (regardless of whether the sequences are identical), only the last occurrence is retained.          
+**Notes:** At least one parameter must be specified. When only one parameter is provided, do not confuse this with script 1.02: script 1.02 renumbers sequences (assigning different IDs regardless of sequence identity), whereas this script consolidates identical sequences under a single ID. If duplicate IDs exist in the original file (regardless of whether the sequences are identical), only the last occurrence is retained.          
 
 **Generated File:** 
 - `merge.fasta`(FASTA file).  
@@ -2014,7 +2014,7 @@ N_0000000008 	Seq2/Seq3	-	-
 
 **Function Description:** Convert Mitos annotation results into GFF file format.    
 
-- **MITOS_FILE: ** The .mitos file generated by Mitos.   
+- **MITOS_FILE:** The .mitos file generated by Mitos.   
         
 **Generated File:** 
 - `result_mitos.gff`(GFF file).
@@ -2047,8 +2047,8 @@ test	mitfi	tRNA	16618	16686	.	-	.	ID=trnE-TTC
 
 **Function Description:** Convert Mitos annotation results into GFF file format.    
 
-- **MITOS_FILE: ** The .mitos file generated by Mitos.  
-- **FASTA_FILE: ** The FASTA file imported into the Mitos program/web server, i.e., the file used for genome annotation.     
+- **MITOS_FILE:** The .mitos file generated by Mitos.  
+- **FASTA_FILE:** The FASTA file imported into the Mitos program/web server, i.e., the file used for genome annotation.     
         
 **Generated File:** 
 - `result_mitos.fasta`(FASTA file, where tRNA sequences have their anticodon and secondary structure annotated in the sequence header.)
@@ -2124,7 +2124,7 @@ GGAAGCGTGCCTGAATAAAAGGACCACTATGATAAAGTGGACATAGAGGTAAAacAATCCTCTCGCCTCCT
 ```
 Note that this script converts amino acid three-letter abbreviations to single-letter abbreviations.   
 
-- **SS_FILE: ** The .ss file generated by tRNAscan-SE.  
+- **SS_FILE:** The .ss file generated by tRNAscan-SE.  
 
 **Video tutorial:** https://www.bilibili.com/video/BV1fwDjYVEx9/  
         
@@ -2146,7 +2146,7 @@ python SsToFold.py example/trnascanse.ss
 
 **Function Description:** Obtain the codon preference of protein-coding genes and plot the RSCU bar chart.   
 
-**Notes: ** This R script provides data statistics and plotting functions and cannot be directly invoked via the command line.
+**Notes:** This R script provides data statistics and plotting functions and cannot be directly invoked via the command line.
 
 **Video tutorial:** https://www.bilibili.com/video/BV1GQnWztEzF/    
 
@@ -2210,7 +2210,7 @@ df = main_fun(pcg,codonTable)
 
 **Function Description:** Split a multi-sequence GenBank file.   
 
-- **GB_FILE: ** The GenBank file that needs to be split.   
+- **GB_FILE:** The GenBank file that needs to be split.   
 
 **Usage scenario:** GB files downloaded using the NCBI Batch Entrez tool (https://www.ncbi.nlm.nih.gov/sites/batchentrez) are multi-sequence GB files; this script can be used if you need to split them.  
         
@@ -2264,7 +2264,7 @@ codemlnull/
 
 **Parameter Description:** No parameter configuration is required. Import all the tables that need to be merged based on their first column one by one, and use the corresponding function to merge them by the first column content with a single click. 
 
-**Notes: ** Only supports graphical systems. Tables can be either tab-separated or comma-separated; if a table contains tabs, it will be treated as tab-separated.    
+**Notes:** Only supports graphical systems. Tables can be either tab-separated or comma-separated; if a table contains tabs, it will be treated as tab-separated.    
 
 **Generated File:** 
 
@@ -2373,7 +2373,7 @@ ProteinC	GeneC
 
 **Usage scenario:** When processing data, suppose you have a map table that records the relationship between each gene and its corresponding gene family, and you also have a matrix table listing the abundance data for each gene. In this case, you need to combine these two tables to calculate the total abundance for each gene family. The same approach applies to species abundance tables.                 
 
-**Notes: ** Make sure that both the map table and the matrix table contain header rows to correctly identify column information. Additionally, when calculating relative abundance, the total count value from "all.count" should be used as the denominator for calculating the abundance of each sequence.
+**Notes:** Make sure that both the map table and the matrix table contain header rows to correctly identify column information. Additionally, when calculating relative abundance, the total count value from "all.count" should be used as the denominator for calculating the abundance of each sequence.
 
 **Generated File:** 
 - `out.count` (TABLE file, group summation table).  
@@ -2449,7 +2449,7 @@ options:
 
 **Usage scenario:** For example, in a biological process involving three GO terms, there are overlapping genes among these terms. You want to count the total number of unique genes associated with the biological process (after removing duplicates).
 
-**Notes: ** Parameters -a and -b are required; all other parameters have default values!
+**Notes:** Parameters -a and -b are required; all other parameters have default values!
 
 **Generated File:** 
 - `count_Map.txt`(table file).
@@ -2511,7 +2511,7 @@ Three FASTA files will then be generated.
    
 **Function Description:** Parse KEG files. This tool can parse .keg annotation files downloaded from the KEGG website, and is useful for enrichment analysis or manually constructing background gene sets for gene annotation.
 
-- **KEG_FILE: ** KEG files downloaded from the KEGG database, such as the universal ko00001.keg or the human-specific hsa00001.keg.
+- **KEG_FILE:** KEG files downloaded from the KEGG database, such as the universal ko00001.keg or the human-specific hsa00001.keg.
 
 **Usage scenario:** Using this script, you can obtain a simplified table of pathway IDs for each KO or each species in the KEGG database, which can be used: ① to parse KEGG annotation results obtained from the KEGG online annotation website; ② to parse KEGG pathway databases for model organisms or general annotation tables.
                  
@@ -2519,7 +2519,7 @@ Three FASTA files will then be generated.
 > Replace "ko" in htext=ko00001 in the above URL with a species abbreviation to download the KEG file for a specific organism. For example, replacing it with "hsa" (https://www.kegg.jp/kegg-bin/download_htext?htext=hsa00001&format=htext&filedir=) gives the human KEG file.  
 > You can find species abbreviations at: https://www.genome.jp/kegg/catalog/org_list.html. For instance, the abbreviation for mouse is "mmu".
 
-**Notes: ** The example folder contains human and universal keg files downloaded from the KEGG website. To ensure the database is up to date, manual download is recommended.  
+**Notes:** The example folder contains human and universal keg files downloaded from the KEGG website. To ensure the database is up to date, manual download is recommended.  
 
 **Generated Files:**  
 - `output_<your_keg_filename>` (table file)  
@@ -2645,9 +2645,9 @@ Human Diseases	Neurodegenerative disease	Alzheimer disease	1
 
 **Function Description:** Read and parse the descriptions and categories corresponding to GO terms from the obo file, generating a three-column table of GO ID \t description \t category. You can directly use the go_term_list.txt file provided in the example; however, please note that this file may not be the latest version. Therefore, it is recommended to use this script to extract the most up-to-date GO annotation information.
 
-- **obo_FILE: ** The file path of the obo file downloaded from the GO website (open the URL: https://purl.obolibrary.org/obo/go/go-basic.obo. It is recommended to right-click on the webpage and select "Save As" to save it as a text file).
+- **obo_FILE:** The file path of the obo file downloaded from the GO website (open the URL: https://purl.obolibrary.org/obo/go/go-basic.obo. It is recommended to right-click on the webpage and select "Save As" to save it as a text file).
 
-**Notes: ** Due to the possibility of incomplete webpage loading, it is not recommended to use CTRL+A to select all, CTRL+C to copy, then create a new text file and paste with CTRL+V.
+**Notes:** Due to the possibility of incomplete webpage loading, it is not recommended to use CTRL+A to select all, CTRL+C to copy, then create a new text file and paste with CTRL+V.
 
 **Generated File:** 
 - `<version_number>_go_term_list.txt` (TABLE file; the first column is the GO ID, the second column is the description, and the third column is the category).
@@ -2678,7 +2678,7 @@ Convert to:
   
 where: the original table is not necessarily comma-separated; it can also be semicolon-separated or may contain redundant descriptive information, for example, in the format: GO:000001(description), GO:000002(description).
 
-- **GENE_GOs_MAP: ** A two-column table, where the first column contains gene names and the second column contains multiple corresponding GO terms, with each row in a one-to-many format.
+- **GENE_GOs_MAP:** A two-column table, where the first column contains gene names and the second column contains multiple corresponding GO terms, with each row in a one-to-many format.
 
 **Generated File:** 
 - `g-go.txt` (TABLE file, the first column is geneid, the second column is GOID).     
@@ -2713,7 +2713,7 @@ a2	GO:0004497
 - **go_term_list:** It is recommended to use the `go_term_list.txt` file generated by script 3.08, which contains the descriptive information for all GO terms.  
 - **GENE_GO_MAP:** It is recommended to use the file generated by script 3.09, with the first column being gene names and the second column being the corresponding GO IDs.
 
-**Notes: ** Sometimes, your annotated table may have one column for gene IDs and another column containing multiple GO IDs. You can use script 3.09 (recommended) or the code below to convert a file where one gene corresponds to multiple GO IDs into a one-to-one format! If the GO IDs are separated by commas, simply change the semicolon in the code below to a comma—make sure to use English punctuation. `input_file` is your input filename, i.e., the table where one gene corresponds to multiple GO IDs, and `output_file` is the desired output filename; ensure it does not conflict with an existing file name.
+**Notes:** Sometimes, your annotated table may have one column for gene IDs and another column containing multiple GO IDs. You can use script 3.09 (recommended) or the code below to convert a file where one gene corresponds to multiple GO IDs into a one-to-one format! If the GO IDs are separated by commas, simply change the semicolon in the code below to a comma—make sure to use English punctuation. `input_file` is your input filename, i.e., the table where one gene corresponds to multiple GO IDs, and `output_file` is the desired output filename; ensure it does not conflict with an existing file name.
 ```bash
 awk -F'\t' '{split($2, arr, ";"); for (j in arr) print $1 "\t" arr[j]}' input_file > output_file
 ```
@@ -2855,7 +2855,7 @@ where: the original table requires a tab delimiter between the first and second 
 
 **Usage scenario:** When you have obtained gene annotation information in database X (including specific entry IDs or gene names), and you also know the corresponding IDs or names in database Y for each entry in database X, you can use this script to retrieve the corresponding names in database Y. You can think of this script as a variant of the VLOOKUP function, which is also suitable for deriving an A-C mapping from A-B and B-C mappings.      
 
-**Notes: ** The parameters s1 and s2 must be specified simultaneously! It is recommended not to use a header row, as the final generated content may not have the header row in the expected position.       
+**Notes:** The parameters s1 and s2 must be specified simultaneously! It is recommended not to use a header row, as the final generated content may not have the header row in the expected position.       
 
 **Generated File:** 
 - `A-Cs.table` (TABLE file, the merged table).  
@@ -2911,11 +2911,11 @@ G5	A05: not found!
      
 **Function Description:** To distinguish the linear arrangement of genes by different colors, you can use other more specialized tools for drawing.
 
-- **GENE_LIST: ** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.
-- **COLOR_CONFIG: ** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
-- **Vertical_spacing: ** Spacing of adjacent row genomes, default 50.
+- **GENE_LIST:** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.
+- **COLOR_CONFIG:** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
+- **Vertical_spacing:** Spacing of adjacent row genomes, default 50.
 
-**Notes: ** This script is provided for entertainment purposes only. It does not reflect the coding direction of features and simply concatenates basic circles and rectangles. It is suitable for combining with a phylogenetic tree after the tree has been constructed. A more visually appealing gene rearrangement visualization script will be developed in the future. This script will no longer be updated.
+**Notes:** This script is provided for entertainment purposes only. It does not reflect the coding direction of features and simply concatenates basic circles and rectangles. It is suitable for combining with a phylogenetic tree after the tree has been constructed. A more visually appealing gene rearrangement visualization script will be developed in the future. This script will no longer be updated.
 
 **Generated File:** 
 - `out.svg` （SVG file）。
@@ -2979,7 +2979,7 @@ options:
 
 **Usage scenario:** You have obtained a preliminary SVG version of the tRNA secondary structure and need to enhance its appearance and merge multiple images.
 
-**Notes: ** 
+**Notes:** 
 
 ① The script uses the text before the first "-" as the RNA name (if not present, it uses the file name). Adjust the file naming format accordingly before running the script.  
 ② This script is only suitable for beautifying secondary structure diagrams generated by RNAplot (e.g., from software like Mitoos).  
@@ -3051,15 +3051,15 @@ python GenoSpider.py
 >> e    exit    exit the program.
 ```
 
-**Notes: ** You need to install the requests, pandas, and matplotlib libraries!  
+**Notes:** You need to install the requests, pandas, and matplotlib libraries!  
 
 ### 5.02 `PrideSpider.py [SP_LIST]`   
 
 **Function Description:** A crawler designed to retrieve information from the PRIDE database!  
 
-- **SP_LIST: ** Species scientific (Latin) name / common name, with each line representing one species.
+- **SP_LIST:** Species scientific (Latin) name / common name, with each line representing one species.
 
-**Notes: ** Currently, batch downloading of results in JSON format is supported. Functionality for parsing JSON files will be added in future updates.  
+**Notes:** Currently, batch downloading of results in JSON format is supported. Functionality for parsing JSON files will be added in future updates.  
 
 **Generated File:** 
 - `log.txt` (log file, which shows how many data entries exist for each species' scientific/common name; if network issues occur, you can check which species have already been processed to avoid duplicate data requests)  
