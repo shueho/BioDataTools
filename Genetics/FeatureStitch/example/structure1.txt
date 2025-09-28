@@ -1,0 +1,5 @@
+cox1_mafft
+trnL2_mafft
+-nad1_mafft
+trnW_mafft
+-trnY_mafft
