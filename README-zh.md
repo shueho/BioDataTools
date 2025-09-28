@@ -55,6 +55,7 @@
   <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
   <tr><td>2.34</td><td>RSCUPlot</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
   <tr><td>2.35</td><td>splitGB</td><td>拆分多序列的GenBank文件</td></tr>   
+  <tr><td>2.36</td><td>FeatureStitch</td><td>按照原始的编码方向缝合特征</td></tr>   
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2202,13 +2203,15 @@ df = main_fun(pcg,codonTable)
 	
 ```
 
-### 2.35 `splitGB.py [GB_FILE]`
+### 2.35 `SplitGB.py [GB_FILE]`
 
 **功能描述：** 拆分多序列GenBank文件。   
 
 - **GB_FILE：** 需要拆分的GenBank文件。  
 
-**使用场景：** 使用NCBI批量下载工具（ https://www.ncbi.nlm.nih.gov/sites/batchentrez ）下载的GB文件是多序列GB文件，如果有拆分需求可以使用本脚本。  
+**使用场景：** 使用NCBI批量下载工具（ https://www.ncbi.nlm.nih.gov/sites/batchentrez ）下载的GB文件是多序列GB文件，如果有拆分需求可以使用本脚本。 
+
+**注意事项：** 务必使用比对好的序列，并且每个特征序列文件中包括相同的序列名称。 
         
 **生成文件：** 
 
@@ -2236,9 +2239,8 @@ VERSION     MW310242.1
 //
 ```
 执行命令：
-
 ```bash
-python splitGB.py example/sequence.gb
+python SplitGB.py example/sequence.gb
 ```     
 即可生成结果文件夹 `gb_output` ：
 ```
@@ -2249,6 +2251,72 @@ codemlnull/
 ├── Hystrichopsylla_weida_qinlingensis_NC_042380.gb
 └── Xenopsylla_cheopis_MW310242.gb
 ```   
+
+### 2.36 `FeatureStitch.py [STRUCTURE] [ALI_DIR] [Suffix]`
+
+**功能描述：** 按照一条链连接不同特征，编码于另外一条链的基因等特征将反向互补后合并。   
+
+- **STRUCTURE：** 特征连接顺序表，只能包含一列信息，从上到下依次连接，如果想要反向互补的特征在名称前加上“-”标记。 
+- **ALI_DIR：** 在特征连接顺序表文件中提到的特征的序列（需要有相同的后缀，这样指定后缀参数程序将能对应特征名和文件）所在的文件夹，注意这些序列必须是比对过的。 
+- **Suffix：** 特征连接顺序表描述每个特征对应到具体的序列的后缀。  
+
+**使用场景：** 想要观察没有发生基因重排区域的变异情况。  
+        
+**生成文件：** 
+
+- `merge.fas`（按照顺序连接的序列，序列可以与原始基因组数据某一条链对应）。  
+- `regions.txt`（特征分界统计表，展示每一个特征在拼接好的序列的区间位置）。
+
+**示例：**
+
+比如 `example` 文件夹包含所需文件：
+```
+example/
+├── ali/
+│     ├── cox1_mafft.fas  
+│     ├── ...
+│     └── trnY_mafft.fas
+├── structure1.txt
+└── structure2.txt
+
+#structure1.txt
+cox1_mafft
+trnL2_mafft
+-nad1_mafft
+trnW_mafft
+-trnY_mafft
+
+#structure2.txt   
+cox1
+trnL2
+-nad1
+trnW
+-trnY  
+
+#ali文件夹中是比对好的基因        
+```
+执行命令：
+```bash
+# 如果使用structure1.txt为顺序文件，则后缀是.fas
+python FeatureStitch.py example/structure1.txt example/ali .fas
+
+# 如果使用structure2.txt为顺序文件，则后缀是_mafft.fas
+python FeatureStitch.py example/structure2.txt example/ali _mafft.fas
+```     
+即可生成相同的结果文件：
+```
+#regions.txt
+FeatureName	start	end	length	Strand
+cox1_mafft.fas	1	1536	1536	+
+trnL2_mafft.fas	1537	1600	64	+
+nad1_mafft.fas	1601	2548	948	-
+trnW_mafft.fas	2549	2615	67	+
+trnY_mafft.fas	2616	2680	65	-
+
+#merge.fas
+合并后的序列。
+```  
+一些比对软件会系统生成后缀，脚本提供后缀参数可以简化操作。
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 

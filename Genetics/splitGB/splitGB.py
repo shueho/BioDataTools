@@ -6,7 +6,7 @@
 # @Time    : 2025/9/27 11:50
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
-# @File    : splitGB.py
+# @File    : SplitGB.py
 #
 # Split multi-sequence GenBank files.
 
