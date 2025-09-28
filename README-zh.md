@@ -2250,7 +2250,7 @@ codemlnull/
 └── Xenopsylla_cheopis_MW310242.gb
 ```   
 
-## 3. Gadget 一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
+## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
 ### 3.01 `MergeTable.py`
 
@@ -2901,7 +2901,7 @@ G1	A03: not found!
 G5	A05: not found!
 ```
   
-## 4.Plotscript 绘图代码工具集。     
+## 4.Plotscript：绘图代码工具集。     
 
 ### 4.01 `GeneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
      
@@ -2995,7 +2995,7 @@ python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -
 ```
 即可在输出文件夹中生成结果，注意如果在组图中看到有tRNA缺失请不要惊慌，或许您通过浏览器打开用滚轮缩小界面就可以看到完整的图片了！  
 
-## 5.BioDataSpider 生物学数据库爬虫工具模块。  
+## 5.BioDataSpider：生物学数据库爬虫工具模块。  
 
 ### 5.01 `GenoSpider`
 
@@ -3051,8 +3051,8 @@ python GenoSpider.py
 **注意事项：** 目前实现了批量下载json格式结果，后续会更新解析json的功能。  
 
 **生成文件：** 
-- log.txt (日志文件，可以查看物种拉丁名/常用名下有多少个信息条目，如果由于网络原因，可以查看哪些物种已经跑过了就不用重复请求数据)  
-- json_result (文件夹，内含爬取的json格式信息，文件名以“拉丁名-页码”的形式命名)   
+- `log.txt` (日志文件，可以查看物种拉丁名/常用名下有多少个信息条目，如果由于网络原因，可以查看哪些物种已经跑过了就不用重复请求数据)  
+- `json_result` (文件夹，内含爬取的json格式信息，文件名以“拉丁名-页码”的形式命名)   
 
 **示例：**
 
@@ -3075,10 +3075,10 @@ python PrideSpider.py example/sp.txt
 **Author: Hao Xue**     
 **E-mail: studid@163.com**   
 **引用：没有文献可以引用，如果对您科研工作有帮助的话，偷偷夸我厉害就行。**   
-如果必须要引用可以在您的著作中添加："我们使用了 BioDataTools 工具 (https://github.com/shueho/BioDataTools) 进行生物信息学分析"    
-如果是英文著作："We used BioDataTools (https://github.com/shueho/BioDataTools) for sequence analysis."    
+或许可以在您的著作中添加："我们使用了 BioDataTools 工具 (https://github.com/shueho/BioDataTools) 进行XXX分析"    
+如果是英文著作："We used BioDataTools (https://github.com/shueho/BioDataTools) for XXX analysis."    
 如果在毕业论文中引用：  
-[1] 薛浩,  大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.               
+[1] 薛浩, 大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.               
         
 <a href="https://orcid.org/0000-0001-9708-3575" target="_blank" rel="noopener noreferrer me">
   <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID iD icon" style="width: 1em; margin-inline-start: 0.5em" />
