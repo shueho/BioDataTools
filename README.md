@@ -57,6 +57,7 @@ This README document provides script files under each module and their brief fun
   <tr><td>2.34</td><td>RSCUPlot</td><td>Analyze the codon usage bias of protein-coding genes and generate a bar chart of Relative Synonymous Codon Usage (RSCU)</td></tr> 
   <tr><td>2.35</td><td>splitGB</td><td>Split multi-sequence GeneBank files</td></tr>   
   <tr><td>2.36</td><td>FeatureStitch</td><td>Stitch features preserving the original coding direction</td></tr>   
+  <tr><td>2.37</td><td>ReallocateFasta</td><td>Reallocate sequences from multiple FASTA files into different FASTA files</td></tr>   
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
@@ -2263,7 +2264,9 @@ codemlnull/
 - **ALI_DIR：** The directory containing sequence files corresponding to the features listed in the STRUCTURE table. All sequence files must share the same suffix (e.g., .fas or .aln), so that the program can match feature names to files using the specified suffix. 
 - **Suffix：** The file extension used to associate feature names in the STRUCTURE table with their corresponding sequence files in ALI_DIR.  
 
-**Usage scenario:** To analyze variation in genomic regions where no gene rearrangements have occurred.      
+**Usage scenario:** To analyze variation in genomic regions where no gene rearrangements have occurred.     
+
+**Video tutorial:** https://www.bilibili.com/video/ 
         
 **Generated File:** 
 
@@ -2320,6 +2323,79 @@ trnY_mafft.fas	2616	2680	65	-
 The merged sequence.
 ```  
 Some alignment software automatically generates suffixes; the script provides a suffix parameter to simplify the operation.    
+
+### 2.37 `ReallocateFasta.py [MATRIX] [FASTA_DIR] [FLAG (Optional parameter)]`
+
+**Function Description:** This script is designed to extract specific sequences from existing FASTA files within a specified folder, and reorganize them into new FASTA files named by groups, based on a tab-separated mapping file that defines the correspondence between sequence IDs and target groups. Users need to provide the directory path containing the original FASTA files and the mapping file; the script will automatically handle sequence extraction and generate the grouped output files.      
+
+- **MATRIX:** This file is in tab-separated format. In the first row (header row), column headers other than "ID" define the group names, which also serve as the filenames for the generated FASTA files. The first column (excluding the header row) contains sequence IDs. The combination of sequence IDs and group names corresponds to existing FASTA filenames, enabling the script to extract specified sequences from the original FASTA files and reorganize them into newly generated FASTA files grouped by category. Note: The script automatically interprets "(" and ")" as underscores.
+- **FASTA_DIR:** Specifies the directory path containing the existing FASTA files.
+- **FLAG:** This parameter typically does not need to be specified. It is unnecessary when the entries in the matrix exactly match the names of the existing FASTA files. This parameter is designed to address specific naming issues, avoiding the need for additional scripting and providing extended functionality: by default (when the parameter is not specified), the script performs normal sequence reallocation; if the parameter is set to "tRNA", the script automatically prepends "trn" to tRNA names that either consist of a single-letter amino acid code or lack the "trn" prefix.   
+
+**Usage scenario:** The currently identified use case is to resolve the ambiguity of tRNA gene annotations carrying L1/L2 and S1/S2.  
+
+**Video tutorial:** https://www.bilibili.com/video/   
+        
+**Generated File:** 
+
+- `fas_output` (a newly created folder containing the generated FASTA files).    
+
+**Example:**
+
+For example, the `example` folder contains the required files:
+```
+example/
+├── seq/
+│     ├── L_copy2.fas  
+│     ├── ...
+│     └── trnS-TCA.fas
+└── matrix.txt
+
+#matrix.txt
+ID	trnL2	trnS1	trnS2	trnL1
+Dorcadia_ioffi_NC_036066	L	S	S_copy2	L_copy2
+Ceratophyllus_wui_NC_040301	L	S	S_copy2	L_copy2
+Hystrichopsylla_weida_qinlingensis_NC_042380	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenocephalides_felis_felis_MW420044	L2	S1	S2	L1
+Xenopsylla_cheopis_MW310242	trnL2(taa)	trnS(tct)	trnS(tga)	trnL1(tag)
+Pulex_irritans_NC_063709	L2	S1	S2	L1
+Ctenocephalides_canis_NC_063710	L2	S1	S2	L1
+Leptopsylla_segnis_NC_072691	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenophthalmus_quadratus_NC_072692	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenocephalides_orientis_NC_073009	trnL2	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ceratophyllus_anisus_NC_073017	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Frontopsylla_spadix_NC_073018	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Neopsylla_specialis_NC_073019	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Stenischia_humilis_NC_073020	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Paradoxopsyllus_custodis_OQ627398	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Aviostivalius_klossi_bispiniformis_OR774970	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Stenischia_montanis_yunlongensis_OR780663	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Frontopsylla_diqingensis_NC_085276	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenophthalmus_yunnanus_NC_085277	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Citellophilus_tesquorum_NC_088096	trnL-TTA	trnS-AGA	trnS-TCA	trnL-CTA
+Nosopsyllus_laeviceps_PP838812	L2	S1	S2	L1
+Jellisonia_amadoi_NC_022710	L2	S1	S2	L1
+Macrostylophora_euteles_NC_085274	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+
+# All existing FASTA files in the seq folder have filenames consistent with the content in the matrix file.  
+# Note that the matrix file contains parentheses, which the script will automatically convert to underscores.    
+```
+Execute the command:
+```bash
+# Run without specifying the mode; it will throw an error when using the example. You can successfully run the script by adding "trn" before L, L1, L2, S, S1, and S2 in the matrix file of the example.
+python ReallocateFasta.py example/matrix.txt example/seq
+
+# Specify the tRNA mode
+python ReallocateFasta.py example/matrix.txt example/seq tRNA
+```     
+New FASTA files can then be generated:
+```
+fas_output/
+├── trnL1.fas/
+├── trnL2.fas  
+├── trnS1.fas
+└── trnS2.fas
+```  
 
 ## 3. Gadget: Some general text processing and analysis tools, as well as code related to enrichment annotation analysis.
 

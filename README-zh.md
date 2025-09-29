@@ -56,6 +56,7 @@
   <tr><td>2.34</td><td>RSCUPlot</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
   <tr><td>2.35</td><td>splitGB</td><td>拆分多序列的GenBank文件</td></tr>   
   <tr><td>2.36</td><td>FeatureStitch</td><td>按照原始的编码方向缝合特征</td></tr>   
+  <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>   
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2261,6 +2262,8 @@ codemlnull/
 - **Suffix：** 特征连接顺序表描述每个特征对应到具体的序列的后缀。  
 
 **使用场景：** 想要观察没有发生基因重排区域的变异情况。  
+
+**视频教学：** https://www.bilibili.com/video/    
         
 **生成文件：** 
 
@@ -2317,6 +2320,79 @@ trnY_mafft.fas	2616	2680	65	-
 合并后的序列。
 ```  
 一些比对软件会系统生成后缀，脚本提供后缀参数可以简化操作。
+
+### 2.37 `ReallocateFasta.py [MATRIX] [FASTA_DIR] [FLAG（可选参数）]`
+
+**功能描述：** 该脚本用于从指定文件夹中的现有FASTA文件中提取特定序列，并根据制表符分隔的映射文件（包含序列ID与目标分组的对应关系）将序列重新组织到按分组命名的新FASTA文件中。用户需提供包含原始FASTA文件的目录路径和映射文件，脚本将自动处理序列提取与分组文件生成。      
+
+- **MATRIX：** 该文件为制表符分隔格式，第一行（标题行）中，除"ID"外的其他列标题定义了分组名称，同时也是生成新FASTA文件的文件名；第一列（除标题行外）是序列ID。序列ID与分组名称共同指向对应的现有FASTA文件，脚本据此从原始FASTA文件中提取指定序列，并按分组重新组织到新生成的FASTA文件中。注意：脚本会将“(”和“)”解析成为下划线。   
+- **FASTA_DIR：** 指定包含现有FASTA文件的文件夹路径。    
+- **FLAG：** 通常情况下无需指定此参数。当矩阵表格内容与现有FASTA文件名完全匹配时，无需使用该参数。本参数旨在解决特定命名问题，避免额外脚本编写，提供扩展功能：默认模式（未指定参数）下执行正常序列重新分配；若指定参数为"tRNA"，则自动在单字母氨基酸缩写或未标注"trn"标识的tRNA名称前添加"trn"。  
+
+**使用场景：** 目前发现的场景是解决携带L1/L2及S1/S2的tRNA编码基因混淆的问题。  
+
+**视频教学：** https://www.bilibili.com/video/     
+        
+**生成文件：** 
+
+- `fas_output`（新生成的文件夹，里边有新生成的FASTA文件）。  
+
+**示例：**
+
+比如 `example` 文件夹包含所需文件：
+```
+example/
+├── seq/
+│     ├── L_copy2.fas  
+│     ├── ...
+│     └── trnS-TCA.fas
+└── matrix.txt
+
+#matrix.txt
+ID	trnL2	trnS1	trnS2	trnL1
+Dorcadia_ioffi_NC_036066	L	S	S_copy2	L_copy2
+Ceratophyllus_wui_NC_040301	L	S	S_copy2	L_copy2
+Hystrichopsylla_weida_qinlingensis_NC_042380	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenocephalides_felis_felis_MW420044	L2	S1	S2	L1
+Xenopsylla_cheopis_MW310242	trnL2(taa)	trnS(tct)	trnS(tga)	trnL1(tag)
+Pulex_irritans_NC_063709	L2	S1	S2	L1
+Ctenocephalides_canis_NC_063710	L2	S1	S2	L1
+Leptopsylla_segnis_NC_072691	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenophthalmus_quadratus_NC_072692	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenocephalides_orientis_NC_073009	trnL2	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ceratophyllus_anisus_NC_073017	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Frontopsylla_spadix_NC_073018	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Neopsylla_specialis_NC_073019	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Stenischia_humilis_NC_073020	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Paradoxopsyllus_custodis_OQ627398	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Aviostivalius_klossi_bispiniformis_OR774970	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Stenischia_montanis_yunlongensis_OR780663	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Frontopsylla_diqingensis_NC_085276	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Ctenophthalmus_yunnanus_NC_085277	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+Citellophilus_tesquorum_NC_088096	trnL-TTA	trnS-AGA	trnS-TCA	trnL-CTA
+Nosopsyllus_laeviceps_PP838812	L2	S1	S2	L1
+Jellisonia_amadoi_NC_022710	L2	S1	S2	L1
+Macrostylophora_euteles_NC_085274	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+
+#seq文件夹中现有的所有FASTA文件，其文件名与矩阵文件中的内容一致  
+#可以看到矩阵文件包含括号，脚本会自动将其转换为下划线      
+```
+执行命令：
+```bash
+# 不指定模式，用于示例会报错如果你把示例中矩阵文件里的L/L1/L2/S/S1/S2前加上“trn”就可以成功运行了
+python ReallocateFasta.py example/matrix.txt example/seq
+
+# 指定tRNA模式
+python ReallocateFasta.py example/matrix.txt example/seq tRNA
+```     
+即可生成新的FASTA文件：
+```
+fas_output/
+├── trnL1.fas/
+├── trnL2.fas  
+├── trnS1.fas
+└── trnS2.fas
+```  
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
