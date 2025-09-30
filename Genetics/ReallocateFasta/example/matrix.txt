@@ -1,24 +1,24 @@
-ID	trnL2	trnS1	trnS2	trnL1
-Dorcadia_ioffi_NC_036066	L	S	S_copy2	L_copy2
-Ceratophyllus_wui_NC_040301	L	S	S_copy2	L_copy2
-Hystrichopsylla_weida_qinlingensis_NC_042380	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Ctenocephalides_felis_felis_MW420044	L2	S1	S2	L1
-Xenopsylla_cheopis_MW310242	trnL2(taa)	trnS(tct)	trnS(tga)	trnL1(tag)
-Pulex_irritans_NC_063709	L2	S1	S2	L1
-Ctenocephalides_canis_NC_063710	L2	S1	S2	L1
-Leptopsylla_segnis_NC_072691	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Ctenophthalmus_quadratus_NC_072692	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Ctenocephalides_orientis_NC_073009	trnL2	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Ceratophyllus_anisus_NC_073017	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Frontopsylla_spadix_NC_073018	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Neopsylla_specialis_NC_073019	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Stenischia_humilis_NC_073020	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Paradoxopsyllus_custodis_OQ627398	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Aviostivalius_klossi_bispiniformis_OR774970	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Stenischia_montanis_yunlongensis_OR780663	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Frontopsylla_diqingensis_NC_085276	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Ctenophthalmus_yunnanus_NC_085277	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
-Citellophilus_tesquorum_NC_088096	trnL-TTA	trnS-AGA	trnS-TCA	trnL-CTA
-Nosopsyllus_laeviceps_PP838812	L2	S1	S2	L1
-Jellisonia_amadoi_NC_022710	L2	S1	S2	L1
-Macrostylophora_euteles_NC_085274	trnL2(taa)	trnS1(tct)	trnS2(tga)	trnL1(tag)
+ID	trnL2	trnK	trnD	trnG	trnA	trnR	trnN	trnS1	trnE	trnF	trnH	trnT	trnP	trnS2	trnL1	trnV	trnI	trnQ	trnM	trnW	trnC	trnY
+Aviostivalius_klossi_bispiniformis_OR774970	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Ceratophyllus_anisus_NC_073017	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Ceratophyllus_wui_NC_040301	L	K	D	G	A	R	N	S	E	F	H	T	P	S_copy2	L_copy2	V	I	Q	M	W	C	Y
+Citellophilus_tesquorum_NC_088096	trnL-TTA	trnK-AAG	trnD-GAC	trnG-GGA	trnA-GCA	trnR-CGA	trnN-AAC	trnS-AGA	trnE-GAA	trnF-TTC	trnH-CAC	trnT-ACA	trnP-CCA	trnS-TCA	trnL-CTA	trnV-GTA	trnI-ATC	trnQ-CAA	trnM-ATG	trnW-TGA	trnC-TGC	trnY-TAC
+Ctenocephalides_canis_NC_063710	L2	K	D	G	A	R	N	S1	E	F	H	T	P	S2	L1	V	I	Q	M	W	C	Y
+Ctenocephalides_felis_felis_MW420044	L2	K	D	G	A	R	N	S1	E	F	H	T	P	S2	L1	V	I	Q	M	W	C	Y
+Ctenocephalides_orientis_NC_073009	trnL2	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Ctenophthalmus_quadratus_NC_072692	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Ctenophthalmus_yunnanus_NC_085277	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Dorcadia_ioffi_NC_036066	L	K	D	G	A	R	N	S	E	F	H	T	P	S_copy2	L_copy2	V	I	Q	M	W	C	Y
+Frontopsylla_diqingensis_NC_085276	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Frontopsylla_spadix_NC_073018	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Hystrichopsylla_weida_qinlingensis_NC_042380	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Jellisonia_amadoi_NC_022710	L2	K	D	G	A	R	N	S1	E	F	H	T	P	S2	L1	V	I	Q	M	W	C	Y
+Leptopsylla_segnis_NC_072691	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Macrostylophora_euteles_NC_085274	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Neopsylla_specialis_NC_073019	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Nosopsyllus_laeviceps_PP838812	L2	K	D	G	A	R	N	S1	E	F	H	T	P	S2	L1	V	I	Q	M	W	C	Y
+Paradoxopsyllus_custodis_OQ627398	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Pulex_irritans_NC_063709	L2	K	D	G	A	R	N	S1	E	F	H	T	P	S2	L1	V	I	Q	M	W	C	Y
+Stenischia_humilis_NC_073020	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Stenischia_montanis_yunlongensis_OR780663	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS1(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS2(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
+Xenopsylla_cheopis_MW310242	trnL2(taa)	trnK(ctt)	trnD(gtc)	trnG(tcc)	trnA(tgc)	trnR(tcg)	trnN(gtt)	trnS(tct)	trnE(ttc)	trnF(gaa)	trnH(gtg)	trnT(tgt)	trnP(tgg)	trnS(tga)	trnL1(tag)	trnV(tac)	trnI(gat)	trnQ(ttg)	trnM(cat)	trnW(tca)	trnC(gca)	trnY(gta)
