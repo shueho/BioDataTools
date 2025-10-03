@@ -2270,7 +2270,8 @@ codemlnull/
         
 **Generated File:** 
 
-- `merge.fas` (Sequences concatenated in order, which may correspond to one strand of the original genomic data).
+- `merge.fas` (Sequences concatenated in order, which may correspond to one strand of the original genomic data). 
+- `only_atgcn.fas` (Retain only ATGCN bases and gaps; all other characters are converted to N bases, to facilitate import into software such as DnaSP).
 - `regions.txt` (A feature boundary statistics table, showing the interval positions of each feature on the assembled sequence).
 
 **Example:**
@@ -2320,7 +2321,10 @@ trnW_mafft.fas	2549	2615	67	+
 trnY_mafft.fas	2616	2680	65	-
 
 #merge.fas
-The merged sequence.
+The merged sequence.  
+
+#only_atgcn.fas
+Retain only ATGCN bases and gaps; convert all other characters to N bases.
 ```  
 Some alignment software automatically generates suffixes; the script provides a suffix parameter to simplify the operation.    
 

@@ -84,7 +84,14 @@ for i in range(len(std)):
 			seqDic[j] += seq[j]
 f_site.close()
 
+only_atgcn = open("only_atgcn.fas","w")
 with open("merge.fas","w") as f:
 	for i in seqName:
 		f.write(">"+i+"\n"+seqDic[i]+"\n")
-	
+		only_atgcn.write(">"+i+"\n")
+		for j in seqDic[i]:
+			if j not in "ATGCN-":
+				only_atgcn.write("N")
+			else:
+				only_atgcn.write(j)
+		only_atgcn.write("\n")
