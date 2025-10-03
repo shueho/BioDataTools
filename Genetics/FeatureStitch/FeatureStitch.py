@@ -32,7 +32,23 @@ def readfasta(path):
     return sd
 
 def reverse_complement(seq):
-	comp = {'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G', 'N': 'N', '-': '-'}
+	comp = {'A': 'T', 
+			'T': 'A', 
+			'G': 'C', 
+			'C': 'G', 
+			'R': 'Y', 
+			'Y': 'R', 
+			'K': 'M', 
+			'M': 'K', 
+			'B': 'V', 
+			'V': 'B', 
+			'D': 'H', 
+			'H': 'D',			
+			'U': 'A', 
+			'S': 'S',			
+			'W': 'W', 
+			'N': 'N', 
+			'-': '-'}
 	return ''.join(comp[base] for base in reversed(seq))
 
 std = dict()
