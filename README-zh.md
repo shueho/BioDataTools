@@ -72,6 +72,7 @@
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Plotscript：绘图工具模块</th></tr>
   <tr><td>4.01</td><td>GeneArrangementMap</td><td>绘制基因组特征排布图</td></tr>
   <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>tRNA二级结构图美化</td></tr>
+  <tr><td>4.03</td><td>PiSlidingWindowPlot</td><td>基因编码区核苷酸多态性滑动窗口分析绘图脚本</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider：生物学数据库爬虫工具模块</th></tr>
   <tr><td>5.01</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE数据库信息爬虫</td></tr>
@@ -3142,6 +3143,68 @@ python TrnaStructureBeautifier.py -i example/trnG.svg #指定一个文件
 python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -vg 7 -ac "red" -pc "#FF0000" -bf "#FFFF00" -bs "#000000" -A "#FF0000" -U "#0000FF" -G "#00FF00" -C "#FFFF00" 
 ```
 即可在输出文件夹中生成结果，注意如果在组图中看到有tRNA缺失请不要惊慌，或许您通过浏览器打开用滚轮缩小界面就可以看到完整的图片了！  
+
+### 4.03 `PiSlidingWindowPlot.R`
+
+**功能描述：** 基因编码区核苷酸多态性滑动窗口分析绘图脚本。  
+
+**使用场景：** 可以对提取到的基因进行比对，①使用由脚本2.36生成的仅将非ATGC碱基替换为N碱基合并序列的`only_atgcn.fas` 导入到DnaSP软件，点击软件的Analysis，选择DNA Polymorphism...计算核苷酸多态性，将结果全选复制到txt文件中；②再将脚本2.36生成的`regions.txt`文件中不需要展示的基因删除，将基因名称改为希望展示的形式；③将前两步生成两个结果路径填入R脚本的相应位置即可进行可视化。    
+
+**注意事项：** 本R脚本提供了绘图功能，不可以直接通过命令行调用，可以在R或RStudio中修改脚本中的一些内容，全选内容并运行即可出图。
+
+**视频教学：** https://www.bilibili.com/video/      
+
+**生成文件：** 
+- `Pi.pdf`（按照示例尺寸输出的绘制结果）。
+
+**示例：**
+
+比如 `example/Dnasp_result.txt` 是使用DnaSP计算出的核苷酸多态性表格（表格中的空白字符不需要删除）：
+```
+Window	Midpoint	Pi	Theta	S
+      1-346	  158	0.10282	0.10115	 112
+     28-371	  183	0.11635	0.11018	 122
+     54-396	  246	0.12261	0.11741	 130
+     81-421	  271	0.13722	0.12734	 141
+...
+14611-14936	14769	0.12008	0.10296	 114
+14638-14961	14796	0.11534	0.09754	 108
+14663-15004	14820	0.11707	0.10160	 111
+```
+比如 `example/regions.txt` 是修改好的基因区间文件（其中FeatureName、start以及end是必须保留的内容）：
+```
+FeatureName	start	end	length	Strand
+nad2	213	1223	1011	+
+cox1	1430	2965	1536	+
+cox2	3031	3708	678	+
+atp8	3854	4045	192	+
+atp6	4046	4729	684	+
+cox3	4730	5509	780	+
+nad3	5591	5941	351	+
+nad5	6357	8099	1743	+
+nad4	8167	9510	1344	+
+nad4L	9511	9804	294	+
+nad6	9952	10473	522	+
+cytb	10474	11613	1140	+
+nad1	11681	12622	942	+
+rrnL	12686	14085	1400	+
+rrnS	14155	15004	850	+
+```
+此外已经在本地下载了本脚本，假设将脚本放置在`xxx/xxx/RSCUPlot.R`位置，可以右键脚本使用R或者RStudio打开：
+```bash
+# 可以设置包括准备好的两个文件所在的工作目录。
+setwd("xxx/xxx")
+# 需要注意具体路径！
+
+# 将脚本中的两个文件路径进行修改，示例中两个文件的路径分别为：
+# piPath = "example/Dnasp_result.txt"
+# regPath = "example/regions.txt"
+
+# 如果你的Dnasp的计算结果存放在某个位置可以修改piPath。
+# 如果你的基因区间文件存放在某个位置可以修改regPath。 
+# 其他的绘制参数可以将脚本复制到AI软件中根据参考内容进行修改。  
+# 修改完成后你可以全选脚本，点击运行，即可出图，如果对出图结果不满意可以进一步修改参数，如果是尺寸原因，可以点击绘图面板中的图像，自行调整图片到合适的样式导出PDF文件。
+``` 
 
 ## 5.BioDataSpider：生物学数据库爬虫工具模块。  
 
