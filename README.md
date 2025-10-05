@@ -2267,7 +2267,7 @@ codemlnull/
 
 **Usage scenario:** To analyze variation in genomic regions where no gene rearrangements have occurred.     
 
-**Video tutorial:** https://www.bilibili.com/video/ 
+**Video tutorial:** https://www.bilibili.com/video/BV1VaxGzgEe2/ 
         
 **Generated File:** 
 
@@ -2339,7 +2339,7 @@ Some alignment software automatically generates suffixes; the script provides a 
 
 **Usage scenario:** The currently identified use case is to resolve the ambiguity of tRNA gene annotations carrying L1/L2 and S1/S2.  
 
-**Video tutorial:** https://www.bilibili.com/video/   
+**Video tutorial:** https://www.bilibili.com/video/BV1iHxgzuE4P/   
         
 **Generated File:** 
 
@@ -3165,7 +3165,7 @@ Results will be generated in the output folder. Note that if you notice missing 
 
 **Notes:** This R script provides plotting functionality and cannot be directly called from the command line. It can be modified within R or RStudio by editing certain parts of the script, then selecting all content and running it to generate the plot.  
 
-**Video tutorial:** https://www.bilibili.com/video/      
+**Video tutorial:** https://www.bilibili.com/video/BV1VaxGzgEe2/      
 
 **Generated File:** 
 - `Pi.pdf` (The drawing is output in the dimensions shown in the example.)

@@ -20,6 +20,7 @@ regPath = "example/regions.txt"
 
 data = read.csv(piPath,header = T,sep = "\t")
 features = read.csv(regPath,header = T,sep = "\t")
+features = features[order(features$start),]
 x_max = round(max(data$Midpoint) / 1000) * 1000  # 可以自行设置横坐标最大值
 y_max <- max(data$Pi) * 1.2  # 可以自行设置纵坐标最大值
 

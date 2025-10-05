@@ -2264,7 +2264,7 @@ codemlnull/
 
 **使用场景：** 想要观察没有发生基因重排区域的变异情况。  
 
-**视频教学：** https://www.bilibili.com/video/    
+**视频教学：** https://www.bilibili.com/video/BV1VaxGzgEe2/    
         
 **生成文件：** 
 
@@ -2336,7 +2336,7 @@ trnY_mafft.fas	2616	2680	65	-
 
 **使用场景：** 目前发现的场景是解决携带L1/L2及S1/S2的tRNA编码基因混淆的问题。  
 
-**视频教学：** https://www.bilibili.com/video/     
+**视频教学：** https://www.bilibili.com/video/BV1iHxgzuE4P/     
         
 **生成文件：** 
 
@@ -3152,7 +3152,7 @@ python TrnaStructureBeautifier.py -i example/mitos_RNA_plot -s 1.8 -p 6 -hg 12 -
 
 **注意事项：** 本R脚本提供了绘图功能，不可以直接通过命令行调用，可以在R或RStudio中修改脚本中的一些内容，全选内容并运行即可出图。
 
-**视频教学：** https://www.bilibili.com/video/      
+**视频教学：** https://www.bilibili.com/video/BV1VaxGzgEe2/      
 
 **生成文件：** 
 - `Pi.pdf`（按照示例尺寸输出的绘制结果）。
