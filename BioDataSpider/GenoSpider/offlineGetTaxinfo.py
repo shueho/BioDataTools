@@ -159,7 +159,12 @@ def taxonomy_from_tid_list(in_=None):
     gtc.writeInfoDict(path="TidListToTaxinfo_{}.txt".format(gtc.baseName(ipath)), cover=1)
     for i in ls:
         co += 1
-        d = taxonomy_from_id(i)
+        try:
+            d = taxonomy_from_id(i)
+        except:
+            #import getTaxClassification as gtc
+            #d = gtc.get_taxonomy_from_id(i)
+            pass
         gtc.writeInfoDict(path="TidListToTaxinfo_{}.txt".format(gtc.baseName(ipath)), d=d)
         print("{}/{} {}".format(co, len(ls), i))
 

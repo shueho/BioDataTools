@@ -76,12 +76,14 @@ def post_taxonomy_from_name(query):   #Species name --> taxID and classification
     for i in TAX_RANK:
         all_d[i] = "-"    
     all_d["query"] = query.strip()
-    url = "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi"
+    #url = "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi"
+    url = "https://www.ncbi.nlm.nih.gov/taxonomy/?term="+query.strip()
     post_data = {"mode":"Undef", 
             "name":query.strip(), 
             "lvl": "0"}
     try:
-        all_text = requests.post(url, data=post_data, headers=headers).text
+        #all_text = requests.post(url, data=post_data, headers=headers).text
+        all_text = requests.get(url, headers=headers).text
     except:
         all_d["flag"] = "non-knowerror."
         return all_d
@@ -89,7 +91,8 @@ def post_taxonomy_from_name(query):   #Species name --> taxID and classification
         all_d["flag"] = "Miss taxonomy ID."
         return all_d
     try:
-        all_d["taxID"] = re.search(r'Taxonomy ID: (.+?)\<', all_text).group(1)
+        #all_d["taxID"] = re.search(r'Taxonomy ID: (.+?)\<', all_text).group(1)
+        all_d["taxID"] = re.search(r'"/Taxonomy/Browser/wwwtax.cgi\?id=(.+?)"', all_text).group(1)
     except:
         all_d["flag"] = "Too many target."
         tid_list = re.findall("amp;id=(.*?)&amp", all_text)
