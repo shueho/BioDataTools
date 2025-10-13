@@ -17,6 +17,10 @@ import requests
 
 HOME = os.path.abspath(sys.path[0])
 PWD = os.path.abspath('.')
+if len(sys.argv) == 2:
+	URL = sys.argv[1]
+else:
+	URL = "https://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip"
 
 def fix_taxdmp():
 	import zipfile
@@ -55,4 +59,4 @@ def download_taxdmp(url="https://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip"):
 	fix_taxdmp()
 
 if __name__=='__main__':
-	download_taxdmp(url="https://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip")
+	download_taxdmp(url=URL)
