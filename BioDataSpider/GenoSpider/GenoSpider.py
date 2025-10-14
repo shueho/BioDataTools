@@ -239,6 +239,5 @@ def auto():
 		import offlineGetTaxinfo as ogt
 	ogt.taxonomy_from_assembly(q) if CONFIG["5"][1] else gtc.get_taxonomy_from_assembly(q)
 	dv.plotAll(q1, ref=CONFIG["4"][1], MaxR=q2, dpi_=CONFIG["3"][1], format_=CONFIG["2"][1], w=CONFIG["6"][1], h=CONFIG["7"][1], hsp=CONFIG["8"][1])
-
 if __name__=='__main__': 
 	main()

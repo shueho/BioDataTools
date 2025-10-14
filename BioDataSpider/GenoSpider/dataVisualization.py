@@ -15,6 +15,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 plt.rcParams['font.family'] = "Times New Roman"
+import matplotlib
+matplotlib.use('TkAgg') 
 
 Rank = ["superkingdom",
         "kingdom",
@@ -60,7 +62,7 @@ def filteringData(path, ref=False, fin=1, MaxR=None):
 	ls = [i.strip().split("\t") for i in ls if i.strip()]
 	data = pd.DataFrame(ls[1:],columns=ls[0])
 	if ref:
-		data = data[data["assembly_info.refseq_category"]=="representative genome"]
+		data = data[data["assembly_info.refseq_category"]=="reference genome"] #representative genome
 	if fin:
 		data = data[Rank+Sig]
 	if MaxR:
@@ -70,7 +72,6 @@ def filteringData(path, ref=False, fin=1, MaxR=None):
 def plotAll(path, ref=False, fin=1, MaxR=None, dpi_=300, format_="jpg", w=8, h=10, hsp=0.4): #Width Height HSPace
 	d = filteringData(path,ref=ref,fin=fin,MaxR=MaxR)
 	plt.figure(figsize=(w,h))
-
 	plt.subplot(311)
 	category = list(d[d.columns[0]])
 	for i in range(len(category)):
@@ -88,9 +89,10 @@ def plotAll(path, ref=False, fin=1, MaxR=None, dpi_=300, format_="jpg", w=8, h=1
 			tid_to_lev[uni[i]] = g[i]
 	count_list = []
 	category = list(set(category))
-	result = pd.DataFrame(0,columns=category,index=Level)        
+	result = pd.DataFrame(0,columns=category,index=Level)
 	for i in tid_to_c:
-		result[tid_to_c[i]][tid_to_lev[i]] += 1
+		#result[tid_to_c[i]][tid_to_lev[i]] += 1
+		result.loc[tid_to_lev[i],tid_to_c[i]] += 1
 	result.to_csv("assemblyLevelCountsFor_{}.txt".format(d.columns[0]),sep="\t")
 	ly = [0]*len(result.columns)
 	for i in Level:
@@ -101,10 +103,12 @@ def plotAll(path, ref=False, fin=1, MaxR=None, dpi_=300, format_="jpg", w=8, h=1
 	plt.legend(frameon=False)
 
 	plt.subplot(312)
-	gc = list(pd.to_numeric(d['assembly_stats.gc_percent']))
+	gc = list(pd.to_numeric(d['assembly_stats.gc_percent'], errors='coerce'))
 	tem = dict()
 	category = list(d[d.columns[0]])
 	for i in range(len(category)):
+		if category[i] == "-":
+			category[i] = "Other"
 		if category[i] in tem:
 			tem[category[i]].append(gc[i])
 		else:
@@ -140,7 +144,8 @@ def plotAll(path, ref=False, fin=1, MaxR=None, dpi_=300, format_="jpg", w=8, h=1
 	plt.ylabel("Genome number")
 	plt.title("Statistics on the number of NCBI assembly information submissions.")
 	plt.subplots_adjust(hspace=hsp)
-	plt.savefig("OverviewDiagram_{}dpi.{}".format(dpi_,format_), dpi=dpi_, format=format_, width=w, height=h)
+	#plt.savefig("OverviewDiagram_{}dpi.{}".format(dpi_,format_), dpi=dpi_, format=format_, width=w, height=h)
+	plt.savefig("OverviewDiagram_{}dpi.{}".format(dpi_,format_), dpi=dpi_, format=format_)
 	plt.close()
 	print("Image export complete!")
 

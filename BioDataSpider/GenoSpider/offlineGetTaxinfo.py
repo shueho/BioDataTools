@@ -15,8 +15,8 @@ import sys
 import os
 import getTaxClassification as gtc
 
-HOME = os.path.abspath(sys.path[0])
-PWD = os.path.abspath('.')
+HOME = os.path.dirname(os.path.abspath(__file__))    #os.path.abspath(sys.path[0])
+#PWD = os.path.abspath('.')
 
 
 def idNameMap(path):   #id: Name
@@ -57,11 +57,11 @@ def readNodes(path): #id: [sup, lev]
     
 print("Load the offline package!")
 print("1/3 Read the name-tid map.")
-n_iMap = nameIdMap(HOME+"/.taxdmp/names.dmp")
+n_iMap = nameIdMap(HOME+"/.taxdump/names.dmp")
 print("2/3 Read the tid-name map.")
-i_nMap = idNameMap(HOME+"/.taxdmp/names.dmp")
+i_nMap = idNameMap(HOME+"/.taxdump/names.dmp")
 print("3/3 Read the tid-nodes map.")
-nodes = readNodes(HOME+"/.taxdmp/nodes.dmp")
+nodes = readNodes(HOME+"/.taxdump/nodes.dmp")
 print("Loaded successfully!")
 
 def tracingPedigree(item, fir=1):   #test
@@ -162,9 +162,7 @@ def taxonomy_from_tid_list(in_=None):
         try:
             d = taxonomy_from_id(i)
         except:
-            #import getTaxClassification as gtc
-            #d = gtc.get_taxonomy_from_id(i)
-            pass
+            d = gtc.get_taxonomy_from_id(i)
         gtc.writeInfoDict(path="TidListToTaxinfo_{}.txt".format(gtc.baseName(ipath)), d=d)
         print("{}/{} {}".format(co, len(ls), i))
 
