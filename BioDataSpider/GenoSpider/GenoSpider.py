@@ -100,7 +100,7 @@ If you have any questions, or have bugs you want to submit, please contact the a
 import sys
 import os
 import argparse
-import offlineExtraction as oe
+#import offlineExtraction as oe
 import getTaxClassification as gtc
 import getGenomicInformation as ggi
 import dataVisualization as dv
@@ -108,8 +108,8 @@ import dataVisualization as dv
 HOME = os.path.abspath(sys.path[0])
 PWD = os.path.abspath('.')
 
-if oe.ON:
-	CONFIG["5"][1] = False
+#if oe.ON:
+#	CONFIG["5"][1] = False
 
 E = 0
 def main(): 

@@ -3225,7 +3225,7 @@ setwd("xxx/xxx")
 
 ### 5.01 `GenoSpider`
 
-**Function Description:** Genome data crawler; detailed explanation can be found in the master's thesis!  
+**Function Description:** Genomic data crawler. If you have any questions or encounter any bugs, please contact the author via email!   
 
 **Parameter Description:** 
 
@@ -3233,7 +3233,7 @@ setwd("xxx/xxx")
 #The tool offers two execution modes: interactive mode and command-line mode. The command-line mode supports only streamlined input and output for a single category, while the interactive mode provides more personalized operation options.
 
 #Command-line mode
-python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w WIDTH] [-H HEIGHT] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
+python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
 
 ## Running "python GenoSpider.py -n Aves -u -r -l superorder" will retrieve all reference genome information for the class Aves.
 
@@ -3241,7 +3241,7 @@ python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w 
 ## -f=[output image format, choose one from jpg, png, svg, eps; default: jpg]  
 ## -p=[output image resolution in dpi, default: 300] -r=[output reference genomes only, boolean flag, default: False]  
 ## -u=[offline mode, boolean flag, default: False] -l=[taxonomic rank to be summarized in the output image]  
-## -w=[image width in inches, default: 8] -H=[image height in inches, default: 10] -g=[subplot spacing, default: 0.4]  
+## -g=[subplot spacing, default: 0.4]  
 ## -n=[scientific (Latin) name, specify either this or -i] -i=[species ID, specify either this or -n]
 
 #Interactive mode
@@ -3264,9 +3264,32 @@ python GenoSpider.py
 >> h    help    Get complete help information.
 >> f    settingOutputFormat     View or configure the output format.
 >> e    exit    exit the program.
+
+# Offline Package Configuration
+## If you wish to quickly obtain taxonomic information for species, it is recommended to first configure the offline package for the species taxonomy data frame. You can use the standalone script `offlineExtraction.py`.
+##
+python offlineExtraction.py
+## Running the above command will use the default download link: https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz.
+## If the download speed is slow, you can specify an acceptable mirror source, for example: http://xxx.xxx/taxdump.tar.gz. You can use the script as follows:
+python offlineExtraction.py http://xxx.xxx/taxdump.tar.gz
+## to complete the download.
+##
+## If you cannot find a suitable download source, you can manually download the taxdump.tar.gz file to {} and use this script to extract it. For example:
+wget https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz -O taxdump.tar.gz
+python offlineExtraction.py taxdump.tar.gz
+## Alternatively, if suitable, you can use the compressed package downloaded on November 16, 2025:
+python offlineExtraction.py example/taxdump.tar.gz
+
+# Simplifying the Offline Package (Optional)
+## Since the directly downloaded offline package for species taxonomy contains some unnecessary information that can slow down the loading speed of the package, you can use the standalone script `simplifyingTaxdump.py`.
+## For example, if your extracted offline package is located at example/taxdump (this directory must contain names.dmp and nodes.dmp), you can run:
+python simplifyingTaxdump.py example/taxdump
+## Afterwards, you can rename new_names.dmp to names.dmp, rename new_nodes.dmp to nodes.dmp, and then replace these two files in the .taxdump folder.
 ```
 
 **Notes:** You need to install the requests, pandas, and matplotlib libraries!  
+
+**Video tutorial:** https://www.bilibili.com/video/      
 
 ### 5.02 `PrideSpider.py [SP_LIST]`   
 

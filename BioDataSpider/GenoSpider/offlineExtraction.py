@@ -22,31 +22,14 @@ if len(sys.argv) == 2:
 else:
 	URL = "https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz"
 
-def fix_taxdump():
+def fix_taxdump(p):
 	#import zipfile
 	import tarfile
 	#zip_file = zipfile.ZipFile(HOME+"/taxdump.zip")
-	tar_file = tarfile.open(HOME+"/taxdump.tar.gz", 'r:gz')
+	tar_file = tarfile.open(p, 'r:gz')
 	#zip_extract = zip_file.extractall(HOME+"/.taxdump")
 	tar_file.extractall(path=HOME+"/.taxdump")
 	print("taxdump.tar.gz: Unzip done!")
-
-ON = 0
-if not os.path.exists(HOME+"/.taxdump"):
-	if os.path.exists(HOME+"/taxdump.tar.gz"):
-		print("Find the taxdump.tar.gz you downloaded! Unzip it for you!")
-		try:
-			fix_taxdump()
-			ON = 1
-		except:
-			print("Error! The compressed download is not complete, please download again! https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.zip")
-	else:
-		print("Warning! Offline database not found! Switched to online mode for you.")
-		print("Please download the species database file https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz to: "+HOME)
-		print("It is recommended that you first use a one-click download command such as wget:\n\
-	wget https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz -o {}\n\
-or use the download function that comes with this script. (Failure is possible!):\n\
-	python offlineExtraction.py".format(HOME.replace("\\","/")+"/taxdump.tar.gz"))
 
 def download_taxdump(url="https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz"):
 	print("wait! Attention! Since downloading the database is slow, it is recommended that you download it yourself.")
@@ -59,7 +42,21 @@ def download_taxdump(url="https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz")
 			if FLAG % 1024 == 0:
 				print("Current download progress: {:.1f} Mb.".format(FLAG/1024))
 	print("Download successful!")
-	fix_taxdump()
-
+	fix_taxdump(HOME+"/taxdump.tar.gz")
 if __name__=='__main__':
-	download_taxdump(url=URL)
+	
+	print("""
+	Default download link: https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+	If the download speed is slow, you can specify an acceptable mirror source, such as http://xxx.xxx/taxdump.tar.gz. Use the script:
+		python offlineExtraction.py http://xxx.xxx/taxdump.tar.gz
+	to complete the download.
+	If you cannot find a suitable download source, manually download the taxdump.tar.gz file to {} and use this script to extract it. For example:
+		wget https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz -o {}
+		python offlineExtraction.py taxdump.tar.gz
+	If applicable, you can also use the compressed package downloaded on November 16, 2025:
+		python offlineExtraction.py example/taxdump.tar.gz
+		""".format(HOME.replace("\\","/"),HOME.replace("\\","/")+"/taxdump.tar.gz"))
+	if os.path.exists(URL):
+		fix_taxdump(URL)
+	else:
+		download_taxdump(url=URL)

@@ -3210,7 +3210,7 @@ setwd("xxx/xxx")
 
 ### 5.01 `GenoSpider`
 
-**功能描述：** 基因组数据爬虫，详细说明见硕士毕业论文！  
+**功能描述：** 基因组数据爬虫，如果有疑问，或者有BUG请联系作者邮箱！  
 
 **参数说明：** 
 
@@ -3218,7 +3218,7 @@ setwd("xxx/xxx")
 #工具包括两种执行方式，分为交互模式和命令行模式。其中命令行模式只支持单一分类流程化输入和输出，交互式包含更个性化的运行方式。
 
 #命令行模式
-python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w WIDTH] [-H HEIGHT] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
+python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-g GAP] [-n NAME] [-i TID] [-l LEVEL]
 
 ##输入“python GenoSpider.py -n Aves -u -r -l superorder”即可得到鸟纲的所有参考基因组信息
 
@@ -3226,7 +3226,7 @@ python GenoSpider.py [-h] [-s] [-f {jpg,png,svg,eps}] [-p PIXELS] [-r] [-u] [-w 
 ##-f=[输出图片格式，可选择jpg, png, svg, eps中的一种，默认jpg]
 ##-p=[输出图像像素，默认300] -r=[只输出参考基因组，开关参数，默认否]
 ##-u=[离线模式，开关参数，默认否] -l=[输出图像所统计的阶元等级]
-##-w=[图片宽度，默认8] -H=[图片高度，默认10] -g=[子图间隔，默认0.4]
+##-g=[子图间隔，默认0.4]
 ##-n=[拉丁名，与-i只需指定其中一个] -i=[物种ID，与-u只需指定其中一个]
 
 #交互模式
@@ -3249,9 +3249,32 @@ python GenoSpider.py
 >> h    help    Get complete help information.
 >> f    settingOutputFormat     View or configure the output format.
 >> e    exit    exit the program.
+
+#离线包配置
+##如果想要快速得到物种分类学信息，最好先进行物种分类下数据框离线包的配置，可以使用独立脚本offlineExtraction.py。
+##
+python offlineExtraction.py
+##使用上述命令将使用默认下载链接：https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz。
+##如果使用下载速度缓慢可以指定可以接受的镜像下载源，比如是http://xxx.xxx/taxdump.tar.gz，您可以使用脚本：
+python offlineExtraction.py http://xxx.xxx/taxdump.tar.gz
+##完成下载。
+##
+##如果找不到合适的下载源，您可以自行下载taxdump.tar.gz文件到{}并且使用本脚本解压，例如：
+wget https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz -o taxdump.tar.gz
+python offlineExtraction.py taxdump.tar.gz
+##如果合适您也可以使用在2025年11月16日下载好的压缩包：
+python offlineExtraction.py example/taxdump.tar.gz
+
+#简化离线包（可以不使用）
+##由于直接下载的物种数据框的离线包包括一些无用信息，这些信息会降低离线包的加载速度，可以使用独立脚本simplifyingTaxdump.py。
+##比如您解压好的离线包位于example/taxdump（这个目录中必须包含names.dmp和nodes.dmp），您可以运行：
+python simplifyingTaxdump.py example/taxdump
+##随后您可以将new_names.dmp文件名称替换为names.dmp，将new_nodes.dmp文件名称替换为nodes.dmp，随后替换掉.taxdump文件夹中的这两个文件。
 ```
 
 **注意事项：** 需要安装requests、pandas和matplotlib库！  
+
+**视频教学：** https://www.bilibili.com/video/      
 
 ### 5.02 `PrideSpider.py [SP_LIST]`   
 
