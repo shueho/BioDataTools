@@ -3289,7 +3289,7 @@ python simplifyingTaxdump.py example/taxdump
 
 **Notes:** You need to install the requests, pandas, and matplotlib libraries!  
 
-**Video tutorial:** https://www.bilibili.com/video/      
+**Video tutorial:** https://www.bilibili.com/video/BV1LiWBz1Emy/      
 
 ### 5.02 `PrideSpider.py [SP_LIST]`   
 

@@ -3274,7 +3274,7 @@ python simplifyingTaxdump.py example/taxdump
 
 **注意事项：** 需要安装requests、pandas和matplotlib库！  
 
-**视频教学：** https://www.bilibili.com/video/      
+**视频教学：** https://www.bilibili.com/video/BV1LiWBz1Emy/      
 
 ### 5.02 `PrideSpider.py [SP_LIST]`   
 
