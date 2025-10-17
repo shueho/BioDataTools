@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 #
-# @Version : 1.0
+# @Version : 1.1
 # @Project : https://github.com/shueho/BioDataTools
 # @Time    : 2023/8/4 21:00
+# @Update  : 2025/10/17 21:00
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
 # @File    : GeneArrangementMap.py
@@ -13,7 +14,6 @@
 import sys
 import os
 
-print("Author: XueHao\nE-mail: studid@163.com")
 
 HEAD = '''<svg version="1.1"
      baseProfile="full"
@@ -42,15 +42,19 @@ ls = [i.strip().split("\t") for i in ls if i.strip()]
 f = open("out.svg","w")
 f.write(HEAD)
 class Text:
-    def __init__(self,x,y,string,f_size=25,fill="#000000",f="Times New Roman"):
+    def __init__(self,x,y,string,f_size=25,fill="#000000",f="Times New Roman",italic=False):
         self.x = x
         self.y = y
         self.string = string
         self.f_size = f_size if len(string) < 3 else 20
         self.fill = fill
         self.f = f
+        self.italic = italic
     def pack(self):
-        return '  <text x="{}" y="{}" font-size="{}" font-family="{}" text-anchor="middle" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
+        if not self.italic:
+            return '  <text x="{}" y="{}" font-size="{}" font-family="{}" text-anchor="middle" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
+        else:
+            return '  <text x="{}" y="{}" font-size="{}" font-family="{}" font-style="italic" text-anchor="middle" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
 
 
 class Rect:
@@ -64,7 +68,7 @@ class Rect:
         self.string = string
     def pack(self):
         shape = '  <rect x="{}" y="{}" fill="{}" stroke="{}" width="{}" height="{}"/>\n'.format(self.x,self.y,self.fill,self.stroke,self.width,self.height)
-        text = Text(self.x+self.width/2,self.y+3*self.height/4,self.string)
+        text = Text(self.x+self.width/2,self.y+3*self.height/4,self.string,italic=True)
         return shape + text.pack() + "\n"
 
 class Circle:

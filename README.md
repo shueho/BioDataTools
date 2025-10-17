@@ -3063,7 +3063,7 @@ G5	A05: not found!
 - **COLOR_CONFIG:** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
 - **Vertical_spacing:** Spacing of adjacent row genomes, default 50.
 
-**Notes:** This script is provided for entertainment purposes only. It does not reflect the coding direction of features and simply concatenates basic circles and rectangles. It is suitable for combining with a phylogenetic tree after the tree has been constructed. A more visually appealing gene rearrangement visualization script will be developed in the future. This script will no longer be updated.
+**Notes:** Single-letter gene names (recommended to be uppercase, such as tRNA genes) will be displayed inside circles and rendered in regular (upright) font. For tRNA genes with the same base name (e.g., S1 and S2), please simplify them to a single letter (e.g., S) without adding numerical suffixes. Gene names consisting of more than one letter (including non-coding regions) will be displayed inside rectangles and rendered in italic. Users may later adjust the styling of non-gene structural elements using an SVG editing software. This script does not indicate the coding direction of genomic features; it simply arranges circles and rectangles in a linear fashion, making it suitable for combination with phylogenetic trees after tree construction.    
 
 **Generated File:** 
 - `out.svg` （SVG file）。

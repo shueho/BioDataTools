@@ -3060,7 +3060,7 @@ G5	A05: not found!
 - **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
 - **Vertical_spacing：** Spacing of adjacent row genomes, default 50.
 
-**注意事项：** 本脚本仅供娱乐，不能反映特征的编码方向，只是使用简单的圆圈和方框进行简单拼接，适合在构建好系统发育树之后与本图片拼接到一起，后续会重写更具有观感的基因重排可视化脚本，本脚本不再更新。
+**注意事项：** 单个字母的基因名（建议使用大写，如 tRNA 基因）将显示在圆圈内，并以正体呈现。若存在同名 tRNA（例如 S1 和 S2），请统一简写为单一字母（如 S），无需添加数字后缀。包含一个以上字母的基因名称（包括非编码区）将显示在方框内，并以斜体呈现。用户后续可通过 SVG 编辑软件自行调整非基因结构名称的样式。本脚本不展示基因特征的编码方向，仅通过简单的圆形和矩形符号进行线性拼接，适用于系统发育树构建完成后与该图进行组合排版。   
 
 **生成文件:** 
 - `out.svg` （SVG file）。
@@ -3070,19 +3070,19 @@ G5	A05: not found!
 比如 `example` 有两个文件：
 ```
 #基因排布式：gene.txt
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
 ...
 
 #特征填充色：color.txt
 #FFD966	F	V	L	I	Q	M	W	A	N	C	Y	S	D	K	G	R	H	S	L	T	P	E
-#DDEBF7	12S	16S																				
-#FFFF00	ND1	ND2	ND3	ND4L	ND4	ND5	ND6															
-#FCE4D6	 COX1	 COX2	 COX3																			
-#70AD47	ATP8	ATP6																				
-#2F75B5	CYTB																					
-#E7E6E6	D-loop	
+#DDEBF7	rrnS	rrnL																				
+#FFFF00	nad1	nad2	nad3	nad4L	nad4	nad5	nad6															
+#FCE4D6	 cox1	 cox2	 cox3																			
+#70AD47	atp8	atp6																				
+#2F75B5	cytb																					
+#E7E6E6	D-loop		
 ```
 执行命令：
 ```bash 

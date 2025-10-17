@@ -1,35 +1,35 @@
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6		
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P			D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6		
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P			D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
