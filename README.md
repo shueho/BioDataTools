@@ -74,6 +74,7 @@ This README document provides script files under each module and their brief fun
   <tr><td>4.01</td><td>GeneArrangementMap</td><td>Draw a genomic feature arrangement chart</td></tr>
   <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>Beautification of tRNA secondary structure diagram</td></tr>
   <tr><td>4.03</td><td>PiSlidingWindowPlot</td><td>Script for plotting sliding window analysis of nucleotide variability in gene coding regions</td></tr>
+  <tr><td>4.04</td><td>VisualizeGeneArrangement</td><td>A visualization of gene arrangement showing coding direction and missing genes</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider: Biological Database Web Scraping Tools Module</th></tr>
   <tr><td>5.01</td><td>GenoSpider</td><td>Genome information web scraper</td></tr>
   <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE database information web scraper</td></tr>
@@ -3057,7 +3058,7 @@ G5	A05: not found!
 
 ### 4.01 `GeneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
      
-**Function Description:** To distinguish the linear arrangement of genes by different colors, you can use other more specialized tools for drawing.
+**Function Description:** To distinguish the linear arrangement of genes by different colors, you can use other more specialized tools for drawing.There is an updated beautification tool, namely script 4.04. 
 
 - **GENE_LIST:** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.
 - **COLOR_CONFIG:** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
@@ -3073,19 +3074,19 @@ G5	A05: not found!
 For example, `example` contains two files: 
 ```
 #Gene arrangement file: gene.txt
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
-F	12S	V	16S	L	ND1	I	Q	M	ND2	W	A	N	C	Y	COX1	S	D	COX2	K	ATP8	ATP6	COX3	G	ND3	R	ND4L	ND4	H	S	L	ND5	CYTB	T	P	ND6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
+F	rrnS	V	rrnL	L	nad1	I	Q	M	nad2	W	A	N	C	Y	cox1	S	D	cox2	K	atp8	atp6	cox3	G	nad3	R	nad4L	nad4	H	S	L	nad5	cytb	T	P	nad6	E	D-loop
 ...
 
 #Feature fill color: color.txt
 #FFD966	F	V	L	I	Q	M	W	A	N	C	Y	S	D	K	G	R	H	S	L	T	P	E
-#DDEBF7	12S	16S																				
-#FFFF00	ND1	ND2	ND3	ND4L	ND4	ND5	ND6															
-#FCE4D6	 COX1	 COX2	 COX3																			
-#70AD47	ATP8	ATP6																				
-#2F75B5	CYTB																					
-#E7E6E6	D-loop	
+#DDEBF7	rrnS	rrnL																				
+#FFFF00	nad1	nad2	nad3	nad4L	nad4	nad5	nad6															
+#FCE4D6	 cox1	 cox2	 cox3																			
+#70AD47	atp8	atp6																				
+#2F75B5	cytb																					
+#E7E6E6	D-loop		
 ```
 Execute the command: 
 ```bash 
@@ -3220,6 +3221,53 @@ setwd("xxx/xxx")
 # If you are not satisfied with the output, you may further adjust the parameters. 
 # If the issue is related to image dimensions, click on the plot panel, manually resize the image to the desired layout, and then export it as a PDF file.
 ``` 
+
+### 4.04 `VisualizeGeneArrangement.py [GENE_LIST] [COLOR_CONFIG] [Gene_spacing] [Vertical_spacing]`
+     
+**Function Description:** A visualization script for gene arrangement that can indicate missing genes.
+
+- **GENE_LIST:** A list of gene sequences, tab-separated. Each row represents the linear order of a genome, with different rows representing different genomes. Lines starting with "#" are comment lines. Modifiers can be added before gene names: "-" indicates the gene is encoded on the negative strand; ":" indicates a missing gene; "!" indicates a control region or non-coding region.
+- **COLOR_CONFIG:** A color configuration table, tab-separated. The first column contains RGB hexadecimal color codes. The second column specifies the display style of genes (1: narrow square with horizontal non-italic text, suitable for single-letter tRNAs such as gene F; 2: narrow square with vertical non-italic text, suitable for multi-letter tRNAs such as S1/S2/L1/L2; 3: wide square with horizontal italic text, suitable for protein-coding and rRNA genes; 4: narrow square with vertical italic text, suitable for relatively short protein-coding genes such as the apt8 gene). The remaining columns list gene names; all genes in the same row share the same color and display style. The configured gene names must include all genes intended for visualization.
+- **Gene_spacing:** The horizontal distance between gene blocks. It should not be set too large; a recommended value is 2.
+- **Vertical_spacing:** The vertical distance between different arrangements. A recommended value is 20.  
+
+**Notes:** Missing genes and annotation information may both be absent. If a large number of genomes need to be plotted and there is a requirement to combine the visualization with a phylogenetic tree, script 4.01 is recommended.   
+
+**Video tutorial:** https://www.bilibili.com/video/      
+
+**Generated File:** 
+- `output.svg` （SVG file）。
+
+**Example:**
+
+For example, `example` contains the required files: 
+```
+# Gene arrangement format: gene1/2/3.txt
+pass
+...
+
+#Feature fill color: color.txt
+#C3D899	1	F	V	L	I	Q	M	W	A	N	C	Y	D	K	G	R	H	T	P	E
+#C3D899	2	S1	S2	L1	L2
+#ACA8B0	3	rrnS	rrnL
+#8FB5E4	3	nad1	nad2	nad3	nad4L	nad4	nad5	nad6
+#ED999C	3	cox1	cox2	cox3
+#8064A0	4	atp8
+#8064A0	3	atp6
+#F3C46F	3	cob			
+```
+Execution command:
+```bash
+# Example with annotation information
+python VisualizeGeneArrangement.py example/gene1.txt example/color.txt 2 20
+
+# Example without annotation information
+python VisualizeGeneArrangement.py example/gene2.txt example/color.txt 2 20
+
+# Example without missing genes
+python VisualizeGeneArrangement.py example/gene3.txt example/color.txt 2 20
+```
+This will generate an SVG file, which can be opened directly in a web browser. If the display is incomplete, you may adjust it using SVG editing software such as Adobe Illustrator.
 
 ## 5.BioDataSpider: Biological database web crawler tool module.  
 

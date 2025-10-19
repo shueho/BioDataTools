@@ -1,0 +1,12 @@
+Gyge ovalis	cox1	L2	cox2	K	D	atp8	atp6	cox3	G	R	nad3	A	  -nad1	  -L1	N	rrnS
+Bopyroides hippolytes	cox1	L2	cox2	:K	D	atp8	atp6	cox3	G	R	nad3	A	  -nad1	  -L1	N	rrnS
+Argeia pugettensis	cox1	L2	cox2		D	atp8	atp6	cox3	G	R	nad3	A	  -nad1	  -L1	N	rrnS
+Cymothoa indica	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	N	rrnS	!CR	  -nad1
+Ichthyoxenos japonensis	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	N	rrnS	!CR	  -nad1
+Asotana magnifica	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	  -nad1	N	rrnS	!CR
+Tachaea chinensis	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	  -nad1	N	rrnS	  -I
+Ligia oceanica	cox1	L2	cox2	K	D	atp8	atp6	cox3	:R	G	nad3	A	  -nad1	  -L1	N	rrnS
+Mongoloniscus sinensis	cox1	L2	cox2	K	D	atp8	atp6	cox3	R	nad3	V	  -nad1	N	rrnS		
+Sphaeroma terebrans	cox1	L1	cox2	K	D	atp8	atp6	cox3	R	nad3	:A	  -nad1	N	rrnS	  -I	
+Limnoria quadripunctata	cox1	cox2	K	cox3	V	A	  -E	!CR	  -R	  -rrnL	  -W	  -M	  -atp6	  -atp8	  -D	  -nad3
+Eophreatoicus karrkkanj	  -cox1	Y	C	  -nad2	  -M	cox2	D	atp8	atp6	cox3	G	nad3	A	R	  -nad1	N

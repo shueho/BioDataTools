@@ -1,0 +1,8 @@
+#C3D899	1	F	V	L	I	Q	M	W	A	N	C	Y	D	K	G	R	H	T	P	E
+#C3D899	2	S1	S2	L1	L2															
+#ACA8B0	3	rrnS	rrnL																	
+#8FB5E4	3	nad1	nad2	nad3	nad4L	nad4	nad5	nad6												
+#ED999C	3	cox1	cox2	cox3																
+#8064A0	4	atp8																		
+#8064A0	3	atp6																		
+#F3C46F	3	cob																		

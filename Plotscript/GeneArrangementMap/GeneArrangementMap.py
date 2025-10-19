@@ -52,13 +52,13 @@ class Text:
         self.italic = italic
     def pack(self):
         if not self.italic:
-            return '  <text x="{}" y="{}" font-size="{}" font-family="{}" text-anchor="middle" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
+            return '  <text x="{}" y="{}" font-size="{}" font-family="{}" text-anchor="middle" dy="0.35em" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
         else:
-            return '  <text x="{}" y="{}" font-size="{}" font-family="{}" font-style="italic" text-anchor="middle" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
+            return '  <text x="{}" y="{}" font-size="{}" font-family="{}" font-style="italic" text-anchor="middle" dy="0.35em" fill="{}">{}</text>'.format(self.x,self.y,self.f_size,self.f,self.fill,self.string)
 
 
 class Rect:
-    def __init__(self,x,y,fill,string="",width=60,height=40,stroke="#000000"):
+    def __init__(self,x,y,fill,string="",width=60,height=40,stroke="#000000",fs=25):
         self.x = x
         self.y = y
         self.width = width
@@ -66,22 +66,24 @@ class Rect:
         self.fill = fill
         self.stroke = stroke
         self.string = string
+        self.f_size = fs
     def pack(self):
         shape = '  <rect x="{}" y="{}" fill="{}" stroke="{}" width="{}" height="{}"/>\n'.format(self.x,self.y,self.fill,self.stroke,self.width,self.height)
-        text = Text(self.x+self.width/2,self.y+3*self.height/4,self.string,italic=True)
+        text = Text(self.x+self.width/2,self.y+self.height/2,self.string,italic=True)
         return shape + text.pack() + "\n"
 
 class Circle:
-    def __init__(self,cx,cy,fill,string="",r=20,stroke="#000000"):
+    def __init__(self,cx,cy,fill,string="",r=20,stroke="#000000",fs=25):
         self.cx = cx
         self.cy = cy
         self.fill = fill
         self.r = r
         self.stroke = stroke
         self.string = string
+        self.f_size = fs
     def pack(self):
         shape = '  <circle cx="{}" cy="{}" fill="{}" r="{}" stroke="{}"/>\n'.format(self.cx,self.cy,self.fill,self.r,self.stroke)
-        text = Text(self.cx,self.cy+self.r/2,self.string)
+        text = Text(self.cx,self.cy,self.string)
         return shape + text.pack() + "\n"
 
 

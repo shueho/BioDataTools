@@ -1,0 +1,12 @@
+Gyge ovalis	cox1	L2	cox2	K	D	atp8	atp6	cox3	G	R	nad3	A	  -nad1	  -L1	N	rrnS	  -W	:I	:E	:S1	!CR	  -cob	  -T	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	S2	rrnL	  -V	  -Q	M	nad2	  -C	  -Y				
+Bopyroides hippolytes	cox1	L2	cox2	:K	D	atp8	atp6	cox3	G	R	nad3	A	  -nad1	  -L1	N	rrnS	:  -W	:I	  -S1	  -E	!CR	  -cob	  -T	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -V	  -Q	M	nad2	  -C	  -Y				
+Argeia pugettensis	cox1	L2	cox2		D	atp8	atp6	cox3	G	R	nad3	A	  -nad1	  -L1	N	rrnS	W	:I	  -S1	  -E	!CR	  -cob	  -T	nad5	nad4	:  -nad4L	:  -P	:nad6	H	  -F	  -nad5	T	cob	S2	rrnL	  -V	  -Q	M	nad2	  -K	  -C	  -Y
+Cymothoa indica	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	N	rrnS	!CR	  -nad1	  -L1	:  -I	:  -E	  -L2	  -S1	  -W	  -cob	  -T	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -Q	M	nad2	  -C	  -Y				
+Ichthyoxenos japonensis	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	N	rrnS	!CR	  -nad1	L1	:  -I	  -E	  -L2	S1	  -W	  -cob	  -T	nad5	F	H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -Q	M	nad2	  -C	  -Y				
+Asotana magnifica	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	  -nad1	N	rrnS	!CR	  -L1	:  -I	:  -E	  -L2	  -S1	  -W	  -cob	  -T	nad5	F	H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -Q	M	nad2	:  -C	  -Y				
+Tachaea chinensis	cox1	cox2	K	D	atp8	atp6	cox3	R	G	nad3	A	V	  -nad1	N	rrnS	  -I	!CR	  -E	  -L1	  -W	:S1	  -L2	  -cob	  -T	nad5	F	H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -Q	M	nad2	  -C	  -Y				
+Ligia oceanica	cox1	L2	cox2	K	D	atp8	atp6	cox3	:R	G	nad3	A	  -nad1	  -L1	N	rrnS	  -W	  -V	I	!  -CR	E	S1	  -cob	  -T	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -Q	M	nad2	C	  -Y				
+Mongoloniscus sinensis	cox1	L2	cox2	K	D	atp8	atp6	cox3	R	nad3	:A	V	  -nad1	:  -L1	N	rrnS	I	W	G	T	:E	!  -CR	S1	  -cob	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -Q	M	nad2	  -C	  -Y				
+Sphaeroma terebrans	cox1	L1	cox2	K	D	atp8	atp6	cox3	R	:G	nad3	:A	  -nad1	N	rrnS	  -I	W	V	  -Q	!CR	E	S1	  -cob	  -T	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	L1	S2	  -rrnL	M	nad2	  -C	  -Y				
+Limnoria quadripunctata	cox1	cox2	K	cox3	V	A	  -E	!CR	  -R	  -rrnL	  -W	  -M	  -atp6	  -atp8	  -D	  -nad3	  -T	  -nad6	P	nad4L	nad4	H	  -F	  -nad5	cob	  -S1	N	  -E	  -V	G	  -nad1	  -L2	I	  -L1	rrnS	S2	  -Q	nad2	  -Y	  -C		
+Eophreatoicus karrkkanj	  -cox1	Y	C	  -nad2	  -M	cox2	D	atp8	atp6	cox3	G	nad3	A	R	  -nad1	N	rrnS	K	E	!  -CR	  -I	  -W	S1	cob	T	nad5	F	  -H	  -nad4	  -nad4L	  -P	nad6	S2	  -rrnL	  -V	  -Q	L2	L1				

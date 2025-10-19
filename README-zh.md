@@ -73,6 +73,7 @@
   <tr><td>4.01</td><td>GeneArrangementMap</td><td>绘制基因组特征排布图</td></tr>
   <tr><td>4.02</td><td>TrnaStructureBeautifier</td><td>tRNA二级结构图美化</td></tr>
   <tr><td>4.03</td><td>PiSlidingWindowPlot</td><td>基因编码区核苷酸多态性滑动窗口分析绘图脚本</td></tr>
+  <tr><td>4.04</td><td>VisualizeGeneArrangement</td><td>基因排布图可视化脚本（可以显示缺失基因及备注信息）</td></tr>
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">BioDataSpider：生物学数据库爬虫工具模块</th></tr>
   <tr><td>5.01</td><td>GenoSpider</td><td>基因组信息爬虫</td></tr>
   <tr><td>5.02</td><td>PrideSpider</td><td>PRIDE数据库信息爬虫</td></tr>
@@ -3054,7 +3055,7 @@ G5	A05: not found!
 
 ### 4.01 `GeneArrangementMap.py [GENE_LIST] [COLOR_CONFIG] [Vertical_spacing]`
      
-**功能描述：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。
+**功能描述：** 根据不同的颜色来区分基因的线性排列，你可以使用其他更专业的工具绘制。有更新的美化工具即脚本4.04。
 
 - **GENE_LIST：** List of gene sequences, TAB delimited. Each row represents a linear order of a genome. Different lines represent different genomes.
 - **COLOR_CONFIG：** Color configuration table, TAB delimited. The RGB hexadecimal representation of the colors in the first column and the gene names in the remaining columns.
@@ -3205,6 +3206,53 @@ setwd("xxx/xxx")
 # 其他的绘制参数可以将脚本复制到AI软件中根据参考内容进行修改。  
 # 修改完成后你可以全选脚本，点击运行，即可出图，如果对出图结果不满意可以进一步修改参数，如果是尺寸原因，可以点击绘图面板中的图像，自行调整图片到合适的样式导出PDF文件。
 ``` 
+
+### 4.04 `VisualizeGeneArrangement.py [GENE_LIST] [COLOR_CONFIG] [Gene_spacing] [Vertical_spacing]`
+     
+**功能描述：** 可以表示缺失基因的基因排布可视化脚本。
+
+- **GENE_LIST：** 基因序列列表，以制表符（TAB）分隔。每一行代表一个基因组的线性排列顺序，不同行代表不同的基因组，#开头的行为注释信息行。基因名称前可以添加修饰符：“-”表示编码于负链；“:”表示缺失基因；“！”表示控制区或非编码区。      
+- **COLOR_CONFIG：** 颜色配置表，以制表符（TAB）分隔。第一列为颜色的RGB十六进制表示，第二列为基因的显示方式（1：窄方块水平文字不斜体，适合表示单字母tRNA，如F基因；2：窄方块竖直文字不斜体，适合表示多字母tRNA，如S1/S2/L1/L2：3：宽方块水平文字斜体适合表示蛋白编码基因和rRNA基因：4：窄方块垂直文字斜体，适合表示比较短的蛋白编码基因，如apt8基因），其余列为基因名称，同一行的所有基因应用相同的配色和显示方式，配置的基因名称必须包括需要可视化的所有基因。     
+- **Gene_spacing：** 基因方块之间的水平距离，不宜设置过大，推荐为2.
+- **Vertical_spacing：** 不同排布之间的垂直距离，推荐为20.
+
+**注意事项：** 缺失基因、备注信息都可以没有。如果需要绘制的基因组过多，并且有与系统发育树组合需求的话推荐使用脚本4.01。   
+
+**视频教学：** https://www.bilibili.com/video/      
+
+**生成文件:** 
+- `output.svg` （SVG file）。
+
+**示例：**
+
+比如 `example` 有所需文件：
+```
+#基因排布式：gene1/2/3.txt
+略
+...
+
+#特征填充色：color.txt
+#C3D899	1	F	V	L	I	Q	M	W	A	N	C	Y	D	K	G	R	H	T	P	E
+#C3D899	2	S1	S2	L1	L2
+#ACA8B0	3	rrnS	rrnL
+#8FB5E4	3	nad1	nad2	nad3	nad4L	nad4	nad5	nad6
+#ED999C	3	cox1	cox2	cox3
+#8064A0	4	atp8
+#8064A0	3	atp6
+#F3C46F	3	cob			
+```
+执行命令：
+```bash 
+#有备注信息的示例
+python VisualizeGeneArrangement.py example/gene1.txt example/color.txt 2 20
+
+#无备注信息的示例
+python VisualizeGeneArrangement.py example/gene2.txt example/color.txt 2 20
+
+#无缺失基因的示例
+python VisualizeGeneArrangement.py example/gene3.txt example/color.txt 2 20
+```
+将生成svg文件，使用浏览器打开即可，如果显示不全可使用Adobe illustrator等SVG编辑软件调整。
 
 ## 5.BioDataSpider：生物学数据库爬虫工具模块。  
 
