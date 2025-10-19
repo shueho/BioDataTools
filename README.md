@@ -3066,6 +3066,8 @@ G5	A05: not found!
 
 **Notes:** Single-letter gene names (recommended to be uppercase, such as tRNA genes) will be displayed inside circles and rendered in regular (upright) font. For tRNA genes with the same base name (e.g., S1 and S2), please simplify them to a single letter (e.g., S) without adding numerical suffixes. Gene names consisting of more than one letter (including non-coding regions) will be displayed inside rectangles and rendered in italic. Users may later adjust the styling of non-gene structural elements using an SVG editing software. This script does not indicate the coding direction of genomic features; it simply arranges circles and rectangles in a linear fashion, making it suitable for combination with phylogenetic trees after tree construction.    
 
+**Video tutorial:** https://www.bilibili.com/video/BV1mNsMzEEdT/      
+
 **Generated File:** 
 - `out.svg` （SVG file）。
 
@@ -3233,7 +3235,7 @@ setwd("xxx/xxx")
 
 **Notes:** Missing genes and annotation information may both be absent. If a large number of genomes need to be plotted and there is a requirement to combine the visualization with a phylogenetic tree, script 4.01 is recommended.   
 
-**Video tutorial:** https://www.bilibili.com/video/      
+**Video tutorial:** https://www.bilibili.com/video/BV1mNsMzEEdT/      
 
 **Generated File:** 
 - `output.svg` （SVG file）。

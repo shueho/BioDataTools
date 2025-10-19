@@ -1,5 +1,5 @@
 #Epicaridea																																										
-Gyge ovalis	cox1	L2	cox2	K	D	atp8	atp6	cox3	G	R	nad3	A	-nad1	-L1	N	rrnS	-W	:I	:E	:S1	!CR	-cob	-T	nad5	F	-H	-nad4	-nad4L	-P	nad6	S2	rrnL	-V	-Q	M	nad2	-C	-Y				
+Gyge ovalis	cox1	L2	cox2	K	D	atp8	atp6	cox3	G	R	nad3	A	-nad1	-L1	N	rrnS	-W	:I	:E	:S1	!-CR	-cob	-T	nad5	F	-H	-nad4	-nad4L	-P	nad6	S2	rrnL	-V	-Q	M	nad2	-C	-Y				
 Bopyroides hippolytes	cox1	L2	cox2	:K	D	atp8	atp6	cox3	G	R	nad3	A	-nad1	-L1	N	rrnS	:-W	:I	-S1	-E	!CR	-cob	-T	nad5	F	-H	-nad4	-nad4L	-P	nad6	S2	-rrnL	-V	-Q	M	nad2	-C	-Y				
 Argeia pugettensis	cox1	L2	cox2		D	atp8	atp6	cox3	G	R	nad3	A	-nad1	-L1	N	rrnS	W	:I	-S1	-E	!CR	-cob	-T	nad5	nad4	:-nad4L	:-P	:nad6	H	-F	-nad5	T	cob	S2	rrnL	-V	-Q	M	nad2	-K	-C	-Y
 #																																										
