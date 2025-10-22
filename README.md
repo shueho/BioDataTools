@@ -3224,7 +3224,7 @@ setwd("xxx/xxx")
 # If the issue is related to image dimensions, click on the plot panel, manually resize the image to the desired layout, and then export it as a PDF file.
 ``` 
 
-### 4.04 `VisualizeGeneArrangement.py [GENE_LIST] [COLOR_CONFIG] [Gene_spacing] [Vertical_spacing]`
+### 4.04 `VisualizeGeneArrangement.py [GENE_LIST] [COLOR_CONFIG] [Gene_spacing] [Vertical_spacing] [Height_Width (Optional parameters)]`
      
 **Function Description:** A visualization script for gene arrangement that can indicate missing genes.
 
@@ -3232,8 +3232,9 @@ setwd("xxx/xxx")
 - **COLOR_CONFIG:** A color configuration table, tab-separated. The first column contains RGB hexadecimal color codes. The second column specifies the display style of genes (1: narrow square with horizontal non-italic text, suitable for single-letter tRNAs such as gene F; 2: narrow square with vertical non-italic text, suitable for multi-letter tRNAs such as S1/S2/L1/L2; 3: wide square with horizontal italic text, suitable for protein-coding and rRNA genes; 4: narrow square with vertical italic text, suitable for relatively short protein-coding genes such as the apt8 gene). The remaining columns list gene names; all genes in the same row share the same color and display style. The configured gene names must include all genes intended for visualization.
 - **Gene_spacing:** The horizontal distance between gene blocks. It should not be set too large; a recommended value is 2.
 - **Vertical_spacing:** The vertical distance between different arrangements. A recommended value is 20.  
+- **Height_Width:** Sets the height and width of the rectangular blocks. Specify in the format "H,W1,W2" — three numbers separated by English commas, indicating height H, wide rectangle width W1, and narrow rectangle width W2. Default is "30,60,18".
 
-**Notes:** Missing genes and annotation information may both be absent. If a large number of genomes need to be plotted and there is a requirement to combine the visualization with a phylogenetic tree, script 4.01 is recommended.   
+**Notes:** Missing genes and notes can be absent. If there are too many genomes to draw and you need to combine them with a phylogenetic tree, Script 4.01 is recommended. If the drawing does not display completely, Adobe Illustrator can be used for canvas adjustments.   
 
 **Video tutorial:** https://www.bilibili.com/video/BV1mNsMzEEdT/      
 
@@ -3268,6 +3269,9 @@ python VisualizeGeneArrangement.py example/gene2.txt example/color.txt 2 20
 
 # Example without missing genes
 python VisualizeGeneArrangement.py example/gene3.txt example/color.txt 2 20
+
+# Custom rectangle height and width
+python VisualizeGeneArrangement.py example/gene1.txt example/color.txt 2 20 50,50,18
 ```
 This will generate an SVG file, which can be opened directly in a web browser. If the display is incomplete, you may adjust it using SVG editing software such as Adobe Illustrator.
 

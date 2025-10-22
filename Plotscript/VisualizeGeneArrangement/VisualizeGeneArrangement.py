@@ -17,6 +17,12 @@ COLOR = sys.argv[2]
 GENE = sys.argv[1]
 gap_g = int(sys.argv[3]) # 2
 gap_y = int(sys.argv[4]) # 20
+HW = sys.argv[5] if len(sys.argv) == 6 else "30,60,18"
+HW = HW.split(",")
+H = int(HW[0])
+W1 = int(HW[1])
+W2 = int(HW[2])
+
 X = 100
 Y = 100
 def create_and_save_svg(body_content, filename="output.svg", width="100%", height="100%", viewBox="0 0 5000 1000"):
@@ -48,8 +54,8 @@ cd = parse_color_table(COLOR)
 def generate_gene(text, x, y, miss=False):
     dash_ = "5,1" if miss else "none"  # 虚化边框
     flag = cd.get(text, ['#FFFFFF',3])[1]
-    height = 30
-    width = 60 if flag == '3' else 18
+    height = H
+    width = W1 if flag == '3' else W2
     font_size = 20 if flag not in '24' else 15  
     font_style = "italic" if flag in ['3', '4'] else "normal"
     color = '#FFFFFF' if miss else cd.get(text, ['#FFFFFF'])[0]
@@ -86,11 +92,11 @@ def generate_gene_list(dic, y):
     for i in dic:
         #print(i)
         if dic[i][2]:
-            text += f'''  <text x="{X_}" y="{y+30+(dic[i][0]-0.5)*20}" font-size="20" font-family="Times New Roman" font-weight="bold" dy="0.35em" fill="blue" text-anchor="start" font-style="normal">{i}</text>
-  <line x1="{X_}" y1="{y+30}" x2="{X_+len(i)*13}" y2="{y+30}" stroke="black" stroke-width="1" />'''
+            text += f'''  <text x="{X_+len(i)*13/2}" y="{y+H+(dic[i][0]-0.5)*20}" font-size="20" font-family="Times New Roman" font-weight="bold" dy="0.35em" fill="blue" text-anchor="middle" font-style="normal">{i}</text>
+  <line x1="{X_}" y1="{y+H}" x2="{X_+len(i)*13}" y2="{y+H}" stroke="black" stroke-width="1" />'''
             X_ += len(i)*13+gap_g
             continue
-        tem = generate_gene(i,X_,y+dic[i][0]*30,miss=dic[i][1])
+        tem = generate_gene(i,X_,y+dic[i][0]*H,miss=dic[i][1])
         text += tem[0]
         X_ += tem[1]+gap_g
     return text
@@ -104,11 +110,11 @@ for i in gs:
     if i[0][0] == "#":
         svg += f'''  <text x="{X}" y="{Y_}" font-size="30" font-family="Times New Roman" dy="0.35em" text-anchor="start" font-weight="bold" font-style="normal">{i[0].lstrip("#")}</text>\n'''
         #Y_ += 5 if i[0] == "#" else 30
-        Y_ += 30
+        Y_ += H
     else:
         svg += f'''  <text x="{X}" y="{Y_}" font-size="25" font-family="Times New Roman" dy="0.35em" text-anchor="start" font-style="italic">{i[0]}</text>\n'''
         tem = getStrain(i[1:])
-        Y_ += 20
+        Y_ += H*2/3
         svg += generate_gene_list(tem,Y_)
-        Y_ += 60 + gap_y
+        Y_ += H*2 + gap_y
 create_and_save_svg(svg)

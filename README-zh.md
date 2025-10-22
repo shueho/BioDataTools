@@ -3209,16 +3209,17 @@ setwd("xxx/xxx")
 # 修改完成后你可以全选脚本，点击运行，即可出图，如果对出图结果不满意可以进一步修改参数，如果是尺寸原因，可以点击绘图面板中的图像，自行调整图片到合适的样式导出PDF文件。
 ``` 
 
-### 4.04 `VisualizeGeneArrangement.py [GENE_LIST] [COLOR_CONFIG] [Gene_spacing] [Vertical_spacing]`
+### 4.04 `VisualizeGeneArrangement.py [GENE_LIST] [COLOR_CONFIG] [Gene_spacing] [Vertical_spacing] [Height_Width（可选）]`
      
 **功能描述：** 可以表示缺失基因的基因排布可视化脚本。
 
 - **GENE_LIST：** 基因序列列表，以制表符（TAB）分隔。每一行代表一个基因组的线性排列顺序，不同行代表不同的基因组，#开头的行为注释信息行。基因名称前可以添加修饰符：“-”表示编码于负链；“:”表示缺失基因；“！”表示控制区或非编码区。      
 - **COLOR_CONFIG：** 颜色配置表，以制表符（TAB）分隔。第一列为颜色的RGB十六进制表示，第二列为基因的显示方式（1：窄方块水平文字不斜体，适合表示单字母tRNA，如F基因；2：窄方块竖直文字不斜体，适合表示多字母tRNA，如S1/S2/L1/L2：3：宽方块水平文字斜体适合表示蛋白编码基因和rRNA基因：4：窄方块垂直文字斜体，适合表示比较短的蛋白编码基因，如apt8基因），其余列为基因名称，同一行的所有基因应用相同的配色和显示方式，配置的基因名称必须包括需要可视化的所有基因。     
 - **Gene_spacing：** 基因方块之间的水平距离，不宜设置过大，推荐为2.
-- **Vertical_spacing：** 不同排布之间的垂直距离，推荐为20.
+- **Vertical_spacing：** 不同排布之间的垂直距离，推荐为20.  
+- **Height_Width：** 可以设置矩形方块的宽和高，指定格式为“H,W1,W2”，英文逗号隔开的三个数字，表示以H作为高，宽矩形以W1为宽，窄矩形以W2为宽，默认为“30,60,18”。   
 
-**注意事项：** 缺失基因、备注信息都可以没有。如果需要绘制的基因组过多，并且有与系统发育树组合需求的话推荐使用脚本4.01。   
+**注意事项：** 缺失基因、备注信息都可以没有。如果需要绘制的基因组过多，并且有与系统发育树组合需求的话推荐使用脚本4.01，如果绘图后显示不完全可以使用Adobe illustrator进行画布调整。   
 
 **视频教学：** https://www.bilibili.com/video/BV1mNsMzEEdT/      
 
@@ -3253,6 +3254,9 @@ python VisualizeGeneArrangement.py example/gene2.txt example/color.txt 2 20
 
 #无缺失基因的示例
 python VisualizeGeneArrangement.py example/gene3.txt example/color.txt 2 20
+
+#自定义矩形高和宽
+python VisualizeGeneArrangement.py example/gene1.txt example/color.txt 2 20 50,50,18
 ```
 将生成svg文件，使用浏览器打开即可，如果显示不全可使用Adobe illustrator等SVG编辑软件调整。
 
