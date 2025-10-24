@@ -56,7 +56,8 @@
   <tr><td>2.34</td><td>RSCUPlot</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
   <tr><td>2.35</td><td>splitGB</td><td>拆分多序列的GenBank文件</td></tr>   
   <tr><td>2.36</td><td>FeatureStitch</td><td>按照原始的编码方向缝合特征</td></tr>   
-  <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>   
+  <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>  
+  <tr><td>2.38</td><td>BatchFastaToAXT</td><td>批量转换Fasta文件到AXT格式比对文件</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2399,6 +2400,60 @@ fas_output/
 ├── trnS1.fas
 └── trnS2.fas
 ```  
+
+### 2.38 `BatchFastaToAXT.py [FASTA_FILE_DIR]`
+
+**功能描述：** 批量将比对过的FASTA文件转换为AXT格式比对文件。
+
+- **FASTA_FILE_DIR：** 文件夹路径名，在该目录下包含需要转换的FASTA格式的比对文件。
+
+**注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！  
+
+**视频教学：** https://www.bilibili.com/video/    
+
+**生成文件：** 
+- `AXTfile`（文件夹，其中包含需要转换的fasta文件名+axt后缀）。      
+- `merge.axt`（所有AXT文件合并到一起组成的文件，方便后续Ka/Ks选择压力等分析）。      
+
+**示例：**
+
+比如 `example/ali_fasta` 文件夹中包含需要转换的fasta文件：
+```
+example/
+└── ali_fasta/
+    ├── atp6_mafft.fas   
+    ├── atp8_mafft.fas   
+    ├── nad5_mafft.fas
+    └── nad6_mafft.fas
+```
+执行命令：
+```bash
+python BatchFastaToAXT.py example/ali_fasta
+```
+即可输出对应的结果于文件夹 `AXTfile` 中：
+```
+pamlfile/
+├── atp6_mafft.axt  
+├── atp8_mafft.axt
+├── nad5_mafft.axt 
+└── nad6_mafft.axt
+```
+同时可输出对应AXT整合文件 `merge.axt`，序列来源的文件夹在序列名称/描述信息行注明：  
+```
+#例如atp6_mafft.axt文件中的内容：
+Tapirus_bairdii_NC_063943&Tapirus_indicus_KJ417810
+ATGAACGAAAATCTATTCGC...
+ATGAACGAAAATCTATTCGC...
+...
+
+#在merge.axt文件中将呈现：
+Tapirus_bairdii_NC_063943&Tapirus_indicus_KJ417810|atp6_mafft
+ATGAACGAAAATCTATTCGC...
+ATGAACGAAAATCTATTCGC...
+...
+
+#也就是说单个AXT文件的描述信息是“样本1&样本2”的命名形式，合并的AXT文件时“样本1&样本2|来自文件名”的命名形式
+```
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 

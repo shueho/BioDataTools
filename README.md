@@ -58,6 +58,7 @@ This README document provides script files under each module and their brief fun
   <tr><td>2.35</td><td>splitGB</td><td>Split multi-sequence GeneBank files</td></tr>   
   <tr><td>2.36</td><td>FeatureStitch</td><td>Stitch features preserving the original coding direction</td></tr>   
   <tr><td>2.37</td><td>ReallocateFasta</td><td>Reallocate sequences from multiple FASTA files into different FASTA files</td></tr>   
+  <tr><td>2.38</td><td>BatchFastaToAXT</td><td>Batch convert Fasta files to AXT format alignment files</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
@@ -2402,6 +2403,60 @@ fas_output/
 ├── trnS1.fas
 └── trnS2.fas
 ```  
+
+### 2.38 `BatchFastaToAXT.py [FASTA_FILE_DIR]`
+
+**Function Description:** Batch convert aligned FASTA files to AXT format alignment files.  
+
+- **FASTA_FILE_DIR：** Folder path containing the FASTA format alignment files to be converted.   
+
+**Notes:** The folder must not contain unaligned sequence files or any other files, otherwise an error will occur!   
+
+**Video tutorial:** https://www.bilibili.com/video/    
+
+**Generated File:** 
+- `AXTfile` (Folder containing the converted files, with filenames in the format: original_fasta_filename.axt).  
+- `merge.axt` (A single file merging all AXT files, convenient for subsequent analyses such as Ka/Ks calculation and selection pressure analysis).      
+
+**Example:**
+
+For example, the folder example/ali_fasta contains the FASTA files to be converted:
+```
+example/
+└── ali_fasta/
+    ├── atp6_mafft.fas   
+    ├── atp8_mafft.fas   
+    ├── nad5_mafft.fas
+    └── nad6_mafft.fas
+```
+Execute the command:
+```bash
+python BatchFastaToAXT.py example/ali_fasta
+```
+The corresponding results will then be output to the AXTfile folder:
+```
+pamlfile/
+├── atp6_mafft.axt  
+├── atp8_mafft.axt
+├── nad5_mafft.axt 
+└── nad6_mafft.axt
+```
+At the same time, a consolidated AXT file merge.axt will be generated, with the source folder of each sequence indicated in the sequence name/description line:
+```
+#For example, the content of the file atp6_mafft.axt:
+Tapirus_bairdii_NC_063943&Tapirus_indicus_KJ417810
+ATGAACGAAAATCTATTCGC...
+ATGAACGAAAATCTATTCGC...
+...
+
+#In the merge.axt file, the content will appear as: 
+Tapirus_bairdii_NC_063943&Tapirus_indicus_KJ417810|atp6_mafft
+ATGAACGAAAATCTATTCGC...
+ATGAACGAAAATCTATTCGC...
+...
+
+#That is, the header information in individual AXT files follows the naming format "sample1&sample2", while in the merged AXT file, it adopts the format "sample1&sample2|from_filename".
+```
 
 ## 3. Gadget: Some general text processing and analysis tools, as well as code related to enrichment annotation analysis.
 
