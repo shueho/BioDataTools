@@ -638,10 +638,10 @@ MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF
 
 - **FASTA_FILE:** Provide protein sequences in FASTA format, which can be a file containing multiple sequences. 
 
-**Video tutorial:** https://www.bilibili.com/video/    
+**Video tutorial:** https://www.bilibili.com/video/BV1PayyBLECJ/    
 
 **Generated File:** 
-- `expasy_output.csv`(Table file, containing physicochemical properties of some protein sequences). 
+- `expasy_output.txt`(Table file, containing physicochemical properties of some protein sequences). 
 
 **Example:**
 
@@ -661,7 +661,7 @@ python ProteinPropertyFromExpasy.py example/text.fa
 ``` 
 The corresponding results can then be output:  
 ```
-id,Number of amino acids,Molecular weight,Theoretical pI,Total number of negatively charged residues (Asp + Glu),Total number of positively charged residues (Arg + Lys),Formula,Total number of atoms,Instability index (II),Aliphatic index,Grand average of hydropathicity (GRAVY),
+id	Number of amino acids	Molecular weight	Theoretical pI	Total number of negatively charged residues (Asp + Glu)	Total number of positively charged residues (Arg + Lys)	Formula	Total number of atoms	Instability index (II)	Aliphatic index	Grand average of hydropathicity (GRAVY)
 KAF7112153.1	242	26387.53	9.60	28	40	C 1134 H 1834 N 342 O 369 S 7	3686	46.09	65.33	-0.683	
 KAF7112159.1	215	23735.82	4.91	28	20	C 1033 H 1631 N 279 O 333 S 14	3290	46.08	73.02	-0.329	
 KAF7154833.1	86	9692.81	9.84	8	14	C 422 H 654 N 122 O 133 S 4	1335	59.07	40.81	-0.852	

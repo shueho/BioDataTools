@@ -33,9 +33,9 @@ try:
     f.close()
 except:
     f = open("expasy_output.txt","w")
-    f.write("id,")
+    f.write("id\t")
     for i in item_ls:
-            f.write(i+",")
+            f.write(i+"\t")
     f.write("\n")
     f.close()
     

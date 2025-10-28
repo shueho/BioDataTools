@@ -638,9 +638,9 @@ MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF
 - **FASTA_FILE：** 提供蛋白质序列的FASTA格式，可以是包含多个序列的文件。
 
 **生成文件：** 
-- `expasy_output.csv`（表格文件，包含部分蛋白质序列的理化性质）。
+- `expasy_output.txt`（表格文件，包含部分蛋白质序列的理化性质）。
 
-**视频教学：** https://www.bilibili.com/video/     
+**视频教学：** https://www.bilibili.com/video/BV1PayyBLECJ/     
 
 **示例：**
 
@@ -660,7 +660,7 @@ python ProteinPropertyFromExpasy.py example/text.fa
 ``` 
 即可输出对应结果：
 ```
-id,Number of amino acids,Molecular weight,Theoretical pI,Total number of negatively charged residues (Asp + Glu),Total number of positively charged residues (Arg + Lys),Formula,Total number of atoms,Instability index (II),Aliphatic index,Grand average of hydropathicity (GRAVY),
+id	Number of amino acids	Molecular weight	Theoretical pI	Total number of negatively charged residues (Asp + Glu)	Total number of positively charged residues (Arg + Lys)	Formula	Total number of atoms	Instability index (II)	Aliphatic index,Grand average of hydropathicity (GRAVY)
 KAF7112153.1	242	26387.53	9.60	28	40	C 1134 H 1834 N 342 O 369 S 7	3686	46.09	65.33	-0.683	
 KAF7112159.1	215	23735.82	4.91	28	20	C 1033 H 1631 N 279 O 333 S 14	3290	46.08	73.02	-0.329	
 KAF7154833.1	86	9692.81	9.84	8	14	C 422 H 654 N 122 O 133 S 4	1335	59.07	40.81	-0.852	
