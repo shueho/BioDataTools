@@ -2412,7 +2412,7 @@ fas_output/
 
 **Notes:** The folder must not contain unaligned sequence files or any other files, otherwise an error will occur!   
 
-**Video tutorial:** https://www.bilibili.com/video/    
+**Video tutorial:** https://www.bilibili.com/video/BV1MysQzrEsy/    
 
 **Generated File:** 
 - `AXTfile` (Folder containing the converted files, with filenames in the format: original_fasta_filename.axt).  

@@ -2409,7 +2409,7 @@ fas_output/
 
 **注意事项：** 文件夹中不能包含未比对的序列文件，也不能有其他文件，否则将会报错！  
 
-**视频教学：** https://www.bilibili.com/video/    
+**视频教学：** https://www.bilibili.com/video/BV1MysQzrEsy/      
 
 **生成文件：** 
 - `AXTfile`（文件夹，其中包含需要转换的fasta文件名+axt后缀）。      
