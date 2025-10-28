@@ -4,6 +4,7 @@
 # @Version : 1.0
 # @Project : https://github.com/shueho/BioDataTools
 # @Time    : 2022/3/25 18:00
+# @Update  : 2025/10/29 2:50
 # @Author  : Hao Xue
 # @E-mail  : studid@163.com
 # @File    : ProteinPropertyFromExpasy.py
@@ -19,15 +20,19 @@ fasta_path = sys.argv[1]
 item_ls = ["Number of amino acids",
            "Molecular weight",
            "Theoretical pI",
-           "Instability index",
+           "Total number of negatively charged residues (Asp + Glu)",
+           "Total number of positively charged residues (Arg + Lys)",
+           "Formula",
+           "Total number of atoms",
+           "Instability index (II)",
            "Aliphatic index",
            "Grand average of hydropathicity (GRAVY)"]
 
 try:
-    f = open("expasy_output.csv","r")
+    f = open("expasy_output.txt","r")
     f.close()
 except:
-    f = open("expasy_output.csv","w")
+    f = open("expasy_output.txt","w")
     f.write("id,")
     for i in item_ls:
             f.write(i+",")
@@ -52,29 +57,29 @@ def out_info(txt):
     lt = []
     #for i in ls:
 	#if "<B>" in i or "instability index" in i:
-            #lt.append(i)
-            
+            #lt.append(i) 
     d={}
     for i in ls:
-        if "Number of amino acids" in i:
-            d["Number of amino acids"]=i.split(">")[-1].strip()
-        if "Molecular weight" in i:
-            d["Molecular weight"]=i.split(">")[-1].strip()
-        if "Theoretical pI" in i:
-            d["Theoretical pI"]=i.split(">")[-1].strip()
         if "instability" in i:
-            d["Instability index"]=i.split("e")[-1].strip()
-        if "Aliphatic index" in i:
-            d["Aliphatic index"]=i.split(">")[-1].strip()
-        if "Grand average of hydropathicity (GRAVY)" in i:
-            d["Grand average of hydropathicity (GRAVY)"]=i.split(">")[-1].strip()
+            d["Instability index (II)"]=i.split("e")[-1].strip()
+            continue
+        else:
+            if "Formula" in i:
+                d["Formula"] = i.split("</strong>")[1].replace("/","").replace("<sub>"," ").strip()
+                continue
+        for j in item_ls:
+            if j in ["Instability index (II)","Formula"]:
+                continue
+            else:
+                if j in i:
+                    d[j] = i.split(">")[-1].strip()
     return d
 
 def fn(seq):
     d = out_info(askURL(seq))
-    with open("expasy_output.csv","a") as f:
+    with open("expasy_output.txt","a") as f:
         for i in item_ls:
-            f.write(d[i]+",")
+            f.write(d[i]+"\t")
         f.write("\n")
 
 def get_seq(file_name):
@@ -97,8 +102,8 @@ def main():
     lensd = len(sd)
     flag = 1
     for item in sd:
-        with open("expasy_output.csv","a") as f:
-            f.write(item+",")
+        with open("expasy_output.txt","a") as f:
+            f.write(item+"\t")
         print("{}/{}:{}".format(flag,lensd,item))
         try:
             fn(sd[item])
@@ -106,7 +111,7 @@ def main():
             try:
                 fn(sd[item])
             except:
-                with open("expasy_output.csv","a") as f:
+                with open("expasy_output.txt","a") as f:
                     f.write("error!\n")
                 print("{}:error!".format(item))
         flag += 1

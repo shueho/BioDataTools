@@ -640,6 +640,8 @@ MASTHITPQTNFSSFSKAQFMASSATSFTDLLAGDYPSSSAVSRGLSDRIAERTGSGVPKFKSIPPPSIPTSPHAVSPSF
 **生成文件：** 
 - `expasy_output.csv`（表格文件，包含部分蛋白质序列的理化性质）。
 
+**视频教学：** https://www.bilibili.com/video/     
+
 **示例：**
 
 比如 `example/text.fa` 是蛋白序列的FASTA文件：
@@ -658,12 +660,12 @@ python ProteinPropertyFromExpasy.py example/text.fa
 ``` 
 即可输出对应结果：
 ```
-id	Number of amino acids	Molecular weight	Theoretical pI	Instability index	Aliphatic index	Grand average of hydropathicity (GRAVY)
-KAF7112153.1	242	26387.53	9.6	46.09	65.33	-0.683
-KAF7112159.1	215	23735.82	4.91	46.08	73.02	-0.329
-KAF7154833.1	86	9692.81	9.84	59.07	40.81	-0.852
-KAF7153261.1	397	43507.84	9.07	56.96	61.64	-0.763
-KAF7152831.1	548	60491.94	8.44	57.65	43.27	-0.965
+id,Number of amino acids,Molecular weight,Theoretical pI,Total number of negatively charged residues (Asp + Glu),Total number of positively charged residues (Arg + Lys),Formula,Total number of atoms,Instability index (II),Aliphatic index,Grand average of hydropathicity (GRAVY),
+KAF7112153.1	242	26387.53	9.60	28	40	C 1134 H 1834 N 342 O 369 S 7	3686	46.09	65.33	-0.683	
+KAF7112159.1	215	23735.82	4.91	28	20	C 1033 H 1631 N 279 O 333 S 14	3290	46.08	73.02	-0.329	
+KAF7154833.1	86	9692.81	9.84	8	14	C 422 H 654 N 122 O 133 S 4	1335	59.07	40.81	-0.852	
+KAF7153261.1	397	43507.84	9.07	40	51	C 1863 H 2997 N 563 O 601 S 19	6043	56.96	61.64	-0.763	
+KAF7152831.1	548	60491.94	8.44	54	57	C 2613 H 4002 N 770 O 867 S 13	8265	57.65	43.27	-0.965	
 ```
 
 ### 2.08 `FeaturesBaseComponents.py [FASTA_FILE] [TABLE]`
