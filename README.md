@@ -59,6 +59,7 @@ This README document provides script files under each module and their brief fun
   <tr><td>2.36</td><td>FeatureStitch</td><td>Stitch features preserving the original coding direction</td></tr>   
   <tr><td>2.37</td><td>ReallocateFasta</td><td>Reallocate sequences from multiple FASTA files into different FASTA files</td></tr>   
   <tr><td>2.38</td><td>BatchFastaToAXT</td><td>Batch convert Fasta files to AXT format alignment files</td></tr> 
+  <tr><td>2.39</td><td>RSCUPlotPlus</td><td>Drawing of multi-species RSCU bar charts and statistical analysis of codon usage</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
@@ -2458,6 +2459,75 @@ ATGAACGAAAATCTATTCGC...
 ...
 
 #That is, the header information in individual AXT files follows the naming format "sample1&sample2", while in the merged AXT file, it adopts the format "sample1&sample2|from_filename".
+```
+
+### 2.39 `RSCUPlotPlus.R`
+
+**Function Description:** Multi-species RSCU bar chart plotting and codon usage statistics — an advanced version of Script 2.34.     
+
+**Notes:** This R script provides data summarization and plotting functions; it cannot be invoked directly from the command line and does not validate the correctness of the selected codon table.
+
+**Video tutorial:** https://www.bilibili.com/video/    
+
+**Generated File:** 
+- `01-sequences.csv` (a tabular file containing sequences of protein-coding genes along with their start and stop codon information).  
+- `02-Codon_occurrence_in_all_gene.csv` (a tabular file listing codon usage counts and frequencies across all protein-coding genes).  
+- `03-Codon_occurrence_matrix.csv` (a tabular file containing the codon preference matrix).  
+- `04-RSCU_matrix.csv` (a tabular file containing the RSCU matrix).  
+- `05-<gene_name>_RSCU.csv` (a tabular file containing RSCU values and codon usage counts for a specified gene).  
+- `06-<gene_name>_RSCU_plot_file.csv` (a tabular file containing raw data for custom plotting).  
+- `07-<gene_name>_RSCU_plot.pdf` (a plot generated using default parameters).
+
+**Example:**
+
+For example, the `example/cds` folder contains CDS sequences of protein-coding genes extracted from four species. Under actual conditions, these sequences do not need to be located in the same folder. Below is an example of one such file:  
+```
+>nad1
+ATGACCCCACTAACCCCAATAAACCTCACAATCATAACTTTATCTTACATAATCCCAAT...
+...
+>nad6
+ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGGGGTTTTAGCTGTAGC...
+```
+For example, the file `example/order.txt` contains the actual absolute paths of the CDS sequences, listed from top to bottom in the same order as the bars appear from left to right in the bar chart:
+```
+xxx/cds/demo a.fa
+xxx/cds/demo d.fa
+xxx/cds/demo c.fa
+xxx/cds/demo b.fa
+```
+Additionally, assuming you have already downloaded this script locally and placed it at `xxx/xxx/RSCUPlotPlus.R`, you can open R or RStudio and run the following command:
+```bash
+source("xxx/xxx/RSCUPlotPlus.R")
+# Note: You must source the script using its full path!
+
+# If your working directory is already set to the folder containing the script, you can run:
+# source("RSCUPlotPlus.R")
+
+# On first run, you may need to install a few R packages. After loading is complete, you can use the following code or functions:
+
+# Specify the file containing the paths and order of protein-coding gene sequences
+ord <- "example/order.txt"
+
+# Set the genetic code (codon table). It is recommended to consult 
+# https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes 
+# to choose the correct codon table.
+# In this example, genetic code table 2 is selected, so enter the number 2:
+codonTable <- 2
+
+# Run the main function to generate seven output files, including a bar plot of overall RSCU 
+# values across all protein-coding genes.
+df <- main_fun(ord, codonTable)
+
+# To export an RSCU bar plot for a specific gene, specify the 'gene' argument:
+# df <- main_fun(ord, codonTable, gene = "nad6")
+# Note: By default, results for all protein-coding genes are output (i.e., gene = "Total").
+
+# To customize the outline color between adjacent bars, specify the 'c' argument. 
+# The default is white ("#FFFFFF"):
+# df <- main_fun(ord, codonTable, c = "#000000")
+# This example changes the outline color to black.
+
+# For more customization and aesthetic details, refer to Script 2.34.
 ```
 
 ## 3. Gadget: Some general text processing and analysis tools, as well as code related to enrichment annotation analysis.

@@ -58,6 +58,7 @@
   <tr><td>2.36</td><td>FeatureStitch</td><td>按照原始的编码方向缝合特征</td></tr>   
   <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>  
   <tr><td>2.38</td><td>BatchFastaToAXT</td><td>批量转换Fasta文件到AXT格式比对文件</td></tr> 
+  <tr><td>2.39</td><td>RSCUPlotPlus</td><td>多物种RSCU柱形图绘制及密码子使用情况统计</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2455,6 +2456,71 @@ ATGAACGAAAATCTATTCGC...
 ...
 
 #也就是说单个AXT文件的描述信息是“样本1&样本2”的命名形式，合并的AXT文件时“样本1&样本2|来自文件名”的命名形式
+```
+
+### 2.39 `RSCUPlotPlus.R`
+
+**功能描述：** 多物种RSCU柱形图绘制及密码子使用情况统计，脚本2.34的进阶版。  
+
+**注意事项：** 本R脚本提供了数据统计及绘图函数，不可以直接通过命令行调用，不对密码子表选择的正确与否进行判断。
+
+**视频教学：** https://www.bilibili.com/video/    
+
+**生成文件：** 
+- `01-sequences.csv`（表格文件，包含各个蛋白编码基因的序列及起始终止密码子信息）。
+- `02-Codon_occurrence_in_all_gene.csv` （表格文件，所有蛋白编码基因的密码子使用频数及频率）。
+- `03-Codon_occurrence_matrix.csv`（表格文件，密码子偏好矩阵）。
+- `04-RSCU_matrix.csv` （表格文件，RSCU矩阵）。
+- `05-<基因名>_RSCU.csv`（表格文件，指定基因的RSCU值及密码子使用频数）。
+- `06-<基因名>_RSCU_plot_file.csv` （表格文件，用于自定义绘图的原始数据）。
+- `07-<基因名>_RSCU_plot.pdf`（使用默认参数绘制的图形）。
+
+**示例：**
+
+比如 `example/cds` 文件夹下是4个物种提取到的蛋白编码基因的CDS序列，实际条件下这些序列无需在同一个文件夹下，下面是其中一个的举例：
+```
+>nad1
+ATGACCCCACTAACCCCAATAAACCTCACAATCATAACTTTATCTTACATAATCCCAAT...
+...
+>nad6
+ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGGGGTTTTAGCTGTAGC...
+```
+比如 `example/order.txt` 文件是各个cds序列的实际绝对路径，从上到下依次是柱形图从左至右的次序：
+```
+xxx/cds/demo a.fa
+xxx/cds/demo d.fa
+xxx/cds/demo c.fa
+xxx/cds/demo b.fa
+```
+此外已经在本地下载了本脚本，假设将脚本放置在`xxx/xxx/RSCUPlotPlus.R`位置，可以打开R或者RStudio,执行命令：
+```bash
+source("xxx/xxx/RSCUPlotPlus.R")
+# 需要注意source到脚本具体路径！
+
+# 如果已经把工作目录设定到了脚本所在文件夹，可以直接运行：
+# source("RSCUPlotPlus.R")
+``` 
+如果是第一次运行可能需要下载几个R包，加载完成后可以使用下面代码或函数：
+```
+# 设定蛋白编码基因所在路径以及次序
+ord = "example/order.txt"
+
+# 设定密码子表，建议查看https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?chapter=tgencodes，选择正确的密码子表。
+# 示例选择的是第二套密码子表，因此输入数字2：
+codonTable = 2
+
+# 运行函数，即可生成7个结果文件，其中包括所有蛋白编码基因总体的RSCU柱形图。
+df = main_fun(ord,codonTable)
+
+# 如果想导出指定基因的RSCU柱形图可以指定gene参数
+# df = main_fun(ord,codonTable,gene="nad6")
+# 注意默认输出全部蛋白编码基因的结果，即gene="Total"。
+
+# 如果想导出指定不同相邻柱形图的轮廓可以指定c参数，默认是“#FFFFFF”即白色
+# df = main_fun(ord,codonTable,c="#000000")
+# 示例输出将改为黑色轮廓。
+
+# 更多美化细节可以参考脚本2.34.	
 ```
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
