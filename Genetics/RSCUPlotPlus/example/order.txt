@@ -1,0 +1,4 @@
+./cds/demo a.fa
+./cds/demo d.fa
+./cds/demo c.fa
+./cds/demo b.fa
