@@ -229,7 +229,7 @@ main_fun = function(ord,codonTable,gene="Total",h1=0.6,h2=6,c="#FFFFFF"){
   w = 0.8/length(pcgs)
   f = 0
   for (pcg in pcgs) {
-    df = main_fun_one(pcg,codonTable,gene="Total")
+    df = main_fun_one(pcg,codonTable,gene)
     colnames(df) = c("V1","V2","V3","V4","V5")
     df$V6 = match(df$V2,unique(df$V2)[order(unique(df$V2))])
     df$V7 = df$V6-0.4+w/2+f*w
@@ -242,7 +242,7 @@ main_fun = function(ord,codonTable,gene="Total",h1=0.6,h2=6,c="#FFFFFF"){
   p1<-ggplot(dfs,
              aes(fill=as.character(V4),x=V7,y=V3))+
     geom_bar(position = "stack",
-             stat="identity",width=w,,colour = "#FFFFFF")+
+             stat="identity",width=w,,colour = c)+
     theme_bw()+
     scale_y_continuous(expand=c(0,0),
                        limits = c(0,yLim))+
