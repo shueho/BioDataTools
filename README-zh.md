@@ -53,7 +53,7 @@
   <tr><td>2.31</td><td>MitosToGFF</td><td>将Mitos注释结果转换为GFF文件</td></tr>
   <tr><td>2.32</td><td>MitosToFasta</td><td>将Mitos注释结果转换为Fasta文件</td></tr> 
   <tr><td>2.33</td><td>SsToFold</td><td>将tRNAscan-SE产生的二级结构文件（.ss）转换为RNAplot程序支持的格式</td></tr> 
-  <tr><td>2.34</td><td>RSCUPlot</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
+  <tr><td>2.34</td><td>RSCUPlot/RSCUPlot2</td><td>得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图</td></tr> 
   <tr><td>2.35</td><td>splitGB</td><td>拆分多序列的GenBank文件</td></tr>   
   <tr><td>2.36</td><td>FeatureStitch</td><td>按照原始的编码方向缝合特征</td></tr>   
   <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>  
@@ -2145,9 +2145,9 @@ python SsToFold.py example/trnascanse.ss
 #将所有的svg文件整理到一个文件中，可以使用代码4.03进行美化。
 ```     
 
-### 2.34 `RSCUPlot.R`
+### 2.34 `RSCUPlot.R`以及`RSCUPlot2.R` 
 
-**功能描述：** 得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图。  
+**功能描述：** 得到蛋白编码基因的密码子偏好性，绘制RSCU柱形图。`RSCUPlot.R`脚本按照密码子前两位将氨基酸进行分组，使得每个横坐标最多含有4个密码子，导出的图形是扁平的矩形；`RSCUPlot2.R`不对氨基酸进行分组，导出的图片是近似正方形的矩形。  
 
 **注意事项：** 本R脚本提供了数据统计及绘图函数，不可以直接通过命令行调用。
 
@@ -2172,13 +2172,15 @@ ATGACCCCACTAACCCCAATAAACCTCACAATCATAACTTTATCTTACATAATCCCAAT...
 >nad6
 ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGGGGTTTTAGCTGTAGC...
 ```
-此外已经在本地下载了本脚本，假设将脚本放置在`xxx/xxx/RSCUPlot.R`位置，可以打开R或者RStudio,执行命令：
+此外已经在本地下载了本脚本，假设将脚本放置在`xxx/xxx/RSCUPlot.R`或`xxx/xxx/RSCUPlot2.R`位置，可以打开R或者RStudio,执行命令：
 ```bash
 source("xxx/xxx/RSCUPlot.R")
+# 或source("xxx/xxx/RSCUPlot2.R")
 # 需要注意source到脚本具体路径！
 
 # 如果已经把工作目录设定到了脚本所在文件夹，可以直接运行：
 # source("RSCUPlot.R")
+# 或source("xxx/xxx/RSCUPlot2.R")
 ``` 
 如果是第一次运行可能需要下载几个R包，加载完成后可以使用下面代码或函数：
 ```
@@ -2203,7 +2205,8 @@ df = main_fun(pcg,codonTable)
 # h1与密码子矩形垂直间隙有关，如果矩形重叠可以适当增加该值；
 # h2是输出图片的高度，注意增加h2必须相应调整h1参数可以美观；
 # yLim是柱形图最高限度，除了第5套密码子，各个氨基酸的RSCU值之和不超过6，因此6.2是合适的，第5套密码子Ser氨基酸对应有8个密码子，所以需要设置8左右是合适的。
-# 通过作者测试h1=0.6，h2=6可以生成较好的扁平图形，h1=0.2，h2=12可以生成近似正方形的图形。
+# 通过作者测试对于RSCUPlot.R脚本，h1=0.6，h2=6可以生成较好的扁平图形，h1=0.2，h2=12可以生成近似正方形的图形。
+# 对于RSCUPlot2.R脚本，h1=0.6，h2=12较为合适！
 # 自定义绘图的例子：plot_rscu(df,"111.pdf",0.1,24,8.2)
 # 绘制完之后建议使用PDF编辑软件，缩小密码子和柱形图的垂直距离。
 # 如果觉得默认图案不太美观，可以自行修改函数！
