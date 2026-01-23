@@ -2152,7 +2152,7 @@ python SsToFold.py example/trnascanse.ss
 
 ### 2.34 `RSCUPlot.R` and `RSCUPlot2.R`
 
-**Function Analyze codon usage bias of protein-coding genes and plot RSCU bar charts. The `RSCUPlot.R` script groups amino acids based on the first two bases of the codon, ensuring a maximum of 4 codons per x-axis category, resulting in a flattened rectangular output. In contrast, `RSCUPlot2.R` does not group amino acids, producing an output that is closer to a square rectangle.   
+**Function Description:** Analyze codon usage bias of protein-coding genes and plot RSCU bar charts. The `RSCUPlot.R` script groups amino acids based on the first two bases of the codon, ensuring a maximum of 4 codons per x-axis category, resulting in a flattened rectangular output. In contrast, `RSCUPlot2.R` does not group amino acids, producing an output that is closer to a square rectangle.   
 
 **Notes:** This R script provides data statistics and plotting functions and cannot be directly invoked via the command line.
 
