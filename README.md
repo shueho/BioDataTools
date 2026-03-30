@@ -60,6 +60,7 @@ This README document provides script files under each module and their brief fun
   <tr><td>2.37</td><td>ReallocateFasta</td><td>Reallocate sequences from multiple FASTA files into different FASTA files</td></tr>   
   <tr><td>2.38</td><td>BatchFastaToAXT</td><td>Batch convert Fasta files to AXT format alignment files</td></tr> 
   <tr><td>2.39</td><td>RSCUPlotPlus</td><td>Drawing of multi-species RSCU bar charts and statistical analysis of codon usage</td></tr> 
+  <tr><td>2.40</td><td>GBtoInformationTable</td><td>Extract feature information tables from GenBank files</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
@@ -2532,6 +2533,49 @@ df <- main_fun(ord, codonTable)
 
 # For more customization and aesthetic details, refer to Script 2.34.
 ```
+
+### 2.40 `GBtoInformationTable.py [GB_FILE]`
+
+**Function Description:** Extract feature information tables from GenBank files.   
+
+- **GB_FILE：** GenBank file from which feature information needs to be extracted.  
+        
+**Generated File:** 
+
+- `result.txt` (information table without translation results).  
+- `result_add_translation.txt` (information table with translation results).  
+
+**Example:**
+
+For example, the file `example/test.gb` is the GenBank file from which feature information needs to be extracted. Note that this example is only a formally valid GenBank file.
+```
+LOCUS       test              27317 bp ss-RNA     linear   VRL 17-AUG-2021
+DEFINITION  xxx.
+ACCESSION   xxx
+VERSION     xxx
+DBLINK      xxx
+BioProject: PRJNA927338
+...
+  27241 agtaactgct aatggaacgg tttcgatatg gatacacaaa aaaaaaaaaa aaaaaaaaaa
+    27301 aaaaaaaaaa aaaaaaa
+//
+```
+Run the command:
+```bash
+python GBtoInformationTable.py example/test.gb
+```     
+and the result files will be generated as follows:
+```
+# Take the file without translation results as an example.  
+feature_type	location	start	end	strand	gene	product	codon_start	clone	transl_except	organism	transl_table	protein_id	note	db_xref	mol_type	locus_tag	experiment
+source	1..27317	1	27317	+	NA	NA	NA	inf-1	NA	Human coronavirus 229E	NA	NA	NA	taxon:11137	genomic RNA	NA	NA
+5'UTR	1..292	1	292	+	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+gene	293..20568	293	20568	+	NA	NA	NA	NA	NA	NA	NA	NA	NA	GeneID:918764	NA	HCoV229Egp1	NA
+rRNA	12..883	12	883	+	NA	rrnS	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+...
+
+# NA indicates that the information does not exist.
+```  
 
 ## 3. Gadget: Some general text processing and analysis tools, as well as code related to enrichment annotation analysis.
 

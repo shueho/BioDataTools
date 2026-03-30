@@ -59,6 +59,7 @@
   <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>  
   <tr><td>2.38</td><td>BatchFastaToAXT</td><td>批量转换Fasta文件到AXT格式比对文件</td></tr> 
   <tr><td>2.39</td><td>RSCUPlotPlus</td><td>多物种RSCU柱形图绘制及密码子使用情况统计</td></tr> 
+  <tr><td>2.40</td><td>GBtoInformationTable</td><td>从GenBank文件中提取特征信息表格</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2525,6 +2526,49 @@ df = main_fun(ord,codonTable)
 
 # 更多美化细节可以参考脚本2.34.	
 ```
+
+### 2.40 `GBtoInformationTable.py [GB_FILE]`
+
+**功能描述：** 从GenBank文件中提取特征信息表格。   
+
+- **GB_FILE：** 需要提取特征信息的GenBank文件。  
+        
+**生成文件：** 
+
+- `result.txt`（不包含翻译结果的信息表格）。
+- `result_add_translation.txt`（包含翻译结果的信息表格）。
+
+**示例：**
+
+比如 `example/test.gb` 文件是需要提取特征信息的文件，注意本示例只是形式上正确的GenBank文件：
+```
+LOCUS       test              27317 bp ss-RNA     linear   VRL 17-AUG-2021
+DEFINITION  xxx.
+ACCESSION   xxx
+VERSION     xxx
+DBLINK      xxx
+BioProject: PRJNA927338
+...
+  27241 agtaactgct aatggaacgg tttcgatatg gatacacaaa aaaaaaaaaa aaaaaaaaaa
+    27301 aaaaaaaaaa aaaaaaa
+//
+```
+执行命令：
+```bash
+python GBtoInformationTable.py example/test.gb
+```     
+即可生成结果文件：
+```
+# 以不包括翻译结果文件为例。
+feature_type	location	start	end	strand	gene	product	codon_start	clone	transl_except	organism	transl_table	protein_id	note	db_xref	mol_type	locus_tag	experiment
+source	1..27317	1	27317	+	NA	NA	NA	inf-1	NA	Human coronavirus 229E	NA	NA	NA	taxon:11137	genomic RNA	NA	NA
+5'UTR	1..292	1	292	+	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+gene	293..20568	293	20568	+	NA	NA	NA	NA	NA	NA	NA	NA	NA	GeneID:918764	NA	HCoV229Egp1	NA
+rRNA	12..883	12	883	+	NA	rrnS	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+...
+
+# NA表示不存在该信息。
+```  
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
