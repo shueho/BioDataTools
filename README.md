@@ -60,7 +60,8 @@ This README document provides script files under each module and their brief fun
   <tr><td>2.37</td><td>ReallocateFasta</td><td>Reallocate sequences from multiple FASTA files into different FASTA files</td></tr>   
   <tr><td>2.38</td><td>BatchFastaToAXT</td><td>Batch convert Fasta files to AXT format alignment files</td></tr> 
   <tr><td>2.39</td><td>RSCUPlotPlus</td><td>Drawing of multi-species RSCU bar charts and statistical analysis of codon usage</td></tr> 
-  <tr><td>2.40</td><td>GBtoInformationTable</td><td>Extract feature information tables from GenBank files</td></tr> 
+  <tr><td>2.40</td><td>GBtoFeatureTable</td><td>Extract feature information tables from GenBank files</td></tr> 
+  <tr><td>2.41</td><td>FastaAlignPos</td><td>Corresponds to the positions of each base in the FASTA files before and after alignment</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
@@ -2534,7 +2535,7 @@ df <- main_fun(ord, codonTable)
 # For more customization and aesthetic details, refer to Script 2.34.
 ```
 
-### 2.40 `GBtoInformationTable.py [GB_FILE]`
+### 2.40 `GBtoFeatureTable.py [GB_FILE]`
 
 **Function Description:** Extract feature information tables from GenBank files.   
 
@@ -2562,9 +2563,9 @@ BioProject: PRJNA927338
 ```
 Run the command:
 ```bash
-python GBtoInformationTable.py example/test.gb
+python GBtoFeatureTable.py example/test.gb
 ```     
-and the result files will be generated as follows:
+and the result files will be generated as follows:  
 ```
 # Take the file without translation results as an example.  
 feature_type	location	start	end	strand	gene	product	codon_start	clone	transl_except	organism	transl_table	protein_id	note	db_xref	mol_type	locus_tag	experiment
@@ -2575,7 +2576,53 @@ rRNA	12..883	12	883	+	NA	rrnS	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
 ...
 
 # NA indicates that the information does not exist.
-```  
+```
+  
+### 2.41 `FastaAlignPos.py [ALIGN_FILE] [POS_FILE]`
+
+**Function Description:** Corresponds to the positions of each base in the FASTA files before and after alignment.     
+
+- **ALIGN_FILE：** For the aligned FASTA file, use the reference sequence as the starting sequence, or retain only the reference sequence.     
+- **POS_FILE：** Start and end positions of each gene in the unaligned FASTA, with header and two columns only.    
+
+**Usage scenario:** Identify the coordinates of genes in the aligned sequences.  
+
+**Note:** The first sequence in the FASTA file must match the coordinate file; otherwise, incorrect results will be obtained.   
+        
+**Generated File:** 
+
+- `result.txt` (position correspondence table)   
+
+**Example:**
+
+For example, the `example` folder contains the aligned FASTA file and the feature positions of the first sequence in the FASTA file before alignment.  
+```
+# Alignment file: Alignment.fasta, where the first sequence is the reference sequence.
+>REF genome
+----AAGTAC---ATCTATCTACAGATAGAAAAGTTGCTTTTTAGACTTTGTGTCTACTT
+TTCTCAACTAAACGAAATT---GCTATGGCCGGCATCTTTGATGCTGGAGTCGTAGTGTA
+>OTHER genome
+TTTTAAGTAC---ATCTATCTACAGATAGAAAAGTTGCTTTTTAGACTTTGTGTCTACTT
+TTCTCAACTAAACGAAATT---GCTATGGCCGGCATCTTTGATGCTGGAGTCGTAGTGTA
+
+# Position information of the reference sequence before alignment: pos.txt. Note that the file must contain two columns and a header line.
+start	end
+1	5
+10	16
+8	50
+```
+Run the command:  
+```bash
+python FastaAlignPos.py example/Alignment.fasta example/pos.txt
+```     
+and the result file `result.txt` will be generated:  
+```
+# The third column corresponds to the aligned coordinates of the first column, and the fourth column corresponds to the aligned coordinates of the second column.
+start	end	pos_1	pos_2
+1	5	5	9
+10	16	17	23
+8	50	15	57
+```   
 
 ## 3. Gadget: Some general text processing and analysis tools, as well as code related to enrichment annotation analysis.
 

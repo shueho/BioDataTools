@@ -59,7 +59,8 @@
   <tr><td>2.37</td><td>ReallocateFasta</td><td>将多个fasta文件的序列重新分配到不同的fasta中</td></tr>  
   <tr><td>2.38</td><td>BatchFastaToAXT</td><td>批量转换Fasta文件到AXT格式比对文件</td></tr> 
   <tr><td>2.39</td><td>RSCUPlotPlus</td><td>多物种RSCU柱形图绘制及密码子使用情况统计</td></tr> 
-  <tr><td>2.40</td><td>GBtoInformationTable</td><td>从GenBank文件中提取特征信息表格</td></tr> 
+  <tr><td>2.40</td><td>GBtoFeatureTable</td><td>从GenBank文件中提取特征信息表格</td></tr> 
+  <tr><td>2.41</td><td>FastaAlignPos</td><td>对应比对前后 FASTA文件中各碱基的坐标位置</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2527,7 +2528,7 @@ df = main_fun(ord,codonTable)
 # 更多美化细节可以参考脚本2.34.	
 ```
 
-### 2.40 `GBtoInformationTable.py [GB_FILE]`
+### 2.40 `GBtoFeatureTable.py [GB_FILE]`
 
 **功能描述：** 从GenBank文件中提取特征信息表格。   
 
@@ -2555,7 +2556,7 @@ BioProject: PRJNA927338
 ```
 执行命令：
 ```bash
-python GBtoInformationTable.py example/test.gb
+python GBtoFeatureTable.py example/test.gb
 ```     
 即可生成结果文件：
 ```
@@ -2569,6 +2570,52 @@ rRNA	12..883	12	883	+	NA	rrnS	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
 
 # NA表示不存在该信息。
 ```  
+
+### 2.41 `FastaAlignPos.py [ALIGN_FILE] [POS_FILE]`
+
+**功能描述：** 对应比对前后fasta文件中各个碱基的位置。   
+
+- **ALIGN_FILE：** 比对后的FASTA文件，将参考序列作为起始序列，或者只保留参考序列。  
+- **POS_FILE：** 未比对时各个基因的起止位置坐标，需要包括标题行，只能有两列。  
+
+**使用场景：** 找到比对后的基因位置。 
+
+**注意事项：** FASTA文件中的第一个序列要与坐标文件匹配，否则会得到错误的结果。 
+        
+**生成文件：** 
+
+- `result.txt`（位置对应表格）。
+
+**示例：**
+
+比如 `example` 文件夹包含比对好的FASTA文件以及FASTA文件中第一个序列在未比对时的特征位置：
+```
+# 比对文件：Alignment.fasta，第一个序列时参考序列。
+>REF genome
+----AAGTAC---ATCTATCTACAGATAGAAAAGTTGCTTTTTAGACTTTGTGTCTACTT
+TTCTCAACTAAACGAAATT---GCTATGGCCGGCATCTTTGATGCTGGAGTCGTAGTGTA
+>OTHER genome
+TTTTAAGTAC---ATCTATCTACAGATAGAAAAGTTGCTTTTTAGACTTTGTGTCTACTT
+TTCTCAACTAAACGAAATT---GCTATGGCCGGCATCTTTGATGCTGGAGTCGTAGTGTA
+
+# 参考序列未比对前的位置信息：pos.txt，注意需要包括两列，需要有标题行。
+start	end
+1	5
+10	16
+8	50
+```
+执行命令：
+```bash
+python FastaAlignPos.py example/Alignment.fasta example/pos.txt
+```     
+即可生成结果文件 `result.txt` ：
+```
+# 第三列对应第一例比对后的坐标，第四列对应第二列比对后的坐标
+start	end	pos_1	pos_2
+1	5	5	9
+10	16	17	23
+8	50	15	57
+```   
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
