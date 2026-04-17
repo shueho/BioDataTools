@@ -56,7 +56,7 @@ def generate_gene(text, x, y, miss=False):
     flag = cd.get(text, ['#FFFFFF',3])[1]
     height = H
     width = W1 if flag == '3' else W2
-    font_size = 20 if flag not in '24' else 15  
+    font_size = 20 if str(flag) not in '24' else 15  
     font_style = "italic" if flag in ['3', '4'] else "normal"
     color = '#FFFFFF' if miss else cd.get(text, ['#FFFFFF'])[0]
     text_x = x + width/2
