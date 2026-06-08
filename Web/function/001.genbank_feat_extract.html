@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenBank特征提取 - BioDataTools 网页版</title>
+    <link rel="stylesheet" href="COMMON/global.css">
+    <style>
+        .radio-box {
+            margin: 10px 0 15px;
+        }
+        .radio-box label {
+            margin-right: 25px;
+            cursor: pointer;
+        }
+        .file-input, .text-input {
+            margin: 10px 0;
+        }
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        .filter-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0 0 0;
+        }
+        .tip-text {
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .warn { color: #e67700; }
+        .error { color: #dc3545; }
+        .success { color: #28a745; }
+        .btn {
+            padding: 8px 20px;
+            background: #1f4068;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+        .result-item {
+            border: 1px solid #e8edf2;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        .seq-area {
+            word-break: break-all;
+            font-family: Consolas, monospace;
+            margin-top: 8px;
+            line-height: 1.8;
+        }
+        .result-toolbar {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrap">
+            <div class="site-title">
+                <h1>BioDataTools 网页版</h1>
+                <div class="author">脚本原作者：Paul Stothard, University of Alberta, Canada（修改：地上飞猪）</div>
+            </div>
+            <div>
+                <a href="https://space.bilibili.com/33053326" target="_blank" class="bilibili-link">前往B站主页</a>
+                <a href="https://github.com/shueho/BioDataTools" target="_blank" class="github-link">GitHub项目</a>
+                <a href="../index.html" target="_self" class="back-home">返回首页</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main" id="app">
+        <div class="page-intro">
+            <h2>GenBank 特征序列提取</h2>
+            <p>支持上传GB文件/粘贴GB文本，提取基因、CDS、mRNA、内含子等特征序列。</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">第一步：导入 GenBank 注释文件</div>
+            <div class="radio-box">
+                <label>
+                    <input type="radio" name="inputMode" value="file" checked onchange="switchInput()"> 上传 GB 文件
+                </label>
+                <label>
+                    <input type="radio" name="inputMode" value="text" onchange="switchInput()"> 粘贴 GB 文本
+                </label>
+            </div>
+            <div class="file-input">
+                <input type="file" id="gbFile" accept=".gb,.gbk,.genbank">
+            </div>
+            <div class="text-input">
+                <textarea id="gbText" placeholder="请粘贴完整 GenBank 格式内容..." disabled></textarea>
+            </div>
+            <div id="msgTip" class="tip-text"></div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">第二步：筛选提取特征</div>
+            <div class="filter-box">
+                <label><input type="checkbox" value="gene" checked> gene</label>
+                <label><input type="checkbox" value="CDS" checked> CDS</label>
+                <label><input type="checkbox" value="rRNA" checked> rRNA</label>
+                <label><input type="checkbox" value="tRNA" checked> tRNA</label>
+                <label><input type="checkbox" value="intron"> intron</label>
+                <label><input type="checkbox" value="exon"> exon</label>
+            </div>
+            <div class="filter-box" style="margin-top:8px;">
+                <label><input type="checkbox" value="D-loop"> D-loop</label>
+                <label><input type="checkbox" value="promoter"> promoter</label>
+                <label><input type="checkbox" value="terminator"> terminator</label>
+                <label><input type="checkbox" value="5'UTR"> 5'UTR</label>
+                <label><input type="checkbox" value="3'UTR"> 3'UTR</label>
+                <label><input type="checkbox" value="misc_feature"> misc_feature</label>
+            </div>
+            <div style="margin-top:15px;">
+                <button class="btn" onclick="parseGB()">开始解析提取</button>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">第三步：提取结果</div>
+            <div class="result-toolbar">
+                <button class="btn" id="copyAllBtn" onclick="copyAllFasta()" disabled>复制全部序列</button>
+                <button class="btn" id="downloadBtn" onclick="downloadFasta()" disabled>下载FASTA</button>
+                <span id="toolbarTip" class="tip-text"></span>
+            </div>
+            <div id="resultBox"></div>
+        </div>
+    </div>
+
+    <footer>
+        <span class="donate-wrap">
+            赞赏支持
+            <div class="donate-tip">
+                <img class="donate-img" src="../images/donate.png" alt="捐赠二维码">
+            </div>
+        </span>
+        <div class="email">联系作者：studid@163.com</div>
+        BioDataTools 网页版 &copy; 2026 地上飞猪
+    </footer>
+
+    <script>
+        let rawGBContent = "";
+        let fastaAll = ""; // 用于保存全部FASTA
+        const msgTip = document.getElementById("msgTip");
+        const resultBox = document.getElementById("resultBox");
+        const gbFile = document.getElementById("gbFile");
+        const gbText = document.getElementById("gbText");
+        const copyAllBtn = document.getElementById("copyAllBtn");
+        const downloadBtn = document.getElementById("downloadBtn");
+        const toolbarTip = document.getElementById("toolbarTip");
+
+        function switchInput() {
+            const mode = document.querySelector('input[name="inputMode"]:checked').value;
+            rawGBContent = "";
+            fastaAll = "";
+            resultBox.innerHTML = "";
+            msgTip.innerHTML = "";
+            toolbarTip.innerHTML = "";
+            copyAllBtn.disabled = true;
+            downloadBtn.disabled = true;
+            if (mode === "file") {
+                gbFile.disabled = false;
+                gbText.disabled = true;
+                gbText.value = "";
+            } else {
+                gbFile.disabled = true;
+                gbFile.value = "";
+                gbText.disabled = false;
+            }
+        }
+
+        gbFile.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+                rawGBContent = ev.target.result;
+                msgTip.innerHTML = `<span class="success">✅ 文件读取成功：${file.name}</span>`;
+                resultBox.innerHTML = "";
+                fastaAll = "";
+                copyAllBtn.disabled = true;
+                downloadBtn.disabled = true;
+            };
+            reader.readAsText(file);
+        });
+
+        function filterFastaTitle(str) {
+            if (!str) return "";
+            return str.replace(/[\f\n\r\t]+/g, "").trim();
+        }
+        function removeNonDna(str) {
+            if (!str) return "";
+            return str.replace(/[^ATGCatgc]/g, "").toUpperCase();
+        }
+        function reverse(str) {
+            return str.split("").reverse().join("");
+        }
+        function complement(str) {
+            const map = {
+                A:"T",T:"A",C:"G",G:"C",
+                R:"Y",Y:"R",M:"K",K:"M",
+                S:"S",W:"W",H:"D",D:"H",
+                V:"B",B:"V",N:"N"
+            };
+            let res = "";
+            for(let c of str) res += map[c] || c;
+            return res;
+        }
+        function addReturns(str) { return str; }
+        function hasAmbiguousBase(seq) {
+            return /[RYMKSWHBVDNrymkshbvd]/.test(seq);
+        }
+
+        function Feature(strand) {
+            this.strand = strand;
+            this.fragments = [];
+        }
+        Feature.prototype.addFragment = function(sequence) {
+            this.fragments.push(sequence);
+        };
+        Feature.prototype.writeFeature = function() {
+            let seq = this.fragments.join("");
+            if (this.strand === "complement") {
+                seq = reverse(complement(seq));
+            }
+            return seq;
+        };
+
+        function genBankFeatExtract (genBankFile,outputType,targetKeys) {
+            let outputHtml = "";
+            let fasta = "";
+            genBankFile = "_" + genBankFile + "_";
+            var recordArray = genBankFile.split(/LOCUS\s\s\s[^\f\n\r]*/m);
+            for (var i=1; i < recordArray.length; i++) {
+                var mainArray = recordArray[i].split(/DEFINITION|ACCESSION|FEATURES|ORIGIN[^\f\n\r]*/);
+                var dnaSequenceArray = mainArray[4].split (/\/{2}/);
+                var dnaSequence = removeNonDna(dnaSequenceArray[0]);
+                if(!dnaSequence){
+                    outputHtml += '<p class="error">❌ 未检测到有效核酸序列</p>';
+                    continue;
+                }
+                var featureArray = mainArray[3].split(/[\f\n\r] {5,12}\b/);
+                let featHtml = prepareFeatures(featureArray,dnaSequence,outputType,targetKeys);
+                outputHtml += featHtml.html;
+                fasta += featHtml.fasta;
+            }
+            return { html:outputHtml, fasta:fasta };
+        }
+
+        function prepareFeatures (arrayOfFeatures,dnaSequence,outputType,targetKeys) {
+            let outHtml = "";
+            let outFasta = "";
+            for (var i=1; i < arrayOfFeatures.length; i++) {
+                arrayOfFeatures[i] = arrayOfFeatures[i].replace(/[\[\]\*]/g,"");
+                let featureTitle = (arrayOfFeatures[i].match(/[^ \f\n\r\t\v]+ /) || [""])[0].trim();
+                if (!targetKeys.includes(featureTitle.toUpperCase())) continue;
+
+                let geneName = "";
+                let geneMatch = arrayOfFeatures[i].match(/\/gene\s*=\s*["']([^"']+)["']/i);
+                if(geneMatch) geneName = geneMatch[1];
+
+                let firstQualifier = "";
+                let qMatch = arrayOfFeatures[i].match(/\/[^\f\n\r]+/);
+                if(qMatch) firstQualifier = qMatch[0];
+
+                let posPart = arrayOfFeatures[i].replace(new RegExp("^\\s*"+featureTitle),"").split(/\//)[0];
+                let seq = printFeature(posPart,dnaSequence,outputType);
+                let seqLen = seq.length;
+
+                let header = `>${geneName||"NA"} |${featureTitle}|${firstQualifier||"NA"}|len=${seqLen}`;
+                let warn = hasAmbiguousBase(seq) ? ' <span class="warn">⚠️ 含简并碱基</span>' : '';
+
+                outHtml += `<div style="margin:12px 0;">
+                    <p><strong>${header}</strong>${warn}</p>
+                    <div class="seq-area">${seq}</div>
+                </div>`;
+                outFasta += header + "\n" + seq + "\n";
+            }
+            return { html:outHtml, fasta:outFasta };
+        }
+
+        function printFeature(featurePos,dnaSequence,outputType) {
+            featurePos = featurePos.replace(/<|>/g,"");
+            if (featurePos.search(/complement/) != -1) {
+                var feature = new Feature("complement");
+            } else {
+                var feature = new Feature("direct");
+            }
+            var posArray = featurePos.replace(/\)/g,"").split(/\(/);
+            var pairArray = posArray[posArray.length-1].split(/\,/);
+            for (var j = 0; j < pairArray.length; j++) {
+                var range = pairArray[j].split(/\.\./);
+                var start = parseInt(range[0])-1;
+                var end = parseInt(range[1]);
+                feature.addFragment(dnaSequence.substring(start,end));
+            }
+            return feature.writeFeature();
+        }
+
+        function parseGB() {
+            resultBox.innerHTML = "";
+            msgTip.innerHTML = "";
+            toolbarTip.innerHTML = "";
+            fastaAll = "";
+            copyAllBtn.disabled = true;
+            downloadBtn.disabled = true;
+
+            const mode = document.querySelector('input[name="inputMode"]:checked').value;
+            if (mode === "text") {
+                rawGBContent = gbText.value;
+            }
+            const content = rawGBContent;
+            if (!content.trim()) {
+                msgTip.innerHTML = `<span class="error">❌ 请先上传文件或粘贴GB文本</span>`;
+                return;
+            }
+            const checks = document.querySelectorAll('.filter-box input:checked');
+            if (checks.length === 0) {
+                msgTip.innerHTML = `<span class="error">❌ 请至少选择一种特征</span>`;
+                return;
+            }
+            const targetKeys = Array.from(checks).map(cb => cb.value.toUpperCase());
+            const res = genBankFeatExtract(content, "separated", targetKeys);
+            resultBox.innerHTML = `<div class="result-item">${res.html}</div>`;
+            fastaAll = res.fasta;
+
+            if (fastaAll) {
+                copyAllBtn.disabled = false;
+                downloadBtn.disabled = false;
+            }
+        }
+
+        // 复制全部FASTA
+        function copyAllFasta() {
+            if (!fastaAll) return;
+            navigator.clipboard.writeText(fastaAll).then(() => {
+                toolbarTip.innerHTML = '<span class="success">✅ 已复制全部序列</span>';
+            }).catch(() => {
+                toolbarTip.innerHTML = '<span class="error">❌ 复制失败，请手动复制</span>';
+            });
+        }
+
+        // 下载FASTA文件
+        function downloadFasta() {
+            if (!fastaAll) return;
+            const blob = new Blob([fastaAll], {type:"text/plain"});
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "features.fasta";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>

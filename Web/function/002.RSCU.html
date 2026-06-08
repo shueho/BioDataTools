@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密码子偏好性 & RSCU 计算 - BioDataTools 网页版</title>
+    <!-- 公共样式统一调用 -->
+    <link rel="stylesheet" href="COMMON/global.css">
+    <style>
+        /* 本页面局部样式，和 GenBank 页面保持一致 */
+        .radio-box {
+            margin: 10px 0 15px;
+        }
+        .radio-box label {
+            margin-right: 25px;
+            cursor: pointer;
+        }
+        .file-input, .text-input {
+            margin: 10px 0;
+        }
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        .filter-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0 0 0;
+            align-items: center;
+        }
+        .tip-text {
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .warn { color: #e67700; }
+        .error { color: #dc3545; }
+        .success { color: #28a745; }
+        .btn {
+            padding: 8px 20px;
+            background: #1f4068;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+        .result-item {
+            border: 1px solid #e8edf2;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        .custom-codon-box {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px dashed #999;
+            border-radius: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-family: Consolas, monospace;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f5f7fa;
+        }
+        select {
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .hide {
+            display: none;
+        }
+        .gene-title {
+            font-weight: bold;
+            margin: 8px 0;
+            font-size: 15px;
+        }
+        .result-top {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 完整原版头部：B站 + GitHub + 返回首页 -->
+    <header>
+        <div class="header-wrap">
+            <div class="site-title">
+                <h1>BioDataTools 网页版</h1>
+                <div class="author">作者：地上飞猪</div>
+            </div>
+            <div>
+                <a href="https://space.bilibili.com/33053326" target="_blank" class="bilibili-link">前往B站主页</a>
+                <a href="https://github.com/shueho/BioDataTools" target="_blank" class="github-link">GitHub项目</a>
+                <a href="../index.html" target="_self" class="back-home">返回首页</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main" id="app">
+        <div class="page-intro">
+            <h2>密码子使用偏好 & RSCU 计算</h2>
+            <p>导入 FASTA 序列，计算密码子使用频数与同义密码子相对使用度(RSCU)。</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">第一步：导入 FASTA 序列</div>
+            <div class="radio-box">
+                <label>
+                    <input type="radio" name="inputMode" value="file" checked onchange="switchInput()"> 上传FASTA文件
+                </label>
+                <label>
+                    <input type="radio" name="inputMode" value="text" onchange="switchInput()"> 粘贴FASTA文本
+                </label>
+            </div>
+            <div class="file-input">
+                <input type="file" id="fastaFile" accept=".fasta,.fa,.fna,.txt">
+            </div>
+            <div class="text-input">
+                <textarea id="fastaText" placeholder="粘贴标准 FASTA 内容" disabled></textarea>
+            </div>
+            <div id="msgTip" class="tip-text"></div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">第二步：参数设置</div>
+            <div class="filter-box">
+                <label>NCBI 密码子表：</label>
+                <select id="codonTableSel"></select>
+
+                <label>计算模式：</label>
+                <select id="calcMode">
+                    <option value="total">合并所有序列</option>
+                    <option value="allGene">各个序列分别计算</option>
+                </select>
+
+                <button class="btn" id="gotoNcbiCodon">查看NCBI密码子表</button>
+                <button class="btn" onclick="runAnalysis()">开始计算</button>
+            </div>
+
+            <div class="custom-codon-box">
+                <button class="btn" style="margin-bottom:8px;" id="toggleCustomBtn">展开自定义密码子</button>
+                <div id="customInner" class="hide">
+                    <p>格式：密码子 氨基酸，终止密码子填 TER，每一行是一组对应</p>
+                    <textarea id="customCodonText" placeholder="示例：UUU F"></textarea>
+                    <div style="margin-top:8px;display:flex;gap:10px;">
+                        <button class="btn" id="loadCustomBtn">加载</button>
+                        <button class="btn" id="clearCustomBtn">清空</button>
+                    </div>
+                    <div id="customTip" class="tip-text"></div>
+                </div>
+            </div>
+            <div id="tableViewTip" class="tip-text"></div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-title">第三步：计算结果</div>
+            <div class="result-top">
+                <button class="btn" id="exportCsvBtn" disabled>导出 RSCU 结果(CSV)</button>
+            </div>
+            <div id="resultBox"></div>
+        </div>
+    </div>
+
+    <!-- 完整原版底部：捐赠 + 联系作者 + 版权 -->
+    <footer>
+        <span class="donate-wrap">
+            赞赏支持
+            <div class="donate-tip">
+                <img class="donate-img" src="../images/donate.png" alt="捐赠二维码">
+            </div>
+        </span>
+        <div class="email">联系作者：studid@163.com</div>
+        BioDataTools 网页版 &copy; 2026 地上飞猪
+    </footer>
+
+<script>
+// 氨基酸 单字母 → 三字母 对照表
+const AA_ONE_TO_THREE = {
+    "A":"Ala", "R":"Arg", "N":"Asn", "D":"Asp", "C":"Cys",
+    "Q":"Gln", "E":"Glu", "G":"Gly", "H":"His", "I":"Ile",
+    "L":"Leu", "K":"Lys", "M":"Met", "F":"Phe", "P":"Pro",
+    "S":"Ser", "T":"Thr", "W":"Trp", "Y":"Tyr", "V":"Val",
+    "TER":"TER"
+};
+
+// 密码子表配置
+const STANDARD_CODON_TABLE = {
+    "UUU":"F","UUC":"F","UUA":"L","UUG":"L",
+    "UCU":"S","UCC":"S","UCA":"S","UCG":"S",
+    "UAU":"Y","UAC":"Y","UAA":"TER","UAG":"TER",
+    "UGU":"C","UGC":"C","UGA":"TER","UGG":"W",
+    "CUU":"L","CUC":"L","CUA":"L","CUG":"L",
+    "CCU":"P","CCC":"P","CCA":"P","CCG":"P",
+    "CAU":"H","CAC":"H","CAA":"Q","CAG":"Q",
+    "CGU":"R","CGC":"R","CGA":"R","CGG":"R",
+    "AUU":"I","AUC":"I","AUA":"I","AUG":"M",
+    "ACU":"T","ACC":"T","ACA":"T","ACG":"T",
+    "AAU":"N","AAC":"N","AAA":"K","AAG":"K",
+    "AGU":"S","AGC":"S","AGA":"R","AGG":"R",
+    "GUU":"V","GUC":"V","GUA":"V","GUG":"V",
+    "GCU":"A","GCC":"A","GCA":"A","GCG":"A",
+    "GAU":"D","GAC":"D","GAA":"E","GAG":"E",
+    "GGU":"G","GGC":"G","GGA":"G","GGG":"G"
+};
+const CODON_TABLE_DIFF = {
+    2:{"AUA":"M","UGA":"W","AGA":"TER","AGG":"TER"},
+    3:{"AUA":"M","CUU":"T","CUC":"T","CUA":"T","CUG":"T","UUA":"W"},
+    4:{"UGA":"W"},
+    5:{"AGA":"S","AGG":"S","AUA":"M","UGA":"W"},
+    6:{"UAA":"Q","UAG":"Q"},
+    9:{"AAA":"N","AGA":"S","AGG":"S","UGA":"W"},
+    10:{"UGA":"C"},
+    11:{"GGU":"G"},
+    12:{"CUG":"S"},
+    13:{"AGA":"G","AGG":"G","AUA":"M","UGA":"W"},
+    14:{"AAA":"N","AGA":"S","AGG":"S","UAA":"Y","UGA":"W"},
+    15:{"UAG":"Q"},
+    16:{"UAG":"L"}
+};
+const TABLE_ID_NAME_MAP = {
+    1:"标准通用密码子表",
+    2:"脊椎动物线粒体",
+    3:"酵母线粒体",
+    4:"霉菌/原生动物/腔肠动物线粒体&支原体/螺原体",
+    5:"无脊椎动物线粒体",
+    6:"The Ciliate, Dasycladacean and Hexamita Nuclear Code",
+    9:"The Echinoderm and Flatworm Mitochondrial Code",
+    10:"The Euplotid Nuclear Code",
+    11:"The Bacterial, Archaeal and Plant Plastid Code",
+    12:"The Alternative Yeast Nuclear Code",
+    13:"The Ascidian Mitochondrial Code",
+    14:"The Alternative Flatworm Mitochondrial Code",
+    15:"Blepharisma Nuclear Code",
+    16:"Chlorophycean Mitochondrial Code"
+};
+
+function buildCodonTable(tableId){
+    const table = JSON.parse(JSON.stringify(STANDARD_CODON_TABLE));
+    const diff = CODON_TABLE_DIFF[tableId];
+    if(diff) Object.assign(table, diff);
+    return table;
+}
+function getCodonTable(tableId){
+    return Number.isInteger(tableId) ? buildCodonTable(tableId) : buildCodonTable(1);
+}
+function getTableName(tableId){
+    return TABLE_ID_NAME_MAP[tableId] || "未知类型";
+}
+
+// 全局变量
+let rawFasta = "";
+let geneList = [];
+let geneSeqMap = new Map();
+let currentCodonTable = {};
+let exportData = [];
+
+// DOM
+const codonTableSel = document.getElementById("codonTableSel");
+const gotoNcbiCodon = document.getElementById("gotoNcbiCodon");
+const toggleCustomBtn = document.getElementById("toggleCustomBtn");
+const customInner = document.getElementById("customInner");
+const customCodonText = document.getElementById("customCodonText");
+const loadCustomBtn = document.getElementById("loadCustomBtn");
+const clearCustomBtn = document.getElementById("clearCustomBtn");
+const customTip = document.getElementById("customTip");
+const tableViewTip = document.getElementById("tableViewTip");
+
+const fastaFile = document.getElementById("fastaFile");
+const fastaText = document.getElementById("fastaText");
+const msgTip = document.getElementById("msgTip");
+
+const calcMode = document.getElementById("calcMode");
+const resultBox = document.getElementById("resultBox");
+const exportCsvBtn = document.getElementById("exportCsvBtn");
+
+// 跳转 NCBI 密码子表网页
+gotoNcbiCodon.onclick = function(){
+    window.open("https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi", "_blank");
+};
+
+// 切换导入方式
+function switchInput(){
+    const mode = document.querySelector('input[name="inputMode"]:checked').value;
+    resetAll();
+    if(mode === "file"){
+        fastaFile.disabled = false;
+        fastaText.disabled = true;
+    }else{
+        fastaFile.disabled = true;
+        fastaText.disabled = false;
+    }
+}
+
+// 初始化密码子表下拉
+function initCodonSelect(){
+    codonTableSel.innerHTML = "";
+    for(const id in TABLE_ID_NAME_MAP){
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = `${id} - ${TABLE_ID_NAME_MAP[id]}`;
+        codonTableSel.appendChild(opt);
+    }
+    currentCodonTable = getCodonTable(Number(codonTableSel.value));
+}
+
+// 切换密码子表
+codonTableSel.addEventListener("change",function(){
+    const id = Number(this.value);
+    currentCodonTable = getCodonTable(id);
+    tableViewTip.innerHTML = `<span class="success">已切换：${getTableName(id)}</span>`;
+});
+
+// 展开/收起自定义
+toggleCustomBtn.onclick = function(){
+    customInner.classList.toggle("hide");
+};
+
+// 加载自定义密码子
+loadCustomBtn.onclick = function(){
+    const txt = customCodonText.value.trim();
+    if(!txt){
+        customTip.innerHTML = '<span class="error">请输入内容</span>';
+        return;
+    }
+    const lines = txt.split(/\r?\n/).filter(line=>line.trim());
+    const temp = {};
+    let ok = true;
+    for(const line of lines){
+        const p = line.trim().split(/\s+/);
+        if(p.length < 2){ ok=false; break; }
+        temp[p[0].toUpperCase()] = p[1];
+    }
+    if(!ok){
+        customTip.innerHTML = '<span class="error">格式错误</span>';
+        return;
+    }
+    currentCodonTable = temp;
+    customTip.innerHTML = '<span class="success">加载成功</span>';
+    tableViewTip.innerHTML = '<span class="success">当前：自定义密码子表</span>';
+};
+
+// 清空自定义
+clearCustomBtn.onclick = function(){
+    customCodonText.value = "";
+    customTip.innerHTML = "";
+};
+
+// 读取FASTA文件
+fastaFile.addEventListener("change",function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+        rawFasta = ev.target.result;
+        msgTip.innerHTML = `<span class="success">已读取：${file.name}</span>`;
+        parseFasta(rawFasta);
+    };
+    reader.readAsText(file);
+});
+
+// 解析FASTA
+function parseFasta(str){
+    geneList = [];
+    geneSeqMap.clear();
+    const lines = str.split(/\r?\n/).filter(line=>line.trim());
+    let name = "", seq = "";
+    for(const line of lines){
+        if(line.startsWith(">")){
+            if(name && seq){
+                const rna = seq.toUpperCase().replace(/[^ATGC]/g,"").replace(/T/g,"U");
+                geneList.push(name);
+                geneSeqMap.set(name, rna);
+            }
+            name = line.replace(/^>\s*/,"").trim().split(/\s+/)[0];
+            seq = "";
+        }else{
+            seq += line.trim();
+        }
+    }
+    if(name && seq){
+        const rna = seq.toUpperCase().replace(/[^ATGC]/g,"").replace(/T/g,"U");
+        geneList.push(name);
+        geneSeqMap.set(name, rna);
+    }
+    resetResult();
+}
+
+// 统计单个基因密码子计数
+function getCodonCount(rnaSeq){
+    const count = {};
+    const fullLen = Math.floor(rnaSeq.length / 3) * 3;
+    for(let i=0; i<fullLen; i+=3){
+        const c = rnaSeq.substr(i,3);
+        count[c] = (count[c] || 0) + 1;
+    }
+    return count;
+}
+
+// 计算RSCU并返回HTML + 导出数据
+function calcRSCU(targetGene){
+    let totalCount = {};
+    const allCodon = Object.keys(currentCodonTable);
+    allCodon.forEach(c=>totalCount[c] = 0);
+
+    if(targetGene === "Total"){
+        for(const g of geneList){
+            const cnt = getCodonCount(geneSeqMap.get(g));
+            allCodon.forEach(c=> totalCount[c] += cnt[c]||0);
+        }
+    }else{
+        const cnt = getCodonCount(geneSeqMap.get(targetGene));
+        allCodon.forEach(c=> totalCount[c] = cnt[c]||0);
+    }
+
+    // 氨基酸分组
+    const aaGroup = {};
+    for(const c of allCodon){
+        const aa = currentCodonTable[c];
+        if(!aaGroup[aa]) aaGroup[aa] = [];
+        aaGroup[aa].push(c);
+    }
+
+    let html = `<div class="result-item">`;
+    html += `<div class="gene-title">${targetGene === "Total" ? "合并所有基因" : "基因：" + targetGene}</div>`;
+    html += `<table>
+        <tr>
+            <th>密码子</th>
+            <th>氨基酸(单字母)</th>
+            <th>氨基酸(三字母)</th>
+            <th>使用频数</th>
+            <th>RSCU值</th>
+        </tr>`;
+
+    const data = [];
+    for(const c of allCodon){
+        const aaOne = currentCodonTable[c];
+        const aaThree = AA_ONE_TO_THREE[aaOne] || "";
+        const group = aaGroup[aaOne];
+        const sum = group.reduce((s,item)=> s + (totalCount[item]||0), 0);
+        const num = group.length;
+        const rscu = sum === 0 ? 0 : totalCount[c] / (sum / num);
+        const freq = totalCount[c] || 0;
+
+        html += `<tr>
+            <td>${c}</td>
+            <td>${aaOne}</td>
+            <td>${aaThree}</td>
+            <td>${freq}</td>
+            <td>${rscu.toFixed(4)}</td>
+        </tr>`;
+
+        data.push({
+            gene: targetGene === "Total" ? "Total" : targetGene,
+            codon: c,
+            aaOne: aaOne,
+            aaThree: aaThree,
+            frequency: freq,
+            rscu: rscu.toFixed(4)
+        });
+    }
+    html += `</table></div>`;
+    return {html, data};
+}
+
+function resetResult(){
+    resultBox.innerHTML = "";
+    exportData = [];
+    exportCsvBtn.disabled = true;
+}
+
+function resetAll(){
+    rawFasta = "";
+    fastaFile.value = "";
+    fastaText.value = "";
+    msgTip.innerHTML = "";
+    tableViewTip.innerHTML = "";
+    customTip.innerHTML = "";
+    resetResult();
+}
+
+// 主计算
+function runAnalysis(){
+    if(document.querySelector('input[name="inputMode"][value="text"]').checked){
+        rawFasta = fastaText.value;
+    }
+    if(!rawFasta || rawFasta.trim() === ""){
+        resultBox.innerHTML = '<span class="error">❌ 无有效序列</span>';
+        return;
+    }
+    parseFasta(rawFasta);
+    if(geneList.length === 0){
+        resultBox.innerHTML = '<span class="error">❌ 未解析到有效基因</span>';
+        return;
+    }
+
+    const mode = calcMode.value;
+    let outHtml = "";
+    exportData = [];
+
+    if(mode === "total"){
+        const res = calcRSCU("Total");
+        outHtml = res.html;
+        exportData = exportData.concat(res.data);
+    }else{
+        for(const g of geneList){
+            const res = calcRSCU(g);
+            outHtml += res.html;
+            exportData = exportData.concat(res.data);
+        }
+    }
+
+    resultBox.innerHTML = outHtml;
+    exportCsvBtn.disabled = false;
+}
+
+// 导出CSV
+function exportToCSV(){
+    if(exportData.length === 0) return;
+    let csv = "\ufeff基因名称,密码子,氨基酸(单字母),氨基酸(三字母),使用频数,RSCU值\n";
+    exportData.forEach(item=>{
+        csv += `${item.gene},${item.codon},${item.aaOne},${item.aaThree},${item.frequency},${item.rscu}\n`;
+    });
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "RSCU结果.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+exportCsvBtn.addEventListener("click", exportToCSV);
+window.onload = initCodonSelect;
+</script>
+</body>
+</html>

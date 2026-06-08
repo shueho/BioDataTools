@@ -1,0 +1,348 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", "Microsoft Yahei", sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 顶部导航栏 */
+header {
+    background: #1f4068;
+    color: #fff;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+.header-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-title h1 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+.author {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+.bilibili-link {
+    background: #fb7299;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.bilibili-link:hover {
+    background: #f85a87;
+    transform: scale(1.05);
+}
+
+/* GitHub 链接样式 */
+.github-link {
+    background: #24292f;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-weight: 500;
+}
+.github-link:hover {
+    background: #373e47;
+    transform: scale(1.05);
+}
+
+/* 左侧固定导航 - 带滚动支持 */
+.side-nav {
+    position: fixed;
+    left: 20px;
+    top: 120px;
+    bottom: 20px;
+    background: #fff;
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    width: 200px;
+    z-index: 98;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* 美化滚动条 */
+.side-nav::-webkit-scrollbar {
+    width: 6px;
+}
+.side-nav::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+.side-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.side-nav h4 {
+    color: #1f4068;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.side-nav ul {
+    list-style: none;
+}
+
+.side-nav li {
+    margin: 0.4rem 0;
+}
+
+/* ========== 左侧大类菜单样式（加深背景） ========== */
+.side-nav a.parent-item {
+    background-color: #e8f0fc;
+    color: #1f4068;
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    display: block;
+    border-radius: 6px;
+    transition: background 0.2s;
+    cursor: pointer;
+    font-weight: 500;
+}
+.side-nav a.parent-item:hover {
+    background-color: #d0e1f7;
+}
+
+/* ========== 子菜单容器样式 ========== */
+.sub-menu {
+    display: none;
+    margin-left: 12px;
+    border-left: 1px dashed #ccc;
+    padding-left: 8px;
+}
+.sub-menu.open {
+    display: block;
+}
+
+/* ========== 子功能项样式（浅背景） ========== */
+.sub-menu a {
+    background-color: #f7f9fc;
+    color: #444;
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    display: block;
+    border-radius: 4px;
+    transition: background 0.2s;
+    cursor: pointer;
+    font-size: 0.92rem;
+}
+.sub-menu a:hover {
+    background-color: #e8f0fc;
+    color: #1f4068;
+}
+
+/* 主内容容器 */
+.main {
+    max-width: 1400px;
+    margin: 4rem auto;
+    padding: 0 2rem 0 240px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.intro h2 {
+    font-size: 1.8rem;
+    color: #1f4068;
+    margin-bottom: 0.8rem;
+}
+
+.intro p {
+    color: #666;
+    font-size: 1.05rem;
+}
+
+/* 功能列表区域 */
+#toolList {
+    border-top: 1px solid #dce4ec;
+    padding-top: 2.5rem;
+}
+
+/* 分类模块 */
+.tool-category {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(31, 64, 104, 0.1);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid #e8edf2;
+    scroll-margin-top: 140px;
+}
+
+.category-title {
+    font-size: 1.4rem;
+    color: #1f4068;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #e8edf2;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.category-icon {
+    font-size: 1.8rem;
+}
+
+/* 工具网格 */
+.sub-tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.sub-tool-card {
+    background: #f7f9fc;
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #e8edf2;
+}
+
+.sub-tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(31, 64, 104, 0.15);
+    border-color: #1f4068;
+    background: #fff;
+}
+
+.sub-tool-card .icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    color: #2980b9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sub-tool-card .icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.sub-tool-card h4 {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    color: #222;
+}
+
+.sub-tool-card p {
+    color: #777;
+    font-size: 0.85rem;
+}
+
+/* 底部 */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+    font-size: 0.9rem;
+    background: #fff;
+    margin-top: 3rem;
+    position: relative;
+}
+
+footer .email {
+    margin: 0.5rem 0;
+}
+
+/* 捐赠悬浮容器 */
+.donate-wrap {
+    display: inline-block;
+    position: relative;
+    margin-left: 8px;
+    cursor: pointer;
+    color: #1f4068;
+    font-weight: 500;
+}
+.donate-tip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 100;
+}
+.donate-tip img {
+    display: block;
+    max-width: 500px;
+    height: auto;
+}
+.donate-wrap:hover .donate-tip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 移动端适配 */
+@media (max-width: 900px) {
+    .side-nav {
+        display: none;
+    }
+    .main {
+        padding-left: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-wrap {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    .sub-tool-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .category-title {
+        font-size: 1.2rem;
+    }
+    .header-wrap > div:last-child {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .sub-tool-grid {
+        grid-template-columns: 1fr;
+    }
+}
