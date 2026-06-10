@@ -4,14 +4,13 @@
     box-sizing: border-box;
     font-family: "Segoe UI", "Microsoft Yahei", sans-serif;
 }
-
 body {
     background-color: #f0f4f8;
     color: #333;
     line-height: 1.6;
 }
 
-/* 顶部导航栏 */
+/* 顶部导航栏 全站共用 */
 header {
     background: #1f4068;
     color: #fff;
@@ -21,7 +20,6 @@ header {
     top: 0;
     z-index: 99;
 }
-
 .header-wrap {
     max-width: 1200px;
     margin: 0 auto;
@@ -29,19 +27,17 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-
 .site-title h1 {
     font-size: 2rem;
     letter-spacing: 1px;
 }
-
 .author {
     margin-top: 0.5rem;
     font-size: 1rem;
     opacity: 0.85;
 }
 
-/* B站按钮 */
+/* 通用按钮样式 */
 .bilibili-link {
     background: #fb7299;
     color: #fff;
@@ -56,8 +52,6 @@ header {
     background: #f85a87;
     transform: scale(1.05);
 }
-
-/* GitHub按钮 */
 .github-link {
     background: #24292f;
     color: #fff;
@@ -72,8 +66,6 @@ header {
     background: #373e47;
     transform: scale(1.05);
 }
-
-/* 返回首页按钮 */
 .back-home {
     background: #24292f;
     color: #fff;
@@ -88,30 +80,14 @@ header {
     transform: scale(1.05);
 }
 
-/* 主内容容器 */
+/* 主体容器通用 */
 .main {
-    max-width: 1500px;
+    max-width: 1200px;
     margin: 4rem auto;
     padding: 0 2rem;
 }
 
-.page-intro {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.page-intro h2 {
-    font-size: 1.8rem;
-    color: #1f4068;
-    margin-bottom: 0.8rem;
-}
-
-.page-intro p {
-    color: #666;
-    font-size: 1.05rem;
-}
-
-/* 分步卡片 */
+/* 卡片通用样式 */
 .step-card {
     background: #fff;
     border-radius: 12px;
@@ -120,17 +96,15 @@ header {
     margin-bottom: 2.5rem;
     border: 1px solid #e8edf2;
 }
-
 .step-title {
     font-size: 1.4rem;
     color: #1f4068;
-    font-weight: bold; 
     margin-bottom: 1.5rem;
     padding-bottom: 0.8rem;
     border-bottom: 2px solid #e8edf2;
 }
 
-/* 底部页脚 */
+/* 页脚 全站共用 */
 footer {
     text-align: center;
     padding: 2rem;
@@ -140,12 +114,11 @@ footer {
     margin-top: 3rem;
     position: relative;
 }
-
 footer .email {
     margin: 0.5rem 0;
 }
 
-/* 捐赠悬浮（默认隐藏，hover显示） */
+/* 捐赠悬浮提示 */
 .donate-wrap {
     display: inline-block;
     position: relative;
@@ -164,7 +137,7 @@ footer .email {
     background: #fff;
     padding: 12px;
     border-radius: 8px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 12px rgba(0,0,0.2);
     transition: opacity 0.3s, visibility 0.3s;
     z-index: 100;
 }
@@ -178,11 +151,98 @@ footer .email {
     opacity: 1;
 }
 
-/* 移动端适配 */
+
+/* 移动端适配 全站共用 */
 @media (max-width: 768px) {
     .header-wrap {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+    }
+}
+
+/* ========== 代码块 行号+折叠+滚动 专用样式 ========== */
+.article-content pre {
+    margin: 0;
+    padding: 1rem 1rem 1rem 50px;
+    border: none;
+    border-radius: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+/* 代码整体容器 */
+.code-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f8f8f8;
+    border: 1px solid #e8edf2;
+    margin: 1.5rem 0;
+}
+
+/* 顶部控制栏：折叠 + 复制 */
+.code-control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #e8edf2;
+    border-bottom: 1px solid #d1d9e6;
+}
+.code-collapse-btn {
+    color: #1f4068;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
+}
+.code-copy-btn {
+    background: #1f4068;
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.code-copy-btn:hover {
+    background: #2a5688;
+}
+
+/* 左侧行号容器：固定、垂直滚动同步、严格对齐代码 */
+.code-line-nums {
+    position: absolute;
+    left: 0;
+    top: 36px;  /* 避开顶部控制栏高度 */
+    bottom: 0;
+    width: 44px;
+    background: #f0f4f8;
+    padding: 1rem 4px;
+    border-right: 1px solid #e8edf2;
+    text-align: right;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* 折叠状态：限制高度，保留双滚动条 */
+.code-container.collapsed pre {
+    max-height: 180px;
+}
+.code-container.collapsed .code-line-nums {
+    max-height: 180px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .code-line-nums {
+        width: 34px;
+    }
+    .article-content pre {
+        padding-left: 40px;
     }
 }

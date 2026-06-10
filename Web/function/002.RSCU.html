@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>密码子偏好性 & RSCU 计算 - BioDataTools 网页版</title>
-    <!-- 公共样式统一调用 -->
+    <title>RSCU计算工具 - BioDataTools 网页版</title>
+    <!-- 公共样式 -->
     <link rel="stylesheet" href="COMMON/global.css">
     <style>
-        /* 本页面局部样式，和 GenBank 页面保持一致 */
         .radio-box {
             margin: 10px 0 15px;
         }
@@ -96,10 +95,34 @@
         .result-top {
             margin-bottom: 10px;
         }
+
+        /* 多列预览面板样式 */
+        .preview-table-wrap {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .preview-table-wrap h4 {
+            margin: 0 0 8px 0;
+        }
+        /* 四列并排布局 */
+        .codon-preview-row {
+            display: flex;
+            gap: 10px;
+        }
+        .codon-col {
+            flex: 1;
+        }
+        .preview-table {
+            width: 100%;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
-    <!-- 完整原版头部：B站 + GitHub + 返回首页 -->
     <header>
         <div class="header-wrap">
             <div class="site-title">
@@ -116,8 +139,8 @@
 
     <div class="main" id="app">
         <div class="page-intro">
-            <h2>密码子使用偏好 & RSCU 计算</h2>
-            <p>导入 FASTA 序列，计算密码子使用频数与同义密码子相对使用度(RSCU)。</p>
+            <h2>相对同义密码子使用度</h2>
+            <p>相对同义密码子使用度计算(RSCU)</p>
         </div>
 
         <div class="step-card">
@@ -134,7 +157,7 @@
                 <input type="file" id="fastaFile" accept=".fasta,.fa,.fna,.txt">
             </div>
             <div class="text-input">
-                <textarea id="fastaText" placeholder="粘贴标准 FASTA 内容" disabled></textarea>
+                <textarea id="fastaText" placeholder="粘贴标准 FASTA 内容（注意：序列标识第一个空格前的内容将作为基因名称，如有重名请提前修改！）" disabled></textarea>
             </div>
             <div id="msgTip" class="tip-text"></div>
         </div>
@@ -168,6 +191,12 @@
                 </div>
             </div>
             <div id="tableViewTip" class="tip-text"></div>
+
+            <!-- 多列密码子预览区域 -->
+            <div class="preview-table-wrap">
+                <h4>当前密码子表预览</h4>
+                <div id="codonPreview"></div>
+            </div>
         </div>
 
         <div class="step-card">
@@ -179,7 +208,6 @@
         </div>
     </div>
 
-    <!-- 完整原版底部：捐赠 + 联系作者 + 版权 -->
     <footer>
         <span class="donate-wrap">
             赞赏支持
@@ -188,91 +216,76 @@
             </div>
         </span>
         <div class="email">联系作者：studid@163.com</div>
-        BioDataTools 网页版 &copy; 2026 地上飞猪
+        BioDataTools 网页版 &copy; 2026 地上飞猪<br>
+        声明：大部分内容改编自BioDataTools工具集，部分脚本取自开源项目并标注原作者，网页设计由AI辅助完成。<br>
+        如需引用，可引用本网站：https://www.biodatatools.top或BioDataTools工具集。<br>
+        参考文献：薛浩, 大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
     </footer>
 
+<!-- 1. 先加载规则库（提供 getGeneticCodeString） -->
+<script src="COMMON/sms_genetic_codes.js"></script>
+<!-- 2. 再加载配置+工具函数（依赖上面的方法） -->
+<script src="COMMON/codon_config.js"></script>
+
 <script>
-// 氨基酸 单字母 → 三字母 对照表
-const AA_ONE_TO_THREE = {
-    "A":"Ala", "R":"Arg", "N":"Asn", "D":"Asp", "C":"Cys",
-    "Q":"Gln", "E":"Glu", "G":"Gly", "H":"His", "I":"Ile",
-    "L":"Leu", "K":"Lys", "M":"Met", "F":"Phe", "P":"Pro",
-    "S":"Ser", "T":"Thr", "W":"Trp", "Y":"Tyr", "V":"Val",
-    "TER":"TER"
-};
+// ========= 核心工具函数 =========
+/**
+ * 由规则串构建 密码子=>氨基酸 映射
+ * @param {string} type
+ * @returns {Object}
+ */
+function renderCodonPreview(codonMap){
+    const previewBox = document.getElementById("codonPreview");
+    const codonList = Object.entries(codonMap);
+    if(codonList.length === 0){
+        previewBox.innerHTML = '<span class="error">暂无密码子数据</span>';
+        return;
+    }
 
-// 密码子表配置
-const STANDARD_CODON_TABLE = {
-    "UUU":"F","UUC":"F","UUA":"L","UUG":"L",
-    "UCU":"S","UCC":"S","UCA":"S","UCG":"S",
-    "UAU":"Y","UAC":"Y","UAA":"TER","UAG":"TER",
-    "UGU":"C","UGC":"C","UGA":"TER","UGG":"W",
-    "CUU":"L","CUC":"L","CUA":"L","CUG":"L",
-    "CCU":"P","CCC":"P","CCA":"P","CCG":"P",
-    "CAU":"H","CAC":"H","CAA":"Q","CAG":"Q",
-    "CGU":"R","CGC":"R","CGA":"R","CGG":"R",
-    "AUU":"I","AUC":"I","AUA":"I","AUG":"M",
-    "ACU":"T","ACC":"T","ACA":"T","ACG":"T",
-    "AAU":"N","AAC":"N","AAA":"K","AAG":"K",
-    "AGU":"S","AGC":"S","AGA":"R","AGG":"R",
-    "GUU":"V","GUC":"V","GUA":"V","GUG":"V",
-    "GCU":"A","GCC":"A","GCA":"A","GCG":"A",
-    "GAU":"D","GAC":"D","GAA":"E","GAG":"E",
-    "GGU":"G","GGC":"G","GGA":"G","GGG":"G"
-};
-const CODON_TABLE_DIFF = {
-    2:{"AUA":"M","UGA":"W","AGA":"TER","AGG":"TER"},
-    3:{"AUA":"M","CUU":"T","CUC":"T","CUA":"T","CUG":"T","UUA":"W"},
-    4:{"UGA":"W"},
-    5:{"AGA":"S","AGG":"S","AUA":"M","UGA":"W"},
-    6:{"UAA":"Q","UAG":"Q"},
-    9:{"AAA":"N","AGA":"S","AGG":"S","UGA":"W"},
-    10:{"UGA":"C"},
-    11:{"GGU":"G"},
-    12:{"CUG":"S"},
-    13:{"AGA":"G","AGG":"G","AUA":"M","UGA":"W"},
-    14:{"AAA":"N","AGA":"S","AGG":"S","UAA":"Y","UGA":"W"},
-    15:{"UAG":"Q"},
-    16:{"UAG":"L"}
-};
-const TABLE_ID_NAME_MAP = {
-    1:"标准通用密码子表",
-    2:"脊椎动物线粒体",
-    3:"酵母线粒体",
-    4:"霉菌/原生动物/腔肠动物线粒体&支原体/螺原体",
-    5:"无脊椎动物线粒体",
-    6:"The Ciliate, Dasycladacean and Hexamita Nuclear Code",
-    9:"The Echinoderm and Flatworm Mitochondrial Code",
-    10:"The Euplotid Nuclear Code",
-    11:"The Bacterial, Archaeal and Plant Plastid Code",
-    12:"The Alternative Yeast Nuclear Code",
-    13:"The Ascidian Mitochondrial Code",
-    14:"The Alternative Flatworm Mitochondrial Code",
-    15:"Blepharisma Nuclear Code",
-    16:"Chlorophycean Mitochondrial Code"
-};
+    // 按第一位碱基分组
+    const groupU = [], groupC = [], groupA = [], groupG = [];
+    codonList.forEach(([codon, aa]) => {
+        const first = codon[0];
+        const item = {codon, aa};
+        switch(first){
+            case "U": groupU.push(item); break;
+            case "C": groupC.push(item); break;
+            case "A": groupA.push(item); break;
+            case "G": groupG.push(item); break;
+        }
+    });
 
-function buildCodonTable(tableId){
-    const table = JSON.parse(JSON.stringify(STANDARD_CODON_TABLE));
-    const diff = CODON_TABLE_DIFF[tableId];
-    if(diff) Object.assign(table, diff);
-    return table;
-}
-function getCodonTable(tableId){
-    return Number.isInteger(tableId) ? buildCodonTable(tableId) : buildCodonTable(1);
-}
-function getTableName(tableId){
-    return TABLE_ID_NAME_MAP[tableId] || "未知类型";
+    // 生成单列表格HTML
+    function buildColHtml(list, title){
+        let html = `<div class="codon-col"><table class="preview-table">
+            <tr><th colspan="2">${title}</th></tr>
+            <tr><th>密码子</th><th>氨基酸</th></tr>`;
+        list.forEach(item => {
+            html += `<tr><td>${item.codon}</td><td>${item.aa}</td></tr>`;
+        });
+        html += `</table></div>`;
+        return html;
+    }
+
+    // 四列并排
+    let totalHtml = `<div class="codon-preview-row">`;
+    totalHtml += buildColHtml(groupU, "首位: U");
+    totalHtml += buildColHtml(groupC, "首位: C");
+    totalHtml += buildColHtml(groupA, "首位: A");
+    totalHtml += buildColHtml(groupG, "首位: G");
+    totalHtml += `</div>`;
+
+    previewBox.innerHTML = totalHtml;
 }
 
-// 全局变量
+// ========= 全局变量 =========
 let rawFasta = "";
 let geneList = [];
 let geneSeqMap = new Map();
 let currentCodonTable = {};
 let exportData = [];
 
-// DOM
+// ========= DOM 节点 =========
 const codonTableSel = document.getElementById("codonTableSel");
 const gotoNcbiCodon = document.getElementById("gotoNcbiCodon");
 const toggleCustomBtn = document.getElementById("toggleCustomBtn");
@@ -291,12 +304,11 @@ const calcMode = document.getElementById("calcMode");
 const resultBox = document.getElementById("resultBox");
 const exportCsvBtn = document.getElementById("exportCsvBtn");
 
-// 跳转 NCBI 密码子表网页
+// ========= 页面交互逻辑 =========
 gotoNcbiCodon.onclick = function(){
     window.open("https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi", "_blank");
 };
 
-// 切换导入方式
 function switchInput(){
     const mode = document.querySelector('input[name="inputMode"]:checked').value;
     resetAll();
@@ -309,16 +321,18 @@ function switchInput(){
     }
 }
 
-// 初始化密码子表下拉
+// 初始化下拉框 + 预览
 function initCodonSelect(){
     codonTableSel.innerHTML = "";
     for(const id in TABLE_ID_NAME_MAP){
         const opt = document.createElement("option");
         opt.value = id;
-        opt.textContent = `${id} - ${TABLE_ID_NAME_MAP[id]}`;
+        opt.textContent = TABLE_ID_NAME_MAP[id];
         codonTableSel.appendChild(opt);
     }
-    currentCodonTable = getCodonTable(Number(codonTableSel.value));
+    const initId = Number(codonTableSel.value);
+    currentCodonTable = getCodonTable(initId);
+    renderCodonPreview(currentCodonTable);
 }
 
 // 切换密码子表
@@ -326,9 +340,9 @@ codonTableSel.addEventListener("change",function(){
     const id = Number(this.value);
     currentCodonTable = getCodonTable(id);
     tableViewTip.innerHTML = `<span class="success">已切换：${getTableName(id)}</span>`;
+    renderCodonPreview(currentCodonTable);
 });
 
-// 展开/收起自定义
 toggleCustomBtn.onclick = function(){
     customInner.classList.toggle("hide");
 };
@@ -340,7 +354,7 @@ loadCustomBtn.onclick = function(){
         customTip.innerHTML = '<span class="error">请输入内容</span>';
         return;
     }
-    const lines = txt.split(/\r?\n/).filter(line=>line.trim());
+    const lines = txt.split(/\r?\n/).filter(line => line.trim());
     const temp = {};
     let ok = true;
     for(const line of lines){
@@ -355,9 +369,9 @@ loadCustomBtn.onclick = function(){
     currentCodonTable = temp;
     customTip.innerHTML = '<span class="success">加载成功</span>';
     tableViewTip.innerHTML = '<span class="success">当前：自定义密码子表</span>';
+    renderCodonPreview(currentCodonTable);
 };
 
-// 清空自定义
 clearCustomBtn.onclick = function(){
     customCodonText.value = "";
     customTip.innerHTML = "";
@@ -392,7 +406,7 @@ function parseFasta(str){
             name = line.replace(/^>\s*/,"").trim().split(/\s+/)[0];
             seq = "";
         }else{
-            seq += line.trim();
+            seq += line;
         }
     }
     if(name && seq){
@@ -403,18 +417,23 @@ function parseFasta(str){
     resetResult();
 }
 
-// 统计单个基因密码子计数
+// 统计密码子计数
 function getCodonCount(rnaSeq){
     const count = {};
+    const allCodonList = Object.keys(currentCodonTable);
+    allCodonList.forEach(c => count[c] = 0);
+
     const fullLen = Math.floor(rnaSeq.length / 3) * 3;
     for(let i=0; i<fullLen; i+=3){
-        const c = rnaSeq.substr(i,3);
-        count[c] = (count[c] || 0) + 1;
+        const codon = rnaSeq.substr(i,3);
+        if(count.hasOwnProperty(codon)){
+            count[codon]++;
+        }
     }
     return count;
 }
 
-// 计算RSCU并返回HTML + 导出数据
+// 计算RSCU
 function calcRSCU(targetGene){
     let totalCount = {};
     const allCodon = Object.keys(currentCodonTable);
@@ -430,7 +449,6 @@ function calcRSCU(targetGene){
         allCodon.forEach(c=> totalCount[c] = cnt[c]||0);
     }
 
-    // 氨基酸分组
     const aaGroup = {};
     for(const c of allCodon){
         const aa = currentCodonTable[c];
@@ -453,10 +471,13 @@ function calcRSCU(targetGene){
     for(const c of allCodon){
         const aaOne = currentCodonTable[c];
         const aaThree = AA_ONE_TO_THREE[aaOne] || "";
-        const group = aaGroup[aaOne];
+        const group = aaGroup[aaOne] || [];
         const sum = group.reduce((s,item)=> s + (totalCount[item]||0), 0);
         const num = group.length;
-        const rscu = sum === 0 ? 0 : totalCount[c] / (sum / num);
+        let rscu = 0;
+        if(sum > 0 && num > 0){
+            rscu = totalCount[c] / (sum / num);
+        }
         const freq = totalCount[c] || 0;
 
         html += `<tr>
@@ -496,12 +517,12 @@ function resetAll(){
     resetResult();
 }
 
-// 主计算
+// 主计算入口
 function runAnalysis(){
-    if(document.querySelector('input[name="inputMode"][value="text"]').checked){
+    if(document.querySelector('input[name="inputMode"][value="text"]:checked')){
         rawFasta = fastaText.value;
     }
-    if(!rawFasta || rawFasta.trim() === ""){
+    if(!rawFasta){
         resultBox.innerHTML = '<span class="error">❌ 无有效序列</span>';
         return;
     }
@@ -545,12 +566,10 @@ function exportToCSV(){
     a.download = "RSCU结果.csv";
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
 exportCsvBtn.addEventListener("click", exportToCSV);
-window.onload = initCodonSelect;
-</script>
+window.onload = initCodonSelect;</script>
 </body>
 </html>

@@ -1,70 +1,120 @@
-// 新标签页打开工具链接
-function openPage(url) {
-    window.open(url, '_blank');
+// 渲染左侧导航栏
+function renderSideNav() {
+    const navList = document.getElementById('navList');
+    navList.innerHTML = '';
+
+    // 博客首页
+    const blogItem = document.createElement('li');
+    blogItem.innerHTML = `
+        <a href="blog/home.html" class="parent-item blog-home-item">
+            📝 博客首页
+        </a>
+    `;
+    navList.appendChild(blogItem);
+
+    // 在线科研绘图 ==========
+    const plotItem = document.createElement('li');
+    plotItem.innerHTML = `
+        <a href="plot/home.html" target="_blank" class="parent-item blog-home-item">
+            🎨 在线科研绘图
+        </a>
+    `;
+    navList.appendChild(plotItem);
+
+    // 渲染分类导航
+    toolConfig.forEach((category, catIndex) => {
+        const categoryItem = document.createElement('li');
+        const subMenuId = `submenu-${catIndex}`;
+        categoryItem.innerHTML = `
+            <a class="parent-item" onclick="toggleSubMenu(${catIndex})">
+                ${category.categoryIcon} ${category.categoryName}
+            </a>
+            <ul class="sub-menu" id="${subMenuId}"></ul>
+        `;
+        navList.appendChild(categoryItem);
+
+        const subMenu = document.getElementById(subMenuId);
+       
+        category.tools.forEach((tool, toolIndex) => {
+            const toolId = `tool-${catIndex}-${toolIndex}`;
+            const toolItem = document.createElement('li');
+            let iconText = tool.toolIcon.includes('images/') ? '' : tool.toolIcon;
+            toolItem.innerHTML = `
+                <a onclick="scrollToTool('${toolId}')">
+                    ${iconText} ${tool.toolName}
+                </a>
+            `;
+            subMenu.appendChild(toolItem);
+        });
+    });
 }
 
-// 平滑滚动到对应分类区块
-function scrollToCate(id) {
-    const target = document.getElementById(id);
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+// 展开/收起子菜单
+function toggleSubMenu(catIndex) {
+    const subMenu = document.getElementById(`submenu-${catIndex}`);
+    subMenu.classList.toggle('open');
+}
+
+// 平滑滚动定位
+function scrollToTool(toolId) {
+    const targetEl = document.getElementById(toolId);
+    if (targetEl) {
+        // 计算偏移量：header高度(约100px) + 额外留白(20px)
+        const headerHeight = document.querySelector('header').offsetHeight || 100;
+        const offsetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+        window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+        });
     }
 }
 
-// 渲染页面所有内容 + 左侧折叠菜单
-function renderAll() {
-    const toolWrapper = document.getElementById('toolList');
-    const navWrapper = document.getElementById('navList');
-    let toolHtml = '';
-    let navHtml = '';
+// 渲染主内容工具卡片
+function renderToolList() {
+    const toolList = document.getElementById('toolList');
+    toolList.innerHTML = '';
 
-    toolConfig.forEach((cate, idx) => {
-        const cateId = `cate_${idx}`;
-        const subMenuId = `sub_menu_${idx}`;
+    toolConfig.forEach((category, catIndex) => {
+        const catWrap = document.createElement('div');
+        catWrap.className = 'tool-category';
+        catWrap.innerHTML = `
+            <div class="category-title">
+                <span class="category-icon">${category.categoryIcon}</span>
+                <h3>${category.categoryName}</h3>
+            </div>
+            <div class="sub-tool-grid" id="grid-${catIndex}"></div>
+        `;
+        toolList.appendChild(catWrap);
 
-        // 渲染右侧工具卡片
-        toolHtml += `<div class="tool-category" id="${cateId}">
-            <h3 class="category-title">
-                <span class="category-icon">${cate.categoryIcon}</span>
-                ${cate.categoryName}
-            </h3>
-            <div class="sub-tool-grid">`;
+        const grid = document.getElementById(`grid-${catIndex}`);
+        category.tools.forEach((tool, toolIndex) => {
+            const toolId = `tool-${catIndex}-${toolIndex}`;
+            const card = document.createElement('div');
+            card.className = 'sub-tool-card';
+            card.id = toolId;
 
-        cate.tools.forEach(tool => {
-            toolHtml += `<div class="sub-tool-card" onclick="openPage('${tool.link}')">
-                <div class="icon">${tool.toolIcon}</div>
+            
+            let iconHtml = '';
+            if (tool.toolIcon.startsWith('images/')) {
+                iconHtml = `<img src="${tool.toolIcon}" alt="${tool.toolName}">`;
+            } else {
+                iconHtml = tool.toolIcon;
+            }
+
+            card.innerHTML = `
+                <div class="icon">${iconHtml}</div>
                 <h4>${tool.toolName}</h4>
                 <p>${tool.toolDesc}</p>
-            </div>`;
+            `;
+            //不新开card.onclick = () => window.location.href = tool.link;
+            card.onclick = () => window.open(tool.link, '_blank');
+            grid.appendChild(card);
         });
-
-        toolHtml += `</div></div>`;
-
-        // 渲染左侧折叠导航
-        navHtml += `
-        <li>
-            <a class="parent-item">${cate.categoryName}</a>
-            <ul class="sub-menu" id="${subMenuId}">
-        `;
-        cate.tools.forEach(tool => {
-            navHtml += `<li><a onclick="scrollToCate('${cateId}')">${tool.toolName}</a></li>`;
-        });
-        navHtml += `</ul></li>`;
     });
-
-    toolWrapper.innerHTML = toolHtml;
-    navWrapper.innerHTML = navHtml;
 }
 
-// DOM加载完成执行渲染
-document.addEventListener('DOMContentLoaded', renderAll);
-
-// 菜单展开/折叠交互（事件委托，兼容动态DOM）
-const navList = document.getElementById('navList');
-navList.addEventListener('click', function (e) {
-    if (e.target.classList.contains('parent-item')) {
-        const subMenu = e.target.nextElementSibling;
-        subMenu.classList.toggle('open');
-        e.stopPropagation();
-    }
+// 页面加载执行
+window.addEventListener('DOMContentLoaded', function () {
+    renderSideNav();
+    renderToolList();
 });

@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- 侧边栏切换按钮 -->
+    <button class="toggle-side-btn" id="toggleSideBtn">
+        ⇆
+    </button>
+
     <!-- 顶部头部 -->
     <header>
         <div class="header-wrap">
@@ -47,12 +52,28 @@
         </span>
 
         <div class="email">联系作者：studid@163.com</div>
-        BioDataTools 网页版 &copy; 2026 地上飞猪
-    </footer>
+        BioDataTools 网页版 &copy; 2026 地上飞猪<br>
+        声明：大部分内容改编自BioDataTools工具集，部分脚本取自开源项目并标注原作者，网页设计由AI辅助完成。<br>
+        如需引用，可引用本网站：https://www.biodatatools.top或BioDataTools工具集。<br>
+        参考文献：薛浩, 大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
+</footer>
 
     <!-- 1. 先加载配置文件-->
     <script src="js/config.js"></script>
     <!-- 2. 再加载渲染&交互逻辑 -->
     <script src="js/main.js"></script>
+
+    <script>
+        const toggleSideBtn = document.getElementById('toggleSideBtn');
+        const sideNav = document.querySelector('.side-nav');
+        const mainWrap = document.querySelector('.main');
+
+        toggleSideBtn.addEventListener('click', function() {
+            sideNav.classList.toggle('hidden');
+            mainWrap.classList.toggle('full-width');
+            this.textContent = '⇆';
+        });
+    </script>
+
 </body>
 </html>

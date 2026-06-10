@@ -68,6 +68,14 @@
             gap: 10px;
             align-items: center;
         }
+
+        .copy-temp {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -144,6 +152,9 @@
         </div>
     </div>
 
+
+    <textarea id="tempCopyArea" class="copy-temp"></textarea>
+
     <footer>
         <span class="donate-wrap">
             赞赏支持
@@ -152,7 +163,10 @@
             </div>
         </span>
         <div class="email">联系作者：studid@163.com</div>
-        BioDataTools 网页版 &copy; 2026 地上飞猪
+        BioDataTools 网页版 &copy; 2026 地上飞猪<br>
+        声明：大部分内容改编自BioDataTools工具集，部分脚本取自开源项目并标注原作者，网页设计由AI辅助完成。<br>
+        如需引用，可引用本网站：https://www.biodatatools.top或BioDataTools工具集。<br>
+        参考文献：薛浩, 大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
     </footer>
 
     <script>
@@ -165,6 +179,7 @@
         const copyAllBtn = document.getElementById("copyAllBtn");
         const downloadBtn = document.getElementById("downloadBtn");
         const toolbarTip = document.getElementById("toolbarTip");
+        const tempCopyArea = document.getElementById("tempCopyArea");
 
         function switchInput() {
             const mode = document.querySelector('input[name="inputMode"]:checked').value;
@@ -347,17 +362,53 @@
             }
         }
 
-        // 复制全部FASTA
+
         function copyAllFasta() {
-            if (!fastaAll) return;
-            navigator.clipboard.writeText(fastaAll).then(() => {
-                toolbarTip.innerHTML = '<span class="success">✅ 已复制全部序列</span>';
-            }).catch(() => {
-                toolbarTip.innerHTML = '<span class="error">❌ 复制失败，请手动复制</span>';
-            });
+            if (!fastaAll || fastaAll.trim() === "") {
+                toolbarTip.innerHTML = '<span class="error">❌ 暂无可复制序列</span>';
+                return;
+            }
+            copyAllBtn.disabled = true;
+            toolbarTip.innerHTML = "";
+
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(fastaAll)
+                .then(() => {
+                    toolbarTip.innerHTML = '<span class="success">✅ 已复制全部序列</span>';
+                })
+                .catch(() => {
+                    copyByTempArea();
+                })
+                .finally(() => {
+                    copyAllBtn.disabled = false;
+                });
+            } else {
+                copyByTempArea();
+                copyAllBtn.disabled = false;
+            }
         }
 
-        // 下载FASTA文件
+        function copyByTempArea() {
+            tempCopyArea.value = fastaAll;
+            tempCopyArea.select();
+            tempCopyArea.setSelectionRange(0, tempCopyArea.value.length);
+
+            try {
+                const success = document.execCommand("copy");
+                if (success) {
+                    toolbarTip.innerHTML = '<span class="success">✅ 已复制全部序列（兼容模式）</span>';
+                } else {
+                    toolbarTip.innerHTML = '<span class="error">❌ 复制失败，请手动选中内容复制</span>';
+                }
+            } catch (e) {
+                toolbarTip.innerHTML = '<span class="error">❌ 复制异常，请手动复制</span>';
+            }
+            // 清空临时域
+            tempCopyArea.value = "";
+        }
+
+        // 下载FASTA文件（原逻辑无问题，保留）
         function downloadFasta() {
             if (!fastaAll) return;
             const blob = new Blob([fastaAll], {type:"text/plain"});

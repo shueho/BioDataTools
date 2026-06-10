@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioDataTools 博客 - 生物信息学工具与教程</title>
+    <link rel="stylesheet" href="../function/COMMON/global.css">
+    <style>
+        /* 全局布局 */
+        .blog-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+            position: relative;
+            /* 关键：避免两列高度强制对齐，保证sticky生效 */
+            align-items: flex-start;
+        }
+
+        /* 左侧文章整体容器 */
+        .article-wrap {
+            width: 100%;
+        }
+
+        /* 文章区固定顶部标题（滚动不移动） */
+        .article-header {
+            background: #4773aa;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 12px 12px 0 0;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        /* 文章内容滚动区域（拉长高度） */
+        .article-list {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 15px rgba(31, 64, 0.1);
+            /* 拉长可视高度 */
+            height: 85vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* 自定义滚动条样式 */
+        .article-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .article-list::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        .article-list::-webkit-scrollbar-track {
+            background: #f8f8f8;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            color: #1f4068;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e8edf2;
+        }
+        .article-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.2rem 0;
+            border-bottom: 1px dashed #e8edf2;
+        }
+        .article-card:last-child {
+            border-bottom: none;
+        }
+        .article-cover {
+            width: 120px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .article-info {
+            flex: 1;
+        }
+        .article-title {
+            font-size: 1.2rem;
+            color: #1f4068;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .article-title:hover {
+            color: #fb7299;
+        }
+        .article-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* 右侧侧边栏：粘性固定，滚动不跟随 */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .sidebar-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(31, 64, 0.1);
+            padding: 1.5rem;
+        }
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: #1f4068;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e8edf2;
+        }
+
+        /* 优化分类导航，解决拥挤问题 */
+        .categoryNav a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 0.7rem 0.8rem;
+            margin: 0.3rem 0;
+            border-radius: 6px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #f0f4f8;
+        }
+        .categoryNav a:last-child {
+            border-bottom: none;
+        }
+        .categoryNav a:hover {
+            background: #f0f4f8;
+            color: #1f4068;
+            font-weight: 500;
+        }
+
+        .author-info {
+            text-align: center;
+        }
+        .author-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            border: 3px solid #f0f4f8;
+        }
+        .author-desc {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .friend-link a {
+            display: inline-block;
+            color: #1f4068;
+            text-decoration: none;
+            margin: 0.3rem 0.5rem;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #e8edf2;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .friend-link a:hover {
+            background: #1f4068;
+            color: #fff;
+            border-color: #1f4068;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+                position: static;
+                align-items: flex-start;
+            }
+            .article-list {
+                height: auto;
+                overflow: visible;
+            }
+            .sidebar {
+                position: static;
+            }
+            .article-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .article-cover {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrap">
+            <div class="site-title">
+                <h1>地上飞猪个人博客</h1>
+                <div class="author">生物信息学教程分享</div>
+            </div>
+            <div>
+                <a href="https://space.bilibili.com/33053326" target="_blank" class="bilibili-link">前往B站主页</a>
+                <a href="https://github.com/shueho/BioDataTools" target="_blank" class="github-link">GitHub项目</a>
+                <a href="https://biodatatools.top/" target="_self" class="back-home">BioDataTools网页版首页</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main">
+        <div class="page-intro">
+            <h2>地上飞猪个人博客</h2>
+            <p>分享生物信息学工具使用技巧</p>
+        </div>
+
+        <div class="blog-container">
+            <!-- 左侧文章区域：顶部固定标题 + 滚动内容 -->
+            <div class="article-wrap">
+                <div class="article-header">博客文章</div>
+                <div class="article-list" id="articleList">正在加载文章...</div>
+            </div>
+
+            <div class="sidebar">
+                <!-- 关于博主 -->
+                <div class="sidebar-card author-info">
+                    <div class="sidebar-title">关于博主</div>
+                    <img src="images/avatar.png" alt="博主头像" class="author-avatar">
+                    <h3>地上飞猪</h3>
+                    <p class="author-desc">
+                        摸鱼生信人。
+                    </p>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-title">最新公告</div>
+                    <div id="noticeBoard">正在加载公告...</div>
+                </div>
+
+                <!-- 文章分类 -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title">文章分类</div>
+                    <div class="categoryNav" id="categoryNav"></div>
+                </div>
+
+                <!-- 友情链接 -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title">常用链接</div>
+                    <div class="friend-link">
+                        <a href="https://www.ncbi.nlm.nih.gov/" target="_blank">NCBI</a>
+                        <a href="https://www.ebi.ac.uk/" target="_blank">EBI</a>
+                        <a href="https://bioinformatics.tools/" target="_blank">Bioinformatics Tools</a>
+                        <a href="https://www.r-project.org/" target="_blank">R语言官网</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span class="donate-wrap">
+            <div class="donate-tip">
+                <img class="donate-img" src="../images/donate.png" alt="捐赠二维码">
+            </div>
+            赞赏支持
+        </span>
+        <div class="email">联系作者：studid@163.com</div>
+        地上飞猪个人博客 &copy; 2026 地上飞猪<br>
+        声明：博客内容为个人见解，仅供学习交流。
+    </footer>
+
+    <script>
+        // 读取五列Tab数据：大类、文章名、文章路径、封面图、简介
+        async function loadArticleList() {
+            try {
+                const res = await fetch('https://biodatatools.top/blog/list.txt');
+                if (!res.ok) throw new Error('文件请求失败');
+                const raw = await res.text();
+                // 兼容全平台换行符，过滤注释与空行
+                const lines = raw.split(/\r?\n/)
+                    .map(s => s.trim())
+                    .filter(s => s !== '' && !s.startsWith('#'));
+
+                const categoryMap = new Map();
+                lines.forEach(line => {
+                    const cols = line.split('\t');
+                    const category = cols[0] || '';
+                    const title = cols[1] || '';
+                    const path = cols[2] || '';
+                    const cover = cols[3] || '';
+                    const desc = cols[4] || '暂无简介';
+
+                    if (!category || !title) return;
+                    if (!categoryMap.has(category)) {
+                        categoryMap.set(category, []);
+                    }
+                    categoryMap.get(category).push({ title, path, cover, desc });
+                });
+
+                // 渲染侧边分类导航
+                const catNav = document.getElementById('categoryNav');
+                catNav.innerHTML = '';
+                categoryMap.forEach((_, name) => {
+                    const a = document.createElement('a');
+                    a.href = `#${name}`;
+                    a.textContent = name;
+                    catNav.appendChild(a);
+                });
+
+                // 渲染主文章列表（恢复封面图）
+                const artList = document.getElementById('articleList');
+                artList.innerHTML = '';
+                categoryMap.forEach((articles, catName) => {
+                    // 分类标题 + 锚点
+                    const h3 = document.createElement('h3');
+                    h3.className = 'category-title';
+                    h3.id = catName;
+                    h3.textContent = catName;
+                    artList.appendChild(h3);
+
+                    // 单篇文章卡片
+                    articles.forEach(art => {
+                        const card = document.createElement('div');
+                        card.className = 'article-card';
+                        card.innerHTML = `
+                            <img src="images/${art.cover}" alt="${art.title}" class="article-cover" onerror="this.style.display='none'">
+                            <div class="article-info">
+                                <a href="./document/${art.path}" class="article-title">${art.title}</a>
+                                <p class="article-desc">${art.desc}</p>
+                            </div>
+                        `;
+                        artList.appendChild(card);
+                    });
+                });
+            } catch (e) {
+                document.getElementById('articleList').innerHTML = '<p style="color:red;text-align:center;padding:2rem;">文章加载异常</p>';
+                console.error('文章加载错误：', e);
+            }
+        }
+
+        // 加载公告
+        async function loadNotice() {
+            try {
+                const res = await fetch('https://biodatatools.top/blog/notice.txt');
+                const text = await res.text();
+                document.getElementById('noticeBoard').innerHTML = `<p class="author-desc">${text.replace(/\n/g, '<br>')}</p>`;
+            } catch (e) {
+                document.getElementById('noticeBoard').innerHTML = '<p class="author-desc">公告加载异常</p>';
+                console.error('公告加载错误：', e);
+            }
+        }
+
+        // 页面初始化
+        window.addEventListener('load', function(){
+            loadArticleList();
+            loadNotice();
+        });
+    </script>
+</body>
+</html>

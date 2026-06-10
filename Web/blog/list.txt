@@ -1,0 +1,7 @@
+# 格式：文章大类	文章名称	文章路径	封面图片名	文章简介
+教程	CDS序列翻译工具使用指南	cds_translate_guide.html	test.png	详解CDS序列翻译全流程与常见问题排查
+教程	FASTA格式序列处理技巧	fasta_process.html	fasta_cover.png	FASTA格式规范、批量处理与实用小技巧分享
+大类测试1	网页版BioDataTools开发总结	biodatatools_dev.html	dev_cover.png	xxxx开发思路总结
+大类测试1	JavaScript处理核酸序列最佳实践	js_seq_handle.html	js_cover.png	xxx
+大类测试2	2024生物信息学工具发展趋势	2024_trend.html	trend_cover.png	xxx
+其他	博文模板	article-template.html	test.png	xx
