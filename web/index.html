@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioDataTools 网页版</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 侧边栏切换按钮 -->
+    <button class="toggle-side-btn" id="toggleSideBtn">
+        ⇆
+    </button>
+
+    <!-- 顶部头部 -->
+    <header>
+        <div class="header-wrap">
+            <div class="site-title">
+                <h1>BioDataTools 网页版</h1>
+                <div class="author">作者：地上飞猪</div>
+            </div>
+            <div>
+                <a href="https://space.bilibili.com/33053326" target="_blank" class="bilibili-link">前往B站主页</a>
+                <a href="https://github.com/shueho/BioDataTools" target="_blank" class="github-link">GitHub 项目</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 左侧导航 -->
+    <nav class="side-nav" id="sideNav">
+        <h4>功能导航</h4>
+        <ul id="navList"></ul>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main">
+        <div class="intro">
+            <h2>生物数据分析工具合集</h2>
+            <p>点击对应工具进入功能页面，功能不断完善中！</p>
+        </div>
+        <div id="toolList"></div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <span class="donate-wrap">
+            赞赏支持
+            <div class="donate-tip">
+                <img class="donate-img" src="images/donate.png" alt="捐赠二维码">
+            </div>
+        </span>
+
+        <div class="email">联系作者：studid@163.com</div>
+        BioDataTools 网页版 &copy; 2026 地上飞猪<br>
+        声明：大部分内容改编自BioDataTools工具集，部分脚本取自开源项目并标注原作者，网页设计由AI辅助完成。<br>
+        如需引用，可引用本网站：https://www.biodatatools.top或BioDataTools工具集。<br>
+        参考文献：薛浩, 大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
+</footer>
+
+    <!-- 1. 先加载配置文件-->
+    <script src="js/config.js"></script>
+    <!-- 2. 再加载渲染&交互逻辑 -->
+    <script src="js/main.js"></script>
+
+    <script>
+        const toggleSideBtn = document.getElementById('toggleSideBtn');
+        const sideNav = document.querySelector('.side-nav');
+        const mainWrap = document.querySelector('.main');
+
+        toggleSideBtn.addEventListener('click', function() {
+            sideNav.classList.toggle('hidden');
+            mainWrap.classList.toggle('full-width');
+            this.textContent = '⇆';
+        });
+    </script>
+
+</body>
+</html>
