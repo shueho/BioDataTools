@@ -40,7 +40,7 @@ const toolConfig = [
                 toolIcon: "images/002.png",
                 link: "function/002.RSCU.html"
             },
-            { toolName: "待添加功能", toolDesc: "预留空位", toolIcon: "⚙️", link: "module1_01.html" },
+            { toolName: "蛋白质参数计算（在线Expasy Protparam批量计算）", toolDesc: "导入蛋白/氨基酸序列，批量计算从Expasy Protparam得到的参数", toolIcon: "images/007.png", link: "function/007.Protparam.html" },
             { toolName: "待添加功能", toolDesc: "预留空位", toolIcon: "⚙️", link: "module1_02.html" },
             { toolName: "待添加功能", toolDesc: "预留空位", toolIcon: "⚙️", link: "module1_03.html" },
             { toolName: "待添加功能", toolDesc: "预留空位", toolIcon: "⚙️", link: "module1_04.html" }
