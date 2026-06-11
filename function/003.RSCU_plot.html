@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSCU柱形图绘制 - BioDataTools 网页版</title>
+    <link rel="stylesheet" href="COMMON/global.css">
+    <style>
+        .radio-box {
+            margin: 10px 0 15px;
+        }
+        .radio-box label {
+            margin-right: 25px;
+            cursor: pointer;
+        }
+        .file-input, .text-input {
+            margin: 10px 0;
+        }
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        .filter-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0 0 0;
+            align-items: center;
+        }
+        .tip-text {
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .warn { color: #e67700; }
+        .error { color: #dc3545; }
+        .success { color: #28a745; }
+        .btn {
+            padding: 8px 20px;
+            background: #1f4068;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+        .result-item {
+            border: 1px solid #e8edf2;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        .result-toolbar {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .config-group {
+            margin: 15px 0;
+            padding: 12px;
+            border: 1px solid #e8edf2;
+            border-radius: 6px;
+        }
+        .group-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        label {
+            font-size: 1rem;
+        }
+        /* 表格滚动 */
+        .table-scroll {
+            max-height: 300px;
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        .chart-wrap {
+            max-width: 100%;
+            overflow: auto;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrap">
+            <div class="site-title">
+                <h1>BioDataTools 网页版</h1>
+                <div class="author">作者：地上飞猪</div>
+            </div>
+            <div>
+                <a href="https://space.bilibili.com/33053326" target="_blank" class="bilibili-link">前往B站主页</a>
+                <a href="https://github.com/shueho/BioDataTools" target="_blank" class="github-link">GitHub项目</a>
+                <a href="../index.html" target="_self" class="back-home">返回首页</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main" id="app">
+        <div class="page-intro">
+            <h2>RSCU柱形图绘制</h2>
+            <p>支持单序列/多基因/多物种RSCU柱形图绘制</p>
+        </div>
+
+        <!-- 第一步：导入数据 -->
+        <div class="step-card">
+            <div class="step-title">第一步：导入表格数据</div>
+            <div class="text-input">
+                <textarea id="tableInput" placeholder="输入数据至少包含：物种/基因、氨基酸、密码子、RSCU值，需包含表头，制表符分隔&#10;建议直接粘贴由本网页RSCU计算工具得到的结果&#10;单序列模式的物种/基因列填充为任意相同值"></textarea>
+            </div>
+            <div style="margin-top:15px;">
+                <button class="btn" id="importBtn">导入并预览原始数据</button>
+            </div>
+            <div id="msgTip1" class="tip-text"></div>
+
+            <div id="originTableWrap" style="display:none;">
+                <p><strong>原始数据预览：</strong></p>
+                <div class="result-item">
+                    <div class="table-scroll">
+                        <table id="originTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二步：字段选择 & 绘图模式 & 过滤 -->
+        <div class="step-card">
+            <div class="step-title">第二步：绘图数据设置</div>
+            <div class="filter-box">
+                <label>绘图模式：</label>
+                <select id="chartMode">
+                    <option value="stack">单序列模式</option>
+                    <option value="group">多基因/物种模式</option>
+                </select>
+                <label>分组标识列(物种/基因)：</label>
+                <select id="groupCol"></select>
+                <label>氨基酸列：</label>
+                <select id="colAA"></select>
+                <label>密码子列：</label>
+                <select id="colCodon"></select>
+                <label>RSCU 值列：</label>
+                <select id="colRscu"></select>
+            </div>
+            <div class="filter-box" style="margin-top:8px;">
+                <label>终止氨基酸(多个空格分隔)：</label>
+                <input type="text" id="stopAminoInput" value="TER" style="width:220px;">
+                <label>启用氨基酸由前两位密码子分组：</label>
+                <input type="checkbox" id="enableGroup" checked>
+            </div>
+            <div style="margin-top:15px;">
+                <button class="btn" id="makePlotTableBtn">生成绘图表格</button>
+            </div>
+            <div id="msgTip2" class="tip-text"></div>
+
+            <div id="plotTableWrap" style="display:none;">
+                <p><strong>待绘图数据表（已过滤终止氨基酸）：</strong></p>
+                <div class="result-item">
+                    <div class="table-scroll">
+                        <table id="plotTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三步：绘图参数 & 绘制图表 & 导出SVG -->
+        <div class="step-card">
+            <div class="step-title">第三步：绘图参数设置</div>
+
+            <div class="config-group">
+                <div class="group-title">字体设置</div>
+                <div class="filter-box">
+                    <label>全局字体：</label>
+                    <select id="fontFamily" style="width:160px;">
+                        <option value="Times New Roman" selected>Times New Roman</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Calibri">Calibri</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Microsoft YaHei">微软雅黑</option>
+                    </select>
+                    <label>X轴字号(px)：</label>
+                    <input type="number" id="xAxisFontSize" value="18" min="8" max="24" style="width:70px;">
+                    <label>Y轴字号(px)：</label>
+                    <input type="number" id="yAxisFontSize" value="18" min="8" max="24" style="width:70px;">
+                    <label>密码子字号(px)：</label>
+                    <input type="number" id="boxFontSize" value="15" min="8" max="24" style="width:70px;">
+                </div>
+            </div>
+
+            <div class="config-group">
+                <div class="group-title">图形画布设置</div>
+                <div class="filter-box">
+                    <label>图表宽度(px)：</label>
+                    <input type="number" id="chartWidth" value="1500" min="800" style="width:80px;">
+                    <label>图表高度(px)：</label>
+                    <input type="number" id="chartHeight" value="700" min="500" style="width:80px;">
+                    <label>底部留白(px)：</label>
+                    <input type="number" id="bottomPadding" value="280" min="180" style="width:80px;">
+                    <label>簇/柱间距：</label>
+                    <input type="number" id="barPadding" value="0.35" step="0.05" min="0.1" max="0.8" style="width:70px;">
+                    <label>簇内柱间距：</label>
+                    <input type="number" id="innerPadding" value="0.1" step="0.05" min="0" max="0.4" style="width:70px;">
+                </div>
+                <div class="filter-box" style="margin-top:8px;">
+                    <label>纵轴标题：</label>
+                    <input type="text" id="yAxisLabel" value="RSCU" style="width:120px;">
+                    <label>纵坐标最大值：</label>
+                    <input type="number" id="yMaxValue" value="8" style="width:100px;" placeholder="如：2.0">
+                    <label style="color:red; font-weight:bold;">基因/物种顺序(已自动填充，可自行修改)：</label>
+                    <input type="text" id="speciesOrder" style="width:320px;">
+                </div>
+            </div>
+
+            <div class="config-group">
+                <div class="group-title">密码子方框样式</div>
+                <div class="filter-box">
+                    <label>方框宽度(px)：</label>
+                    <input type="number" id="boxWidth" value="50" min="40" style="width:70px;">
+                    <label>方框高度(px)：</label>
+                    <input type="number" id="boxHeight" value="22" min="16" style="width:70px;">
+                    <label>密码子竖向间距(px)：</label>
+                    <input type="number" id="codonGap" value="8" min="4" style="width:70px;">
+                </div>
+            </div>
+
+            <div class="config-group">
+                <div class="group-title">颜色设置（可以使用十六进制RGB颜色，null表示不填充颜色）</div>
+                <div class="filter-box">
+                    <label>密码子文字颜色：</label>
+                    <input type="text" id="codonTextColor" value="#000000" style="width:100px;">
+                    <label>柱形分隔线颜色：</label>
+                    <input type="text" id="barStrokeColor" value="null" style="width:100px;">
+                    <label>方框边框颜色：</label>
+                    <input type="text" id="boxStrokeColor" value="#333333" style="width:100px;">
+                    <label>坐标轴线条颜色：</label>
+                    <input type="text" id="axisLineColor" value="#333333" style="width:100px;">
+                    <label>系列配色(逗号分隔)：</label>
+                    <input type="text" id="colorList" value="#C67BFE,#FE60CB,#7BAD00,#F8766C,#00A9FE,#00BEC4,#00BD67,#CD9500" style="width:380px;">
+                </div>
+            </div>
+
+            <div class="result-toolbar">
+                <button class="btn" id="drawChartBtn">绘制图表</button>
+                <button class="btn" id="exportSvgBtn" disabled>导出SVG文件</button>
+                <span id="toolbarTip" class="tip-text"></span>
+            </div>
+
+            <div id="msgTip3" class="tip-text"></div>
+            <!-- 用 chart-wrap 包裹图表，实现溢出滚动 -->
+            <div class="result-item chart-wrap">
+                <div id="chartBox"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span class="donate-wrap">
+            赞赏支持
+            <div class="donate-tip">
+                <img class="donate-img" src="../images/donate.png" alt="捐赠二维码">
+            </div>
+        </span>
+        <div class="email">联系作者：studid@163.com</div>
+        BioDataTools 网页版 &copy; 2026 地上飞猪<br>
+        声明：大部分内容改编自BioDataTools工具集，部分脚本取自开源项目并标注原作者，网页设计由AI辅助完成。<br>
+        如需引用，可引用本网站：https://www.biodatatools.top或BioDataTools工具集。<br>
+        参考文献：薛浩, 大石鸡（Alectoris magna）基因组结构与比较基因组分析[D]. 烟台: 烟台大学, 2024.
+    </footer>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        const tableInput = document.getElementById("tableInput");
+        const stopAminoInput = document.getElementById("stopAminoInput");
+        const importBtn = document.getElementById("importBtn");
+        const makePlotTableBtn = document.getElementById("makePlotTableBtn");
+        const drawChartBtn = document.getElementById("drawChartBtn");
+        const exportSvgBtn = document.getElementById("exportSvgBtn");
+        const speciesOrder = document.getElementById("speciesOrder");
+        const yMaxValue = document.getElementById("yMaxValue");
+        const toolbarTip = document.getElementById("toolbarTip");
+
+        const chartMode = document.getElementById("chartMode");
+        const groupCol = document.getElementById("groupCol");
+        const colAA = document.getElementById("colAA");
+        const colCodon = document.getElementById("colCodon");
+        const colRscu = document.getElementById("colRscu");
+        const enableGroup = document.getElementById("enableGroup");
+
+        const fontFamily = document.getElementById("fontFamily");
+        const xAxisFontSize = document.getElementById("xAxisFontSize");
+        const yAxisFontSize = document.getElementById("yAxisFontSize");
+        const boxFontSize = document.getElementById("boxFontSize");
+        const chartWidth = document.getElementById("chartWidth");
+        const chartHeight = document.getElementById("chartHeight");
+        const bottomPadding = document.getElementById("bottomPadding");
+        const barPadding = document.getElementById("barPadding");
+        const innerPadding = document.getElementById("innerPadding");
+        const boxWidth = document.getElementById("boxWidth");
+        const boxHeight = document.getElementById("boxHeight");
+        const codonGap = document.getElementById("codonGap");
+        const yAxisLabel = document.getElementById("yAxisLabel");
+        const codonTextColor = document.getElementById("codonTextColor");
+        const barStrokeColor = document.getElementById("barStrokeColor");
+        const boxStrokeColor = document.getElementById("boxStrokeColor");
+        const axisLineColor = document.getElementById("axisLineColor");
+        const colorList = document.getElementById("colorList");
+
+        const msgTip1 = document.getElementById("msgTip1");
+        const msgTip2 = document.getElementById("msgTip2");
+        const msgTip3 = document.getElementById("msgTip3");
+
+        const originTableWrap = document.getElementById("originTableWrap");
+        const originTable = document.getElementById("originTable");
+        const plotTableWrap = document.getElementById("plotTableWrap");
+        const plotTable = document.getElementById("plotTable");
+        const chartBox = document.getElementById("chartBox");
+
+        let rawData = [];
+        let tableHeaders = [];
+        let plotReadyData = [];
+        let currentSvg = null;
+
+        function clearSelect() {
+            groupCol.innerHTML = "";
+            colAA.innerHTML = "";
+            colCodon.innerHTML = "";
+            colRscu.innerHTML = "";
+        }
+
+        function fillSelect(headers) {
+            clearSelect();
+            headers.forEach(h => {
+                groupCol.add(new Option(h, h));
+                colAA.add(new Option(h, h));
+                colCodon.add(new Option(h, h));
+                colRscu.add(new Option(h, h));
+            });
+        }
+
+        function renderTable(tableEl, headers, data) {
+            tableEl.innerHTML = "";
+            if (!headers || headers.length === 0 || !data || data.length === 0) {
+                tableEl.innerHTML = "<tr><td colspan='100%'>暂无数据</td>";
+                return;
+            }
+            const thead = document.createElement("thead");
+            const trHead = document.createElement("tr");
+            headers.forEach(h => {
+                const th = document.createElement("th");
+                th.style.border = "1px solid #ccc";
+                th.style.padding = "6px";
+                th.innerText = h;
+                trHead.appendChild(th);
+            });
+            thead.appendChild(trHead);
+            tableEl.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+                headers.forEach(h => {
+                    const td = document.createElement("td");
+                    td.style.border = "1px solid #ccc";
+                    td.style.padding = "6px";
+                    td.innerText = row[h] ?? "";
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            tableEl.appendChild(tbody);
+        }
+
+        function parseTable(text) {
+            const content = text.trim();
+            if (!content) return null;
+            const lines = content.split(/\r?\n/).filter(line => line.trim());
+            if (lines.length < 2) return null;
+
+            let separator = /\t|\s+/;
+            if (lines[0].includes(",")) separator = ",";
+            const rows = lines.map(line => line.trim().split(separator));
+            const headers = rows[0].map(h => h.trim());
+            tableHeaders = headers;
+            const data = [];
+            for (let i = 1; i < rows.length; i++) {
+                const obj = {};
+                rows[i].forEach((val, idx) => {
+                    if (headers[idx]) obj[headers[idx]] = val.trim();
+                });
+                data.push(obj);
+            }
+            return { headers, data };
+        }
+
+        function groupAndRename(list, aaKey) {
+            const aaMap = new Map();
+            list.forEach(item => {
+                const aa = item[aaKey];
+                if (!aaMap.has(aa)) aaMap.set(aa, new Map());
+                const cd = item.codon || "";
+                const prefix = cd.slice(0, 2);
+                const pm = aaMap.get(aa);
+                if (!pm.has(prefix)) pm.set(prefix, []);
+                pm.get(prefix).push(item);
+            });
+            const res = [];
+            aaMap.forEach((pm, aaName) => {
+                const listP = Array.from(pm.keys());
+                const cnt = listP.length;
+                listP.forEach((p, idx) => {
+                    const items = pm.get(p);
+                    const label = cnt > 1 ? `${aaName}${idx + 1}` : aaName;
+                    items.forEach(it => {
+                        it.groupName = label;
+                        res.push(it);
+                    });
+                });
+            });
+            return res;
+        }
+
+        function getStopAminoSet() {
+            return new Set(stopAminoInput.value.trim().split(/\s+/).filter(s => s));
+        }
+
+        function getSpeciesOrder(allSpecies) {
+            const input = speciesOrder.value.trim();
+            if (!input) {
+                const order = [];
+                const seen = new Set();
+                plotReadyData.forEach(d => {
+                    if (!seen.has(d.species)) {
+                        seen.add(d.species);
+                        order.push(d.species);
+                    }
+                });
+                return order;
+            }
+            const arr = input.split(/[,，\s]+/).filter(s => s);
+            return arr.filter(name => allSpecies.includes(name));
+        }
+
+        function autoFillSpeciesOrder() {
+            const order = [];
+            const seen = new Set();
+            plotReadyData.forEach(d => {
+                if (!seen.has(d.species)) {
+                    seen.add(d.species);
+                    order.push(d.species);
+                }
+            });
+            speciesOrder.value = order.join(",");
+        }
+
+        function makePlotTable() {
+            if (rawData.length === 0) {
+                msgTip2.innerHTML = '<span class="error">❌ 请先导入原始数据</span>';
+                plotTableWrap.style.display = "none";
+                plotReadyData = [];
+                return;
+            }
+            msgTip2.innerHTML = "";
+
+            const gKey = groupCol.value;
+            const aaKey = colAA.value;
+            const cdKey = colCodon.value;
+            const valKey = colRscu.value;
+            const useGroup = enableGroup.checked;
+            const stopSet = getStopAminoSet();
+
+            let tempData = rawData
+                .filter(d => !stopSet.has(d[aaKey]?.trim()))
+                .map(d => ({
+                    species: d[gKey] ?? "Sample",
+                    amino: d[aaKey] ?? "",
+                    codon: d[cdKey] ?? "",
+                    value: Number(d[valKey]) || 0,
+                    groupName: d[aaKey] ?? ""
+                }));
+
+            if (useGroup) {
+                tempData = groupAndRename(tempData, "amino");
+            }
+            plotReadyData = tempData;
+            autoFillSpeciesOrder();
+
+            const showHeaders = ["物种/基因", "氨基酸", "分组名", "密码子", "RSCU值"];
+            const showData = tempData.map(d => ({
+                "物种/基因": d.species,
+                "氨基酸": d.amino,
+                "分组名": d.groupName,
+                "密码子": d.codon,
+                "RSCU值": d.value
+            }));
+            renderTable(plotTable, showHeaders, showData);
+            plotTableWrap.style.display = "block";
+            msgTip2.innerHTML = '<span class="success">✅ 绘图表格生成完成</span>';
+            chartBox.innerHTML = "";
+            msgTip3.innerHTML = "";
+            toolbarTip.innerHTML = "";
+            exportSvgBtn.disabled = true;
+            currentSvg = null;
+        }
+
+        function drawChart() {
+            if (plotReadyData.length === 0) {
+                msgTip3.innerHTML = '<span class="error">❌ 请先生成绘图表格</span>';
+                chartBox.innerHTML = "";
+                exportSvgBtn.disabled = true;
+                return;
+            }
+            msgTip3.innerHTML = '<span class="success">✅ 图表绘制完成，下方展示的图片可能与设置的参数不一致，请导出SVG后查看</span>';
+            toolbarTip.innerHTML = "";
+            chartBox.innerHTML = "";
+
+            const mode = chartMode.value;
+            const fontFam = fontFamily.value || "Times New Roman";
+            const xFS = parseFloat(xAxisFontSize.value) || 18;
+            const yFS = parseFloat(yAxisFontSize.value) || 18;
+            const boxFS = parseFloat(boxFontSize.value) || 15;
+            const svgW = parseInt(chartWidth.value) || 1500;
+            const svgH = parseInt(chartHeight.value) || 700;
+            const bottomPad = parseInt(bottomPadding.value) || 280;
+            const outerPad = parseFloat(barPadding.value) || 0.35;
+            const innerPad = parseFloat(innerPadding.value) || 0.1;
+            const boxW = parseInt(boxWidth.value) || 50;
+            const boxH = parseInt(boxHeight.value) || 22;
+            const codonGapVal = parseInt(codonGap.value) || 8;
+            const yLabel = yAxisLabel.value || "RSCU";
+            const codonTextCol = codonTextColor.value.trim() || "#000000";
+            const barStrokeCol = barStrokeColor.value.trim() || "#ffffff";
+            const boxStrokeCol = boxStrokeColor.value.trim() || "#333333";
+            const axisLineCol = axisLineColor.value.trim() || "#333333";
+            const userColors = colorList.value.split(",").map(c => c.trim()).filter(c => c);
+
+            const margin = { top: 50, right: 30, bottom: bottomPad, left: 80 };
+            const innerW = svgW - margin.left - margin.right;
+            const innerH = svgH - margin.top - margin.bottom;
+
+            const aminoList = Array.from(new Set(plotReadyData.map(d => d.groupName))).sort();
+            const allSpecies = Array.from(new Set(plotReadyData.map(d => d.species)));
+            const speciesList = getSpeciesOrder(allSpecies);
+
+            const svgRoot = d3.select("#chartBox")
+                .append("svg")
+                .attr("width", svgW)
+                .attr("height", svgH);
+            currentSvg = svgRoot.node();
+            const svg = svgRoot.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            let x0, x1, y;
+            let dataMaxVal = d3.max(plotReadyData, d => d.value) || 1;
+            let maxVal = yMaxValue.value.trim() !== "" ? Number(yMaxValue.value) : dataMaxVal;
+
+            y = d3.scaleLinear()
+                .domain([0, maxVal])
+                .range([innerH, 0]);
+
+            if (mode === "group") {
+                x0 = d3.scaleBand()
+                    .domain(aminoList)
+                    .range([0, innerW])
+                    .paddingOuter(outerPad)
+                    .paddingInner(innerPad);
+
+                x1 = d3.scaleBand()
+                    .domain(speciesList)
+                    .range([0, x0.bandwidth()])
+                    .padding(0);
+
+                aminoList.forEach(amino => {
+                    speciesList.forEach((sp) => {
+                        const items = plotReadyData.filter(d => d.groupName === amino && d.species === sp);
+                        let y0 = 0;
+                        items.forEach((it, cdIdx) => {
+                            const fill = userColors[cdIdx % userColors.length];
+                            svg.append("rect")
+                                .attr("x", x0(amino) + x1(sp))
+                                .attr("y", y(y0 + it.value))
+                                .attr("width", x1.bandwidth())
+                                .attr("height", y(0) - y(it.value))
+                                .attr("fill", fill)
+                                //.attr("stroke-width", 1)
+                                .attr("stroke", barStrokeCol);
+                            y0 += it.value;
+                        });
+                    });
+                });
+
+                const xAxis = svg.append("g")
+                    .attr("transform", `translate(0,${innerH})`)
+                    .call(d3.axisBottom(x0));
+                xAxis.selectAll("text")
+                    .attr("font-family", fontFam)
+                    .attr("font-size", xFS)
+                    .attr("text-anchor", "middle");
+                xAxis.selectAll("path,line").attr("stroke", axisLineCol);
+
+            } else {
+                x0 = d3.scaleBand()
+                    .domain(aminoList)
+                    .range([0, innerW])
+                    .padding(outerPad);
+
+                aminoList.forEach(amino => {
+                    const items = plotReadyData.filter(d => d.groupName === amino);
+                    let y0 = 0;
+                    items.forEach((it, cdIdx) => {
+                        const fill = userColors[cdIdx % userColors.length];
+                        svg.append("rect")
+                            .attr("x", x0(amino))
+                            .attr("y", y(y0 + it.value))
+                            .attr("width", x0.bandwidth())
+                            .attr("height", y(0) - y(it.value))
+                            .attr("fill", fill)
+                            //.attr("stroke-width", 1)
+                            .attr("stroke", barStrokeCol);
+                        y0 += it.value;
+                    });
+                });
+
+                const xAxis = svg.append("g")
+                    .attr("transform", `translate(0,${innerH})`)
+                    .call(d3.axisBottom(x0));
+                xAxis.selectAll("text")
+                    .attr("font-family", fontFam)
+                    .attr("font-size", xFS)
+                    .attr("text-anchor", "middle");
+                xAxis.selectAll("path,line").attr("stroke", axisLineCol);
+            }
+
+            const yAxis = svg.append("g").call(d3.axisLeft(y));
+            yAxis.selectAll("text")
+                .attr("font-family", fontFam)
+                .attr("font-size", yFS);
+            yAxis.selectAll("path,line").attr("stroke", axisLineCol);
+
+            svg.append("text")
+                .attr("x", -innerH / 2)
+                .attr("y", -50)
+                .attr("transform", "rotate(-90)")
+                .attr("text-anchor", "middle")
+                .attr("font-family", fontFam)
+                .attr("font-size", yFS + 2)
+                .attr("font-weight", "bold")
+                .text(yLabel);
+
+            aminoList.forEach(amino => {
+                const uniqueItems = [];
+                const cdSet = new Set();
+                plotReadyData.filter(d => d.groupName === amino).forEach(d => {
+                    if (!cdSet.has(d.codon)) {
+                        cdSet.add(d.codon);
+                        uniqueItems.push(d);
+                    }
+                });
+                const xCenter = x0(amino) + x0.bandwidth() / 2;
+                const baseY = innerH + 70;
+                uniqueItems.forEach((it, cdIdx) => {
+                    const boxX = xCenter - boxW / 2;
+                    const boxY = baseY + cdIdx * (boxH + codonGapVal);
+                    const boxColor = userColors[cdIdx % userColors.length];
+
+                    svg.append("rect")
+                        .attr("x", boxX)
+                        .attr("y", boxY)
+                        .attr("width", boxW)
+                        .attr("height", boxH)
+                        .attr("fill", boxColor)
+                        .attr("stroke", boxStrokeCol)
+                        //.attr("stroke-width", 1)
+                        .attr("rx", 3);
+
+                    svg.append("text")
+                        .attr("x", xCenter)
+                        .attr("y", boxY + boxH / 2 + 4)
+                        .attr("text-anchor", "middle")
+                        .attr("font-family", fontFam)
+                        .attr("font-size", boxFS)
+                        .attr("fill", codonTextCol)
+                        .text(it.codon);
+                });
+            });
+
+            exportSvgBtn.disabled = false;
+        }
+
+        function exportSvg() {
+            if (!currentSvg) return;
+            const serializer = new XMLSerializer();
+            let source = serializer.serializeToString(currentSvg);
+            source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+            const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "RSCU_Codon_Chart.svg";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            toolbarTip.innerHTML = '<span class="success">✅ SVG文件导出成功</span>';
+        }
+
+        importBtn.addEventListener("click", function () {
+            const res = parseTable(tableInput.value);
+            if (!res) {
+                msgTip1.innerHTML = '<span class="error">❌ 解析失败，请检查表格内容</span>';
+                originTableWrap.style.display = "none";
+                rawData = [];
+                return;
+            }
+            rawData = res.data;
+            tableHeaders = res.headers;
+            renderTable(originTable, res.headers, res.data);
+            originTableWrap.style.display = "block";
+            fillSelect(res.headers);
+            msgTip1.innerHTML = '<span class="success">✅ 原始数据导入成功</span>';
+            plotTableWrap.style.display = "none";
+            chartBox.innerHTML = "";
+            msgTip2.innerHTML = "";
+            msgTip3.innerHTML = "";
+            toolbarTip.innerHTML = "";
+            exportSvgBtn.disabled = true;
+            currentSvg = null;
+            plotReadyData = [];
+        });
+
+        makePlotTableBtn.addEventListener("click", makePlotTable);
+        drawChartBtn.addEventListener("click", drawChart);
+        exportSvgBtn.addEventListener("click", exportSvg);
+    </script>
+</body>
+</html>
