@@ -62,6 +62,7 @@ This README document provides script files under each module and their brief fun
   <tr><td>2.39</td><td>RSCUPlotPlus</td><td>Drawing of multi-species RSCU bar charts and statistical analysis of codon usage</td></tr> 
   <tr><td>2.40</td><td>GBtoFeatureTable</td><td>Extract feature information tables from GenBank files</td></tr> 
   <tr><td>2.41</td><td>FastaAlignPos</td><td>Corresponds to the positions of each base in the FASTA files before and after alignment</td></tr> 
+  <tr><td>2.42</td><td>CodonPositionBaseStats</td><td>Calculate the count or frequency of A/T/G/C nucleotides at the three positions of each codon, with optional codon filtering</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget: General Utilities Module</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>Merge extremely large tables</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>VLOOKUP function (advanced)</td></tr>
@@ -2623,6 +2624,42 @@ start	end	pos_1	pos_2
 10	16	17	23
 8	50	15	57
 ```   
+
+### 2.42 `CodonPositionBaseStats.R` 
+
+**Function Description:** Calculate the count or frequency of A/T/G/C nucleotides at the three positions of each codon, with optional codon filtering.    
+
+**Note:** This R script provides data statistics functions and is not executable directly from the command line.  
+
+**Web Version:** This script supports online execution at https://biodatatools.top/function/011.Codon_position_base_stats.html
+
+**Generated File:** 
+- `01-sequences.csv`  (Table file, containing sequences, start and stop codon information of each protein-coding gene).
+- `02-Codon_occurrence_in_all_gene.csv` (Table file, codon usage counts and frequencies across all protein-coding genes).
+- `03-Base_Sum.csv` (Table file, raw base counts at each codon position).
+- `04-Base_Freq.csv` (Table file, normalized base frequencies at each codon position).
+
+**Example:**
+
+For example, `example/pcgs.fa` stores the extracted CDS sequences of protein-coding genes.
+```
+>nad1
+ATGACCCCACTAACCCCAATAAACCTCACAATCATAACTTTATCTTACATAATCCCAAT...
+...
+>nad6
+ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGGGGTTTTAGCTGTAGC...
+```
+Assuming you have downloaded the script, you can right-click to open it in RStudio. Simply complete the configurations below:
+```bash
+pcg = "pcgs.fa"       # Path to your CDS sequence file
+codonTable = 5        # NCBI genetic code table number (follow NCBI official numbering)
+stp_del = TRUE        # Whether to remove stop codons; FALSE = retain stop codons
+codon_del = 2         # Codon filtering mode:
+                      # 0 = no filtering
+                      # 1 = filter single-codon amino acids
+                      # 2 = filter non-fourfold degenerate codons
+```  
+Once you finish editing the parameters, select the entire script and execute it.  
 
 ## 3. Gadget: Some general text processing and analysis tools, as well as code related to enrichment annotation analysis.
 

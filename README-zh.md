@@ -61,6 +61,7 @@
   <tr><td>2.39</td><td>RSCUPlotPlus</td><td>多物种RSCU柱形图绘制及密码子使用情况统计</td></tr> 
   <tr><td>2.40</td><td>GBtoFeatureTable</td><td>从GenBank文件中提取特征信息表格</td></tr> 
   <tr><td>2.41</td><td>FastaAlignPos</td><td>对应比对前后 FASTA文件中各碱基的坐标位置</td></tr> 
+  <tr><td>2.42</td><td>CodonPositionBaseStats</td><td>计算密码子三个位点A/T/G/C碱基的频数或频率，支持密码子过滤</td></tr> 
   <tr><th colspan="3" style="text-align:center; font-weight:bold;">Gadget：通用工具模块</th></tr>
   <tr><td>3.01</td><td>MergeTable</td><td>超大表格合并</td></tr>
   <tr><td>3.02</td><td>VLookup</td><td>Vlookup函数（高阶）</td></tr>
@@ -2616,6 +2617,39 @@ start	end	pos_1	pos_2
 10	16	17	23
 8	50	15	57
 ```   
+
+### 2.42 `CodonPositionBaseStats.R` 
+
+**功能描述：** 计算密码子三个位点A/T/G/C碱基的频数或频率，支持密码子过滤。  
+
+**注意事项：** 本R脚本提供了数据统计函数，不可以直接通过命令行调用。  
+
+**网页版本：** 本脚本可以通过网页在线完成：https://biodatatools.top/function/011.Codon_position_base_stats.html。
+
+**生成文件：** 
+- `01-sequences.csv`（表格文件，包含各个蛋白编码基因的序列及起始终止密码子信息）。
+- `02-Codon_occurrence_in_all_gene.csv` （表格文件，所有蛋白编码基因的密码子使用频数及频率）。
+- `03-Base_Sum.csv`（表格文件，密码子各位点碱基频数）。
+- `04-Base_Freq.csv` （表格文件，密码子各位点碱基频率）。
+
+**示例：**
+
+比如 `example/pcgs.fa` 是提取到的蛋白编码基因的CDS序列：
+```
+>nad1
+ATGACCCCACTAACCCCAATAAACCTCACAATCATAACTTTATCTTACATAATCCCAAT...
+...
+>nad6
+ATGACTTATTTTGTGATTTTTTTGGGAGTTAGTTTTGCATTAGGGGTTTTAGCTGTAGC...
+```
+假设您已经下载了该脚本，并且可以右键使用RStudio打开，你只要进行如下配置就可以了：
+```bash
+pcg = "pcgs.fa" # 这里填写CDS序列所在路径
+codonTable = 5 # 这里填写密码子表，按照NCBI官网的顺序填写
+stp_del = TRUE  # 是否删除终止密码子，FALSE是不删除
+codon_del = 2 # 进行密码子过滤，0不过滤，1过滤单氨基酸密码子，2过滤非四倍简并密码子
+```  
+修改完成之后选中所有代码就可以运行了。  
 
 ## 3. Gadget：一些通用的文本处理和分析工具，以及与富集注释分析相关的代码。
 
