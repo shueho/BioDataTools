@@ -259,7 +259,18 @@ special_g <- if ("Other" %in% taxon_order_group) c("Unclassified", "Other") else
 taxon_order_group <- c(normal_g, special_g)
 taxon_order_group <- unique(taxon_order_group)
 df_long_group$Taxon <- factor(df_long_group$Taxon, levels = taxon_order_group)
-color_vec_group <- color_vec[levels(df_long_group$Taxon)]
+
+n_normal_g <- length(normal_g)
+normal_colors_g <- if (n_normal_g <= length(set2_colors)) {
+  set2_colors[1:n_normal_g]
+} else {
+  rep(set2_colors, length.out = n_normal_g)
+}
+color_vec_group <- c(normal_colors_g, "Unclassified" = color_unclassified)
+if ("Other" %in% taxon_order_group) {
+  color_vec_group <- c(color_vec_group, "Other" = color_other)
+}
+names(color_vec_group) <- taxon_order_group
 p_group <- ggplot(df_long_group, aes(x = Group, y = RelAbundance, fill = Taxon)) +
   geom_bar(stat = "identity", position = "fill", width = 0.6, 
            color = border_color, linewidth = 0.2) +
