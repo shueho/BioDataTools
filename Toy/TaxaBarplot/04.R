@@ -201,7 +201,8 @@ p_tree <- ggtree(tree, layout = "rectangular") %<+% meta_tip +
   theme_tree2() +
   theme(
     axis.title.y = element_blank(),
-    text = element_text(family = "serif"),
+    axis.text.x = element_text(color = "black"),
+    text = element_text(family = "serif", color = "black"),
     #panel.clip = "off"
   )
 
@@ -236,6 +237,7 @@ p_bar_combine <- ggplot(df_long_sample, aes(x = RelAbundance, y = Sample, fill =
   theme_bw() +
   theme(
     text = element_text(family = "serif"),
+    axis.text.x = element_text(color = "black"),
     axis.text.y = element_blank(),
     axis.ticks.y = element_blank(),
     axis.title.y = element_blank(),
@@ -257,10 +259,10 @@ p_bar_single <- ggplot(df_long_sample, aes(x = RelAbundance, y = Sample, fill = 
   theme_bw() +
   theme(
     text = element_text(family = "serif"),
-    axis.text.y = element_text(size = font_size_axis_text, hjust = 1),
-    axis.text.x = element_text(size = font_size_axis_text),
-    axis.title.y = element_text(size = font_size_axis_title),
-    axis.title.x = element_text(size = font_size_axis_title),
+    axis.text.y = element_text(size = font_size_axis_text, hjust = 1, color = "black"),
+    axis.text.x = element_text(size = font_size_axis_text, color = "black"),
+    axis.title.y = element_text(size = font_size_axis_title, color = "black"),
+    axis.title.x = element_text(size = font_size_axis_title, color = "black"),
     axis.ticks.y = element_line(),
     panel.grid = element_blank(),
     legend.key.size = unit(0.3, "cm"),
